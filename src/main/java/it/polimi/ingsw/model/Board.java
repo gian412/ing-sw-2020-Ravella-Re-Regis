@@ -1,0 +1,27 @@
+package it.polimi.ingsw.model;
+
+public class Board {
+
+    private Cell[][] cells;
+    private Player turnPlayer;
+
+    // class constructor with the initialization of cells
+    public Board(){
+        cells = new Cell[5][5];
+        for(int i=0;i<5;i++){
+            for(int j=0;j<5;j++){
+                cells[i][j] = new Cell(i, j);
+            }
+        }
+    }
+
+    // cells' getter
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    // turnPlayer's getter
+    public Player getTurnPlayer() {
+        return turnPlayer;
+    }
+}
