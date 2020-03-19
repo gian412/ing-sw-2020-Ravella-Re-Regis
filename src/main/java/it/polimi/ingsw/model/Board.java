@@ -16,8 +16,9 @@ public class Board {
     }
 
     // cells' getter
-    public Cell[][] getCells() {
-        return cells;
+    public Cell getCell(int row, int column) {
+        return cells[row][column];
+
     }
 
     // turnPlayer's getter
