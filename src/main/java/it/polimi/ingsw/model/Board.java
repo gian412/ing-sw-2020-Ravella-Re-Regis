@@ -18,11 +18,23 @@ public class Board {
     // cells' getter
     public Cell getCell(int row, int column) {
         return cells[row][column];
-
     }
 
     // turnPlayer's getter
     public Player getTurnPlayer() {
         return turnPlayer;
+    }
+
+    public void build(Cell cell, boolean isDome){
+        try{
+            if(isDome){
+                cell.setHeight(Height.DOME);
+            }
+            else{
+                cell.buildFloor();
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }
