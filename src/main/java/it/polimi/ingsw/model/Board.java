@@ -26,6 +26,7 @@ public class Board {
         return turnPlayer;
     }
 
+
     public void build(Cell cell, boolean isDome){
         try{
             if(isDome){
@@ -38,6 +39,9 @@ public class Board {
             System.out.println(e.getMessage());
         }
     }
+
+    // TODO: Marco will implement this
+    public void move(Cell cell){}
 
     @Override
     public String toString() {
