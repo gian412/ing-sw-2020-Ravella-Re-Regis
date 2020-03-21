@@ -4,10 +4,10 @@ import it.polimi.ingsw.model.*  ;
 
 public class Athena extends God{
 
+    // class constructor with the initialization of board using the super constructor
     public Athena(Board board) {
         super(board);
     }
 
-    @Override
-    public void makeMove() {}
+    public void makeMove(Cell cell) {}
 }

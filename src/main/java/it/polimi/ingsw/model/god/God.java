@@ -11,6 +11,7 @@ public abstract class God {
         this.board = board;
     }
 
-    // interface abstract method
+    /*// interface abstract method
     public abstract void makeMove();
+     */
 }
