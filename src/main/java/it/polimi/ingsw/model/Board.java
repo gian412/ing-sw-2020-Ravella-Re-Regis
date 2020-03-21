@@ -26,6 +26,7 @@ public class Board {
         return turnPlayer;
     }
 
+
     public void build(Cell cell, boolean isDome){
         try{
             if(isDome){
@@ -39,9 +40,16 @@ public class Board {
         }
     }
 
-    public void moveWorker(Worker worker, Cell cell){}
+    // TODO: Marco will implement this
+    public void moveWorker(Worker worker, Cell cell){
 
-    public void forceWorker(Worker worker, Cell cell){}
+        Cell supportCell = worker.getCurrentCell();
+
+        supportCell.setWorker(null);
+        worker.setPreviousCell(worker.getCurrentCell());
+        cell.setWorker(worker);
+        worker.setCurrentCell(cell);
+    }
 
     @Override
     public String toString() {

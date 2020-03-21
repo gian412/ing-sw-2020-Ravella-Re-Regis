@@ -19,6 +19,9 @@ public class Cell {
         return worker;
     }
 
+    // worker's setter
+    public void setWorker(Worker worker){ this.worker = worker;}
+
     // height's getter
     public Height getHeight() {
         return height;
