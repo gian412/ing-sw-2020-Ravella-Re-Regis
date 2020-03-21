@@ -9,5 +9,19 @@ public class Apollo extends God{
         super(board);
     }
 
+    // array cell composto da 2 celle, una dove muoversi ed una dove costruire.
+    @Override
+    public void makeMove(Worker worker, Cell[] cells){
+
+        if( cells[0].getWorker() == null ){
+            board.moveWorker(worker, cells[0]);
+        }else{
+            Worker otherWorker = cells[1].getWorker();
+            Cell actualCell = worker.getCurrentCell();
+            board.moveWorker(worker, cells[1]);
+            board.forceWorker(otherWorker, actualCell);
+        }
+
+    }
 
 }

@@ -4,15 +4,15 @@ import it.polimi.ingsw.model.*;
 
 public abstract class God {
 
-    private Board board;
+    public Board board;
 
     // class constructor with the initialization of board
     public God(Board board){
         this.board = board;
     }
 
-    /*// interface abstract method
-    public abstract void makeMove();
-     */
+    // interface abstract method
+    public abstract void makeMove(Worker worker, Cell[] cells);
+
 
 }

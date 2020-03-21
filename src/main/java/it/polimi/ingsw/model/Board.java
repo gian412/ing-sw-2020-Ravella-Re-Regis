@@ -41,7 +41,9 @@ public class Board {
     }
 
     // TODO: Marco will implement this
-    public void move(Cell cell){}
+    public void moveWorker(Worker worker, Cell cell){}
+
+    public void forceWorker(Worker worker, Cell cell){}
 
     @Override
     public String toString() {
