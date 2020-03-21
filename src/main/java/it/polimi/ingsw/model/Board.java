@@ -40,7 +40,6 @@ public class Board {
         }
     }
 
-    // TODO: Marco will implement this
     public void moveWorker(Worker worker, Cell cell){
 
         Cell supportCell = worker.getCurrentCell();
