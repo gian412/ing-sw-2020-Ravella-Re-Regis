@@ -12,7 +12,7 @@ public abstract class God {
     }
 
     // interface abstract method
-    public abstract void makeMove(Worker worker, Cell[] cells);
+    public abstract void makeMove(Worker worker, Cell[] cells) throws IllegalMoveException;
 
 
 }
