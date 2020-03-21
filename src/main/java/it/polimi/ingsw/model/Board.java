@@ -26,21 +26,31 @@ public class Board {
         return turnPlayer;
     }
 
-
+    //permit to build in the selected cel
     public void build(Cell cell, boolean isDome){
         try{
             if(isDome){
                 cell.setHeight(Height.DOME);
             }
             else{
-                cell.buildFloor();
+                switch (cell.getHeight()){
+                    case GROUND: cell.setHeight(Height.FIRST_FLOOR);
+                        break;
+                    case FIRST_FLOOR: cell.setHeight(Height.SECOND_FLOOR);
+                        break;
+                    case SECOND_FLOOR: cell.setHeight(Height.THIRD_FLOOR);
+                        break;
+                    case THIRD_FLOOR: cell.setHeight(Height.DOME);
+                        break;
+                }
+
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
     }
 
-    // permit to move a worker from a cell to an other
+    // permit to move the selected worker from a cell to an other
     public void moveWorker(Worker worker, Cell cell){
 
         Cell supportCell = worker.getCurrentCell();
@@ -51,24 +61,7 @@ public class Board {
         worker.setCurrentCell(cell);
     }
 
-    //permit to build in the selected cell
-    public void buid(Cell cell, boolean isDome){
-
-        if(isDome)
-            cell.setHeight(Height.DOME);
-        else
-            switch (cell.getHeight()){
-                case GROUND: cell.setHeight(Height.FIRST_FLOOR);
-                break;
-                case FIRST_FLOOR: cell.setHeight(Height.SECOND_FLOOR);
-                break;
-                case SECOND_FLOOR: cell.setHeight(Height.THIRD_FLOOR);
-                break;
-                case THIRD_FLOOR: cell.setHeight(Height.DOME);
-                break;
-            }
-
-    }
+    public void forceWorker(Worker worker, Cell cell){}
 
     @Override
     public String toString() {
