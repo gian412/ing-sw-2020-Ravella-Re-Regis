@@ -46,4 +46,9 @@ public class Cell {
                 break;
         }
     }
+
+    @Override
+    public String toString() {
+        return this.height.toString();
+    }
 }
