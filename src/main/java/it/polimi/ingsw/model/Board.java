@@ -37,4 +37,17 @@ public class Board {
             System.out.println(e.getMessage());
         }
     }
+
+    @Override
+    public String toString() {
+        String myBoard = "";
+
+        for(int row = 0; row < 5; row++){
+            for(int col = 0; col < 5; col++)
+                myBoard += cells[row][col].toString().charAt(0);
+            myBoard += '\n';
+        }
+
+        return myBoard;
+    }
 }
