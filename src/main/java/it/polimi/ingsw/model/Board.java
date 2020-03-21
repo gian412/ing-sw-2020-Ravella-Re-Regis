@@ -51,6 +51,8 @@ public class Board {
         worker.setCurrentCell(cell);
     }
 
+    public void forceWorker(Worker worker, Cell cell){}
+
     @Override
     public String toString() {
         String myBoard = "";
