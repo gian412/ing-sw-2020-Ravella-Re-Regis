@@ -41,7 +41,7 @@ public class Board {
     }
 
     // TODO: Marco will implement this
-    public void move(){}
+    public void move(Cell cell){}
 
     @Override
     public String toString() {
