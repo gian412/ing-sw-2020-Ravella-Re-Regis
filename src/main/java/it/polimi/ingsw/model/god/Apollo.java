@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.god;
 
-import com.sun.tools.javac.util.Log;
 import it.polimi.ingsw.model.*;
 
 public class Apollo extends God{
@@ -10,7 +9,7 @@ public class Apollo extends God{
         super(board);
     }
 
-    // array cell composto da 2 celle, una dove muoversi ed una dove costruire.
+    // array cell composed by 2 cells, one for the move and one for the build
     @Override
     public void makeMove(Worker worker, Cell[] cells) throws IllegalMoveException {
 
