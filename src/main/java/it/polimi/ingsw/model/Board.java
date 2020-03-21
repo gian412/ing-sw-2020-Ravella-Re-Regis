@@ -40,7 +40,7 @@ public class Board {
         }
     }
 
-    // TODO: Marco will implement this
+    // permit to move a worker from a cell to an other
     public void moveWorker(Worker worker, Cell cell){
 
         Cell supportCell = worker.getCurrentCell();
@@ -49,6 +49,25 @@ public class Board {
         worker.setPreviousCell(worker.getCurrentCell());
         cell.setWorker(worker);
         worker.setCurrentCell(cell);
+    }
+
+    //permit to build in the selected cell
+    public void buid(Cell cell, boolean isDome){
+
+        if(isDome)
+            cell.setHeight(Height.DOME);
+        else
+            switch (cell.getHeight()){
+                case GROUND: cell.setHeight(Height.FIRST_FLOOR);
+                break;
+                case FIRST_FLOOR: cell.setHeight(Height.SECOND_FLOOR);
+                break;
+                case SECOND_FLOOR: cell.setHeight(Height.THIRD_FLOOR);
+                break;
+                case THIRD_FLOOR: cell.setHeight(Height.DOME);
+                break;
+            }
+
     }
 
     @Override
