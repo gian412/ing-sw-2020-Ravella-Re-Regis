@@ -26,6 +26,7 @@ public class Board {
         return turnPlayer;
     }
 
+
     public void build(Cell cell, boolean isDome){
         try{
             if(isDome){
@@ -39,6 +40,7 @@ public class Board {
         }
     }
 
+    // TODO: Marco will implement this
     public void moveWorker(Worker worker, Cell cell){
 
         Cell supportCell = worker.getCurrentCell();
