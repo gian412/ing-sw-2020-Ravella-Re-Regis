@@ -14,6 +14,7 @@ public class Apollo extends God{
     @Override
     public void makeMove(Worker worker, Cell[] cells) throws IllegalMoveException {
 
+        // move
         if( cells[0].getWorker() == null ){
             if( cells[0].getHeight() == Height.DOME ){
                 throw new IllegalMoveException();
@@ -27,6 +28,7 @@ public class Apollo extends God{
             board.forceWorker(otherWorker, actualCell);
         }
 
+        // build
         if( cells[1].getHeight() == Height.DOME ){
             throw new IllegalMoveException();
         }else if( cells[1].getHeight() == Height.THIRD_FLOOR ){
