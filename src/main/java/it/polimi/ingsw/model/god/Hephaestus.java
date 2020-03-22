@@ -9,6 +9,7 @@ public class Hephaestus extends God {
         super(board);
     }
 
+    // array cell composed by 3 cells, 1 for the moves and 2 for the build
     @Override
     public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
@@ -27,12 +28,12 @@ public class Hephaestus extends God {
         }
 
         // second build
-        if( cells[2] != null && cells[2] == cells[1] && cells[2].getHeight() != Height.THIRD_FLOOR ){
-            super.build(worker, cells[1], false);
-        }else{
-            // TODO: Exception or nothing?
-            throw new IllegalMoveException();
+        if( cells[2] != null ){
+            if( cells[2] == cells[1] && cells[2].getHeight() != Height.THIRD_FLOOR ){
+                super.build(worker, cells[1], false);
+            }else{
+                throw new IllegalMoveException();
+            }
         }
-
     }
 }
