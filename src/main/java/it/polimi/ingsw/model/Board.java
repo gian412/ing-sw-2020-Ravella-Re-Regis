@@ -73,14 +73,14 @@ public class Board {
 
     @Override
     public String toString() {
-        String myBoard = "";
+        StringBuilder myBoard = new StringBuilder();
 
         for(int row = 0; row < 5; row++){
             for(int col = 0; col < 5; col++)
-                myBoard += cells[row][col].toString().charAt(0);
-            myBoard += '\n';
+                myBoard.append(cells[row][col].toString().charAt(0));
+            myBoard.append('\n');
         }
 
-        return myBoard;
+        return myBoard.toString();
     }
 }
