@@ -26,6 +26,10 @@ public class Board {
         return turnPlayer;
     }
 
+    // canMoveUp's set and reset
+    public void setFalseAllCanMoveUp(){/*canMoveUp = false*/}
+    public void setTrueAllCanMoveUp(){/*canGoUp = true*/}
+
 
     public void build(Cell cell, boolean isDome){
         try{

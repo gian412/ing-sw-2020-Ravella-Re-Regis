@@ -5,10 +5,10 @@ import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.IllegalMoveException;
 import it.polimi.ingsw.model.Worker;
 
-public class Pan extends  God {
+public class Athena extends God{
 
     // class constructor with the initialization of board using the super constructor
-    public Pan(Board board) {
+    public Athena(Board board) {
         super(board);
     }
 
@@ -16,11 +16,25 @@ public class Pan extends  God {
     @Override
     public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
+        // reset of the power of Athena
+        if (worker != null){
+            if( !(worker.isCanMoveUp()) ){
+                board.setTrueAllCanMoveUp();
+            }
+        } else{
+            throw new NullPointerException();
+        }
+
         // move
-        if( worker != null && cells[0] != null ){
+        if( cells[0] != null ){
             super.move(worker, cells[0]);
         } else{
             throw new NullPointerException();
+        }
+
+        // set the power of Athena
+        if( worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight()) > 0 ){
+            board.setFalseAllCanMoveUp();
         }
 
         // build
