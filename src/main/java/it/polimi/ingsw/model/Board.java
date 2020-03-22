@@ -40,8 +40,17 @@ public class Board {
         }
     }
 
-    // TODO: Marco will implement this
-    public void move(Cell cell){}
+    public void moveWorker(Worker worker, Cell cell){
+
+        Cell supportCell = worker.getCurrentCell();
+
+        supportCell.setWorker(null);
+        worker.setPreviousCell(worker.getCurrentCell());
+        cell.setWorker(worker);
+        worker.setCurrentCell(cell);
+    }
+
+    public void forceWorker(Worker worker, Cell cell){}
 
     @Override
     public String toString() {
