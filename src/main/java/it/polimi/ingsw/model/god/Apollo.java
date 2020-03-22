@@ -9,32 +9,32 @@ public class Apollo extends God{
         super(board);
     }
 
-    // array cell composed by 2 cells, 1 for the move and 1 for the build
     @Override
-    public void makeMove(Worker worker, Cell[] cells) throws IllegalMoveException {
-
-        // move
-        if( cells[0].getWorker() == null ){
-            if( cells[0].getHeight() == Height.DOME ){
+    public void move(Worker worker, Cell cell) throws IllegalMoveException {
+        if( cell.getWorker() == null ){
+            if( cell.getHeight() == Height.DOME ){
                 throw new IllegalMoveException();
             }else{
-                board.moveWorker(worker, cells[0]);
+                board.moveWorker(worker, cell);
             }
         }else{
-            Worker otherWorker = cells[0].getWorker();
+            Worker otherWorker = cell.getWorker();
             Cell actualCell = worker.getCurrentCell();
-            board.moveWorker(worker, cells[0]);
+            board.moveWorker(worker, cell);
             board.forceWorker(otherWorker, actualCell);
         }
 
+    }
+
+    // array cell composed by 2 cells, 1 for the move and 1 for the build
+    @Override
+    public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException {
+
+        // move
+        move(worker, cells[0]);
+
         // build
-        if( cells[1].getHeight() == Height.DOME ){
-            throw new IllegalMoveException();
-        }else if( cells[1].getHeight() == Height.THIRD_FLOOR ){
-            board.build( cells[1], true);
-        }else{
-            board.build( cells[1], false);
-        }
+        super.build(worker, cells[1], false);
 
     }
 
