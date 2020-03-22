@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.IllegalMoveException;
 import it.polimi.ingsw.model.Worker;
 
-
 public class Pan extends  God {
 
     // class constructor with the initialization of board using the super constructor
