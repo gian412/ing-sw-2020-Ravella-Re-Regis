@@ -50,4 +50,9 @@ public class Player {
         workers[0] = new Worker(this.NAME + "0", this);
         workers[1] = new Worker(this.NAME + "1", this);
     }
+
+    // getter of the workers
+    public Worker[] getWorkers(){
+        return workers;
+    }
 }
