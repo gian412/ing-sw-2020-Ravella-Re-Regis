@@ -19,7 +19,7 @@ public class Athena extends God{
         // reset of the power of Athena
         if (worker != null){
             if( !(worker.isCanMoveUp()) ){
-                board.setTrueAllCanMoveUp();
+                board.setCanMoveUp( true );
             }
         } else{
             throw new NullPointerException();
@@ -34,7 +34,7 @@ public class Athena extends God{
 
         // set the power of Athena
         if( worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight()) > 0 ){
-            board.setFalseAllCanMoveUp();
+            board.setCanMoveUp( false );
         }
 
         // build

@@ -29,8 +29,7 @@ public class Board {
     }
 
     // canMoveUp's set and reset
-    public void setFalseAllCanMoveUp(){/*canMoveUp = false*/}
-    public void setTrueAllCanMoveUp(){/*canGoUp = true*/}
+    public void setCanMoveUp( boolean canMoveUp ){/*Player.canMoveUp = canMoveUp*/}
 
     public void build(Cell cell, boolean isDome){
         try{
