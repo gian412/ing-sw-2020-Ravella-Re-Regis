@@ -1,6 +1,11 @@
 package it.polimi.ingsw.model.god;
 
-import it.polimi.ingsw.model.*;
+
+import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Cell;
+import it.polimi.ingsw.model.IllegalMoveException;
+import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.Height;
 
 public class Minotaur extends God {
 

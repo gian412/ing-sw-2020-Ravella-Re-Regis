@@ -4,16 +4,16 @@ import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.IllegalMoveException;
 import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.Height;
 
-public class Hephaestus extends God {
+
+public class Pan extends  God {
 
     // class constructor with the initialization of board using the super constructor
-    public Hephaestus(Board board) {
+    public Pan(Board board) {
         super(board);
     }
 
-    // array cell composed by 3 cells, 1 for the moves and 2 for the build
+    // array cell composed by 2 cells, 1 for the moves and 1 for the build
     @Override
     public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
@@ -24,20 +24,12 @@ public class Hephaestus extends God {
             throw new NullPointerException();
         }
 
-        // first build
+        // else
         if(cells[1] != null){
             super.build(worker, cells[1], false);
         } else{
             throw new NullPointerException();
         }
 
-        // second build
-        if( cells[2] != null ){
-            if( cells[2] == cells[1] && cells[2].getHeight() != Height.THIRD_FLOOR ){
-                super.build(worker, cells[1], false);
-            }else{
-                throw new IllegalMoveException();
-            }
-        }
     }
 }
