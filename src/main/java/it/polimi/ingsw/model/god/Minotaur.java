@@ -7,13 +7,11 @@ import it.polimi.ingsw.model.IllegalMoveException;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.Height;
 
-public class Minotaur extends God {
-
-    public final String NAME = "MINOTAUR";
+public class Minotaur extends God {;
 
     // class constructor with the initialization of board using the super constructor
     public Minotaur(Board board) {
-        super(board);
+        super(board, "MINOTAUR");
     }
 
     // method that return the direction of the movement of the worker

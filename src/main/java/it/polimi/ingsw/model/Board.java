@@ -62,7 +62,7 @@ public class Board {
         byte heightDifference = worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight());
 
         //check the win with and without Pan
-        if ( worker.getOwner().divinity.equals("Pan") ){
+        if ( worker.getOwner().divinity.equals("PAN") ){
             return (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference == -2;
         } else{
             return heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR;

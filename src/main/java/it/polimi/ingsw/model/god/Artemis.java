@@ -7,11 +7,9 @@ import it.polimi.ingsw.model.Worker;
 
 public class Artemis extends God {
 
-    public final String NAME = "ARTEMIS";
-
     // class constructor with the initialization of board using the super constructor
     public Artemis(Board board) {
-        super(board);
+        super(board, "ARTEMIS");
     }
 
     // array cell composed by 3 cells, 2 for the moves and 1 for the build

@@ -5,10 +5,12 @@ import it.polimi.ingsw.model.*;
 public abstract class God {
 
     public Board board;
+    public final String NAME;
 
     // class constructor with the initialization of board
-    public God(Board board){
+    public God(Board board, String NAME){
         this.board = board;
+        this.NAME = NAME;
     }
 
     // interface abstract method

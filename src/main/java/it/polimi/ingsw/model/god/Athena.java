@@ -7,11 +7,9 @@ import it.polimi.ingsw.model.Worker;
 
 public class Athena extends God{
 
-    public final String NAME = "ATHENA";
-
     // class constructor with the initialization of board using the super constructor
     public Athena(Board board) {
-        super(board);
+        super(board, "ATHENA");
     }
 
     // array cell composed by 2 cells, 1 for the moves and 1 for the build

@@ -8,11 +8,9 @@ import it.polimi.ingsw.model.Height;
 
 public class Apollo extends God{
 
-    public final String NAME = "APOLLO";
-
     // class constructor with the initialization of board using the super constructor
     public Apollo(Board board) {
-        super(board);
+        super(board, "APOLLO");
     }
 
     @Override

@@ -8,11 +8,9 @@ import it.polimi.ingsw.model.Height;
 
 public class Hephaestus extends God {
 
-    public final String NAME = "HEPHAESTUS";
-
     // class constructor with the initialization of board using the super constructor
     public Hephaestus(Board board) {
-        super(board);
+        super(board, "HEPHAESTUS");
     }
 
     // array cell composed by 3 cells, 1 for the moves and 2 for the build
