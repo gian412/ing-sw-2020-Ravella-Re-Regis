@@ -14,13 +14,21 @@ public class Atlas extends God {
 
     // array cell composed by 2 cells, 1 for the moves and 1 for the build
     @Override
-    public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException {
+    public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
         // move
-        super.move(worker, cells[0]);
+        if( worker != null && cells[0] != null ){
+            super.move(worker, cells[0]);
+        } else{
+            throw  new NullPointerException();
+        }
 
         // build
-        super.build(worker, cells[1], isDome);
+        if( cells[1] != null ){
+            super.build(worker, cells[1], isDome);
+        } else{
+            throw new NullPointerException();
+        }
 
     }
 }

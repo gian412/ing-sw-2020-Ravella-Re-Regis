@@ -14,13 +14,21 @@ public class Demeter extends God {
 
     // array cell composed by 3 cells, 1 for the moves and 2 for the build
     @Override
-    public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException {
+    public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
         // move
-        super.move( worker, cells[0] );
+        if( worker != null && cells[0] != null ){
+            super.move( worker, cells[0] );
+        } else{
+            throw new NullPointerException();
+        }
 
         // first build
-        super.build(worker, cells[1], false);
+        if( cells[1] != null ){
+            super.build(worker, cells[1], false);
+        } else{
+            throw new NullPointerException();
+        }
 
         // second build
         if( cells[2] != null ){

@@ -32,13 +32,21 @@ public class Apollo extends God{
 
     // array cell composed by 2 cells, 1 for the move and 1 for the build
     @Override
-    public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException {
+    public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
         // move
-        move(worker, cells[0]);
+        if( worker != null && cells[0] != null ){
+            move(worker, cells[0]);
+        } else{
+            throw new NullPointerException();
+        }
 
         // build
-        super.build(worker, cells[1], false);
+        if( cells[1] != null ){
+            super.build(worker, cells[1], false);
+        } else{
+            throw new NullPointerException();
+        }
 
     }
 

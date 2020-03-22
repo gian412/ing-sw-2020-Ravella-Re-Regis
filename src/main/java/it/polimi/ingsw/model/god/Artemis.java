@@ -14,10 +14,14 @@ public class Artemis extends God {
 
     // array cell composed by 3 cells, 2 for the moves and 1 for the build
     @Override
-    public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException {
+    public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
         // first move
-        super.move( worker, cells[0] );
+        if( worker != null && cells[0] != null ){
+            super.move( worker, cells[0] );
+        } else{
+            throw new NullPointerException();
+        }
 
         //Second move
         if( cells[1] != null ){
@@ -26,10 +30,16 @@ public class Artemis extends God {
             } else{
                 super.move( worker, cells[1] );
             }
+        } else{
+            throw new NullPointerException();
         }
 
         // build
-        super.build(worker, cells[2], false);
+        if( cells[2] != null ){
+            super.build(worker, cells[2], false);
+        } else{
+            throw new NullPointerException();
+        }
 
     }
 }
