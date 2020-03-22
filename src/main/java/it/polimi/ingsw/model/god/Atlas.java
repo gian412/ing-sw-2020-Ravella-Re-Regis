@@ -1,9 +1,13 @@
 package it.polimi.ingsw.model.god;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Cell;
+import it.polimi.ingsw.model.IllegalMoveException;
+import it.polimi.ingsw.model.Worker;
 
 public class Atlas extends God {
 
+    // class constructor with the initialization of board using the super constructor
     public Atlas(Board board) {
         super(board);
     }

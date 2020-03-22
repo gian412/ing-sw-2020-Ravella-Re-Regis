@@ -5,31 +5,30 @@ import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.IllegalMoveException;
 import it.polimi.ingsw.model.Worker;
 
-public class Artemis extends God {
+public class Demeter extends God {
 
     // class constructor with the initialization of board using the super constructor
-    public Artemis(Board board) {
+    public Demeter(Board board) {
         super(board);
     }
 
-    // array cell composed by 3 cells, 2 for the moves and 1 for the build
+    // array cell composed by 3 cells, 1 for the moves and 2 for the build
     @Override
     public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException {
 
-        // first move
+        // move
         super.move( worker, cells[0] );
 
-        //Second move
-        if( cells[1] != null ){
-            if( cells[1].equals( worker.getPreviousCell() ) ){
+        // first build
+        super.build(worker, cells[1], false);
+
+        // second build
+        if( cells[2] != null ){
+            if( cells[2].equals(cells[1]) ){
                 throw new IllegalMoveException();
             } else{
-                super.move( worker, cells[1] );
+                super.build(worker, cells[2], false);
             }
         }
-
-        // build
-        super.build(worker, cells[2], false);
-
     }
 }
