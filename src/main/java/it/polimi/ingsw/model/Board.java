@@ -30,7 +30,6 @@ public class Board {
     public void setFalseAllCanMoveUp(){/*canMoveUp = false*/}
     public void setTrueAllCanMoveUp(){/*canGoUp = true*/}
 
-
     public void build(Cell cell, boolean isDome){
         try{
             if(isDome){
@@ -55,6 +54,8 @@ public class Board {
     }
 
     public void forceWorker(Worker worker, Cell cell){}
+
+    public void checkWin(Worker worker){}
 
     @Override
     public String toString() {
