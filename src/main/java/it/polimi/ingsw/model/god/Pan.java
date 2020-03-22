@@ -7,6 +7,8 @@ import it.polimi.ingsw.model.Worker;
 
 public class Pan extends  God {
 
+    public final String NAME = "PAN";
+
     // class constructor with the initialization of board using the super constructor
     public Pan(Board board) {
         super(board);

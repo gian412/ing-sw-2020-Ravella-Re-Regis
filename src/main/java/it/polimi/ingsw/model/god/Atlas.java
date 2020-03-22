@@ -7,6 +7,8 @@ import it.polimi.ingsw.model.Worker;
 
 public class Atlas extends God {
 
+    public final String NAME = "ATHENA";
+
     // class constructor with the initialization of board using the super constructor
     public Atlas(Board board) {
         super(board);

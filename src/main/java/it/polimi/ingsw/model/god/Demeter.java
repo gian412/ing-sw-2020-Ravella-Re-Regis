@@ -7,6 +7,8 @@ import it.polimi.ingsw.model.Worker;
 
 public class Demeter extends God {
 
+    public final String NAME = "DEMETER";
+
     // class constructor with the initialization of board using the super constructor
     public Demeter(Board board) {
         super(board);

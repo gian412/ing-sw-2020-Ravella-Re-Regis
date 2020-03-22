@@ -7,6 +7,8 @@ import it.polimi.ingsw.model.Worker;
 
 public class Prometheus extends God {
 
+    public final String NAME = "PROMETHEUS";
+
     // class constructor with the initialization of board using the super constructor
     public Prometheus(Board board) {
         super(board);

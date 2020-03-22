@@ -9,6 +9,8 @@ import it.polimi.ingsw.model.Height;
 
 public class Minotaur extends God {
 
+    public final String NAME = "MINOTAUR";
+
     // class constructor with the initialization of board using the super constructor
     public Minotaur(Board board) {
         super(board);

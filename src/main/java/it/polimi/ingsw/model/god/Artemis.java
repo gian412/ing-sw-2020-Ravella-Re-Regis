@@ -7,6 +7,8 @@ import it.polimi.ingsw.model.Worker;
 
 public class Artemis extends God {
 
+    public final String NAME = "ARTEMIS";
+
     // class constructor with the initialization of board using the super constructor
     public Artemis(Board board) {
         super(board);
