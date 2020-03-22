@@ -4,7 +4,7 @@ public enum Height {
     GROUND, FIRST_FLOOR, SECOND_FLOOR, THIRD_FLOOR, DOME;
 
     // method that return the difference of height between two heights
-    public int getDifference( Height that){
+    public byte getDifference( Height that){
 
         switch (this){
             case GROUND:

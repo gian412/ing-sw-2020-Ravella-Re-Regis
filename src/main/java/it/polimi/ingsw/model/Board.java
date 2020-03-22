@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.god.Pan;
+
 public class Board {
 
     private Cell[][] cells;
@@ -55,7 +57,19 @@ public class Board {
 
     public void forceWorker(Worker worker, Cell cell){}
 
-    public void checkWin(Worker worker){}
+    // method that check if the worker had win after the last move
+    public boolean checkWin(Worker worker){
+
+        byte heightDifference = worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight());
+
+        //check the win with and without Pan
+        if ( worker.getOwner().divinity.equals("Pan") ){
+            return (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference == -2;
+        } else{
+            return heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR;
+        }
+
+    }
 
     @Override
     public String toString() {
