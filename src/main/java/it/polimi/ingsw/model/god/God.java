@@ -16,7 +16,7 @@ public abstract class God {
 
     public void move(Worker worker, Cell cell) throws IllegalMoveException{
 
-        if( cell.getWorker() == null && cell.getHeight() != Height.DOME ) {
+        if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
             board.moveWorker(worker, cell);
         }else{
             throw new IllegalMoveException();
