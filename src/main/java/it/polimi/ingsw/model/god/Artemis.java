@@ -31,8 +31,6 @@ public class Artemis extends God {
                 } else{
                     super.move( worker, cells[1] );
                 }
-            } else{
-                throw new NullPointerException();
             }
 
             if( !hadWin ){
