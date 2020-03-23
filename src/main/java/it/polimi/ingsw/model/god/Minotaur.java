@@ -48,12 +48,13 @@ public class Minotaur extends God {;
             throw new NullPointerException();
         }
 
-        // build
-        if( cells[1] != null ){
-            super.build(worker, cells[1], false );
-        } else{
-            throw new NullPointerException();
+        if( !hadWin ){
+            // build
+            if( cells[1] != null ){
+                super.build(worker, cells[1], false );
+            } else{
+                throw new NullPointerException();
+            }
         }
-
     }
 }

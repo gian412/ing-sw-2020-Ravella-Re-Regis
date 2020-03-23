@@ -32,17 +32,18 @@ public class Athena extends God{
             throw new NullPointerException();
         }
 
-        // set the power of Athena
-        if( worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight()) > 0 ){
-            board.setCanMoveUp( false );
-        }
+        if( !hadWin ){
+            // set the power of Athena
+            if( worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight()) > 0 ){
+                board.setCanMoveUp( false );
+            }
 
-        // build
-        if(cells[1] != null){
-            super.build(worker, cells[1], false);
-        } else{
-            throw new NullPointerException();
+            // build
+            if(cells[1] != null){
+                super.build(worker, cells[1], false);
+            } else{
+                throw new NullPointerException();
+            }
         }
-
     }
 }

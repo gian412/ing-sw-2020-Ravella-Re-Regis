@@ -23,23 +23,26 @@ public class Artemis extends God {
             throw new NullPointerException();
         }
 
-        //Second move
-        if( cells[1] != null ){
-            if( cells[1].equals( worker.getPreviousCell() ) ){
-                throw new IllegalMoveException();
+        if( !hadWin ){
+            //Second move
+            if( cells[1] != null ){
+                if( cells[1].equals( worker.getPreviousCell() ) ){
+                    throw new IllegalMoveException();
+                } else{
+                    super.move( worker, cells[1] );
+                }
             } else{
-                super.move( worker, cells[1] );
+                throw new NullPointerException();
             }
-        } else{
-            throw new NullPointerException();
-        }
 
-        // build
-        if( cells[2] != null ){
-            super.build(worker, cells[2], false);
-        } else{
-            throw new NullPointerException();
+            if( !hadWin ){
+                // build
+                if( cells[2] != null ){
+                    super.build(worker, cells[2], false);
+                } else{
+                    throw new NullPointerException();
+                }
+            }
         }
-
     }
 }

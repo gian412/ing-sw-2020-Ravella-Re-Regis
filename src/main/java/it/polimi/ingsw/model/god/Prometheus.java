@@ -36,12 +36,13 @@ public class Prometheus extends God {
             throw new NullPointerException();
         }
 
-        // second build
-        if( cells[2] != null ){
-            super.build(worker, cells[2], false );
-        } else{
-            throw new NullPointerException();
+        if( !hadWin ){
+            // second build
+            if( cells[2] != null ){
+                super.build(worker, cells[2], false );
+            } else{
+                throw new NullPointerException();
+            }
         }
-
     }
 }

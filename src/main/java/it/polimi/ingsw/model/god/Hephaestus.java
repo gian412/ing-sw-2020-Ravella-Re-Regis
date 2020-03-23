@@ -24,20 +24,23 @@ public class Hephaestus extends God {
             throw new NullPointerException();
         }
 
-        // first build
-        if(cells[1] != null){
-            super.build(worker, cells[1], false);
-        } else{
-            throw new NullPointerException();
-        }
-
-        // second build
-        if( cells[2] != null ){
-            if( cells[2] == cells[1] && cells[2].getHeight() != Height.THIRD_FLOOR ){
+        if( !hadWin ){
+            // first build
+            if(cells[1] != null){
                 super.build(worker, cells[1], false);
-            }else{
-                throw new IllegalMoveException();
+            } else{
+                throw new NullPointerException();
+            }
+
+            // second build
+            if( cells[2] != null ){
+                if( cells[2] == cells[1] && cells[2].getHeight() != Height.THIRD_FLOOR ){
+                    super.build(worker, cells[1], false);
+                }else{
+                    throw new IllegalMoveException();
+                }
             }
         }
+
     }
 }
