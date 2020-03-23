@@ -14,6 +14,21 @@ public class Controller {
         this.game = g;
     }
 
+
+    public boolean commitMove(Player player, Command command, int workerID){
+        if(game.getTurnPlayer().equals(player)){
+            try{
+                game.getTurnPlayer().getDivinity().makeMove(
+                        game.getTurnPlayer().getWorkers()[workerID],
+                        command
+                );
+            }catch(IllegalMoveException moveExc){
+                return  false;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
             Game g1 = new Game();
 
