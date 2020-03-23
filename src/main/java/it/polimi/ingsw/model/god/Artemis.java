@@ -8,9 +8,47 @@ import it.polimi.ingsw.model.Worker;
 
 public class Artemis extends God {
 
+    private boolean[] hadMove = {false, false};
+
+
     // class constructor with the initialization of board using the super constructor
     public Artemis(Board board) {
         super(board, "ARTEMIS");
+    }
+
+    @Override
+    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
+
+        if (command != null){
+            Cell cell = board.getCell(command.cellX, command.cellY);
+
+            switch (command.commandType){
+                case MOVE:
+                    if (!hadMove[0] && !hadWin){
+                        super.move(worker, cell);
+                        hadMove[0] = true;
+                        hadWin = board.checkWin(worker);
+                    } else if (!hadMove[1] && !hadWin){
+                        super.move(worker, cell);
+                        hadMove[1] = true;
+                        hadWin = board.checkWin(worker);
+                    } else{
+                        throw new IllegalMoveException();
+                    }
+                    break;
+
+                case BUILD:
+                    if (hadMove[0] && !hadWin){
+                        super.build(worker, cell, false);
+                    } else{
+                        throw new IllegalMoveException();
+                    }
+                    break;
+
+                case BUILD_DOME:
+                    throw new IllegalMoveException();
+            }
+        }
     }
 
     /*// array cell composed by 3 cells, 2 for the moves and 1 for the build
@@ -45,8 +83,4 @@ public class Artemis extends God {
         }
     }*/
 
-    @Override
-    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
-
-    }
 }

@@ -38,22 +38,27 @@ public class Apollo extends God{
     @Override
     public void makeMove(Worker worker, Command command) throws IllegalMoveException {
 
-        Cell cell = board.getCell(command.cellX, command.cellY);
+        if (command != null){
+            Cell cell = board.getCell(command.cellX, command.cellY);
 
-        switch (command.commandType){
-            case MOVE:
-                move(worker, cell);
-                hadWin = board.checkWin(worker);
-                break;
-            case BUILD:
-                if (hadWin){
+            switch (command.commandType){
+                case MOVE:
+                    move(worker, cell);
+                    hadMove = true;
+                    hadWin = board.checkWin(worker);
+                    break;
+
+                case BUILD:
+                    if ( !hadMove || hadWin){
+                        throw new IllegalMoveException();
+                    } else{
+                        super.build(worker, cell, false);
+                    }
+                    break;
+
+                case BUILD_DOME:
                     throw new IllegalMoveException();
-                } else{
-                    build(worker, cell, false);
-                }
-                break;
-            case BUILD_DOME:
-                throw new IllegalMoveException();
+            }
         }
     }
 
