@@ -6,9 +6,11 @@ public class Board {
 
     private Cell[][] cells;
     private Player turnPlayer;
+    private Worker hadWin;
 
     // class constructor with the initialization of cells
     public Board(){
+        hadWin = null;
         cells = new Cell[5][5];
         for(int i=0;i<5;i++){
             for(int j=0;j<5;j++){
@@ -63,9 +65,19 @@ public class Board {
 
         //check the win with and without Pan
         if (worker.getOwner().divinity.NAME.equals("PAN")){
-            return (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference == -2;
+            if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference == -2){
+                hadWin = worker;
+                return true;
+            } else{
+                return false;
+            }
         } else{
-            return heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR;
+            if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
+                hadWin = worker;
+                return true;
+            } else{
+                return false;
+            }
         }
 
     }
