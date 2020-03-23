@@ -16,7 +16,7 @@ public abstract class God {
         hadWin = false;
     }
 
-    // interface abstract method
+    // abstract class' abstract method
     public abstract void makeMove(Worker worker, Command command) throws IllegalMoveException;
     //public abstract void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException;
 
