@@ -29,6 +29,10 @@ public class Board {
         return turnPlayer;
     }
 
+    public void setTurnPlayer(Player next){
+        turnPlayer = next;
+    }
+
     // canMoveUp's set and reset
     public void setCanMoveUp( boolean canMoveUp ){/*Player.canMoveUp = canMoveUp*/}
 
