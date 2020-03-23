@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.god;
 
+import controller.Command;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.IllegalMoveException;
@@ -12,7 +13,7 @@ public class Artemis extends God {
         super(board, "ARTEMIS");
     }
 
-    // array cell composed by 3 cells, 2 for the moves and 1 for the build
+    /*// array cell composed by 3 cells, 2 for the moves and 1 for the build
     @Override
     public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
@@ -42,5 +43,10 @@ public class Artemis extends God {
                 }
             }
         }
+    }*/
+
+    @Override
+    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
+
     }
 }

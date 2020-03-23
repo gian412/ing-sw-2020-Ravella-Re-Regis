@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.god;
 
+import controller.Command;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.IllegalMoveException;
@@ -12,7 +13,7 @@ public class Pan extends  God {
         super(board, "PAN");
     }
 
-    // array cell composed by 2 cells, 1 for the moves and 1 for the build
+    /*// array cell composed by 2 cells, 1 for the moves and 1 for the build
     @Override
     public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
@@ -31,5 +32,10 @@ public class Pan extends  God {
                 throw new NullPointerException();
             }
         }
+    }*/
+
+    @Override
+    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
+
     }
 }
