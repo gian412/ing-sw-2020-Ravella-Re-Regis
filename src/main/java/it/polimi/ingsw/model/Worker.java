@@ -31,6 +31,7 @@ public class Worker {
     public Cell getCurrentCell() {
         return currentCell;
     }
+
     public void setCurrentCell(Cell currentCell) {
         setPreviousCell(currentCell);
         this.currentCell = currentCell;
@@ -40,6 +41,7 @@ public class Worker {
     public Cell getPreviousCell() {
         return previousCell;
     }
+
     public void setPreviousCell(Cell previousCell) {
         this.previousCell = previousCell;
     }

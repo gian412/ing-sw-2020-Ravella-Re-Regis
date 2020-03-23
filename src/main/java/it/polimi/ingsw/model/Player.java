@@ -10,7 +10,7 @@ public class Player {
 
     private Game actualGame;
     private final String NAME;
-    public God divinity;
+    private God divinity;
     private int age;
     private Player nextPlayer;
     private Worker[] workers = new Worker[2];
@@ -24,10 +24,13 @@ public class Player {
         this.actualGame = actualGame;
     }
 
+
     // divinity's setter
     public void setDivinity(God divinity) {
         this.divinity = divinity;
     }
+
+    public God getDivinity(){ return this.divinity;}
 
     // age's getter and setter
     public void setAge(int age) {

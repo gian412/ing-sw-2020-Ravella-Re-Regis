@@ -15,7 +15,6 @@ public class Board {
         for(int i=0;i<5;i++){
             for(int j=0;j<5;j++){
                 cells[i][j] = new Cell(i, j);
-                cells[i][j].setHeight(Height.GROUND);
             }
         }
     }
@@ -64,13 +63,14 @@ public class Board {
         byte heightDifference = worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight());
 
         //check the win with and without Pan
-        if (worker.getOwner().divinity.NAME.equals("PAN")){
+        if (worker.getOwner().getDivinity().NAME.equals("PAN")){
             if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference == -2){
                 hadWin = worker;
                 return true;
             } else{
                 return false;
             }
+
         } else{
             if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
                 hadWin = worker;
