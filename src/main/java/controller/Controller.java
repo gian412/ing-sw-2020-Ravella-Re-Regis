@@ -33,7 +33,7 @@ public class Controller {
             AtlasMove[0] = g1.getBoard().getCell(0,0);
             AtlasMove[1] = g1.getBoard().getCell(1,1);
             try {
-                p1.divinity.makeMove(p1.getWorkers()[0], AtlasMove, true);
+                p1.getDivinity().makeMove(p1.getWorkers()[0], AtlasMove, true);
             }catch(IllegalMoveException e){
                 System.out.println(e.getMessage());
             }
