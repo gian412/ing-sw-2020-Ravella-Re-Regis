@@ -58,4 +58,8 @@ public class Player {
     public Worker[] getWorkers(){
         return workers;
     }
+
+    public boolean equals(Player p) {
+        return (this.NAME.equals(p.NAME));
+    }
 }
