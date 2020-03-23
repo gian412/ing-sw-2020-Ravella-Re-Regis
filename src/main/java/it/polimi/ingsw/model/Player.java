@@ -14,10 +14,20 @@ public class Player {
     private int age;
     private Player nextPlayer;
     private Worker[] workers = new Worker[2];
+    private boolean isTurnPlayer;
 
     public Player(String name, int age){
         this.NAME = name;
         this.age = age;
+        this.isTurnPlayer = false;
+    }
+
+    public boolean turnPlayer(){
+        return isTurnPlayer;
+    }
+
+    public void setTurnPlayer(boolean flag){
+        isTurnPlayer = flag;
     }
 
     // actualGame's setter
