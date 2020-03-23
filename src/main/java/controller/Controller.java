@@ -30,8 +30,13 @@ public class Controller {
     }
 
     public boolean addPlayer(String playerName, int age){
-        if(game.addPlayer(new Player(playerName, age))) return true;
-        return false;
+        return game.addPlayer(new Player(playerName, age));
+    }
+
+    public void changeTurnPlayer(){
+        game.getTurnPlayer().setTurnPlayer(false);
+        game.getBoard().setTurnPlayer(game.getTurnPlayer().getNextPlayer());
+        game.getTurnPlayer().setTurnPlayer(true);
     }
 
     public static void main(String[] args) {
