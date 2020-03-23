@@ -29,13 +29,18 @@ public class Controller {
         return true;
     }
 
+    public boolean addPlayer(String playerName, int age){
+        if(game.addPlayer(new Player(playerName, age))) return true;
+        return false;
+    }
+
     public static void main(String[] args) {
             Game g1 = new Game();
 
             // this code is only for testing purpose, it simulates a game
 
-            Player p1 = new Player("Rave");
-            Player p2 = new Player("Rave2");
+            Player p1 = new Player("Rave", 10);
+            Player p2 = new Player("Rave2", 30);
             p1.setWorkers();
             p1.getWorkers()[0].setCurrentCell(g1.getBoard().getCell(1, 0));
 
