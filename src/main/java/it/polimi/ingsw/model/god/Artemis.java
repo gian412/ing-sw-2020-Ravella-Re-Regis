@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.Worker;
 public class Artemis extends God {
 
     private boolean[] hadMove = {false, false};
+    private boolean hadBuild = false;
 
 
     // class constructor with the initialization of board using the super constructor
@@ -24,11 +25,11 @@ public class Artemis extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMove[0] && !hadWin){
+                    if (!hadMove[0] && !hadWin && !hadBuild){
                         super.move(worker, cell);
                         hadMove[0] = true;
                         hadWin = board.checkWin(worker);
-                    } else if (!hadMove[1] && !hadWin){
+                    } else if (!hadMove[1] && !hadWin && !hadBuild){
                         super.move(worker, cell);
                         hadMove[1] = true;
                         hadWin = board.checkWin(worker);
@@ -38,7 +39,7 @@ public class Artemis extends God {
                     break;
 
                 case BUILD:
-                    if (hadMove[0] && !hadWin){
+                    if (hadMove[0] && !hadWin && !hadBuild){
                         super.build(worker, cell, false);
                     } else{
                         throw new IllegalMoveException();

@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.Height;
 public class Apollo extends God{
 
     private boolean hadMove = false;
+    private boolean hadBuild = false;
 
     // class constructor with the initialization of board using the super constructor
     public Apollo(Board board) {
@@ -43,18 +44,22 @@ public class Apollo extends God{
 
             switch (command.commandType){
                 case MOVE:
-                    move(worker, cell);
-                    hadMove = true;
-                    hadWin = board.checkWin(worker);
-                    break;
+                    if (!hadMove && !hadBuild && !hadWin) {
+                        move(worker, cell);
+                        hadMove = true;
+                        hadWin = board.checkWin(worker);
+                        break;
+                    } else {
+                        throw new IllegalMoveException();
+                    }
 
                 case BUILD:
-                    if ( !hadMove || hadWin){
-                        throw new IllegalMoveException();
-                    } else{
+                    if ( hadMove && !hadBuild && !hadWin){
                         super.build(worker, cell, false);
+                        break;
+                    } else{
+                        throw new IllegalMoveException();
                     }
-                    break;
 
                 case BUILD_DOME:
                     throw new IllegalMoveException();
