@@ -17,7 +17,7 @@ public class Prometheus extends God {
     public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
         // first build
-        if( worker != null && cells[1] != null  ){
+        if( worker != null ){
             if( cells[0] != null ){
                 if( worker.getCurrentCell().getHeight() == cells[1].getHeight() ){
                     super.build(worker, cells[0], false );
