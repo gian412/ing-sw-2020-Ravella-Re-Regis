@@ -6,6 +6,7 @@ public class Worker {
     private Player owner;
     private Cell currentCell;
     private Cell previousCell;
+    private static boolean canMoveUp;
 
     // class constructor with the initialization of WORKER_ID and owner
     public Worker(String workerId, Player owner) {
@@ -13,6 +14,7 @@ public class Worker {
         this.owner = owner;
         currentCell = null;
         previousCell = null;
+        canMoveUp = true;
     }
 
     // WORKER_ID's getter
@@ -34,7 +36,7 @@ public class Worker {
         this.currentCell = currentCell;
     }
 
-    // previousCell's getter e setter
+    // previousCell's getter and setter
     public Cell getPreviousCell() {
         return previousCell;
     }
@@ -42,11 +44,11 @@ public class Worker {
         this.previousCell = previousCell;
     }
 
-
-
-
-
-
-
-
+    // canMoveUp's getter and setter
+    public void setCanMoveUp(boolean canMoveUp) {
+        Worker.canMoveUp = canMoveUp;
+    }
+    public boolean isCanMoveUp() {
+        return canMoveUp;
+    }
 }

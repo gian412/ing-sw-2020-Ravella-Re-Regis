@@ -5,41 +5,42 @@ import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.IllegalMoveException;
 import it.polimi.ingsw.model.Worker;
 
-public class Prometheus extends God {
+public class Athena extends God{
 
     // class constructor with the initialization of board using the super constructor
-    public Prometheus(Board board) {
-        super(board, "PROMETHEUS");
+    public Athena(Board board) {
+        super(board, "ATHENA");
     }
 
-    // array cell composed by 2 cells, 1 for the moves and 2 for the build
+    // array cell composed by 2 cells, 1 for the moves and 1 for the build
     @Override
     public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
-        // first build
-        if( worker != null && cells[1] != null  ){
-            if( cells[0] != null ){
-                if( worker.getCurrentCell().getHeight() == cells[1].getHeight() ){
-                    super.build(worker, cells[0], false );
-                } else{
-                    throw new IllegalMoveException();
-                }
+        // reset of the power of Athena
+        if (worker != null){
+            if( !(worker.isCanMoveUp()) ){
+                board.setCanMoveUp( true );
             }
         } else{
             throw new NullPointerException();
         }
 
         // move
-        if( cells[1] != null ){
-            super.move(worker, cells[1]);
+        if( cells[0] != null ){
+            super.move(worker, cells[0]);
         } else{
             throw new NullPointerException();
         }
 
         if( !hadWin ){
-            // second build
-            if( cells[2] != null ){
-                super.build(worker, cells[2], false );
+            // set the power of Athena
+            if( worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight()) > 0 ){
+                board.setCanMoveUp( false );
+            }
+
+            // build
+            if(cells[1] != null){
+                super.build(worker, cells[1], false);
             } else{
                 throw new NullPointerException();
             }

@@ -9,7 +9,7 @@ public class Pan extends  God {
 
     // class constructor with the initialization of board using the super constructor
     public Pan(Board board) {
-        super(board);
+        super(board, "PAN");
     }
 
     // array cell composed by 2 cells, 1 for the moves and 1 for the build
@@ -23,12 +23,13 @@ public class Pan extends  God {
             throw new NullPointerException();
         }
 
-        // else
-        if(cells[1] != null){
-            super.build(worker, cells[1], false);
-        } else{
-            throw new NullPointerException();
+        if( !hadWin ){
+            // build
+            if(cells[1] != null){
+                super.build(worker, cells[1], false);
+            } else{
+                throw new NullPointerException();
+            }
         }
-
     }
 }

@@ -4,11 +4,15 @@ import it.polimi.ingsw.model.*;
 
 public abstract class God {
 
-    public Board board;
+    protected Board board;
+    public final String NAME;
+    protected boolean hadWin;
 
     // class constructor with the initialization of board
-    public God(Board board){
+    public God(Board board, String NAME){
         this.board = board;
+        this.NAME = NAME;
+        hadWin = false;
     }
 
     // interface abstract method
@@ -16,8 +20,9 @@ public abstract class God {
 
     public void move(Worker worker, Cell cell) throws IllegalMoveException{
 
-        if( cell.getWorker() == null && cell.getHeight() != Height.DOME ) {
+        if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
             board.moveWorker(worker, cell);
+            hadWin = board.checkWin(worker);
         }else{
             throw new IllegalMoveException();
         }

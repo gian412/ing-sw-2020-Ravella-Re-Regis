@@ -9,7 +9,7 @@ public class Demeter extends God {
 
     // class constructor with the initialization of board using the super constructor
     public Demeter(Board board) {
-        super(board);
+        super(board, "DEMETER");
     }
 
     // array cell composed by 3 cells, 1 for the moves and 2 for the build
@@ -23,19 +23,21 @@ public class Demeter extends God {
             throw new NullPointerException();
         }
 
-        // first build
-        if( cells[1] != null ){
-            super.build(worker, cells[1], false);
-        } else{
-            throw new NullPointerException();
-        }
-
-        // second build
-        if( cells[2] != null ){
-            if( cells[2].equals(cells[1]) ){
-                throw new IllegalMoveException();
+        if( !hadWin ){
+            // first build
+            if( cells[1] != null ){
+                super.build(worker, cells[1], false);
             } else{
-                super.build(worker, cells[2], false);
+                throw new NullPointerException();
+            }
+
+            // second build
+            if( cells[2] != null ){
+                if( cells[2].equals(cells[1]) ){
+                    throw new IllegalMoveException();
+                } else{
+                    super.build(worker, cells[2], false);
+                }
             }
         }
     }

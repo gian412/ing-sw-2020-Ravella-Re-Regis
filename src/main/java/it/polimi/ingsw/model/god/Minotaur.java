@@ -7,11 +7,11 @@ import it.polimi.ingsw.model.IllegalMoveException;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.Height;
 
-public class Minotaur extends God {
+public class Minotaur extends God {;
 
     // class constructor with the initialization of board using the super constructor
     public Minotaur(Board board) {
-        super(board);
+        super(board, "MINOTAUR");
     }
 
     // method that return the direction of the movement of the worker
@@ -48,12 +48,13 @@ public class Minotaur extends God {
             throw new NullPointerException();
         }
 
-        // build
-        if( cells[1] != null ){
-            super.build(worker, cells[1], false );
-        } else{
-            throw new NullPointerException();
+        if( !hadWin ){
+            // build
+            if( cells[1] != null ){
+                super.build(worker, cells[1], false );
+            } else{
+                throw new NullPointerException();
+            }
         }
-
     }
 }

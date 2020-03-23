@@ -10,13 +10,13 @@ public class Apollo extends God{
 
     // class constructor with the initialization of board using the super constructor
     public Apollo(Board board) {
-        super(board);
+        super(board, "APOLLO");
     }
 
     @Override
     public void move(Worker worker, Cell cell) throws IllegalMoveException {
         if( cell.getWorker() == null ){
-            if( cell.getHeight() == Height.DOME ){
+            if( cell.getHeight() == Height.DOME || worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) > 1 ){
                 throw new IllegalMoveException();
             }else{
                 board.moveWorker(worker, cell);
@@ -28,6 +28,8 @@ public class Apollo extends God{
             board.forceWorker(otherWorker, actualCell);
         }
 
+
+
     }
 
     // array cell composed by 2 cells, 1 for the move and 1 for the build
@@ -37,15 +39,18 @@ public class Apollo extends God{
         // move
         if( worker != null && cells[0] != null ){
             move(worker, cells[0]);
+            hadWin = board.checkWin(worker);
         } else{
             throw new NullPointerException();
         }
 
         // build
-        if( cells[1] != null ){
-            super.build(worker, cells[1], false);
-        } else{
-            throw new NullPointerException();
+        if ( !hadWin ){
+            if( cells[1] != null ){
+                super.build(worker, cells[1], false);
+            } else{
+                throw new NullPointerException();
+            }
         }
 
     }

@@ -1,12 +1,16 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.god.Pan;
+
 public class Board {
 
     private Cell[][] cells;
     private Player turnPlayer;
+    private Worker hadWin;
 
     // class constructor with the initialization of cells
     public Board(){
+        hadWin = null;
         cells = new Cell[5][5];
         for(int i=0;i<5;i++){
             for(int j=0;j<5;j++){
@@ -26,6 +30,8 @@ public class Board {
         return turnPlayer;
     }
 
+    // canMoveUp's set and reset
+    public void setCanMoveUp( boolean canMoveUp ){/*Player.canMoveUp = canMoveUp*/}
 
     public void build(Cell cell, boolean isDome){
         try{
@@ -52,16 +58,40 @@ public class Board {
 
     public void forceWorker(Worker worker, Cell cell){}
 
+    // method that check if the worker had win after the last move
+    public boolean checkWin(Worker worker){
+
+        byte heightDifference = worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight());
+
+        //check the win with and without Pan
+        if (worker.getOwner().divinity.NAME.equals("PAN")){
+            if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference == -2){
+                hadWin = worker;
+                return true;
+            } else{
+                return false;
+            }
+        } else{
+            if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
+                hadWin = worker;
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+    }
+
     @Override
     public String toString() {
-        String myBoard = "";
+        StringBuilder myBoard = new StringBuilder();
 
         for(int row = 0; row < 5; row++){
             for(int col = 0; col < 5; col++)
-                myBoard += cells[row][col].toString().charAt(0);
-            myBoard += '\n';
+                myBoard.append(cells[row][col].toString().charAt(0));
+            myBoard.append('\n');
         }
 
-        return myBoard;
+        return myBoard.toString();
     }
 }
