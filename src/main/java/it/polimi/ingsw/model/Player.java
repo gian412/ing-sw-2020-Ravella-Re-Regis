@@ -15,8 +15,9 @@ public class Player {
     private Player nextPlayer;
     private Worker[] workers = new Worker[2];
 
-    public Player(String name){
+    public Player(String name, int age){
         this.NAME = name;
+        this.age = age;
     }
 
     // actualGame's setter
