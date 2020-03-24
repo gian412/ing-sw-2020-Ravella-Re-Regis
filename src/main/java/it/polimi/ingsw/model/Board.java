@@ -36,6 +36,9 @@ public class Board {
     // canMoveUp's set and reset
     public void setCanMoveUp( boolean canMoveUp ){/*Player.canMoveUp = canMoveUp*/}
 
+    /*// this method return true if the worker is able to move up
+    public boolean ableToMoveUp( Worker worker ){return true;}*/
+
     public void build(Cell cell, boolean isDome){
         try{
             if(isDome){
