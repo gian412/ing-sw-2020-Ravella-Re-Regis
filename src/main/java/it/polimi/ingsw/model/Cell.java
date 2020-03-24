@@ -65,6 +65,17 @@ public class Cell {
 
     @Override
     public String toString() {
-        return this.height.toString();
+        StringBuilder myCell = new StringBuilder();
+
+        if(this.worker == null)
+            myCell.append(this.height.toString().toUpperCase().charAt(0));
+
+        else {
+            myCell.append(this.height.toString().toUpperCase().charAt(0));
+            myCell.append('/');
+            myCell.append(this.worker.getOwner().getNAME());
+        }
+
+        return myCell.toString();
     }
 }

@@ -94,9 +94,11 @@ public class Board {
         StringBuilder myBoard = new StringBuilder();
 
         for(int row = 0; row < 5; row++){
-            for(int col = 0; col < 5; col++)
-                myBoard.append(cells[row][col].toString().charAt(0));
-            myBoard.append('\n');
+            for(int col = 0; col < 5; col++) {
+                myBoard.append(cells[row][col].toString());
+                myBoard.append('\t');
+            }
+            myBoard.append("\n\n");
         }
 
         return myBoard.toString();
