@@ -56,6 +56,7 @@ public class Apollo extends God{
                 case BUILD:
                     if ( hadMove && !hadBuild && !hadWin){
                         super.build(worker, cell, false);
+                        hadBuild = true;
                         break;
                     } else{
                         throw new IllegalMoveException();

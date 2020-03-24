@@ -29,22 +29,24 @@ public class Artemis extends God {
                         super.move(worker, cell);
                         hadMove[0] = true;
                         hadWin = board.checkWin(worker);
+                        break;
                     } else if (!hadMove[1] && !hadWin && !hadBuild){
                         super.move(worker, cell);
                         hadMove[1] = true;
                         hadWin = board.checkWin(worker);
+                        break;
                     } else{
                         throw new IllegalMoveException();
                     }
-                    break;
 
                 case BUILD:
                     if (hadMove[0] && !hadWin && !hadBuild){
                         super.build(worker, cell, false);
+                        hadBuild = true;
+                        break;
                     } else{
                         throw new IllegalMoveException();
                     }
-                    break;
 
                 case BUILD_DOME:
                     throw new IllegalMoveException();

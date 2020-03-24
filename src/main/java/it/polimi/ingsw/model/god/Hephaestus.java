@@ -21,35 +21,37 @@ public class Hephaestus extends God {
     @Override
     public void makeMove(Worker worker, Command command) throws IllegalMoveException {
 
-        Cell cell = board.getCell(command.cellX, command.cellY);
+        if (command!=null){
+            Cell cell = board.getCell(command.cellX, command.cellY);
 
-        switch (command.commandType){
-            case MOVE:
-                if (!hadMove && !hadBuild[0] && !hadBuild[1] && !hadWin){
-                    super.move(worker, cell);
-                    hadMove = true;
-                    hadWin = board.checkWin(worker);
-                    break;
-                } else{
+            switch (command.commandType){
+                case MOVE:
+                    if (!hadMove && !hadBuild[0] && !hadBuild[1] && !hadWin){
+                        super.move(worker, cell);
+                        hadMove = true;
+                        hadWin = board.checkWin(worker);
+                        break;
+                    } else{
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD:
+                    if (hadMove && !hadBuild[0] && !hadBuild[1] && !hadWin){
+                        super.build(worker, cell, false);
+                        previousCell = cell;
+                        hadBuild[0] = true;
+                        break;
+                    } else if (hadMove && hadBuild[0] && !hadBuild[1] && !hadWin && previousCell!=null && (previousCell.equals(cell)) && cell.getHeight()!=Height.THIRD_FLOOR && cell.getHeight()!=Height.DOME){
+                        super.build(worker, cell, false);
+                        hadBuild[1] = true;
+                        break;
+                    } else{
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD_DOME:
                     throw new IllegalMoveException();
-                }
-
-            case BUILD:
-                if (hadMove && !hadBuild[0] && !hadBuild[1] && !hadWin){
-                    super.build(worker, cell, false);
-                    previousCell = cell;
-                    hadBuild[0] = true;
-                    break;
-                } else if (hadMove && hadBuild[0] && !hadBuild[1] && !hadWin && previousCell!=null && (previousCell.equals(cell)) && cell.getHeight()!=Height.THIRD_FLOOR && cell.getHeight()!=Height.DOME){
-                    super.build(worker, cell, false);
-                    hadBuild[1] = true;
-                    break;
-                } else{
-                    throw new IllegalMoveException();
-                }
-
-            case BUILD_DOME:
-                throw new IllegalMoveException();
+            }
         }
     }
 
