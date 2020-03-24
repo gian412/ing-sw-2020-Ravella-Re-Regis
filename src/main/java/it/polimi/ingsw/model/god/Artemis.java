@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.god;
 
+import controller.Command;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.IllegalMoveException;
@@ -7,12 +8,53 @@ import it.polimi.ingsw.model.Worker;
 
 public class Artemis extends God {
 
+    private boolean[] hadMove = {false, false};
+    private boolean hadBuild = false;
+
+
     // class constructor with the initialization of board using the super constructor
     public Artemis(Board board) {
         super(board, "ARTEMIS");
     }
 
-    // array cell composed by 3 cells, 2 for the moves and 1 for the build
+    @Override
+    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
+
+        if (command != null){
+            Cell cell = board.getCell(command.cellX, command.cellY);
+
+            switch (command.commandType){
+                case MOVE:
+                    if (!hadMove[0] && !hadWin && !hadBuild){
+                        super.move(worker, cell);
+                        hadMove[0] = true;
+                        hadWin = board.checkWin(worker);
+                        break;
+                    } else if (!hadMove[1] && !hadWin && !hadBuild){
+                        super.move(worker, cell);
+                        hadMove[1] = true;
+                        hadWin = board.checkWin(worker);
+                        break;
+                    } else{
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD:
+                    if (hadMove[0] && !hadWin && !hadBuild){
+                        super.build(worker, cell, false);
+                        hadBuild = true;
+                        break;
+                    } else{
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD_DOME:
+                    throw new IllegalMoveException();
+            }
+        }
+    }
+
+    /*// array cell composed by 3 cells, 2 for the moves and 1 for the build
     @Override
     public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
@@ -31,8 +73,6 @@ public class Artemis extends God {
                 } else{
                     super.move( worker, cells[1] );
                 }
-            } else{
-                throw new NullPointerException();
             }
 
             if( !hadWin ){
@@ -44,5 +84,6 @@ public class Artemis extends God {
                 }
             }
         }
-    }
+    }*/
+
 }

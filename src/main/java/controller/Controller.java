@@ -14,30 +14,33 @@ public class Controller {
         this.game = g;
     }
 
-    public static void main(String[] args) {
-            Game g1 = new Game();
 
-            // this code is only for testing purpose, it simulates a game
-
-            Player p1 = new Player("Rave");
-            Player p2 = new Player("Rave2");
-            p1.setWorkers();
-            p1.getWorkers()[0].setCurrentCell(g1.getBoard().getCell(1, 0));
-
-            p2.setWorkers();
-            p1.setDivinity(new Atlas(g1.getBoard()));
-            p2.setDivinity(new Hephaestus(g1.getBoard()));
-
-            System.out.println(g1.getBoard().toString());
-            Cell[] AtlasMove = new Cell[2];
-            AtlasMove[0] = g1.getBoard().getCell(0,0);
-            AtlasMove[1] = g1.getBoard().getCell(1,1);
-            try {
-                p1.getDivinity().makeMove(p1.getWorkers()[0], AtlasMove, true);
-            }catch(IllegalMoveException e){
-                System.out.println(e.getMessage());
+    public boolean commitMove(Player player, Command command, int workerID){
+        if(game.getTurnPlayer().equals(player)){
+            try{
+                game.getTurnPlayer().getDivinity().makeMove(
+                        game.getTurnPlayer().getWorkers()[workerID],
+                        command
+                );
+            }catch(IllegalMoveException moveExc){
+                return  false;
             }
-            System.out.println(g1.getBoard().toString());
+        }
+        return true;
+    }
+
+    public boolean addPlayer(String playerName, int age){
+        return game.addPlayer(new Player(playerName, age));
+    }
+
+    public void changeTurnPlayer(){
+        game.getTurnPlayer().setTurnPlayer(false);
+        game.getBoard().setTurnPlayer(game.getTurnPlayer().getNextPlayer());
+        game.getTurnPlayer().setTurnPlayer(true);
+    }
+
+    public static void main(String[] args) {
+
 
     }
 

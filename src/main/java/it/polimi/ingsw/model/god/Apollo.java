@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.god;
 
+import controller.Command;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.IllegalMoveException;
@@ -7,6 +8,9 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.Height;
 
 public class Apollo extends God{
+
+    private boolean hadMove = false;
+    private boolean hadBuild = false;
 
     // class constructor with the initialization of board using the super constructor
     public Apollo(Board board) {
@@ -32,7 +36,39 @@ public class Apollo extends God{
 
     }
 
-    // array cell composed by 2 cells, 1 for the move and 1 for the build
+    @Override
+    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
+
+        if (command != null){
+            Cell cell = board.getCell(command.cellX, command.cellY);
+
+            switch (command.commandType){
+                case MOVE:
+                    if (!hadMove && !hadBuild && !hadWin) {
+                        move(worker, cell);
+                        hadMove = true;
+                        hadWin = board.checkWin(worker);
+                        break;
+                    } else {
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD:
+                    if ( hadMove && !hadBuild && !hadWin){
+                        super.build(worker, cell, false);
+                        hadBuild = true;
+                        break;
+                    } else{
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD_DOME:
+                    throw new IllegalMoveException();
+            }
+        }
+    }
+
+    /*// array cell composed by 2 cells, 1 for the move and 1 for the build
     @Override
     public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
 
@@ -53,6 +89,6 @@ public class Apollo extends God{
             }
         }
 
-    }
+    }*/
 
 }

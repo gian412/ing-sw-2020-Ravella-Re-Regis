@@ -51,6 +51,18 @@ public class Cell {
         }
     }
 
+    // equals implementetion for cell
+    public boolean equals(Object o){
+
+        if( !( o instanceof Cell))
+            return false;
+
+        Cell other = (Cell) o;
+
+        return this.X == other.X && this.Y == other.Y && this.worker == other.worker;
+    }
+
+
     @Override
     public String toString() {
         return this.height.toString();

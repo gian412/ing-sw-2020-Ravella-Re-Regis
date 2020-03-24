@@ -28,4 +28,6 @@ public class Game {
     public Board getBoard() {
         return board;
     }
+
+    public Player getTurnPlayer(){ return board.getTurnPlayer(); }
 }

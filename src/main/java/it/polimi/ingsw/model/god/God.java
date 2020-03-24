@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.god;
 
+import controller.Command;
 import it.polimi.ingsw.model.*;
 
 public abstract class God {
@@ -15,8 +16,9 @@ public abstract class God {
         hadWin = false;
     }
 
-    // interface abstract method
-    public abstract void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException;
+    // abstract class' abstract method
+    public abstract void makeMove(Worker worker, Command command) throws IllegalMoveException;
+    //public abstract void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException;
 
     public void move(Worker worker, Cell cell) throws IllegalMoveException{
 

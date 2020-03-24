@@ -14,9 +14,20 @@ public class Player {
     private int age;
     private Player nextPlayer;
     private Worker[] workers = new Worker[2];
+    private boolean isTurnPlayer;
 
-    public Player(String name){
+    public Player(String name, int age){
         this.NAME = name;
+        this.age = age;
+        this.isTurnPlayer = false;
+    }
+
+    public boolean turnPlayer(){
+        return isTurnPlayer;
+    }
+
+    public void setTurnPlayer(boolean flag){
+        isTurnPlayer = flag;
     }
 
     // actualGame's setter
@@ -57,5 +68,9 @@ public class Player {
     // getter of the workers
     public Worker[] getWorkers(){
         return workers;
+    }
+
+    public boolean equals(Player p) {
+        return (this.NAME.equals(p.NAME));
     }
 }
