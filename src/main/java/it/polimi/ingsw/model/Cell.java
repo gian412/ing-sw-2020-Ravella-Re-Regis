@@ -21,7 +21,9 @@ public class Cell {
     }
 
     // worker's setter
-    public void setWorker(Worker worker){ this.worker = worker;}
+    public void setWorker(Worker worker){
+        this.worker = worker;
+    }
 
     // height's getter
     public Height getHeight() {
