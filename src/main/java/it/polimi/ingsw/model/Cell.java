@@ -54,6 +54,7 @@ public class Cell {
     }
 
     // equals implementetion for cell
+    @Override
     public boolean equals(Object o){
 
         if( !( o instanceof Cell))
