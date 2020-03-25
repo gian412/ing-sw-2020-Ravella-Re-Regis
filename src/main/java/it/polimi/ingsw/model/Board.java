@@ -89,6 +89,18 @@ public class Board {
 
     }
 
+    public BoardProxy getProxy(){
+        BoardProxy bp = new BoardProxy();
+
+        for(int row = 0; row < cells.length; row++)
+            for(int cols = 0; cols < cells[row].length; cols++){
+                bp.addHeight(row, cols, cells[row][cols].getHeight());
+                if(cells[row][cols] != null)
+                    bp.addWorker(cells[row][cols].getWorker().getWORKER_ID(), new Pair(row, cols));
+            }
+        return bp;
+    }
+
     @Override
     public String toString() {
         StringBuilder myBoard = new StringBuilder();
