@@ -32,9 +32,13 @@ public abstract class God {
      */
     public void move(Worker worker, Cell cell) throws IllegalMoveException{
 
-        if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
-            board.moveWorker(worker, cell);
-            hadWin = board.checkWin(worker);
+        if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {//Posso muovere verso l'alto
+            if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){
+                board.moveWorker(worker, cell);
+                hadWin = board.checkWin(worker);
+            } else{
+                throw new IllegalMoveException();
+            }
         }else{
             throw new IllegalMoveException();
         }

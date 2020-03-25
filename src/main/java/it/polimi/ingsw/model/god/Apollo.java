@@ -23,13 +23,22 @@ public class Apollo extends God{
             if( cell.getHeight() == Height.DOME || worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) > 1 ){
                 throw new IllegalMoveException();
             }else{
-                board.moveWorker(worker, cell);
+                if (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0){
+                    board.moveWorker(worker, cell);
+                } else{
+                    throw new IllegalMoveException();
+                }
             }
         }else{
-            Worker otherWorker = cell.getWorker();
-            Cell actualCell = worker.getCurrentCell();
-            board.moveWorker(worker, cell);
-            board.forceWorker(otherWorker, actualCell);
+            if (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0){
+                Worker otherWorker = cell.getWorker();
+                Cell actualCell = worker.getCurrentCell();
+                board.moveWorker(worker, cell);
+                board.forceWorker(otherWorker, actualCell);
+            } else{
+                throw new IllegalMoveException();
+            }
+
         }
 
 
@@ -65,6 +74,8 @@ public class Apollo extends God{
                 case BUILD_DOME:
                     throw new IllegalMoveException();
             }
+        } else{
+            throw new NullPointerException();
         }
     }
 
