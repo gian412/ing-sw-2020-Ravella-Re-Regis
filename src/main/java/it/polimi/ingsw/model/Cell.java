@@ -21,7 +21,9 @@ public class Cell {
     }
 
     // worker's setter
-    public void setWorker(Worker worker){ this.worker = worker;}
+    public void setWorker(Worker worker){
+        this.worker = worker;
+    }
 
     // height's getter
     public Height getHeight() {
@@ -51,8 +53,31 @@ public class Cell {
         }
     }
 
+    // equals implementetion for cell
+    public boolean equals(Object o){
+
+        if( !( o instanceof Cell))
+            return false;
+
+        Cell other = (Cell) o;
+
+        return this.X == other.X && this.Y == other.Y && this.worker == other.worker;
+    }
+
+
     @Override
     public String toString() {
-        return this.height.toString();
+        StringBuilder myCell = new StringBuilder();
+
+        if(this.worker == null)
+            myCell.append(this.height.toString().toUpperCase().charAt(0));
+
+        else {
+            myCell.append(this.height.toString().toUpperCase().charAt(0));
+            myCell.append('/');
+            myCell.append(this.worker.getOwner().getNAME());
+        }
+
+        return myCell.toString();
     }
 }

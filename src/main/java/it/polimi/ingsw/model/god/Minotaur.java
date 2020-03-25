@@ -1,14 +1,17 @@
 package it.polimi.ingsw.model.god;
 
 
-import controller.Command;
+import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.IllegalMoveException;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.Height;
 
-public class Minotaur extends God {;
+public class Minotaur extends God {
+
+    private boolean hadMove = false;
+    private boolean hadBuild = false;
 
     // class constructor with the initialization of board using the super constructor
     public Minotaur(Board board) {
@@ -24,6 +27,56 @@ public class Minotaur extends God {;
         direction[1] = secondCell.Y - firstCell.Y;
 
         return direction;
+    }
+
+    @Override
+    public void move(Worker worker, Cell cell) throws IllegalMoveException {
+        if( cell.getWorker() == null ){
+            super.move(worker, cell);
+        } else{
+            int[] direction = getDirection( worker.getCurrentCell(), cell );
+            Cell nextCell =  board.getCell( cell.X + direction[0], cell.Y + direction[1] );
+            if( nextCell.getWorker() != null && nextCell.getHeight() != Height.DOME){
+                Worker otherWorker = cell.getWorker();
+                super.move(worker, cell);
+                board.forceWorker(otherWorker, nextCell);
+            } else{
+                throw new IllegalMoveException();
+            }
+        }
+    }
+
+    @Override
+    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
+
+        if (command!=null){
+            Cell cell = board.getCell(command.cellX, command.cellY);
+
+            switch (command.commandType){
+                case MOVE:
+                    if (!hadMove && !hadBuild && !hadWin){
+                        move(worker, cell);
+                        hadMove = true;
+                        hadWin = board.checkWin(worker);
+                        break;
+                    } else{
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD:
+                    if (hadMove && !hadBuild && !hadWin){
+                        build(worker, cell, false);
+                        hadBuild = true;
+                        break;
+                    } else{
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD_DOME:
+                    throw new IllegalMoveException();
+            }
+        }
+
     }
 
     /*// array cell composed by 2 cells, 1 for the moves and 1 for the build
@@ -58,9 +111,4 @@ public class Minotaur extends God {;
             }
         }
     }*/
-
-    @Override
-    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
-
-    }
 }

@@ -36,6 +36,9 @@ public class Board {
     // canMoveUp's set and reset
     public void setCanMoveUp( boolean canMoveUp ){/*Player.canMoveUp = canMoveUp*/}
 
+    /*// this method return true if the worker is able to move up
+    public boolean ableToMoveUp( Worker worker ){return true;}*/
+
     public void build(Cell cell, boolean isDome){
         try{
             if(isDome){
@@ -91,9 +94,11 @@ public class Board {
         StringBuilder myBoard = new StringBuilder();
 
         for(int row = 0; row < 5; row++){
-            for(int col = 0; col < 5; col++)
-                myBoard.append(cells[row][col].toString().charAt(0));
-            myBoard.append('\n');
+            for(int col = 0; col < 5; col++) {
+                myBoard.append(cells[row][col].toString());
+                myBoard.append('\t');
+            }
+            myBoard.append("\n\n");
         }
 
         return myBoard.toString();

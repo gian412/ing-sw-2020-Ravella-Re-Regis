@@ -22,6 +22,8 @@ public class Player {
         this.isTurnPlayer = false;
     }
 
+    public String getNAME(){ return NAME;}
+
     public boolean turnPlayer(){
         return isTurnPlayer;
     }

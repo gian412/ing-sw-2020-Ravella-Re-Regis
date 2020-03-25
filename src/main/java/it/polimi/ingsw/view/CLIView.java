@@ -1,6 +1,6 @@
-package view;
+package it.polimi.ingsw.view;
 
-import controller.Controller;
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Game;
 
 import java.io.PrintStream;
