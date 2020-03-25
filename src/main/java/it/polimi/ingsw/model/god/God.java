@@ -20,6 +20,16 @@ public abstract class God {
     public abstract void makeMove(Worker worker, Command command) throws IllegalMoveException;
     //public abstract void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException;
 
+    /**
+     * Move the worker
+     *
+     * Move the worker using board.moveWorker(worker, cell) and then check if the worker had
+     * win using board.checkWin(worker) and saving this result in the class variable hadWind
+     *
+     * @param worker is the worker you are moving
+     * @param cell is the cell in which you're moving the worker
+     * @throws IllegalMoveException in case the move isn't legal
+     */
     public void move(Worker worker, Cell cell) throws IllegalMoveException{
 
         if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
