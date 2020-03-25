@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.god;
 
-import controller.Command;
+import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.model.*;
 
 public abstract class God {

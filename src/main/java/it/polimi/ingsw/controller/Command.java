@@ -1,4 +1,4 @@
-package controller;
+package it.polimi.ingsw.controller;
 
 public class Command {
     public final int cellX;

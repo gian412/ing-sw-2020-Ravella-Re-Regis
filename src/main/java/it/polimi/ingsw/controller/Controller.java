@@ -1,10 +1,6 @@
-package controller;
+package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.god.Atlas;
-import it.polimi.ingsw.model.god.Hephaestus;
-
-import java.util.Scanner;
 
 public class Controller {
 
