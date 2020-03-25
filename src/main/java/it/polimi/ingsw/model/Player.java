@@ -24,7 +24,7 @@ public class Player {
 
     public String getNAME(){ return NAME;}
 
-    public boolean turnPlayer(){
+    public boolean getTurnPlayer(){
         return isTurnPlayer;
     }
 
