@@ -16,6 +16,15 @@ public abstract class God {
         hadWin = false;
     }
 
+    /**
+     * Moves made every turn
+     *
+     * This abstract method was made in order to simulate actions made by any divinity in each turn.
+     *
+     * @param worker is the worker who is doing the actions
+     * @param command is the command which need to be interpreted
+     * @throws IllegalMoveException in case the action isn't legal
+     */
     // abstract class' abstract method
     public abstract void makeMove(Worker worker, Command command) throws IllegalMoveException;
     //public abstract void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException;
