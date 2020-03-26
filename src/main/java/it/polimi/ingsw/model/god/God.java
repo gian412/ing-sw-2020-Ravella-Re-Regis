@@ -50,8 +50,6 @@ public abstract class God {
         if( cell.getWorker() == null ){
             if( cell.getHeight() == Height.DOME ){
                 throw new IllegalMoveException();
-            }else if( cell.getHeight() == Height.THIRD_FLOOR ){
-                board.build( cell, true );
             }else if(isDome){
                 board.build( cell, true );
             } else{
