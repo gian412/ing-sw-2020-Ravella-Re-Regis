@@ -9,6 +9,12 @@ public abstract class God {
     public final String NAME;
     protected boolean hadWin;
 
+    /**
+     * Class' constructor with the initialization of boar and NAME
+     *
+     * @param board indicates the board of the game
+     * @param NAME indicates the name of the god
+     */
     // class constructor with the initialization of board
     public God(Board board, String NAME){
         this.board = board;
@@ -17,7 +23,7 @@ public abstract class God {
     }
 
     /**
-     * Moves made every turn
+     * Actions made every turn
      *
      * This abstract method was made in order to simulate actions made by any divinity in each turn.
      *
@@ -27,7 +33,6 @@ public abstract class God {
      */
     // abstract class' abstract method
     public abstract void makeMove(Worker worker, Command command) throws IllegalMoveException;
-    //public abstract void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException;
 
     /**
      * Move the worker

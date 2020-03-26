@@ -12,6 +12,10 @@ public class Apollo extends God{
     private boolean hadMove = false;
     private boolean hadBuild = false;
 
+    /**
+     * Class' constructor that use the super class' constructor
+     * @param board indicates the board of the game
+     */
     // class constructor with the initialization of board using the super constructor
     public Apollo(Board board) {
         super(board, "APOLLO");
@@ -55,6 +59,17 @@ public class Apollo extends God{
 
     }
 
+    /**
+     * Actions made every turn
+     *
+     * Action made by the worker received by parameter. the possible moves are:
+     *      1- Move using Apollo.move()
+     *      2- Build using super.build()
+     *
+     * @param worker is the worker who is doing the actions
+     * @param command is the command which need to be interpreted
+     * @throws IllegalMoveException in case the action isn't legal
+     */
     @Override
     public void makeMove(Worker worker, Command command) throws IllegalMoveException {
 
@@ -88,28 +103,5 @@ public class Apollo extends God{
             throw new NullPointerException();
         }
     }
-
-    /*// array cell composed by 2 cells, 1 for the move and 1 for the build
-    @Override
-    public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
-
-        // move
-        if( worker != null && cells[0] != null ){
-            move(worker, cells[0]);
-            hadWin = board.checkWin(worker);
-        } else{
-            throw new NullPointerException();
-        }
-
-        // build
-        if ( !hadWin ){
-            if( cells[1] != null ){
-                super.build(worker, cells[1], false);
-            } else{
-                throw new NullPointerException();
-            }
-        }
-
-    }*/
 
 }
