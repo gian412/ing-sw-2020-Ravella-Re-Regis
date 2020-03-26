@@ -41,7 +41,7 @@ public class Artemis extends God {
 
                 case BUILD:
                     if (hadMove[0] && !hadWin && !hadBuild){
-                        super.build(worker, cell, false);
+                        super.build(cell, false);
                         hadBuild = true;
                         break;
                     } else{

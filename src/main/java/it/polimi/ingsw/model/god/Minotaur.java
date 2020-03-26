@@ -65,7 +65,7 @@ public class Minotaur extends God {
 
                 case BUILD:
                     if (hadMove && !hadBuild && !hadWin){
-                        build(worker, cell, false);
+                        build(cell, false);
                         hadBuild = true;
                         break;
                     } else{

@@ -37,11 +37,11 @@ public class Prometheus extends God {
 
                 case BUILD:
                     if (!hadBuild[0] && !hadMove && !hadBuild[1] && !hadWin){
-                        super.build(worker, cell, false);
+                        super.build(cell, false);
                         hadBuild[0] = true;
                         break;
                     } else if(hadMove && !hadBuild[1] && !hadWin){
-                        super.build(worker, cell, false);
+                        super.build(cell, false);
                         hadBuild[1] = true;
                         break;
                     } else{

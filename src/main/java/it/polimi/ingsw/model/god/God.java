@@ -24,7 +24,7 @@ public abstract class God {
      * Move the worker
      *
      * Move the worker using board.moveWorker(worker, cell) and then check if the worker had
-     * win using board.checkWin(worker) and saving this result in the class variable hadWind
+     * win using board.checkWin(worker) and saving this result in the class' variable hadWind
      *
      * @param worker is the worker you are moving
      * @param cell is the cell in which you're moving the worker
@@ -45,20 +45,16 @@ public abstract class God {
 
     }
 
-    public void build(Worker worker, Cell cell, boolean isDome) throws IllegalMoveException {
+
+    public void build(Cell cell, boolean isDome) throws IllegalMoveException {
         // build
-        if( cell.getWorker() == null ){
-            if( cell.getHeight() == Height.DOME ){
-                throw new IllegalMoveException();
-            }else if(isDome){
-                board.build( cell, true );
-            } else{
-                board.build( cell, false );
-            }
+        if( cell.getWorker() != null && cell.getHeight() != Height.DOME && isDome ){
+            board.build( cell, true );
+        }else if( cell.getWorker() != null && cell.getHeight() != Height.DOME && !isDome){
+            board.build( cell, false );
         } else{
             throw new IllegalMoveException();
         }
     }
-
 
 }

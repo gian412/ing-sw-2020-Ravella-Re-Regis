@@ -35,7 +35,7 @@ public class Atlas extends God {
 
                 case BUILD:
                     if (hadMove && !hadBuild && !hadWin) {
-                        super.build(worker, cell, false);
+                        super.build(cell, false);
                         hadBuild = true;
                         break;
                     } else {
