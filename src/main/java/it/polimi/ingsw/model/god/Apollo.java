@@ -17,6 +17,16 @@ public class Apollo extends God{
         super(board, "APOLLO");
     }
 
+    /**
+     * Move the worker
+     *
+     * Override of the method of the super-class. This method is made in order to use the power
+     * of Apollo, who can exchange the position with another worker.
+     *
+     * @param worker is the worker you are moving
+     * @param cell is the cell in which you're moving the worker
+     * @throws IllegalMoveException in case the move isn't legal
+     */
     @Override
     public void move(Worker worker, Cell cell) throws IllegalMoveException {
         if( cell.getWorker() == null ){
