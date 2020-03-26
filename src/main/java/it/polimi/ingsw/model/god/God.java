@@ -23,8 +23,9 @@ public abstract class God {
     /**
      * Move the worker
      *
-     * Move the worker using board.moveWorker(worker, cell) and then check if the worker had
-     * win using board.checkWin(worker) and saving this result in the class' variable hadWind
+     * Move the worker using board.moveWorker(Worker worker, Cell cell) and then check if the worker had
+     * win using board.checkWin(Worker worker) and saving this result in the class' variable hadWind.
+     * The method throw an IllegalMoveException if the worker can't move in the given cell
      *
      * @param worker is the worker you are moving
      * @param cell is the cell in which you're moving the worker
@@ -45,7 +46,14 @@ public abstract class God {
 
     }
 
-
+    /**
+     * Build a new piece in the cell passed as parameter using board-build(Cell cell, boolean isDome).
+     * The method throw an IllegalMoveException if the piece can't be built in the given cell
+     *
+     * @param cell is the cell in which you're building the new piece
+     * @param isDome is true if Atlas build a dome in any position
+     * @throws IllegalMoveException in case the move isn't legal
+     */
     public void build(Cell cell, boolean isDome) throws IllegalMoveException {
         // build
         if( cell.getWorker() != null && cell.getHeight() != Height.DOME && isDome ){
