@@ -14,6 +14,7 @@ public class Apollo extends God{
 
     /**
      * Class' constructor that use the super class' constructor
+     *
      * @param board indicates the board of the game
      */
     // class constructor with the initialization of board using the super constructor
@@ -63,8 +64,8 @@ public class Apollo extends God{
      * Actions made every turn
      *
      * Action made by the worker received by parameter. the possible moves are:
-     *      1- Move using Apollo.move()
-     *      2- Build using super.build()
+     *      1- Move using Apollo.move(Worker worker, Cell cell)
+     *      2- Build using super.build(Cell cell, boolean false)
      *
      * @param worker is the worker who is doing the actions
      * @param command is the command which need to be interpreted
