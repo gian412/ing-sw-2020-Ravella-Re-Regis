@@ -4,12 +4,14 @@ import it.polimi.ingsw.model.god.Pan;
 
 public class Board {
 
+    private BoardProxy proxy;
     private Cell[][] cells;
     private Player turnPlayer;
     private Worker hadWin;
 
     // class constructor with the initialization of cells
     public Board(){
+        proxy = new BoardProxy();
         hadWin = null;
         cells = new Cell[5][5];
         for(int i=0;i<5;i++){
@@ -17,6 +19,10 @@ public class Board {
                 cells[i][j] = new Cell(i, j);
             }
         }
+
+
+        proxy = new BoardProxy();
+        proxy.updateProxy();
     }
 
     // cells' getter
@@ -89,16 +95,22 @@ public class Board {
 
     }
 
-    public BoardProxy getProxy(){
-        BoardProxy bp = new BoardProxy();
+    public void updateProxyBoard(){
+        proxy.resetWorkers();
 
-        for(int row = 0; row < cells.length; row++)
-            for(int cols = 0; cols < cells[row].length; cols++){
-                bp.addHeight(row, cols, cells[row][cols].getHeight());
-                if(cells[row][cols] != null)
-                    bp.addWorker(cells[row][cols].getWorker().getWORKER_ID(), new Pair(row, cols));
+        for(int rows = 0; rows < 5; rows++)
+            for (int cols = 0; cols < 5; cols++){
+                proxy.addHeight(rows, cols, cells[rows][cols].getHeight());
+
+                if(cells[rows][cols].getWorker() != null){
+                    proxy.addWorker(
+                            cells[rows][cols].getWorker().getWORKER_ID(),
+                            new Pair(rows, cols)
+                    );
+                }
             }
-        return bp;
+
+        proxy.updateProxy();
     }
 
     @Override

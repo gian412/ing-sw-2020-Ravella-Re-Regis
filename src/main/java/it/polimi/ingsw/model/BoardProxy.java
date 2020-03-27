@@ -1,14 +1,15 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.view.Observable;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardProxy {
+public class BoardProxy extends Observable<BoardProxy> {
 
-    public final Height[][] boardScheme;
-    public final Map<String, Pair> workers;
+    private Height[][] boardScheme;
+    private Map<String, Pair> workers;
 
     public BoardProxy(){
         boardScheme = new Height[5][5];
@@ -22,5 +23,14 @@ public class BoardProxy {
     public void addWorker(String worker, Pair coordinates){
         workers.put(worker, coordinates);
     }
+
+    public void resetWorkers(){
+        workers = new HashMap<String, Pair>();
+    }
+
+    public void updateProxy(){
+        notify(this);
+    }
+
 
 }
