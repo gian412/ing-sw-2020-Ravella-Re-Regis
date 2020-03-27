@@ -26,6 +26,7 @@ public abstract class God {
      * Actions made every turn
      *
      * This abstract method was made in order to simulate actions made by any divinity in each turn.
+     * The method will be implemented in every child class
      *
      * @param worker is the worker who is doing the actions
      * @param command is the command which need to be interpreted
