@@ -13,11 +13,28 @@ public class Hephaestus extends God {
     private boolean[] hadBuild = {false, false};
     private  Cell previousCell = null;
 
+    /**
+     * Class' constructor that use the super class' constructor
+     *
+     * @param board indicates the board of the game
+     */
     // class constructor with the initialization of board using the super constructor
     public Hephaestus(Board board) {
         super(board, "HEPHAESTUS");
     }
 
+    /**
+     * Actions made every turn
+     *
+     * Action made by the worker received by parameter. the possible moves are:
+     *      1- Move using super.move(Worker worker, Cell cell)
+     *      2- Build using super.build(Cell cell, boolean false)
+     * In this method, the worker can build twice in the same cell but not a dome
+     *
+     * @param worker is the worker who is doing the actions
+     * @param command is the command which need to be interpreted
+     * @throws IllegalMoveException in case the action isn't legal
+     */
     @Override
     public void makeMove(Worker worker, Command command) throws IllegalMoveException {
 
@@ -55,34 +72,4 @@ public class Hephaestus extends God {
         }
     }
 
-    /*// array cell composed by 3 cells, 1 for the moves and 2 for the build
-    @Override
-    public void makeMove(Worker worker, Cell[] cells, boolean isDome) throws IllegalMoveException, NullPointerException {
-
-        // move
-        if( worker != null && cells[0] != null ){
-            super.move(worker, cells[0]);
-        } else{
-            throw new NullPointerException();
-        }
-
-        if( !hadWin ){
-            // first build
-            if(cells[1] != null){
-                super.build(worker, cells[1], false);
-            } else{
-                throw new NullPointerException();
-            }
-
-            // second build
-            if( cells[2] != null ){
-                if( cells[2] == cells[1] && cells[2].getHeight() != Height.THIRD_FLOOR ){
-                    super.build(worker, cells[1], false);
-                }else{
-                    throw new IllegalMoveException();
-                }
-            }
-        }
-
-    }*/
 }
