@@ -24,26 +24,6 @@ public class Minotaur extends God {
     }
 
     /**
-     * Get the direction between two cell
-     *
-     * This method return the distance between two cells passed like parameters
-     *
-     * @param firstCell is the cell from which the distance start
-     * @param secondCell is the cell in which the distance finish
-     * @return an array of two integer with the two coordinates x and y
-     */
-    // method that return the direction of the movement of the worker
-    private int[] getDirection(Cell firstCell, Cell secondCell){
-
-        int[] direction = new int[2];
-
-        direction[0] = secondCell.X - firstCell.X;
-        direction[1] = secondCell.Y - firstCell.Y;
-
-        return direction;
-    }
-
-    /**
      * Move the worker
      *
      * Override of the method of the super-class. This method is made in order to use the power
@@ -59,7 +39,7 @@ public class Minotaur extends God {
         if( cell.getWorker() == null ){
             super.move(worker, cell);
         } else{
-            int[] direction = getDirection( worker.getCurrentCell(), cell );
+            int[] direction = worker.getCurrentCell().getDirection( cell );
             Cell nextCell =  board.getCell( cell.X + direction[0], cell.Y + direction[1] );
             if( nextCell.getWorker() != null && nextCell.getHeight() != Height.DOME){
                 Worker otherWorker = cell.getWorker();

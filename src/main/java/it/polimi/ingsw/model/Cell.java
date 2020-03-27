@@ -53,6 +53,25 @@ public class Cell {
         }
     }
 
+    /**
+     * Get the direction between two cell
+     *
+     * This method return the distance between two cells passed like parameters
+     *
+     * @param secondCell is the cell in which the distance finish
+     * @return an array of two integer with the two coordinates x and y
+     */
+    // method that return the direction of the movement of the worker
+    public int[] getDirection(Cell secondCell){
+
+        int[] direction = new int[2];
+
+        direction[0] = secondCell.X - this.X;
+        direction[1] = secondCell.Y - this.Y;
+
+        return direction;
+    }
+
     // equals implementetion for cell
     @Override
     public boolean equals(Object o){
@@ -64,7 +83,6 @@ public class Cell {
 
         return this.X == other.X && this.Y == other.Y && this.worker == other.worker;
     }
-
 
     @Override
     public String toString() {
