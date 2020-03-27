@@ -28,6 +28,8 @@ public class Artemis extends God {
      * Action made by the worker received by parameter. the possible moves are:
      *      1- Move using super.move(Worker worker, Cell cell)
      *      2- Build using super.build(Cell cell, boolean false)
+     * Whit this method is checked the possibility to move twice without returning
+     * on the starting cell
      *
      * @param worker is the worker who is doing the actions
      * @param command is the command which need to be interpreted
