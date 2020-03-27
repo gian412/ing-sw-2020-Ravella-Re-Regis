@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.god.Pan;
+import it.polimi.ingsw.view.RemoteView;
 
 public class Board {
 
@@ -111,6 +112,10 @@ public class Board {
             }
 
         proxy.updateProxy();
+    }
+
+    public void addView(RemoteView remoteView){
+        proxy.addObserver(remoteView);
     }
 
     @Override
