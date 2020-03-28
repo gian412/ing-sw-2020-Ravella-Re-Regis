@@ -10,10 +10,19 @@ public class BoardProxy extends Observable<BoardProxy> {
 
     private Height[][] boardScheme;
     private Map<String, Pair> workers;
+    private Player winner;
 
     public BoardProxy(){
         boardScheme = new Height[5][5];
-        workers = new HashMap<String, Pair>();
+        workers = new HashMap<>();
+    }
+
+    public void setWinner(Player player){
+        this.winner = player;
+    }
+
+    public Player getWinner() {
+        return winner;
     }
 
     public void addHeight(int x, int y, Height h){
@@ -25,7 +34,7 @@ public class BoardProxy extends Observable<BoardProxy> {
     }
 
     public void resetWorkers(){
-        workers = new HashMap<String, Pair>();
+        workers = new HashMap<>();
     }
 
     public void updateProxy(){
