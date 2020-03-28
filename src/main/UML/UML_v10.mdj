@@ -15904,38 +15904,6 @@
 					]
 				},
 				{
-					"_type": "UMLClass",
-					"_id": "AAAAAAFwytJIgsy3IZw=",
-					"_parent": {
-						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
-					},
-					"name": "Apollo",
-					"operations": [
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAFwyta9ItNdrt8=",
-							"_parent": {
-								"$ref": "AAAAAAFwytJIgsy3IZw="
-							},
-							"name": "makeMove",
-							"documentation": "esempio di implementazione;\n\nboard.build( 0, 1, isDome);\nboard.move( 1, 2);\n",
-							"parameters": [
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAFwytcKidP4Rjk=",
-									"_parent": {
-										"$ref": "AAAAAAFwyta9ItNdrt8="
-									},
-									"name": "board",
-									"type": {
-										"$ref": "AAAAAAFwyrU696JChQU="
-									}
-								}
-							]
-						}
-					]
-				},
-				{
 					"_type": "UMLEnumeration",
 					"_id": "AAAAAAFwziha4p0wcXo=",
 					"_parent": {
