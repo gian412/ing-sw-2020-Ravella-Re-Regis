@@ -26,6 +26,10 @@ public class Board {
         proxy.updateProxy();
     }
 
+    public BoardProxy getProxy() {
+        return proxy;
+    }
+
     // cells' getter
     public Cell getCell(int row, int column) {
         return cells[row][column];
