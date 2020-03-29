@@ -8,8 +8,7 @@ import it.polimi.ingsw.model.Worker;
 
 public class Demeter extends God {
 
-    private boolean hadMove = false;
-    private boolean[] hadBuild = {false, false};
+    private boolean hadBuildSecond;
     private Cell previousCell = null;
 
     /**
@@ -20,6 +19,7 @@ public class Demeter extends God {
     // class constructor with the initialization of board using the super constructor
     public Demeter(Board board) {
         super(board, "DEMETER");
+        this.hadBuildSecond = false;
     }
 
     /**
@@ -42,7 +42,7 @@ public class Demeter extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMove && !hadBuild[0] && !hadBuild[1] && !hadWin){
+                    if (!hadMove && !hadBuild && !hadBuildSecond && !hadWin){
                         super.move(worker, cell);
                         hadMove = true;
                         hadWin = board.checkWin(worker);
@@ -52,14 +52,14 @@ public class Demeter extends God {
                     }
 
                 case BUILD:
-                    if (hadMove && !hadBuild[0] && !hadBuild[1] && !hadWin){
+                    if (hadMove && !hadBuild && !hadBuildSecond && !hadWin){
                         super.build(cell, false);
                         previousCell = cell;
-                        hadBuild[0] = true;
+                        hadBuild = true;
                         break;
-                    } else if (hadMove && hadBuild[0] && !hadBuild[1] && !hadWin && previousCell!=null && !(previousCell.equals(cell))){
+                    } else if (hadMove && hadBuild && !hadBuildSecond && !hadWin && previousCell!=null && !(previousCell.equals(cell))){
                         super.build(cell, false);
-                        hadBuild[1] = true;
+                        hadBuildSecond = true;
                         break;
                     } else{
                         throw new IllegalMoveException();

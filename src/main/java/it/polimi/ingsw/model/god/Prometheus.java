@@ -7,8 +7,7 @@ import it.polimi.ingsw.model.IllegalMoveException;
 import it.polimi.ingsw.model.Worker;
 
 public class Prometheus extends God {
-    private boolean hadMove = false;
-    private boolean[] hadBuild = {false, false};
+    private boolean hadBuildSecond;
 
     /**
      * Class' constructor that use the super class' constructor
@@ -18,6 +17,7 @@ public class Prometheus extends God {
     // class constructor with the initialization of board using the super constructor
     public Prometheus(Board board) {
         super(board, "PROMETHEUS");
+        this.hadBuildSecond = false;
     }
 
     /**
@@ -40,8 +40,8 @@ public class Prometheus extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMove && !hadBuild[1] && !hadWin){
-                        if ( hadBuild[0] && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<1 ){
+                    if (!hadMove && !hadBuildSecond && !hadWin){
+                        if ( hadBuild && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<1 ){
                             super.move(worker, cell);
                             hadMove = true;
                             hadWin = board.checkWin(worker);
@@ -54,13 +54,13 @@ public class Prometheus extends God {
                     }
 
                 case BUILD:
-                    if (!hadBuild[0] && !hadMove && !hadBuild[1] && !hadWin){
+                    if (!hadBuild && !hadMove && !hadBuildSecond && !hadWin){
                         super.build(cell, false);
-                        hadBuild[0] = true;
+                        hadBuild = true;
                         break;
-                    } else if(hadMove && !hadBuild[1] && !hadWin){
+                    } else if(hadMove && !hadBuildSecond && !hadWin){
                         super.build(cell, false);
-                        hadBuild[1] = true;
+                        hadBuildSecond = true;
                         break;
                     } else{
                         throw new IllegalMoveException();

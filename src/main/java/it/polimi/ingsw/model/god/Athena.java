@@ -5,9 +5,6 @@ import it.polimi.ingsw.model.*;
 
 public class Athena extends God{
 
-    private boolean hadMove = false;
-    private boolean hadBuild = false;
-
     /**
      * Class' constructor that use the super class' constructor
      *

@@ -10,9 +10,6 @@ import it.polimi.ingsw.model.Height;
 
 public class Minotaur extends God {
 
-    private boolean hadMove = false;
-    private boolean hadBuild = false;
-
     /**
      * Class' constructor that use the super class' constructor
      *
