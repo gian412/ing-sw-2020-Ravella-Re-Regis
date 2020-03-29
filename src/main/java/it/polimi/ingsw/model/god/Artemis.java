@@ -35,7 +35,7 @@ public class Artemis extends God {
      * @throws IllegalMoveException in case the action isn't legal
      */
     @Override
-    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
+    public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null){
             Cell cell = board.getCell(command.cellX, command.cellY);
@@ -65,9 +65,15 @@ public class Artemis extends God {
                         throw new IllegalMoveException();
                     }
 
-                case BUILD_DOME:
+                case RESET:
+                    this.resetLocalVariables();
+                    break;
+
+                default:
                     throw new IllegalMoveException();
             }
+        } else{
+            throw new NullPointerException();
         }
     }
 

@@ -84,6 +84,8 @@ public class Board {
         if (worker.getOwner().getDivinity().NAME.equals("PAN")){
             if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference == -2){
                 hadWin = worker;
+                proxy.setWinner(worker.getOwner());
+                proxy.updateProxy();
                 return true;
             } else{
                 return false;

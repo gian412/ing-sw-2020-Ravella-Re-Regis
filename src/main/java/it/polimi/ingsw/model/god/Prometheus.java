@@ -34,7 +34,7 @@ public class Prometheus extends God {
      * @throws IllegalMoveException in case the action isn't legal
      */
     @Override
-    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
+    public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
         if (command!=null){
             Cell cell = board.getCell(command.cellX, command.cellY);
 
@@ -65,7 +65,16 @@ public class Prometheus extends God {
                     } else{
                         throw new IllegalMoveException();
                     }
+
+                case RESET:
+                    this.resetLocalVariables();
+                    break;
+
+                default:
+                    throw new IllegalMoveException();
             }
+        } else{
+            throw new NullPointerException();
         }
     }
 

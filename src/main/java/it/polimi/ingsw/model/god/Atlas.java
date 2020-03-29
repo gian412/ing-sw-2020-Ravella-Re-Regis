@@ -31,7 +31,7 @@ public class Atlas extends God {
      * @throws IllegalMoveException in case the action isn't legal
      */
     @Override
-    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
+    public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command!=null){
             Cell cell = board.getCell(command.cellX, command.cellY);
@@ -56,7 +56,16 @@ public class Atlas extends God {
                         throw new IllegalMoveException();
                     }
 
+                case BUILD_DOME:
+                    break;
+
+                case RESET:
+                    super.resetLocalVariables();
+                    break;
+
             }
+        } else{
+            throw new NullPointerException();
         }
     }
 
