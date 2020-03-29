@@ -81,7 +81,7 @@ public class Artemis extends God {
      * Reset local variable for class Artemis using the super method and adding local variables
      */
     @Override
-    public void resetLocalVariables() {
+    protected void resetLocalVariables() {
         super.resetLocalVariables();
         this.hadMoveSecond = false;
     }

@@ -83,7 +83,7 @@ public class Hephaestus extends God {
      * Reset local variable for class Hephaestus using the super method and adding local variables
      */
     @Override
-    public void resetLocalVariables() {
+    protected void resetLocalVariables() {
         super.resetLocalVariables();
         this.hadBuildSecond = false;
         this.previousCell = null;
