@@ -30,6 +30,7 @@ public class Controller {
     }
 
     public void changeTurnPlayer(){
+        game.getTurnPlayer().getDivinity().resetLocalVariables();
         game.getTurnPlayer().setTurnPlayer(false);
         game.getBoard().setTurnPlayer(game.getTurnPlayer().getNextPlayer());
         game.getTurnPlayer().setTurnPlayer(true);
