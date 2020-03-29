@@ -57,7 +57,13 @@ public class Atlas extends God {
                     }
 
                 case BUILD_DOME:
-                    break;
+                    if (hadMove && !hadBuild && !hadWin) {
+                        super.build(cell, true);
+                        hadBuild = true;
+                        break;
+                    } else {
+                        throw new IllegalMoveException();
+                    }
 
                 case RESET:
                     super.resetLocalVariables();
