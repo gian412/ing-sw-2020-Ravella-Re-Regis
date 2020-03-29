@@ -30,6 +30,14 @@ public class Controller {
     }
 
     public void changeTurnPlayer(){
+        try{
+            game.getTurnPlayer().getDivinity().makeMove(
+                    game.getTurnPlayer().getWorkers()[0],
+                    new Command(0,0, CommandType.RESET)
+            );
+        }catch(IllegalMoveException x){
+            System.err.println(x.getMessage());
+        }
         game.getTurnPlayer().setTurnPlayer(false);
         game.getBoard().setTurnPlayer(game.getTurnPlayer().getNextPlayer());
         game.getTurnPlayer().setTurnPlayer(true);
