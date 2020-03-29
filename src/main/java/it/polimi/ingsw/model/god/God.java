@@ -84,4 +84,12 @@ public abstract class God {
         }
     }
 
+    /**
+     * Reset local variable for class God
+     */
+    public void resetLocalVariables(){
+        this.hadMove = false;
+        this.hadBuild = false;
+    }
+
 }

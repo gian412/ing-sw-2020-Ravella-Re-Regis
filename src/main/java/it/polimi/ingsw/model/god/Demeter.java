@@ -72,4 +72,13 @@ public class Demeter extends God {
 
     }
 
+    /**
+     * Reset local variable for class Demeter using the super method and adding local variables
+     */
+    @Override
+    public void resetLocalVariables() {
+        super.resetLocalVariables();
+        this.hadBuildSecond = false;
+        this.previousCell = null;
+    }
 }

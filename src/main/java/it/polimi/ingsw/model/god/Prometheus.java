@@ -69,4 +69,12 @@ public class Prometheus extends God {
         }
     }
 
+    /**
+     * Reset local variable for class Prometheus using the super method and adding local variables
+     */
+    @Override
+    public void resetLocalVariables() {
+        super.resetLocalVariables();
+        this.hadBuildSecond = false;
+    }
 }
