@@ -8,9 +8,6 @@ import it.polimi.ingsw.model.Worker;
 
 public class Pan extends  God {
 
-    private boolean hadMove = false;
-    private boolean hadBuild = false;
-
     /**
      * Class' constructor that use the super class' constructor
      *

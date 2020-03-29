@@ -7,6 +7,8 @@ public abstract class God {
 
     protected Board board;
     public final String NAME;
+    protected boolean hadMove;
+    protected boolean hadBuild;
     protected boolean hadWin;
 
     /**
@@ -19,7 +21,9 @@ public abstract class God {
     public God(Board board, String NAME){
         this.board = board;
         this.NAME = NAME;
-        hadWin = false;
+        this.hadMove = false;
+        this.hadBuild = false;
+        this.hadWin = false;
     }
 
     /**
@@ -78,6 +82,14 @@ public abstract class God {
         } else{
             throw new IllegalMoveException();
         }
+    }
+
+    /**
+     * Reset local variable for class God
+     */
+    public void resetLocalVariables(){
+        this.hadMove = false;
+        this.hadBuild = false;
     }
 
 }

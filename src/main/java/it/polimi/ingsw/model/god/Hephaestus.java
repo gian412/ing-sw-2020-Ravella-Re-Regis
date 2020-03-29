@@ -9,9 +9,8 @@ import it.polimi.ingsw.model.Height;
 
 public class Hephaestus extends God {
 
-    private boolean hadMove;
-    private boolean[] hadBuild = {false, false};
-    private  Cell previousCell = null;
+    private boolean hadBuildSecond;
+    private  Cell previousCell;
 
     /**
      * Class' constructor that use the super class' constructor
@@ -21,6 +20,8 @@ public class Hephaestus extends God {
     // class constructor with the initialization of board using the super constructor
     public Hephaestus(Board board) {
         super(board, "HEPHAESTUS");
+        this.hadBuildSecond = false;
+        this.previousCell = null;
     }
 
     /**
@@ -43,7 +44,7 @@ public class Hephaestus extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMove && !hadBuild[0] && !hadBuild[1] && !hadWin){
+                    if (!hadMove && !hadBuild && !hadBuildSecond && !hadWin){
                         super.move(worker, cell);
                         hadMove = true;
                         hadWin = board.checkWin(worker);
@@ -53,14 +54,14 @@ public class Hephaestus extends God {
                     }
 
                 case BUILD:
-                    if (hadMove && !hadBuild[0] && !hadBuild[1] && !hadWin){
+                    if (hadMove && !hadBuild && !hadBuildSecond && !hadWin){
                         super.build(cell, false);
                         previousCell = cell;
-                        hadBuild[0] = true;
+                        hadBuild = true;
                         break;
-                    } else if (hadMove && hadBuild[0] && !hadBuild[1] && !hadWin && previousCell!=null && (previousCell.equals(cell)) && cell.getHeight()!=Height.THIRD_FLOOR && cell.getHeight()!=Height.DOME){
+                    } else if (hadMove && hadBuild && !hadBuildSecond && !hadWin && previousCell!=null && (previousCell.equals(cell)) && cell.getHeight()!=Height.THIRD_FLOOR && cell.getHeight()!=Height.DOME){
                         super.build(cell, false);
-                        hadBuild[1] = true;
+                        hadBuildSecond = true;
                         break;
                     } else{
                         throw new IllegalMoveException();
@@ -72,4 +73,13 @@ public class Hephaestus extends God {
         }
     }
 
+    /**
+     * Reset local variable for class Hephaestus using the super method and adding local variables
+     */
+    @Override
+    public void resetLocalVariables() {
+        super.resetLocalVariables();
+        this.hadBuildSecond = false;
+        this.previousCell = null;
+    }
 }

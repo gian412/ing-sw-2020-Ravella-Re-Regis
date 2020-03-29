@@ -8,9 +8,7 @@ import it.polimi.ingsw.model.Worker;
 
 public class Artemis extends God {
 
-    private boolean[] hadMove = {false, false};
-    private boolean hadBuild = false;
-
+    private boolean hadMoveSecond;
 
     /**
      * Class' constructor that use the super class' constructor
@@ -20,6 +18,7 @@ public class Artemis extends God {
     // class constructor with the initialization of board using the super constructor
     public Artemis(Board board) {
         super(board, "ARTEMIS");
+        this.hadMoveSecond = false;
     }
 
     /**
@@ -43,14 +42,14 @@ public class Artemis extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMove[0] && !hadWin && !hadBuild){
+                    if (!hadMove && !hadWin && !hadBuild){
                         super.move(worker, cell);
-                        hadMove[0] = true;
+                        hadMove = true;
                         hadWin = board.checkWin(worker);
                         break;
-                    } else if (!hadMove[1] && !hadWin && !hadBuild){
+                    } else if (!hadMoveSecond && !hadWin && !hadBuild){
                         super.move(worker, cell);
-                        hadMove[1] = true;
+                        hadMoveSecond = true;
                         hadWin = board.checkWin(worker);
                         break;
                     } else{
@@ -58,7 +57,7 @@ public class Artemis extends God {
                     }
 
                 case BUILD:
-                    if (hadMove[0] && !hadWin && !hadBuild){
+                    if (hadMove && !hadWin && !hadBuild){
                         super.build(cell, false);
                         hadBuild = true;
                         break;
@@ -72,4 +71,12 @@ public class Artemis extends God {
         }
     }
 
+    /**
+     * Reset local variable for class Artemis using the super method and adding local variables
+     */
+    @Override
+    public void resetLocalVariables() {
+        super.resetLocalVariables();
+        this.hadMoveSecond = false;
+    }
 }
