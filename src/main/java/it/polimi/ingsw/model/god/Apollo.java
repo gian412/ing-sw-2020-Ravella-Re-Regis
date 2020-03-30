@@ -34,16 +34,15 @@ public class Apollo extends God{
     @Override
     public void move(Worker worker, Cell cell) throws IllegalMoveException {
         if( cell.getWorker() == null ){
-            if( cell.getHeight() == Height.DOME || worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) > 1 ){
-                throw new IllegalMoveException();
-            }else{
-                if (worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0){
+            if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
+                if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){
                     board.moveWorker(worker, cell);
-                } else if (worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) >1 && worker.isCanMoveUp() ){
-                    board.moveWorker(worker, cell);
-                } else {
+                    hadWin = board.checkWin(worker);
+                } else{
                     throw new IllegalMoveException();
                 }
+            }else{
+                throw new IllegalMoveException();
             }
         }else{
             if (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0){
