@@ -43,6 +43,8 @@ public class Game {
             if(i != playerList.size() - 1) playerList.get(i).setNextPlayer(playerList.get(i + 1));
             else playerList.get(i).setNextPlayer(playerList.get(0));
         }
+
+        board.setTurnPlayer(playerList.get(0));
     }
 
     // board's getter
