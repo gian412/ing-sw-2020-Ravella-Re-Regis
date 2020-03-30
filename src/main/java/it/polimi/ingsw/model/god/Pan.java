@@ -35,26 +35,40 @@ public class Pan extends  God {
             switch (command.commandType){
                 case MOVE:
                     if (!hadMove && !hadBuild && !hadWin) {
-                        move(worker, cell);
-                        hadMove = true;
-                        hadWin = board.checkWin(worker);
-                        break;
+                        try {
+                            super.move(worker, cell);
+                            hadMove = true;
+                            hadWin = board.checkWin(worker);
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
                     } else {
                         throw new IllegalMoveException();
                     }
 
                 case BUILD:
                     if ( hadMove && !hadBuild && !hadWin){
-                        super.build(cell, false);
-                        hadBuild = true;
-                        break;
+                        try {
+                            super.build(cell, false);
+                            hadBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
                     } else{
                         throw new IllegalMoveException();
                     }
 
                 case BUILD_DOME:
                     if (cell.getHeight() == Height.THIRD_FLOOR){
-                        super.build(cell, false);
+                        try {
+                            super.build(cell, false);
+                            hadBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
                     } else {
                         throw new IllegalMoveException();
                     }
