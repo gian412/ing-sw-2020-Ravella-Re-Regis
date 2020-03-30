@@ -60,6 +60,13 @@ public class Athena extends God{
                         throw new IllegalMoveException();
                     }
 
+                case BUILD_DOME:
+                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                        super.build(cell, false);
+                    } else {
+                        throw new IllegalMoveException();
+                    }
+
                 case RESET:
                     super.resetLocalVariables();
                     break;

@@ -7,6 +7,8 @@ import it.polimi.ingsw.model.IllegalMoveException;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.Height;
 
+import static it.polimi.ingsw.controller.CommandType.RESET;
+
 public class Apollo extends God{
 
     /**
@@ -32,21 +34,22 @@ public class Apollo extends God{
     @Override
     public void move(Worker worker, Cell cell) throws IllegalMoveException {
         if( cell.getWorker() == null ){
-            if( cell.getHeight() == Height.DOME || worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) > 1 ){
-                throw new IllegalMoveException();
-            }else{
-                if (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0){
+            if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
+                if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){
                     board.moveWorker(worker, cell);
+                    hadWin = board.checkWin(worker);
                 } else{
                     throw new IllegalMoveException();
                 }
+            }else{
+                throw new IllegalMoveException();
             }
         }else{
             if (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0){
                 Worker otherWorker = cell.getWorker();
                 Cell actualCell = worker.getCurrentCell();
                 board.moveWorker(worker, cell);
-                board.forceWorker(otherWorker, actualCell);
+                board.moveWorker(otherWorker, actualCell);
             } else{
                 throw new IllegalMoveException();
             }
@@ -91,6 +94,13 @@ public class Apollo extends God{
                         hadBuild = true;
                         break;
                     } else{
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD_DOME:
+                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                        super.build(cell, false);
+                    } else {
                         throw new IllegalMoveException();
                     }
 
