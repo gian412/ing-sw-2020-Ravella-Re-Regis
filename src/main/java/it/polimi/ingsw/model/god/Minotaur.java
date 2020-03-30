@@ -34,18 +34,22 @@ public class Minotaur extends God {
     @Override
     public void move(Worker worker, Cell cell) throws IllegalMoveException {
         if( cell.getWorker() == null ){
-            super.move(worker, cell);
+            try {
+                super.move(worker, cell);
+            } catch (IllegalMoveException e) {
+                throw new IllegalMoveException();
+            }
         } else{
             int[] direction = worker.getCurrentCell().getDirection( cell );
             Cell nextCell =  board.getCell( cell.X + direction[0], cell.Y + direction[1] );
             if( nextCell.getWorker() != null && nextCell.getHeight() != Height.DOME){
                 Worker otherWorker = cell.getWorker();
-                //try {
+                try {
                     super.move(worker, cell);
                     board.moveWorker(otherWorker, nextCell);
-                //} catch (IllegalMoveException e){
-                //    throw new IllegalMoveException();
-                //}
+                } catch (IllegalMoveException e){
+                    throw new IllegalMoveException();
+                }
 
             } else{
                 throw new IllegalMoveException();

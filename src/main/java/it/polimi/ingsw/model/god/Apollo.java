@@ -36,12 +36,12 @@ public class Apollo extends God{
         if( cell.getWorker() == null ){
             if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
                 if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){
-                    //try {
+                    try {
                         board.moveWorker(worker, cell);
                         hadWin = board.checkWin(worker);
-                    //} catch (IllegalMoveException e){
-                    //    throw new IllegalMoveException();
-                    //}
+                    } catch (IllegalMoveException e){
+                        throw new IllegalMoveException();
+                    }
                 } else{
                     throw new IllegalMoveException();
                 }
@@ -52,12 +52,12 @@ public class Apollo extends God{
             if (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0){
                 Worker otherWorker = cell.getWorker();
                 Cell actualCell = worker.getCurrentCell();
-                //try {
+                try {
                     board.moveWorker(worker, cell);
                     board.moveWorker(otherWorker, actualCell);
-                //} catch (IllegalMoveException e) {
-                //    throw new IllegalMoveException();
-                //}
+                } catch (IllegalMoveException e) {
+                    throw new IllegalMoveException();
+                }
             } else{
                 throw new IllegalMoveException();
             }

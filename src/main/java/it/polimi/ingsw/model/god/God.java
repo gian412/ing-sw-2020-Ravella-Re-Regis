@@ -54,12 +54,12 @@ public abstract class God {
 
         if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
             if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){
-                //try {
+                try {
                     board.moveWorker(worker, cell);
                     hadWin = board.checkWin(worker);
-                //} catch (IllegalMoveException e){
-                //    throw new IllegalMoveException();
-                //}
+                } catch (IllegalMoveException e){
+                    throw new IllegalMoveException();
+                }
 
             } else{
                 throw new IllegalMoveException();
