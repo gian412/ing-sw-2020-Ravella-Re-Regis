@@ -62,16 +62,18 @@ public class Board {
      * @param cell cell in which the player wants to build
      * @param isDome is true if a god, who has the ability to build dome not only after the third level, build a dome
      */
-    public void build(Cell cell, boolean isDome){
-        try{
+    public void build(Cell cell, boolean isDome) throws IllegalMoveException{
+
+        if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5)){
             if(isDome){
                 cell.setHeight(Height.DOME);
             }
-            else{
+            else {
                 cell.buildFloor();
             }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
+        }
+        else{
+            throw new IllegalMoveException();
         }
     }
 

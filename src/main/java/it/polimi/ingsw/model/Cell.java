@@ -84,7 +84,7 @@ public class Cell {
         distanceX = this.X - cell.X;
         distanceY = this.Y - cell.Y;
 
-        if (((distanceX >= -1) && (distanceX <= 1))) {
+        if ((distanceX >= -1) && (distanceX <= 1)) {
             return (distanceY >= -1) && (distanceY <= 1);
         }
         else
