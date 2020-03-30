@@ -14,6 +14,8 @@ public class test {
         Controller c = new Controller(g);
         RemoteView rv = new RemoteView(new Socket(), c, new Player("ciao", 30));
         g.getBoard().getProxy().addObserver(rv);
+        c.addPlayer("Marco", 30);
+        System.out.println(g.getPlayers());
 
 
     }

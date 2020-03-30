@@ -26,7 +26,7 @@ public class Controller {
     }
 
     public boolean addPlayer(String playerName, int age){
-        return game.addPlayer(new Player(playerName, age));
+        return game.addPlayer(playerName, age);
     }
 
     public void changeTurnPlayer(){
@@ -43,9 +43,5 @@ public class Controller {
         game.getTurnPlayer().setTurnPlayer(true);
     }
 
-    public static void main(String[] args) {
-
-
-    }
 
 }

@@ -16,20 +16,21 @@ public class Game {
      */
     // class constructor with the initialization of board
     public Game(){
-        playerList = new ArrayList<Player>();
+        playerList = new ArrayList<>();
         board = new Board();
     }
 
     /**
      * add a new player to the game
      *
-     * @param player the player to add
+     * @param playerName the player to add
+     * @param age the age of the player
      * @return true if everything is good, false if there is an error
      */
     // playerList's adder
-    public boolean addPlayer(Player player){
+    public boolean addPlayer(String playerName, int age){
         try {
-            playerList.add(player);
+            playerList.add(new Player(playerName, age));
             return true;
         }catch (Exception e){
             return false;
