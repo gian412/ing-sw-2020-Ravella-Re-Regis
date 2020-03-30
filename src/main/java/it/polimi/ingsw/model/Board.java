@@ -10,6 +10,12 @@ public class Board {
     private Player turnPlayer;
     private Worker hadWin;
 
+    /**
+     * class' constructor
+     *
+     * create a new boardProxy, set the win to false an initialize al the cells of the board and then
+     * update proxyBoard
+     */
     // class constructor with the initialization of cells
     public Board(){
         proxy = new BoardProxy();
@@ -20,7 +26,6 @@ public class Board {
                 cells[i][j] = new Cell(i, j);
             }
         }
-
 
         proxy = new BoardProxy();
         proxy.updateProxy();
@@ -47,9 +52,16 @@ public class Board {
     // canMoveUp's set and reset
     public void setCanMoveUp( boolean canMoveUp ){/*Player.canMoveUp = canMoveUp*/}
 
-    /*// this method return true if the worker is able to move up
-    public boolean ableToMoveUp( Worker worker ){return true;}*/
 
+    // this method return true if the worker is able to move up
+    public boolean ableToMoveUp( Worker worker ){return true;}
+
+    /**
+     * build a structure on the board
+     *
+     * @param cell cell in which the player wants to build
+     * @param isDome is true if a god, who has the ability to build dome not only after the third level, build a dome
+     */
     public void build(Cell cell, boolean isDome){
         try{
             if(isDome){
@@ -63,18 +75,33 @@ public class Board {
         }
     }
 
-    public void moveWorker(Worker worker, Cell cell){
+    /**
+     * move a worker in an other cell
+     *
+     * @param worker the worker that the player moves
+     * @param cell the in in which the player moves the worker
+     */
+    public void moveWorker(Worker worker, Cell cell) throws IllegalMoveException{
 
-        Cell supportCell = worker.getCurrentCell();
+        if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5) && (worker.getCurrentCell().cellDistance(cell))){
+            Cell supportCell = worker.getCurrentCell();
 
-        supportCell.setWorker(null);
-        worker.setPreviousCell(worker.getCurrentCell());
-        cell.setWorker(worker);
-        worker.setCurrentCell(cell);
+            supportCell.setWorker(null);
+            worker.setPreviousCell(supportCell);
+            cell.setWorker(worker);
+            worker.setCurrentCell(cell);
+        }
+        else{
+            throw new IllegalMoveException();
+        }
     }
 
-    public void forceWorker(Worker worker, Cell cell){}
-
+    /**
+     * check the winning condition
+     *
+     * @param worker the worker that the player have just moved
+     * @return true if the player wins, false if the player doesn't win
+     */
     // method that check if the worker had win after the last move
     public boolean checkWin(Worker worker){
 
@@ -102,6 +129,9 @@ public class Board {
 
     }
 
+    /**
+     * update the proxy board after every step
+     */
     public void updateProxyBoard(){
         proxy.resetWorkers();
 
@@ -119,6 +149,7 @@ public class Board {
 
         proxy.updateProxy();
     }
+
 
     public void addView(RemoteView remoteView){
         proxy.addObserver(remoteView);

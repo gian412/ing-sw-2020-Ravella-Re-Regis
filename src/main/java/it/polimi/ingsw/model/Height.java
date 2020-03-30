@@ -3,6 +3,12 @@ package it.polimi.ingsw.model;
 public enum Height {
     GROUND, FIRST_FLOOR, SECOND_FLOOR, THIRD_FLOOR, DOME;
 
+    /**
+     * calculate the difference of height between two cells
+     *
+     * @param that the cell to compare
+     * @return the difference between the two cells
+     */
     // method that return the difference of height between two heights
     public byte getDifference( Height that){
 
