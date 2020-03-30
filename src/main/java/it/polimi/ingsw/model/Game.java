@@ -41,4 +41,14 @@ public class Game {
     }
 
     public Player getTurnPlayer(){ return board.getTurnPlayer(); }
+
+    public String getPlayers(){
+        StringBuilder players = new StringBuilder("");
+
+        for(Player p : playerList){
+            players.append(p.getNAME() + " " + p.getAge() + "\n");
+        }
+
+        return players.toString();
+    }
 }
