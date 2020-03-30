@@ -26,7 +26,7 @@ public class Controller {
     }
 
     public boolean addPlayer(String playerName, int age){
-        return game.addPlayer(new Player(playerName, age));
+        return game.addPlayer(playerName, age);
     }
 
     public void changeTurnPlayer(){
@@ -38,14 +38,20 @@ public class Controller {
         }catch(IllegalMoveException x){
             System.err.println(x.getMessage());
         }
-        game.getTurnPlayer().setTurnPlayer(false);
-        game.getBoard().setTurnPlayer(game.getTurnPlayer().getNextPlayer());
-        game.getTurnPlayer().setTurnPlayer(true);
+        catch (NullPointerException x){
+            System.err.println(x.getMessage());
+        }
+        finally {
+            game.getTurnPlayer().setTurnPlayer(false);
+            game.getBoard().changeTurnPlayer();
+            game.getTurnPlayer().setTurnPlayer(true);
+        }
+
     }
 
-    public static void main(String[] args) {
-
-
+    public void startGame(){
+        game.startGame();
     }
+
 
 }
