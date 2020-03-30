@@ -9,11 +9,22 @@ public class Game {
     private Board board;
     private God[] gods;
 
+    /**
+     * class' constructor
+     *
+     * create a new board
+     */
     // class constructor with the initialization of board
     public Game(){
         board = new Board();
     }
 
+    /**
+     * add a new player to the game
+     *
+     * @param player the player to add
+     * @return true if everything is good, false if there is an error
+     */
     // playerList's adder
     public boolean addPlayer(Player player){
         try {
