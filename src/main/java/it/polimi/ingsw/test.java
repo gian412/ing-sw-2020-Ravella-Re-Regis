@@ -12,11 +12,18 @@ public class test {
     public static void main(String[] args) {
         Game g = new Game();
         Controller c = new Controller(g);
-        RemoteView rv = new RemoteView(new Socket(), c, new Player("ciao", 30));
-        g.getBoard().getProxy().addObserver(rv);
-        c.addPlayer("Marco", 30);
-        System.out.println(g.getPlayers());
+        c.addPlayer("io", 1);
+        c.addPlayer("yu", 2);
+        c.startGame();
 
+        try {
+            Player p1 = g.getTurnPlayer();
+            c.changeTurnPlayer();
+            Player p2 = g.getTurnPlayer();
+        }catch (Exception x)
+        {
+            System.out.println(x.getMessage());
+        }
 
     }
 }
