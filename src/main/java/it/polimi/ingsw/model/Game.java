@@ -16,6 +16,7 @@ public class Game {
      */
     // class constructor with the initialization of board
     public Game(){
+        playerList = new ArrayList<Player>();
         board = new Board();
     }
 
@@ -28,7 +29,6 @@ public class Game {
     // playerList's adder
     public boolean addPlayer(Player player){
         try {
-            if(player.equals(null)) return false;
             playerList.add(player);
             return true;
         }catch (Exception e){
@@ -44,10 +44,13 @@ public class Game {
     public Player getTurnPlayer(){ return board.getTurnPlayer(); }
 
     public String getPlayers(){
-        StringBuilder players = new StringBuilder("");
+        StringBuilder players = new StringBuilder();
 
         for(Player p : playerList){
-            players.append(p.getNAME() + " " + p.getAge() + "\n");
+            players.append(p.getNAME());
+            players.append(" ");
+            players.append(p.getAge());
+            players.append("\n");
         }
 
         return players.toString();
