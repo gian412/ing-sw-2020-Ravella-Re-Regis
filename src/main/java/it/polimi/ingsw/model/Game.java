@@ -37,6 +37,14 @@ public class Game {
         }
     }
 
+    // this methods needs to set all the nextPlayer's attributes
+    public void startGame(){
+        for(int i = 0; i < playerList.size(); i++){
+            if(i != playerList.size() - 1) playerList.get(i).setNextPlayer(playerList.get(i + 1));
+            else playerList.get(i).setNextPlayer(playerList.get(0));
+        }
+    }
+
     // board's getter
     public Board getBoard() {
         return board;
