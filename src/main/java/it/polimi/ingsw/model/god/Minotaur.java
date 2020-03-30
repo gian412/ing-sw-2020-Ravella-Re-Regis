@@ -34,14 +34,23 @@ public class Minotaur extends God {
     @Override
     public void move(Worker worker, Cell cell) throws IllegalMoveException {
         if( cell.getWorker() == null ){
-            super.move(worker, cell);
+            try {
+                super.move(worker, cell);
+            } catch (IllegalMoveException e) {
+                throw new IllegalMoveException();
+            }
         } else{
             int[] direction = worker.getCurrentCell().getDirection( cell );
             Cell nextCell =  board.getCell( cell.X + direction[0], cell.Y + direction[1] );
             if( nextCell.getWorker() != null && nextCell.getHeight() != Height.DOME){
                 Worker otherWorker = cell.getWorker();
-                super.move(worker, cell);
-                board.moveWorker(otherWorker, nextCell);
+                try {
+                    super.move(worker, cell);
+                    board.moveWorker(otherWorker, nextCell);
+                } catch (IllegalMoveException e){
+                    throw new IllegalMoveException();
+                }
+
             } else{
                 throw new IllegalMoveException();
             }
@@ -70,26 +79,40 @@ public class Minotaur extends God {
             switch (command.commandType){
                 case MOVE:
                     if (!hadMove && !hadBuild && !hadWin){
-                        move(worker, cell);
-                        hadMove = true;
-                        hadWin = board.checkWin(worker);
-                        break;
+                        try {
+                            this.move(worker, cell);
+                            hadMove = true;
+                            hadWin = board.checkWin(worker);
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
                     } else{
                         throw new IllegalMoveException();
                     }
 
                 case BUILD:
                     if (hadMove && !hadBuild && !hadWin){
-                        build(cell, false);
-                        hadBuild = true;
-                        break;
+                        try {
+                            super.build(cell, false);
+                            hadBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
                     } else{
                         throw new IllegalMoveException();
                     }
 
                 case BUILD_DOME:
                     if (cell.getHeight() == Height.THIRD_FLOOR){
-                        super.build(cell, false);
+                        try {
+                            super.build(cell, false);
+                            hadBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
                     } else {
                         throw new IllegalMoveException();
                     }
