@@ -16,14 +16,18 @@ public class test {
         c.addPlayer("yu", 2);
         c.startGame();
 
+        Player p1 = new Player("a", 10), p2 = new Player("b", 10);
+
         try {
-            Player p1 = g.getTurnPlayer();
+            p1 = g.getTurnPlayer();
             c.changeTurnPlayer();
-            Player p2 = g.getTurnPlayer();
+            p2 = g.getTurnPlayer();
         }catch (Exception x)
         {
             System.out.println(x.getMessage());
         }
+
+        System.out.println(p1.getNAME() + " " + p2.getNAME());
 
     }
 }

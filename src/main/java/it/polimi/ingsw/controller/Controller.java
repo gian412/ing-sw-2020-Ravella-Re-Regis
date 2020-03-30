@@ -38,10 +38,15 @@ public class Controller {
         }catch(IllegalMoveException x){
             System.err.println(x.getMessage());
         }
+        catch (NullPointerException x){
+            System.err.println(x.getMessage());
+        }
+        finally {
+            game.getTurnPlayer().setTurnPlayer(false);
+            game.getBoard().changeTurnPlayer();
+            game.getTurnPlayer().setTurnPlayer(true);
+        }
 
-        game.getTurnPlayer().setTurnPlayer(false);
-        game.getBoard().setTurnPlayer(game.getTurnPlayer().getNextPlayer());
-        game.getTurnPlayer().setTurnPlayer(true);
     }
 
     public void startGame(){
