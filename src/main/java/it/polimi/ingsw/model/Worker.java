@@ -8,6 +8,14 @@ public class Worker {
     private Cell previousCell;
     private static boolean canMoveUp;
 
+    /**
+     * Class' constructor
+     *
+     * inizialize worker's id, the worker's owner and the other parameters to null
+     *
+     * @param workerId indicate worker's id
+     * @param owner indicate worker's owner
+     */
     // class constructor with the initialization of WORKER_ID and owner
     public Worker(String workerId, Player owner) {
         this.WORKER_ID = workerId;
@@ -50,6 +58,7 @@ public class Worker {
     public void setCanMoveUp(boolean canMoveUp) {
         Worker.canMoveUp = canMoveUp;
     }
+
     public boolean isCanMoveUp() {
         return canMoveUp;
     }

@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.Command;
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.IllegalMoveException;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 
 public class Prometheus extends God {
     private boolean hadBuildSecond;
@@ -34,7 +31,7 @@ public class Prometheus extends God {
      * @throws IllegalMoveException in case the action isn't legal
      */
     @Override
-    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
+    public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
         if (command!=null){
             Cell cell = board.getCell(command.cellX, command.cellY);
 
@@ -42,10 +39,14 @@ public class Prometheus extends God {
                 case MOVE:
                     if (!hadMove && !hadBuildSecond && !hadWin){
                         if ( hadBuild && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<1 ){
-                            super.move(worker, cell);
-                            hadMove = true;
-                            hadWin = board.checkWin(worker);
-                            break;
+                            try {
+                                super.move(worker, cell);
+                                hadMove = true;
+                                hadWin = board.checkWin(worker);
+                                break;
+                            } catch (IllegalMoveException e) {
+                                throw new IllegalMoveException();
+                            }
                         } else{
                             throw new IllegalMoveException();
                         }
@@ -55,17 +56,47 @@ public class Prometheus extends God {
 
                 case BUILD:
                     if (!hadBuild && !hadMove && !hadBuildSecond && !hadWin){
-                        super.build(cell, false);
-                        hadBuild = true;
-                        break;
+                        try {
+                            super.build(cell, false);
+                            hadBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
                     } else if(hadMove && !hadBuildSecond && !hadWin){
-                        super.build(cell, false);
-                        hadBuildSecond = true;
-                        break;
+                        try {
+                            super.build(cell, false);
+                            hadBuildSecond = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
                     } else{
                         throw new IllegalMoveException();
                     }
+
+                case BUILD_DOME:
+                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                        try {
+                            super.build(cell, false);
+                            hadBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
+                    } else {
+                        throw new IllegalMoveException();
+                    }
+
+                case RESET:
+                    this.resetLocalVariables();
+                    break;
+
+                default:
+                    throw new IllegalMoveException();
             }
+        } else{
+            throw new NullPointerException();
         }
     }
 
@@ -73,7 +104,7 @@ public class Prometheus extends God {
      * Reset local variable for class Prometheus using the super method and adding local variables
      */
     @Override
-    public void resetLocalVariables() {
+    protected void resetLocalVariables() {
         super.resetLocalVariables();
         this.hadBuildSecond = false;
     }

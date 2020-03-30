@@ -29,7 +29,7 @@ public class Athena extends God{
      * @throws IllegalMoveException in case the action isn't legal
      */
     @Override
-    public void makeMove(Worker worker, Command command) throws IllegalMoveException {
+    public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null) {
             Cell cell = board.getCell(command.cellX, command.cellY);
@@ -40,29 +40,56 @@ public class Athena extends God{
                         if (!worker.isCanMoveUp()){
                             board.setCanMoveUp(true);
                         }
-                        move(worker, cell);
-                        if (worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())>0){
-                            board.setCanMoveUp(false);
+                        try {
+                            super.move(worker, cell);
+                            if (worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())>0){
+                                board.setCanMoveUp(false);
+                            }
+                            hadMove = true;
+                            hadWin = board.checkWin(worker);
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
                         }
-                        hadMove = true;
-                        hadWin = board.checkWin(worker);
-                        break;
                     } else {
                         throw new IllegalMoveException();
                     }
 
                 case BUILD:
                     if (hadMove && !hadBuild && !hadWin) {
-                        super.build(cell, false);
-                        hadBuild = true;
-                        break;
+                        try {
+                            super.build(cell, false);
+                            hadBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
                     } else {
                         throw new IllegalMoveException();
                     }
 
                 case BUILD_DOME:
+                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                        try {
+                            super.build(cell, false);
+                            hadBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
+                    } else {
+                        throw new IllegalMoveException();
+                    }
+
+                case RESET:
+                    super.resetLocalVariables();
+                    break;
+
+                default:
                     throw new IllegalMoveException();
             }
+        } else{
+            throw new NullPointerException();
         }
     }
 

@@ -37,7 +37,7 @@ public abstract class God {
      * @throws IllegalMoveException in case the action isn't legal
      */
     // abstract class' abstract method
-    public abstract void makeMove(Worker worker, Command command) throws IllegalMoveException;
+    public abstract void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException;
 
     /**
      * Move the worker
@@ -52,10 +52,15 @@ public abstract class God {
      */
     public void move(Worker worker, Cell cell) throws IllegalMoveException{
 
-        if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {//Posso muovere verso l'alto
+        if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
             if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){
-                board.moveWorker(worker, cell);
-                hadWin = board.checkWin(worker);
+                try {
+                    board.moveWorker(worker, cell);
+                    hadWin = board.checkWin(worker);
+                } catch (IllegalMoveException e){
+                    throw new IllegalMoveException();
+                }
+
             } else{
                 throw new IllegalMoveException();
             }
@@ -76,9 +81,17 @@ public abstract class God {
     public void build(Cell cell, boolean isDome) throws IllegalMoveException {
         // build
         if( cell.getWorker() != null && cell.getHeight() != Height.DOME && isDome ){
-            board.build( cell, true );
+            //try {
+                board.build( cell, true );
+            //} catch (IllegalMoveException e){
+                throw new IllegalMoveException();
+            //}
         }else if( cell.getWorker() != null && cell.getHeight() != Height.DOME && !isDome){
-            board.build( cell, false );
+            //try{
+                board.build( cell, false );
+            //} catch (IllegalMoveException e) {
+            //    throw new IllegalMoveException();
+            //}
         } else{
             throw new IllegalMoveException();
         }
@@ -87,7 +100,7 @@ public abstract class God {
     /**
      * Reset local variable for class God
      */
-    public void resetLocalVariables(){
+    protected void resetLocalVariables(){
         this.hadMove = false;
         this.hadBuild = false;
     }

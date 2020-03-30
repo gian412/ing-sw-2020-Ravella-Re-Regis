@@ -72,6 +72,25 @@ public class Cell {
         return direction;
     }
 
+    /**
+     *check if the cell is adjacent to an other
+     *
+     * @param cell the other cell
+     * @return true if the cell is adjacent
+     */
+    public boolean cellDistance(Cell cell){
+        int distanceX, distanceY;
+
+        distanceX = this.X - cell.X;
+        distanceY = this.Y - cell.Y;
+
+        if ((distanceX >= -1) && (distanceX <= 1)) {
+            return (distanceY >= -1) && (distanceY <= 1);
+        }
+        else
+            return false;
+    }
+
     // equals implementetion for cell
     @Override
     public boolean equals(Object o){
