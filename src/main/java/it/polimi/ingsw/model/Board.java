@@ -81,14 +81,19 @@ public class Board {
      * @param worker the worker that the player moves
      * @param cell the in in which the player moves the worker
      */
-    public void moveWorker(Worker worker, Cell cell){
+    public void moveWorker(Worker worker, Cell cell) throws IllegalMoveException{
 
-        Cell supportCell = worker.getCurrentCell();
+        if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5) && (worker.getCurrentCell().cellDistance(cell))){
+            Cell supportCell = worker.getCurrentCell();
 
-        supportCell.setWorker(null);
-        worker.setPreviousCell(supportCell);
-        cell.setWorker(worker);
-        worker.setCurrentCell(cell);
+            supportCell.setWorker(null);
+            worker.setPreviousCell(supportCell);
+            cell.setWorker(worker);
+            worker.setCurrentCell(cell);
+        }
+        else{
+            throw new IllegalMoveException();
+        }
     }
 
     /**
