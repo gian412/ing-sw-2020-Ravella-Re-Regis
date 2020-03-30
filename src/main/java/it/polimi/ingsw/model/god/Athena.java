@@ -8,6 +8,7 @@ public class Athena extends God{
     /**
      * Class' constructor that use the super class' constructor
      *
+     * @author Gianluca Regis
      * @param board indicates the board of the game
      */
     // class constructor with the initialization of board using the super constructor
@@ -24,6 +25,7 @@ public class Athena extends God{
      * In this method, if the worker move upwards a static variable in worker is setted
      * to false in order to prevent other player to move upward in the next turn
      *
+     * @author Gianluca Regis
      * @param worker is the worker who is doing the actions
      * @param command is the command which need to be interpreted
      * @throws IllegalMoveException in case the action isn't legal

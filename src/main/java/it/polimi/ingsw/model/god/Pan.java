@@ -8,6 +8,7 @@ public class Pan extends  God {
     /**
      * Class' constructor that use the super class' constructor
      *
+     * @author Gianluca Regis
      * @param board indicates the board of the game
      */
     // class constructor with the initialization of board using the super constructor
@@ -22,6 +23,7 @@ public class Pan extends  God {
      *      1- Move using super.move(Worker worker, Cell cell)
      *      2- Build using super.build(Cell cell, boolean false)
      *
+     * @author Gianluca Regis
      * @param worker is the worker who is doing the actions
      * @param command is the command which need to be interpreted
      * @throws IllegalMoveException in case the action isn't legal

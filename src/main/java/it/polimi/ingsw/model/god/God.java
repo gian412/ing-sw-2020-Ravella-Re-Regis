@@ -14,6 +14,7 @@ public abstract class God {
     /**
      * Class' constructor with the initialization of boar and NAME
      *
+     * @author Gianluca Regis
      * @param board indicates the board of the game
      * @param NAME indicates the name of the god
      */
@@ -32,6 +33,7 @@ public abstract class God {
      * This abstract method was made in order to simulate actions made by any divinity in each turn.
      * The method will be implemented in every child class
      *
+     * @author Gianluca Regis
      * @param worker is the worker who is doing the actions
      * @param command is the command which need to be interpreted
      * @throws IllegalMoveException in case the action isn't legal
@@ -46,6 +48,7 @@ public abstract class God {
      * win using board.checkWin(Worker worker) and saving this result in the class' variable hadWind.
      * The method throw an IllegalMoveException if the worker can't move in the given cell
      *
+     * @author Gianluca Regis
      * @param worker is the worker you are moving
      * @param cell is the cell in which you're moving the worker
      * @throws IllegalMoveException in case the move isn't legal
@@ -74,6 +77,7 @@ public abstract class God {
      * Build a new piece in the cell passed as parameter using board-build(Cell cell, boolean isDome).
      * The method throw an IllegalMoveException if the piece can't be built in the given cell
      *
+     * @author Gianluca Regis
      * @param cell is the cell in which you're building the new piece
      * @param isDome is true if Atlas build a dome in any position
      * @throws IllegalMoveException in case the move isn't legal
@@ -99,6 +103,8 @@ public abstract class God {
 
     /**
      * Reset local variable for class God
+     *
+     * @author Gianluca Regis
      */
     protected void resetLocalVariables(){
         this.hadMove = false;

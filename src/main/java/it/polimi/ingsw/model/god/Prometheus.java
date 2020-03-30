@@ -9,6 +9,7 @@ public class Prometheus extends God {
     /**
      * Class' constructor that use the super class' constructor
      *
+     * @author Gianluca Regis
      * @param board indicates the board of the game
      */
     // class constructor with the initialization of board using the super constructor
@@ -26,6 +27,7 @@ public class Prometheus extends God {
      * In this method, the worker can build before and after the move if it
      * didn't move upward
      *
+     * @author Gianluca Regis
      * @param worker is the worker who is doing the actions
      * @param command is the command which need to be interpreted
      * @throws IllegalMoveException in case the action isn't legal
@@ -102,6 +104,8 @@ public class Prometheus extends God {
 
     /**
      * Reset local variable for class Prometheus using the super method and adding local variables
+     *
+     * @author Gianluca Regis
      */
     @Override
     protected void resetLocalVariables() {
