@@ -46,7 +46,7 @@ public class Apollo extends God{
                 Worker otherWorker = cell.getWorker();
                 Cell actualCell = worker.getCurrentCell();
                 board.moveWorker(worker, cell);
-                board.forceWorker(otherWorker, actualCell);
+                board.moveWorker(otherWorker, actualCell);
             } else{
                 throw new IllegalMoveException();
             }

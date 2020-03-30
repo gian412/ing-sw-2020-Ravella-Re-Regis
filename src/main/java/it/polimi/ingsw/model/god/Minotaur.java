@@ -41,7 +41,7 @@ public class Minotaur extends God {
             if( nextCell.getWorker() != null && nextCell.getHeight() != Height.DOME){
                 Worker otherWorker = cell.getWorker();
                 super.move(worker, cell);
-                board.forceWorker(otherWorker, nextCell);
+                board.moveWorker(otherWorker, nextCell);
             } else{
                 throw new IllegalMoveException();
             }
