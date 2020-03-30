@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.Command;
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.IllegalMoveException;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 
 public class Artemis extends God {
 
@@ -62,6 +59,13 @@ public class Artemis extends God {
                         hadBuild = true;
                         break;
                     } else{
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD_DOME:
+                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                        super.build(cell, false);
+                    } else {
                         throw new IllegalMoveException();
                     }
 

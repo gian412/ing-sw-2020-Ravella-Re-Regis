@@ -7,6 +7,8 @@ import it.polimi.ingsw.model.IllegalMoveException;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.Height;
 
+import static it.polimi.ingsw.controller.CommandType.RESET;
+
 public class Apollo extends God{
 
     /**
@@ -35,9 +37,11 @@ public class Apollo extends God{
             if( cell.getHeight() == Height.DOME || worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) > 1 ){
                 throw new IllegalMoveException();
             }else{
-                if (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0){
+                if (worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0){
                     board.moveWorker(worker, cell);
-                } else{
+                } else if (worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) >1 && worker.isCanMoveUp() ){
+                    board.moveWorker(worker, cell);
+                } else {
                     throw new IllegalMoveException();
                 }
             }
@@ -91,6 +95,13 @@ public class Apollo extends God{
                         hadBuild = true;
                         break;
                     } else{
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD_DOME:
+                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                        super.build(cell, false);
+                    } else {
                         throw new IllegalMoveException();
                     }
 
