@@ -28,6 +28,7 @@ public class Game {
     // playerList's adder
     public boolean addPlayer(Player player){
         try {
+            if(player.equals(null)) return false;
             playerList.add(player);
             return true;
         }catch (Exception e){
