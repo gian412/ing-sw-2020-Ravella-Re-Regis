@@ -73,8 +73,6 @@ public class Board {
         worker.setCurrentCell(cell);
     }
 
-    public void forceWorker(Worker worker, Cell cell){}
-
     // method that check if the worker had win after the last move
     public boolean checkWin(Worker worker){
 
