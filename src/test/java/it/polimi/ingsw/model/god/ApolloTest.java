@@ -37,7 +37,7 @@ public class ApolloTest {
         try {
             god.makeMove(worker, command);
         } catch (IllegalMoveException e) {
-            System.err.println(e.toString());
+            System.err.println("Error e in method hadMoveTest in class ApolloTest: " + e.toString());
         }
 
         assertTrue("hadMove must be true", god.hadMove);
@@ -74,7 +74,7 @@ public class ApolloTest {
         try {
             god.makeMove(worker1, command);
         } catch (IllegalMoveException e) {
-            System.err.println(e.toString());
+            System.err.println("Error e in method hadMoveAndForcedTest in class ApolloTest: " + e.toString());
         }
 
         assertTrue("hadMove must be true", god.hadMove);
@@ -110,7 +110,7 @@ public class ApolloTest {
         try {
             god.makeMove(worker, command);
         } catch (IllegalMoveException e) {
-            System.err.println(e.toString());
+            System.err.println("Error e in method hadBuildNotDomeTest in class ApolloTest: " + e.toString());
         }
 
         assertTrue("hadBuild must be true", god.hadBuild);
@@ -145,7 +145,7 @@ public class ApolloTest {
         try {
             god.makeMove(worker, command);
         } catch (IllegalMoveException e) {
-            System.err.println(e.toString());
+            System.err.println("Error e in method hadBuildDomeTest in class ApolloTest: " + e.toString());
         }
 
         assertTrue("hadBuild must be true", god.hadBuild);
@@ -179,7 +179,7 @@ public class ApolloTest {
         try{
             god.makeMove(worker, command);
         } catch (IllegalMoveException e){
-            System.err.println(e.toString());
+            System.err.println("Error e in method hadWinYesTest in class ApolloTest: " + e.toString());
         }
 
         assertTrue( "hadWin must be true", god.hadWin );
@@ -214,7 +214,7 @@ public class ApolloTest {
         try{
             god.makeMove(worker, command);
         } catch (IllegalMoveException e){
-            System.err.println(e.toString());
+            System.err.println("Error e in method hadWinNoTest in class ApolloTest: " + e.toString());
         }
 
         assertFalse( "hadWin must be false", god.hadWin );

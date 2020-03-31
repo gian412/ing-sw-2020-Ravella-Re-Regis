@@ -37,7 +37,7 @@ public class ArtemisTest {
         try {
             god.makeMove(worker, command);
         } catch (IllegalMoveException e) {
-            System.err.println(e.toString());
+            System.err.println("Error e in method hadMoveTest in class ArtemisTest: " + e.toString());
         }
 
 
@@ -125,7 +125,7 @@ public class ArtemisTest {
         try {
             god.makeMove(worker, command);
         } catch (IllegalMoveException e) {
-            System.err.println(e.toString());
+            System.err.println("Error e in method hadBuildNotDomeTest in class ArtemisTest: " + e.toString());
         }
 
         assertTrue("hadBuild must be true", god.hadBuild);
@@ -160,7 +160,7 @@ public class ArtemisTest {
         try {
             god.makeMove(worker, command);
         } catch (IllegalMoveException e) {
-            System.err.println(e.toString());
+            System.err.println("Error e in method hadBuildDomeTest in class ArtemisTest: " + e.toString());
         }
 
         assertTrue("hadBuild must be true", god.hadBuild);
@@ -194,7 +194,7 @@ public class ArtemisTest {
         try{
             god.makeMove(worker, command);
         } catch (IllegalMoveException e){
-            System.err.println(e.toString());
+            System.err.println("Error e in method hadWinYesTest in class ArtemisTest: " + e.toString());
         }
 
         assertTrue( "hadWin must be true", god.hadWin );
@@ -229,7 +229,7 @@ public class ArtemisTest {
         try{
             god.makeMove(worker, command);
         } catch (IllegalMoveException e){
-            System.err.println(e.toString());
+            System.err.println("Error e in method hadWinNoTest in class ArtemisTest: " + e.toString());
         }
 
         assertFalse( "hadWin must be false", god.hadWin );
