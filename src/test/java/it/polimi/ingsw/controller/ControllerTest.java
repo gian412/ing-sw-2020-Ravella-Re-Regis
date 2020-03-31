@@ -2,7 +2,10 @@ package it.polimi.ingsw.controller;
 
 
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.NoSuchPlayerException;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.god.Apollo;
+import it.polimi.ingsw.model.god.Athena;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
@@ -33,7 +36,29 @@ public class ControllerTest {
         controller.changeTurnPlayer();
         Player p2 = g.getTurnPlayer();
 
-        assertNotEquals(p1, p2);
+        assertNotEquals("After a change of turn, player should change", p1, p2);
+
+    }
+
+    @Test
+    @DisplayName("Check initialization of divinity")
+    public void checkSetDivinity(){
+        Game g = new Game();
+        Controller controller = new Controller(g);
+
+        controller.addPlayer("Marco", 30);
+        controller.addPlayer("Gianluca", 35);
+
+        try {
+            g.setPlayerDivinity("Marco", new Apollo(g.getBoard()));
+            g.setPlayerDivinity("Gianluca", new Athena(g.getBoard()));
+        }catch(NoSuchPlayerException x){
+            System.err.println(x.getMessage());
+        }
+
+        controller.startGame();
+
+        assertNotNull(g.getTurnPlayer().getDivinity());
 
     }
 

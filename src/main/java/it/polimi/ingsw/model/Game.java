@@ -37,6 +37,15 @@ public class Game {
         }
     }
 
+    public void setPlayerDivinity(String playerName, God divinity) throws NoSuchPlayerException {
+        for(Player p : playerList)
+            if(p.getNAME().equals(playerName)){
+                p.setDivinity(divinity);
+                return;
+            }
+        throw new NoSuchPlayerException();
+    }
+
     // this methods needs to set all the nextPlayer's attributes
     public void startGame(){
         for(int i = 0; i < playerList.size(); i++){
