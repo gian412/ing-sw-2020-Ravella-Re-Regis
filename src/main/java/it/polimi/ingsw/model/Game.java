@@ -16,23 +16,35 @@ public class Game {
      */
     // class constructor with the initialization of board
     public Game(){
+        playerList = new ArrayList<>();
         board = new Board();
     }
 
     /**
      * add a new player to the game
      *
-     * @param player the player to add
+     * @param playerName the player to add
+     * @param age the age of the player
      * @return true if everything is good, false if there is an error
      */
     // playerList's adder
-    public boolean addPlayer(Player player){
+    public boolean addPlayer(String playerName, int age){
         try {
-            playerList.add(player);
+            playerList.add(new Player(playerName, age));
             return true;
         }catch (Exception e){
             return false;
         }
+    }
+
+    // this methods needs to set all the nextPlayer's attributes
+    public void startGame(){
+        for(int i = 0; i < playerList.size(); i++){
+            if(i != playerList.size() - 1) playerList.get(i).setNextPlayer(playerList.get(i + 1));
+            else playerList.get(i).setNextPlayer(playerList.get(0));
+        }
+
+        board.setTurnPlayer(playerList.get(0));
     }
 
     // board's getter
@@ -41,4 +53,17 @@ public class Game {
     }
 
     public Player getTurnPlayer(){ return board.getTurnPlayer(); }
+
+    public String getPlayers(){
+        StringBuilder players = new StringBuilder();
+
+        for(Player p : playerList){
+            players.append(p.getNAME());
+            players.append(" ");
+            players.append(p.getAge());
+            players.append("\n");
+        }
+
+        return players.toString();
+    }
 }

@@ -75,6 +75,7 @@ public class Cell {
     /**
      *check if the cell is adjacent to an other
      *
+     * @author Gianluca Regis
      * @param cell the other cell
      * @return true if the cell is adjacent
      */

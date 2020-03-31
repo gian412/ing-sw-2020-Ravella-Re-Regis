@@ -9,6 +9,7 @@ public class Prometheus extends God {
     /**
      * Class' constructor that use the super class' constructor
      *
+     * @author Gianluca Regis
      * @param board indicates the board of the game
      */
     // class constructor with the initialization of board using the super constructor
@@ -26,6 +27,7 @@ public class Prometheus extends God {
      * In this method, the worker can build before and after the move if it
      * didn't move upward
      *
+     * @author Gianluca Regis
      * @param worker is the worker who is doing the actions
      * @param command is the command which need to be interpreted
      * @throws IllegalMoveException in case the action isn't legal
@@ -76,7 +78,7 @@ public class Prometheus extends God {
                     }
 
                 case BUILD_DOME:
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (!hadBuild && !hadMove && !hadBuildSecond && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(cell, false);
                             hadBuild = true;
@@ -84,7 +86,15 @@ public class Prometheus extends God {
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else {
+                    } else if(hadMove && !hadBuildSecond && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
+                        try {
+                            super.build(cell, false);
+                            hadBuildSecond = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
+                    } else{
                         throw new IllegalMoveException();
                     }
 
@@ -102,6 +112,8 @@ public class Prometheus extends God {
 
     /**
      * Reset local variable for class Prometheus using the super method and adding local variables
+     *
+     * @author Gianluca Regis
      */
     @Override
     protected void resetLocalVariables() {

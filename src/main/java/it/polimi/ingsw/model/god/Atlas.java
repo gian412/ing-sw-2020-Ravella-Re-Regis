@@ -8,6 +8,7 @@ public class Atlas extends God {
     /**
      * Class' constructor that use the super class' constructor
      *
+     * @author Gianluca Regis
      * @param board indicates the board of the game
      */
     // class constructor with the initialization of board using the super constructor
@@ -23,6 +24,7 @@ public class Atlas extends God {
      *      2- Build using super.build(Cell cell, boolean false)
      * In this method, the worker can build a dome in every position
      *
+     * @author Gianluca Regis
      * @param worker is the worker who is doing the actions
      * @param command is the command which need to be interpreted
      * @throws IllegalMoveException in case the action isn't legal
@@ -37,7 +39,7 @@ public class Atlas extends God {
                 case MOVE:
                     if (!hadMove && !hadBuild && !hadWin) {
                         try {
-                            move(worker, cell);
+                            super.move(worker, cell);
                             hadMove = true;
                             hadWin = board.checkWin(worker);
                             break;

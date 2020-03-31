@@ -45,8 +45,13 @@ public class Board {
         return turnPlayer;
     }
 
-    public void setTurnPlayer(Player next){
-        turnPlayer = next;
+    public void setTurnPlayer(Player player) {
+        this.turnPlayer = player;
+    }
+
+
+    public void changeTurnPlayer(){
+        turnPlayer = turnPlayer.getNextPlayer();
     }
 
     // canMoveUp's set and reset

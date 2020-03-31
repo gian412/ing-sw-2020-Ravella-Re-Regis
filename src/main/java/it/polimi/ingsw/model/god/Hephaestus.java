@@ -15,6 +15,7 @@ public class Hephaestus extends God {
     /**
      * Class' constructor that use the super class' constructor
      *
+     * @author Gianluca Regis
      * @param board indicates the board of the game
      */
     // class constructor with the initialization of board using the super constructor
@@ -32,6 +33,7 @@ public class Hephaestus extends God {
      *      2- Build using super.build(Cell cell, boolean false)
      * In this method, the worker can build twice in the same cell but not a dome
      *
+     * @author Gianluca Regis
      * @param worker is the worker who is doing the actions
      * @param command is the command which need to be interpreted
      * @throws IllegalMoveException in case the action isn't legal
@@ -80,9 +82,10 @@ public class Hephaestus extends God {
                     }
 
                 case BUILD_DOME:
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (hadMove && !hadBuild && !hadBuildSecond && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(cell, false);
+                            previousCell = cell;
                             hadBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
@@ -106,6 +109,8 @@ public class Hephaestus extends God {
 
     /**
      * Reset local variable for class Hephaestus using the super method and adding local variables
+     *
+     * @author Gianluca Regis
      */
     @Override
     protected void resetLocalVariables() {

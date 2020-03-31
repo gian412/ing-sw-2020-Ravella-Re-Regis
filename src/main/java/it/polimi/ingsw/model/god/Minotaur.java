@@ -13,6 +13,7 @@ public class Minotaur extends God {
     /**
      * Class' constructor that use the super class' constructor
      *
+     * @author Gianluca Regis
      * @param board indicates the board of the game
      */
     // class constructor with the initialization of board using the super constructor
@@ -27,6 +28,7 @@ public class Minotaur extends God {
      * of Minotaur, who can move in a cell occupied from another worker, forcing this worker to
      * move a cell forward, if it's free.
      *
+     * @author Gianluca Regis
      * @param worker is the worker you are moving
      * @param cell is the cell in which you're moving the worker
      * @throws IllegalMoveException in case the move isn't legal
@@ -66,6 +68,7 @@ public class Minotaur extends God {
      * In this method, the worker can move in a cell occupied by another worker forcing
      * this other worker to move a cell forward in the same direction, if it's fre.
      *
+     * @author Gianluca Regis
      * @param worker is the worker who is doing the actions
      * @param command is the command which need to be interpreted
      * @throws IllegalMoveException in case the action isn't legal

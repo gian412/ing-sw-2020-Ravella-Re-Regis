@@ -2,7 +2,11 @@ package it.polimi.ingsw;
 
 import static org.junit.Assert.assertTrue;
 
-import it.polimi.ingsw.model.god.GodTest;
+import it.polimi.ingsw.model.god.Apollo;
+import it.polimi.ingsw.model.god.ApolloTest;
+import it.polimi.ingsw.model.god.Artemis;
+import it.polimi.ingsw.model.god.ArtemisTest;
+
 import org.junit.Test;
 
 /**
@@ -20,8 +24,24 @@ public class AppTest
     }
 
     public static void main(String[] args){
-        GodTest godTest = new GodTest();
-        godTest.checkWinYesTest();
-        godTest.checkWinNoTest();
+
+        // class Apollo
+        ApolloTest apolloTest = new ApolloTest();
+        apolloTest.hadMoveTest();
+        apolloTest.hadMoveAndForcedTest();
+        apolloTest.hadBuildNotDomeTest();
+        apolloTest.hadBuildDomeTest();
+        apolloTest.hadWinYesTest();
+        apolloTest.hadWinNoTest();
+
+        // class Artemis
+        ArtemisTest artemisTest = new ArtemisTest();
+        artemisTest.hadMoveTest();
+        artemisTest.hadMoveSecondTest();
+        artemisTest.hadBuildNotDomeTest();
+        artemisTest.hadBuildDomeTest();
+        artemisTest.hadWinYesTest();
+        artemisTest.hadWinNoTest();
     }
+
 }
