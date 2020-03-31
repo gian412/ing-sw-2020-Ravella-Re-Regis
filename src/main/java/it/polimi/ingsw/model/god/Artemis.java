@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.*;
 
 public class Artemis extends God {
 
-    private boolean hadMoveSecond;
+    protected boolean hadMoveSecond;
 
     /**
      * Class' constructor that use the super class' constructor
@@ -41,7 +41,7 @@ public class Artemis extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMove && !hadWin && !hadBuild){
+                    if (!hadMove && !hadMoveSecond && !hadWin && !hadBuild){
                         try {
                             super.move(worker, cell);
                             hadMove = true;
@@ -50,7 +50,7 @@ public class Artemis extends God {
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else if (!hadMoveSecond && !hadWin && !hadBuild){
+                    } else if (hadMove && !hadMoveSecond && !hadWin && !hadBuild){
                         try {
                             super.move(worker, cell);
                             hadMoveSecond = true;
