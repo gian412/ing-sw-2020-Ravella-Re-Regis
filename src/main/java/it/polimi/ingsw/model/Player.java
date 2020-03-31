@@ -11,7 +11,7 @@ public class Player {
     private Game actualGame;
     private final String NAME;
     private God divinity;
-    private int age;
+    private final int age;
     private Player nextPlayer;
     private Worker[] workers = new Worker[2];
     private boolean isTurnPlayer;
@@ -48,10 +48,6 @@ public class Player {
     public God getDivinity(){ return this.divinity;}
 
     // age's getter and setter
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public int getAge() {
         return age;
     }
