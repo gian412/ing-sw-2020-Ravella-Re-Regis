@@ -41,7 +41,7 @@ public class Worker {
     }
 
     public void setCurrentCell(Cell currentCell) {
-        setPreviousCell(currentCell);
+        setPreviousCell(this.getCurrentCell());
         this.currentCell = currentCell;
     }
 

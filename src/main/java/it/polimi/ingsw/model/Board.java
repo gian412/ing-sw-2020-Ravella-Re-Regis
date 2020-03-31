@@ -91,12 +91,12 @@ public class Board {
     public void moveWorker(Worker worker, Cell cell) throws IllegalMoveException{
 
         if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5) && (worker.getCurrentCell().cellDistance(cell))){
-            Cell supportCell = worker.getCurrentCell();
 
-            supportCell.setWorker(null);
-            worker.setPreviousCell(supportCell);
-            cell.setWorker(worker);
-            worker.setCurrentCell(cell);
+            this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y).setWorker(null);
+            worker.setPreviousCell(this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y));
+
+            this.getCell(cell.X, cell.Y).setWorker(worker);
+            worker.setCurrentCell(this.getCell(cell.X, cell.Y));
         }
         else{
             throw new IllegalMoveException();
