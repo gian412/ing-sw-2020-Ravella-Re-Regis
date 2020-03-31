@@ -85,17 +85,17 @@ public abstract class God {
     public void build(Cell cell, boolean isDome) throws IllegalMoveException {
         // build
         if( cell.getWorker() != null && cell.getHeight() != Height.DOME && isDome ){
-            //try {
+            try {
                 board.build( cell, true );
-            //} catch (IllegalMoveException e){
+            } catch (IllegalMoveException e){
                 throw new IllegalMoveException();
-            //}
+            }
         }else if( cell.getWorker() != null && cell.getHeight() != Height.DOME && !isDome){
-            //try{
+            try{
                 board.build( cell, false );
-            //} catch (IllegalMoveException e) {
-            //    throw new IllegalMoveException();
-            //}
+            } catch (IllegalMoveException e) {
+                throw new IllegalMoveException();
+            }
         } else{
             throw new IllegalMoveException();
         }

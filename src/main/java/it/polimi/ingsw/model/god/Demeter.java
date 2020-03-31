@@ -77,15 +77,24 @@ public class Demeter extends God {
                     }
 
                 case BUILD_DOME:
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (hadMove && !hadBuild && !hadBuildSecond && !hadWin && cell.getHeight()==Height.THIRD_FLOOR){
                         try {
                             super.build(cell, false);
+                            previousCell = cell;
                             hadBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else {
+                    } else if (hadMove && hadBuild && !hadBuildSecond && !hadWin && previousCell!=null && !(previousCell.equals(cell)) && cell.getHeight()==Height.THIRD_FLOOR){
+                        try {
+                            super.build(cell, false);
+                            hadBuildSecond = true;
+                            break;
+                        } catch (IllegalMoveException e){
+                            throw new IllegalMoveException();
+                        }
+                    } else{
                         throw new IllegalMoveException();
                     }
 

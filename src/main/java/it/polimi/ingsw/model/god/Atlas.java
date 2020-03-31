@@ -39,7 +39,7 @@ public class Atlas extends God {
                 case MOVE:
                     if (!hadMove && !hadBuild && !hadWin) {
                         try {
-                            move(worker, cell);
+                            super.move(worker, cell);
                             hadMove = true;
                             hadWin = board.checkWin(worker);
                             break;

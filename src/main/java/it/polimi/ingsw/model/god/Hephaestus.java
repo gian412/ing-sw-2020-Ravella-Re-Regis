@@ -82,9 +82,10 @@ public class Hephaestus extends God {
                     }
 
                 case BUILD_DOME:
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (hadMove && !hadBuild && !hadBuildSecond && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(cell, false);
+                            previousCell = cell;
                             hadBuild = true;
                             break;
                         } catch (IllegalMoveException e) {

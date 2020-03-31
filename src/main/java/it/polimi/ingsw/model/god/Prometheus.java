@@ -78,7 +78,7 @@ public class Prometheus extends God {
                     }
 
                 case BUILD_DOME:
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (!hadBuild && !hadMove && !hadBuildSecond && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(cell, false);
                             hadBuild = true;
@@ -86,7 +86,15 @@ public class Prometheus extends God {
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else {
+                    } else if(hadMove && !hadBuildSecond && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
+                        try {
+                            super.build(cell, false);
+                            hadBuildSecond = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
+                    } else{
                         throw new IllegalMoveException();
                     }
 
