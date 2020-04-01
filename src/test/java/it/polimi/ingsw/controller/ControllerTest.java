@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Height;
 import it.polimi.ingsw.model.NoSuchPlayerException;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.Apollo;
@@ -62,5 +63,53 @@ public class ControllerTest {
 
     }
 
+    @Test
+    @DisplayName("test the build function")
+    public void checkBuild(){
+        Game g = new Game();
+        Controller controller = new Controller(g);
+
+
+
+        controller.addPlayer("Marco", 30);
+        controller.addPlayer("Gianluca", 35);
+
+        try {
+            g.setPlayerDivinity("Marco", new Apollo(g.getBoard()));
+            g.setPlayerDivinity("Gianluca", new Athena(g.getBoard()));
+        }catch(NoSuchPlayerException x){
+            System.err.println(x.getMessage());
+        }
+
+        controller.commitMove("Marco", new Command(0, 0, CommandType.BUILD), 0);
+
+        assertEquals("Built a floor in a cell", g.getBoard().getCell(0, 0).getHeight(), Height.FIRST_FLOOR);
+
+    }
+
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
