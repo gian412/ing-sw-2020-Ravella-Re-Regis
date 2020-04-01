@@ -22,6 +22,6 @@ public class RemoteView implements Observer<BoardProxy> {
 
     @Override
     public void update(BoardProxy message) {
-        System.out.println(message.toString());
+        //send the message through teh socket
     }
 }
