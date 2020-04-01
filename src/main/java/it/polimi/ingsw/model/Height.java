@@ -6,6 +6,7 @@ public enum Height {
     /**
      * calculate the difference of height between two cells
      *
+     * @author Gianluca Regis
      * @param that the cell to compare
      * @return the difference between the two cells
      */

@@ -162,7 +162,7 @@ public class Cell {
      * override the method toString of the class Object
      *
      * @author Marco Re
-     * @return true if two cells are equal
+     * @return the string which represents the cell
      */
     @Override
     public String toString() {

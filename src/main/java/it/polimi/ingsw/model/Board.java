@@ -15,6 +15,8 @@ public class Board {
      *
      * create a new boardProxy, set the win to false an initialize al the cells of the board and then
      * update proxyBoard
+     *
+     * @author Marco Re
      */
     // class constructor with the initialization of cells
     public Board(){
@@ -35,6 +37,13 @@ public class Board {
         return proxy;
     }
 
+    /**
+     * return a specific cell ofthe board
+     *
+     * @param row is the index of the matrix for the row
+     * @param column is the index of the matrix for the column
+     * @return the cell identified by the two parameters
+     */
     // cells' getter
     public Cell getCell(int row, int column) {
         return cells[row][column];
@@ -72,9 +81,15 @@ public class Board {
         if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5)){
             if(isDome){
                 cell.setHeight(Height.DOME);
+
+                //update proxyBoard after a legal construction
+                this.updateProxyBoard();
             }
             else {
                 cell.buildFloor();
+
+                //update proxyBoard after a legal construction
+                this.updateProxyBoard();
             }
         }
         else{
@@ -85,6 +100,7 @@ public class Board {
     /**
      * move a worker in an other cell
      *
+     * @author Marco Re
      * @param worker the worker that the player moves
      * @param cell the in in which the player moves the worker
      */
@@ -97,6 +113,9 @@ public class Board {
 
             this.getCell(cell.X, cell.Y).setWorker(worker);
             worker.setCurrentCell(this.getCell(cell.X, cell.Y));
+
+            //update the proxyBoard after a legal move
+            this.updateProxyBoard();
         }
         else{
             throw new IllegalMoveException();
@@ -106,6 +125,7 @@ public class Board {
     /**
      * check the winning condition
      *
+     * @author Gial+nluca regis
      * @param worker the worker that the player have just moved
      * @return true if the player wins, false if the player doesn't win
      */
@@ -157,11 +177,18 @@ public class Board {
         proxy.updateProxy();
     }
 
-
     public void addView(RemoteView remoteView){
         proxy.addObserver(remoteView);
     }
 
+    /**
+     *create a string which represents the attributes and the structure of the board
+     *
+     * override the method toString of the class Object
+     *
+     * @author Marco Re
+     * @return the string which represents the board
+     */
     @Override
     public String toString() {
         StringBuilder myBoard = new StringBuilder();
