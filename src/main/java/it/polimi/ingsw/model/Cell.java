@@ -8,6 +8,15 @@ public class Cell {
     public final int X;
     public final int Y;
 
+    /**
+     * the constructor of class Cell
+     *
+     * it instantiate a new cell with the two coordinate and the height to GROUND
+     *
+     * @author Marco Re
+     * @param x coordinate X of the cell
+     * @param y coordinate Y of the cell
+     */
     // class constructor with the initialization of X and Y
     public Cell(int x, int y) {
         this.X = x;
@@ -15,26 +24,59 @@ public class Cell {
         this.height = Height.GROUND;
     }
 
+    /**
+     * worker's getter
+     *
+     * @author Marco Re
+     * @return the worker which is present in the cell, null if there isn't any worker
+     */
     // worker's getter
     public Worker getWorker() {
         return worker;
     }
 
+    /**
+     *worker's setter
+     *
+     * @author Marco Re
+     * @param worker the worker which the player wants to set in the cell
+     */
     // worker's setter
     public void setWorker(Worker worker){
         this.worker = worker;
     }
 
+    /**
+     * height's getter
+     *
+     * @author Marco Re
+     * @return the height of the cell
+     */
     // height's getter
     public Height getHeight() {
         return height;
     }
 
+    /**
+     * height's setter
+     *
+     * it is used when the player wants to build a dome when the actual height isn't a THIRD FLOOR
+     *
+     * @author Marco Re
+     * @param height is the new height of the cell
+     */
     // height's setter
     public void setHeight(Height height){
         this.height = height;
     }
 
+    /**
+     * add a level
+     *
+     * it is used to add a level in the cell
+     *
+     * @author Marco Re
+     */
     // height's adder
     public void buildFloor(){
         switch(this.height){
@@ -58,6 +100,7 @@ public class Cell {
      *
      * This method return the distance between two cells passed like parameters
      *
+     * @author Gianluca Regis
      * @param secondCell is the cell in which the distance finish
      * @return an array of two integer with the two coordinates x and y
      */
@@ -75,7 +118,7 @@ public class Cell {
     /**
      *check if the cell is adjacent to an other
      *
-     * @author Gianluca Regis
+     * @author Marco Re
      * @param cell the other cell
      * @return true if the cell is adjacent
      */
@@ -92,6 +135,15 @@ public class Cell {
             return false;
     }
 
+    /**
+     * compare two cells
+     *
+     * override the method equals of the class Object
+     *
+     * @author Marco Re
+     * @param o is the cell to compare
+     * @return true if two cells are equal
+     */
     // equals implementetion for cell
     @Override
     public boolean equals(Object o){
@@ -101,9 +153,17 @@ public class Cell {
 
         Cell other = (Cell) o;
 
-        return this.X == other.X && this.Y == other.Y && this.worker == other.worker;
+        return this.X == other.X && this.Y == other.Y && this.worker == other.worker && this.height == other.height;
     }
 
+    /**
+     * create a string which represents the attributes of the cell
+     *
+     * override the method toString of the class Object
+     *
+     * @author Marco Re
+     * @return true if two cells are equal
+     */
     @Override
     public String toString() {
         StringBuilder myCell = new StringBuilder();
