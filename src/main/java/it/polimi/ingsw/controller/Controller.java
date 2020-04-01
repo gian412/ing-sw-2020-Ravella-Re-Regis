@@ -21,8 +21,8 @@ public class Controller {
      * @param workerID the number representing the worker (0, 1)
      * @return true if the operation goes fine, false if not
      */
-    public boolean commitMove(Player player, Command command, int workerID){
-        if(game.getTurnPlayer().equals(player)){
+    public boolean commitMove(String player, Command command, int workerID){
+        if(game.getTurnPlayer().getNAME().equals(player)){
             try{
                 game.getTurnPlayer().getDivinity().makeMove(
                         game.getTurnPlayer().getWorkers()[workerID],
