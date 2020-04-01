@@ -60,7 +60,7 @@ public class Controller {
                     new Command(0,0, CommandType.RESET)
             );
         }catch(IllegalMoveException | NullPointerException x){
-            System.err.println(x.getMessage());
+            System.err.println(x.getMessage() + " controller generated");
         } finally {
             game.getTurnPlayer().setTurnPlayer(false);
             game.getBoard().changeTurnPlayer();
