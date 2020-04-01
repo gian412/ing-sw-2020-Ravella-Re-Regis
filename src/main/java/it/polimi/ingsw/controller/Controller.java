@@ -28,7 +28,8 @@ public class Controller {
                         game.getTurnPlayer().getWorkers()[workerID],
                         command
                 );
-            }catch(IllegalMoveException moveExc){
+            }catch(IllegalMoveException | NullPointerException exc){
+                System.err.println(exc.getMessage());
                 return  false;
             }
         }
