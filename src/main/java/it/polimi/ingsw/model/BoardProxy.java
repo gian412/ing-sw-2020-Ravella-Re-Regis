@@ -10,11 +10,15 @@ public class BoardProxy extends Observable<BoardProxy> {
 
     private Height[][] boardScheme;
     private Map<String, Pair> workers;
-    private Player winner;
+    private Player winner, turnPlayer;
 
     public BoardProxy(){
         boardScheme = new Height[5][5];
         workers = new HashMap<>();
+    }
+
+    public void setTurnPlayer(Player turnPlayer) {
+        this.turnPlayer = turnPlayer;
     }
 
     public void setWinner(Player player){
