@@ -4811,13 +4811,30 @@
 											"height": 13,
 											"text": "+changeTurnPlayer(): void",
 											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAFxNjxdJ7Z/NcM=",
+											"_parent": {
+												"$ref": "AAAAAAFw/WLVVOnUQ1Q="
+											},
+											"model": {
+												"$ref": "AAAAAAFxNjxc37ZnctM="
+											},
+											"font": "Arial;13;0",
+											"left": 1333,
+											"top": 588,
+											"width": 368.8369140625,
+											"height": 13,
+											"text": "+addWorker(): void",
+											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 1328,
 									"top": 523,
 									"width": 378.8369140625,
-									"height": 68
+									"height": 83
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -16209,6 +16226,25 @@
 									"_id": "AAAAAAFxByh9ZJ0Mf/Y=",
 									"_parent": {
 										"$ref": "AAAAAAFxBygrf5xg0K0="
+									},
+									"type": "void",
+									"direction": "return"
+								}
+							]
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAFxNjxc37ZnctM=",
+							"_parent": {
+								"$ref": "AAAAAAFw/WLVUunL0Ck="
+							},
+							"name": "addWorker",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFxNjyI2rf0OG4=",
+									"_parent": {
+										"$ref": "AAAAAAFxNjxc37ZnctM="
 									},
 									"type": "void",
 									"direction": "return"
