@@ -24,12 +24,12 @@ public class ArtemisTest {
 
         // Initialization of the first cell
         Cell firstCell = new Cell(0, 1);
-        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setHeight(Height.FIRST_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
         Cell secondCell = new Cell(1, 1);
-        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
         worker.setCurrentCell(firstCell);
@@ -68,12 +68,12 @@ public class ArtemisTest {
 
         // Initialization of the second cell
         Cell secondCell = new Cell(1, 1);
-        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setHeight(Height.GROUND);
         secondCell.setWorker(null);
 
         // Initialization of the third cell
         Cell thirdCell = new Cell(2, 1);
-        thirdCell.setHeight(Height.THIRD_FLOOR);
+        thirdCell.setHeight(Height.FIRST_FLOOR);
         thirdCell.setWorker(null);
 
         worker.setCurrentCell(firstCell);
