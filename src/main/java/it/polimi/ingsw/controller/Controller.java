@@ -36,6 +36,16 @@ public class Controller {
         return true;
     }
 
+    public boolean addWorker(int row, int column){
+        try {
+            game.getBoard().addWorker(row, column);
+        } catch (IllegalCellException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     /**adds the player to the game
      *
      * this function is called from the RemoteView at the beginning of the game, before the

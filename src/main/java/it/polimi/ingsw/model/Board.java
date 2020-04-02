@@ -122,7 +122,7 @@ public class Board {
         }
     }
 
-    /** TODO implement the method
+    /** TODO implement the method (adds a worker in [row, column], the worker is the turnplayer's one)
      *
      * @param row
      * @param column
