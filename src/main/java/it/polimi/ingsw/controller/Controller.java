@@ -36,6 +36,13 @@ public class Controller {
         return true;
     }
 
+    /**adds a worker to the board
+     *
+     * @author Elia Ravella
+     * @param row the x axis coordinate to be added
+     * @param column the y axis coordinate to be added
+     * @return true if can be added there, false if not
+     */
     public boolean addWorker(int row, int column){
         try {
             game.getBoard().addWorker(row, column);
