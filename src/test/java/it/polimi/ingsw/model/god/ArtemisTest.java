@@ -43,6 +43,7 @@ public class ArtemisTest {
 
 
         assertTrue("hadMove must be true", god.hadMove);
+        assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
         assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
 
     }
@@ -93,8 +94,9 @@ public class ArtemisTest {
 
 
         assertTrue("hadMove must be true", god.hadMove);
-        assertEquals("worker's position must be thirdCell", worker.getCurrentCell(), thirdCell);
         assertEquals("worker's previous position must be secondCell", worker.getCurrentCell(), secondCell);
+        assertEquals("worker's position must be thirdCell", worker.getCurrentCell(), thirdCell);
+
     }
 
     @Test
