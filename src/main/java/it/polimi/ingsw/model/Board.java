@@ -122,6 +122,16 @@ public class Board {
         }
     }
 
+    /** TODO implement the method
+     *
+     * @param row
+     * @param column
+     * @throws IllegalCellException
+     */
+    public void addWorker(int row, int column) throws IllegalCellException{
+
+    }
+
     /**
      * check the winning condition
      *
