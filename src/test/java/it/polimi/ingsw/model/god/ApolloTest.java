@@ -218,6 +218,7 @@ public class ApolloTest {
         }
 
         assertFalse( "hadWin must be false", god.hadWin );
+        assertNotSame("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
     }
 }
