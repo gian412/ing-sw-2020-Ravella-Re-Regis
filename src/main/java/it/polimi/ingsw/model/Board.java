@@ -176,34 +176,59 @@ public class Board {
     /**
      * check the winning condition
      *
-     * @author Gial+nluca regis
+     * @author Gianluca regis
      * @param worker the worker that the player have just moved
      * @return true if the player wins, false if the player doesn't win
      */
     // method that check if the worker had win after the last move
     public boolean checkWin(Worker worker){
 
-        byte heightDifference = worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight());
+        if (worker.getPreviousCell()!=null){
+            byte heightDifference = worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight());
 
-        //check the win with and without Pan
-        if (worker.getOwner().getDivinity().NAME.equals("PAN")){
-            if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
-                hadWin = worker;
-                proxy.setWinner(worker.getOwner());
-                proxy.updateProxy();
-                return true;
+            //check the win with and without Pan
+            if (worker.getOwner().getDivinity().NAME.equals("PAN")){
+                if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
+                    hadWin = worker;
+                    proxy.setWinner(worker.getOwner());
+                    proxy.updateProxy();
+                    return true;
+                } else{
+                    return false;
+                }
+
+            } else if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
+                if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || countCompleteTower()){
+                    hadWin = worker;
+                    proxy.setWinner(worker.getOwner());
+                    proxy.updateProxy();
+                    return true;
+                } else {
+                    return false;
+                }
             } else{
-                return false;
+                if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
+                    hadWin = worker;
+                    return true;
+                } else{
+                    return false;
+                }
             }
-
-        } else{
-            if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
-                hadWin = worker;
-                return true;
+        } else {
+            if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
+                if (countCompleteTower()){
+                    hadWin = worker;
+                    proxy.setWinner(worker.getOwner());
+                    proxy.updateProxy();
+                    return true;
+                } else {
+                    return false;
+                }
             } else{
                 return false;
             }
         }
+
 
     }
 
@@ -247,9 +272,7 @@ public class Board {
                 }
             }
         }
-        if (completedTowers >= 5)
-            return true;
-        return false;
+        return completedTowers >= 5;
     }
 
     /**
