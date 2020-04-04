@@ -11,7 +11,7 @@ public enum Height {
      * @return the difference between the two cells
      */
     // method that return the difference of height between two heights
-    public byte getDifference( Height that){
+    public byte getDifference(Height that){
 
         switch (this){
             case GROUND:

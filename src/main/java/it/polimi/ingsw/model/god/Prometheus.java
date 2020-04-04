@@ -4,7 +4,7 @@ import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.model.*;
 
 public class Prometheus extends God {
-    private boolean hadBuildSecond;
+    protected boolean hadBuildBefore;
 
     /**
      * Class' constructor that use the super class' constructor
@@ -15,7 +15,7 @@ public class Prometheus extends God {
     // class constructor with the initialization of board using the super constructor
     public Prometheus(Board board) {
         super(board, "PROMETHEUS");
-        this.hadBuildSecond = false;
+        this.hadBuildBefore = false;
     }
 
     /**
@@ -34,6 +34,66 @@ public class Prometheus extends God {
      */
     @Override
     public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
+        if (command!=null){
+            Cell cell = board.getCell(command.cellX, command.cellY);
+
+            switch (command.commandType){
+                case MOVE:
+                    if (!hadMove && !hadBuild && !hadWin && (!hadBuildBefore || (hadBuildBefore &&
+                            worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())<1))){
+
+                        try {
+                            super.move(worker, cell);
+                            hadMove = true;
+                            hadWin = board.checkWin(worker);
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException();
+                        }
+
+                    } else{
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD:
+                    if ( !hadBuildBefore && !hadMove && !hadBuild && !hadWin ){
+                        super.build(cell, false);
+                        hadBuildBefore = true;
+                        break;
+                    } else if ( hadMove && !hadBuild && !hadWin ){
+                        super.build(cell, false);
+                        hadBuild = true;
+                        break;
+                    } else {
+                        throw new IllegalMoveException();
+                    }
+
+                case BUILD_DOME:
+                    if ( !hadBuildBefore && !hadMove && !hadBuild && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
+                        super.build(cell, false);
+                        hadBuildBefore = true;
+                        break;
+                    } else if ( hadMove && !hadBuild && !hadWin && cell.getHeight() == Height.THIRD_FLOOR ){
+                        super.build(cell, false);
+                        hadBuild = true;
+                        break;
+                    } else {
+                        throw new IllegalMoveException();
+                    }
+
+                case RESET:
+                    this.resetLocalVariables();
+                    break;
+
+                default:
+                    throw new IllegalMoveException();
+            }
+        } else{
+            throw new NullPointerException();
+        }
+    }
+
+    /*public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
         if (command!=null){
             Cell cell = board.getCell(command.cellX, command.cellY);
 
@@ -108,7 +168,7 @@ public class Prometheus extends God {
         } else{
             throw new NullPointerException();
         }
-    }
+    }*/
 
     /**
      * Reset local variable for class Prometheus using the super method and adding local variables
@@ -118,6 +178,6 @@ public class Prometheus extends God {
     @Override
     protected void resetLocalVariables() {
         super.resetLocalVariables();
-        this.hadBuildSecond = false;
+        this.hadBuildBefore = false;
     }
 }
