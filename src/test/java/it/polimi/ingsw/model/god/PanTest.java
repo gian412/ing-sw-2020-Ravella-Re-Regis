@@ -122,8 +122,8 @@ public class PanTest {
     }
 
     @Test
-    @DisplayName("hadWin = true")
-    public void hadWinJumpingDownTest(){
+    @DisplayName("hadWin = true moving down more then two level")
+    public void hadWinMovingDownTest(){
 
         // Initialization of the parameters
         Board board = new Board();

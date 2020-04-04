@@ -123,7 +123,7 @@ public class DemeterTest {
     }
 
     @Test
-    @DisplayName("hadBuildSecond")
+    @DisplayName("hadBuildSecond not a dome")
     public void hadBuildSecondNotDomeTest(){
 
         // Initialization of the parameters
@@ -182,7 +182,7 @@ public class DemeterTest {
     }
 
     @Test
-    @DisplayName("hadBuildSecond")
+    @DisplayName("hadBuildSecond dome")
     public void hadBuildSecondDomeTest(){
 
         // Initialization of the parameters

@@ -123,7 +123,7 @@ public class PrometheusTest {
     }
 
     @Test
-    @DisplayName("hadBuildSecond")
+    @DisplayName("hadBuildSecond not a dome")
     public void hadBuildSecondNotDomeTest(){
 
         // Initialization of the parameters
@@ -178,7 +178,7 @@ public class PrometheusTest {
     }
 
     @Test
-    @DisplayName("hadBuildSecond")
+    @DisplayName("hadBuildSecond a dome")
     public void hadBuildSecondDomeTest(){
 
         // Initialization of the parameters

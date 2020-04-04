@@ -85,7 +85,7 @@ public class AtlasTest {
     }
 
     @Test
-    @DisplayName("hadBuild a dome")
+    @DisplayName("hadBuild a dome in right position")
     public void hadBuildDomeInRightPositionTest(){
 
         // Initialization of the parameters
@@ -122,7 +122,7 @@ public class AtlasTest {
     }
 
     @Test
-    @DisplayName("hadBuild a dome")
+    @DisplayName("hadBuild a dome in an other position")
     public void hadBuildDomeInOtherPositionTest(){
 
         // Initialization of the parameters

@@ -12,7 +12,7 @@ import static org.junit.Assert.assertFalse;
 public class AthenaTest {
 
     @Test
-    @DisplayName("hadMove")
+    @DisplayName("hadMove no upward")
     public void hadMoveNoUpwardTest(){
 
         // Initialization of the parameters

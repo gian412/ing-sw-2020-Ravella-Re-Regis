@@ -123,7 +123,7 @@ public class HephaestusTest {
     }
 
     @Test
-    @DisplayName("hadBuildSecond")
+    @DisplayName("hadBuildSecond not a dome")
     public void hadBuildSecondNotDomeTest(){
 
         // Initialization of the parameters
@@ -168,12 +168,6 @@ public class HephaestusTest {
             System.err.println("Error e2 in method hadBuildSecondTest in class HephaestusTest :" + e2.toString());
             fail("Exception in hadBuildSecondNotDomeTest in class HephaestusTest");
         }
-
-
-
-
-
-
     }
 
     @Test
