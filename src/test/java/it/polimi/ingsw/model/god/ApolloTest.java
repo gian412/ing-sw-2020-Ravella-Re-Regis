@@ -36,13 +36,14 @@ public class ApolloTest {
 
         try {
             god.makeMove(worker, command);
+
+            assertTrue("hadMove must be true", god.hadMove);
+            assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
+            assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
+
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadMoveTest in class ApolloTest: " + e.toString());
         }
-
-        assertTrue("hadMove must be true", god.hadMove);
-        assertSame("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
-        assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
     }
 
     @Test
@@ -74,15 +75,18 @@ public class ApolloTest {
 
         try {
             god.makeMove(worker1, command);
+
+            assertTrue("hadMove must be true", god.hadMove);
+            assertEquals("worker1's previous position must be firstCell", worker1.getCurrentCell(), firstCell);
+            assertEquals("worker1's position must be secondCell", worker1.getCurrentCell(), secondCell);
+            assertEquals("worker2's previous position must be secondCell", worker2.getPreviousCell(), secondCell);
+            assertEquals("worker2's position must be forced to be firstCell", worker2.getCurrentCell(), firstCell);
+
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadMoveAndForcedTest in class ApolloTest: " + e.toString());
         }
 
-        assertTrue("hadMove must be true", god.hadMove);
-        assertEquals("worker1's previous position must be firstCell", worker1.getCurrentCell(), firstCell);
-        assertEquals("worker1's position must be secondCell", worker1.getCurrentCell(), secondCell);
-        assertEquals("worker2's previous position must be secondCell", worker2.getPreviousCell(), secondCell);
-        assertEquals("worker2's position must be forced to be firstCell", worker2.getCurrentCell(), firstCell);
+
     }
 
     @Test
@@ -112,12 +116,13 @@ public class ApolloTest {
 
         try {
             god.makeMove(worker, command);
+
+            assertTrue("hadBuild must be true", god.hadBuild);
+            assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
+
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadBuildNotDomeTest in class ApolloTest: " + e.toString());
         }
-
-        assertTrue("hadBuild must be true", god.hadBuild);
-        assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
     }
 
     @Test
@@ -147,12 +152,13 @@ public class ApolloTest {
 
         try {
             god.makeMove(worker, command);
+
+            assertTrue("hadBuild must be true", god.hadBuild);
+            assertEquals("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
+
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadBuildDomeTest in class ApolloTest: " + e.toString());
         }
-
-        assertTrue("hadBuild must be true", god.hadBuild);
-        assertEquals("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
     }
 
     @Test
@@ -181,13 +187,13 @@ public class ApolloTest {
 
         try{
             god.makeMove(worker, command);
+
+            assertTrue( "hadWin must be true", god.hadWin );
+            assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
+
         } catch (IllegalMoveException e){
             System.err.println("Error e in method hadWinYesTest in class ApolloTest: " + e.toString());
         }
-
-        assertTrue( "hadWin must be true", god.hadWin );
-        assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
-
     }
 
     @Test
@@ -216,12 +222,12 @@ public class ApolloTest {
 
         try{
             god.makeMove(worker, command);
+
+            assertFalse( "hadWin must be false", god.hadWin );
+            assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
+
         } catch (IllegalMoveException e){
             System.err.println("Error e in method hadWinNoTest in class ApolloTest: " + e.toString());
         }
-
-        assertFalse( "hadWin must be false", god.hadWin );
-        assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
-
     }
 }
