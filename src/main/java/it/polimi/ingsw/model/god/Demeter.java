@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.*;
 
 public class Demeter extends God {
 
-    private boolean hadBuildSecond;
+    protected boolean hadBuildSecond;
     private Cell previousCell = null;
 
     /**
