@@ -24,14 +24,14 @@ public class AthenaTest {
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.SECOND_FLOOR);
-        secondCell.setWorker(null);assertFalse("Worker.canMoveUp must be true", worker.isCanMoveUp());
+        secondCell.setWorker(null);
 
         worker.setCurrentCell(firstCell);
 
@@ -45,6 +45,7 @@ public class AthenaTest {
 
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadMoveTest in class AthenaTest: " + e.toString());
+            fail("Exception in hadMoveNoUpwardTest in class AthenaTest");
         }
     }
 
@@ -61,12 +62,12 @@ public class AthenaTest {
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.FIRST_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -82,6 +83,7 @@ public class AthenaTest {
 
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadMoveTest in class AthenaTest: " + e.toString());
+            fail("Exception in hadMoveUpwardTest in class AthenaTest");
         }
     }
 
@@ -99,12 +101,12 @@ public class AthenaTest {
         god.hadMove = true;
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -118,6 +120,7 @@ public class AthenaTest {
 
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadBuildNotDomeTest in class AthenaTest: " + e.toString());
+            fail("Exception in hadBuildNotDomeTest in class AthenaTest");
         }
     }
 
@@ -135,12 +138,12 @@ public class AthenaTest {
         god.hadMove = true;
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -154,6 +157,7 @@ public class AthenaTest {
 
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadBuildDomeTest in class AthenaTest: " + e.toString());
+            fail("Exception in habBuildDomeTest in class AthenaTest");
         }
     }
 
@@ -170,12 +174,12 @@ public class AthenaTest {
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -189,6 +193,7 @@ public class AthenaTest {
 
         } catch (IllegalMoveException e){
             System.err.println("Error e in method hadWinYesTest in class AthenaTest: " + e.toString());
+            fail("Exception in hadWinYesTest in class AthenaTest");
         }
     }
 
@@ -205,12 +210,12 @@ public class AthenaTest {
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -223,6 +228,7 @@ public class AthenaTest {
 
         } catch (IllegalMoveException e){
             System.err.println("Error e in method hadWinNoTest in class AthenaTest: " + e.toString());
+            fail("Exception in hadWinNoTest in class AthenaTest");
         }
     }
 

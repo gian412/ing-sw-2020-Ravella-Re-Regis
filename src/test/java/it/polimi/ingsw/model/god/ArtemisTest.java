@@ -23,12 +23,12 @@ public class ArtemisTest {
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.FIRST_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -43,6 +43,7 @@ public class ArtemisTest {
 
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadMoveTest in class ArtemisTest: " + e.toString());
+            fail("Exception in hadMoveTest in class ArtemisTest");
         }
     }
 
@@ -60,12 +61,12 @@ public class ArtemisTest {
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.GROUND);
         secondCell.setWorker(null);
 
@@ -92,9 +93,11 @@ public class ArtemisTest {
 
             } catch (IllegalMoveException e1) {
                 System.err.println("Error e1 in method hadMoveSecondTest in class ArtemisTest : " + e1.toString());
+                fail("Exception in hadMoveSecondTest in class ArtemisTest");
             }
         } catch (IllegalMoveException e2) {
             System.err.println("Error e2 in method hadMoveSecondTest in class ArtemisTest :" + e2.toString());
+            fail("Exception in hadMoveSecondTest in class ArtemisTest");
         }
 
 
@@ -118,12 +121,12 @@ public class ArtemisTest {
         god.hadMove = true;
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -137,6 +140,7 @@ public class ArtemisTest {
 
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadBuildNotDomeTest in class ArtemisTest: " + e.toString());
+            fail("Exception in hadBuildNotDomeTest in class ArtemisTest");
         }
     }
 
@@ -154,12 +158,12 @@ public class ArtemisTest {
         god.hadMove = true;
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -173,6 +177,7 @@ public class ArtemisTest {
 
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadBuildDomeTest in class ArtemisTest: " + e.toString());
+            fail("Exception in hadBuildDomeTest in class ArtemisTest");
         }
     }
 
@@ -189,12 +194,12 @@ public class ArtemisTest {
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -208,6 +213,7 @@ public class ArtemisTest {
 
         } catch (IllegalMoveException e){
             System.err.println("Error e in method hadWinYesTest in class ArtemisTest: " + e.toString());
+            fail("Exception in hadWinYesTest in class ArtemisTest");
         }
     }
 
@@ -224,12 +230,12 @@ public class ArtemisTest {
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -242,6 +248,7 @@ public class ArtemisTest {
 
         } catch (IllegalMoveException e){
             System.err.println("Error e in method hadWinNoTest in class ArtemisTest: " + e.toString());
+            fail("Exception in hadWinNoTest in class ArtemisTest");
         }
     }
 

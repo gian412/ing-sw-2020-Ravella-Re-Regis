@@ -23,12 +23,12 @@ public class ApolloTest {
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.FIRST_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1, 1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -43,6 +43,7 @@ public class ApolloTest {
 
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadMoveTest in class ApolloTest: " + e.toString());
+            fail("Exception in hadMoveTest in class ApolloTest");
         }
     }
 
@@ -61,12 +62,12 @@ public class ApolloTest {
         Worker worker2 = new Worker("Id2", player2);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.FIRST_FLOOR);
         firstCell.setWorker(worker1);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(worker2);
 
@@ -84,6 +85,7 @@ public class ApolloTest {
 
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadMoveAndForcedTest in class ApolloTest: " + e.toString());
+            fail("Exception in hadMoveAndForcedTest in class ApolloTest");
         }
 
 
@@ -103,12 +105,12 @@ public class ApolloTest {
         god.hadMove = true;
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -122,6 +124,7 @@ public class ApolloTest {
 
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadBuildNotDomeTest in class ApolloTest: " + e.toString());
+            fail("Exception in hadBuildNotDomeTest in class ApolloTest");
         }
     }
 
@@ -139,12 +142,12 @@ public class ApolloTest {
         god.hadMove = true;
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -158,6 +161,7 @@ public class ApolloTest {
 
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method hadBuildDomeTest in class ApolloTest: " + e.toString());
+            fail("Exception in hadBuildDomeTest in class ApolloTest");
         }
     }
 
@@ -174,12 +178,12 @@ public class ApolloTest {
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -193,6 +197,7 @@ public class ApolloTest {
 
         } catch (IllegalMoveException e){
             System.err.println("Error e in method hadWinYesTest in class ApolloTest: " + e.toString());
+            fail("Exception in hadWinYesTest in class ApolloTest");
         }
     }
 
@@ -209,12 +214,12 @@ public class ApolloTest {
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = new Cell(0, 1);
+        Cell firstCell = board.getCell(0,1);
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = new Cell(1, 1);
+        Cell secondCell = board.getCell(1,1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -228,6 +233,7 @@ public class ApolloTest {
 
         } catch (IllegalMoveException e){
             System.err.println("Error e in method hadWinNoTest in class ApolloTest: " + e.toString());
+            fail("Exception in hadWinNoTest in class ApolloTest");
         }
     }
 }
