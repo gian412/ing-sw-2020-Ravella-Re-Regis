@@ -20,6 +20,9 @@ public class Player {
         this.NAME = name;
         this.age = age;
         this.isTurnPlayer = false;
+
+        workers[0] = new Worker(this.NAME + "0", this);
+        workers[1] = new Worker(this.NAME + "1", this);
     }
 
     //NAME's get
@@ -59,12 +62,6 @@ public class Player {
 
     public Player getNextPlayer() {
         return nextPlayer;
-    }
-
-    // workers[]'s setter and getter
-    public void setWorkers() {
-        workers[0] = new Worker(this.NAME + "0", this);
-        workers[1] = new Worker(this.NAME + "1", this);
     }
 
     public Worker[] getWorkers(){

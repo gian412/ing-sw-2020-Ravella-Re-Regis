@@ -84,13 +84,13 @@ public abstract class God {
      */
     public void build(Cell cell, boolean isDome) throws IllegalMoveException {
         // build
-        if( cell.getWorker() != null && cell.getHeight() != Height.DOME && isDome ){
+        if( cell.getWorker() == null && cell.getHeight() != Height.DOME && isDome ){
             try {
                 board.build( cell, true );
             } catch (IllegalMoveException e){
                 throw new IllegalMoveException();
             }
-        }else if( cell.getWorker() != null && cell.getHeight() != Height.DOME && !isDome){
+        }else if( cell.getWorker() == null && cell.getHeight() != Height.DOME && !isDome){
             try{
                 board.build( cell, false );
             } catch (IllegalMoveException e) {
