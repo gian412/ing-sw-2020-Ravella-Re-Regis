@@ -2,11 +2,7 @@ package it.polimi.ingsw.model.god;
 
 
 import it.polimi.ingsw.controller.Command;
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.IllegalMoveException;
-import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.Height;
+import it.polimi.ingsw.model.*;
 
 public class Minotaur extends God {
 
@@ -42,8 +38,8 @@ public class Minotaur extends God {
                 throw new IllegalMoveException();
             }
         } else{
-            int[] direction = worker.getCurrentCell().getDirection( cell );
-            Cell nextCell =  board.getCell( cell.X + direction[0], cell.Y + direction[1] );
+            Pair direction = worker.getCurrentCell().getDirection( cell );
+            Cell nextCell =  board.getCell( cell.X + direction.x, cell.Y + direction.y );
             if( nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME){
                 Worker otherWorker = cell.getWorker();
                 try {

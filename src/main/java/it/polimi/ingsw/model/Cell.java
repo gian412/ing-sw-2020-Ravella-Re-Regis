@@ -105,14 +105,16 @@ public class Cell {
      * @return an array of two integer with the two coordinates x and y
      */
     // method that return the direction of the movement of the worker
-    public int[] getDirection(Cell secondCell){
+    public Pair getDirection(Cell secondCell){
 
         int[] direction = new int[2];
 
         direction[0] = secondCell.X - this.X;
         direction[1] = secondCell.Y - this.Y;
 
-        return direction;
+        Pair pair = new Pair(direction[0], direction[1]);
+
+        return pair;
     }
 
     /**
