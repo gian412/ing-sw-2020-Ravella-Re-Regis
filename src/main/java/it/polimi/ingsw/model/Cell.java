@@ -162,7 +162,7 @@ public class Cell {
      * override the method toString of the class Object
      *
      * @author Marco Re
-     * @return the string which represents the cell
+     * @return the string which represents the Cell
      */
     @Override
     public String toString() {
