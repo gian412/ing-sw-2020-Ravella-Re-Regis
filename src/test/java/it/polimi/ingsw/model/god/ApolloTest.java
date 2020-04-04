@@ -67,7 +67,7 @@ public class ApolloTest {
         // Initialization of the second cell
         Cell secondCell = new Cell(1, 1);
         secondCell.setHeight(Height.SECOND_FLOOR);
-        secondCell.setWorker(null);
+        secondCell.setWorker(worker2);
 
         worker1.setCurrentCell(firstCell);
         worker2.setCurrentCell(secondCell);
@@ -152,7 +152,7 @@ public class ApolloTest {
         }
 
         assertTrue("hadBuild must be true", god.hadBuild);
-        assertSame("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
+        assertEquals("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
     }
 
     @Test
@@ -186,7 +186,7 @@ public class ApolloTest {
         }
 
         assertTrue( "hadWin must be true", god.hadWin );
-        assertSame("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
+        assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
     }
 
@@ -221,7 +221,7 @@ public class ApolloTest {
         }
 
         assertFalse( "hadWin must be false", god.hadWin );
-        assertNotSame("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
+        assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
     }
 }
