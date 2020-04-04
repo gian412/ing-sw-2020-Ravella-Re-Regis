@@ -81,16 +81,11 @@ public class Board {
         if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5)){
             if(isDome){
                 cell.setHeight(Height.DOME);
-
-                //update proxyBoard after a legal construction
-                this.updateProxyBoard();
             }
             else {
                 cell.buildFloor();
-
-                //update proxyBoard after a legal construction
-                this.updateProxyBoard();
             }
+            this.updateProxyBoard();
         }
         else{
             throw new IllegalMoveException();
@@ -126,9 +121,36 @@ public class Board {
      *
      * @param row
      * @param column
-     * @throws IllegalCellException
+     * @throws IllegalCellException, IllegalAddException
      */
-    public void addWorker(int row, int column) throws IllegalCellException{
+    public void addWorker(int row, int column) throws IllegalCellException, IllegalAddException{
+
+        // check if the two workers are alredy set with the first cell
+        if( (this.turnPlayer.getWorkers()[0].getCurrentCell() == null) || (this.turnPlayer.getWorkers()[1].getCurrentCell() == null)) {
+            // check if the cell where the player wants to put the workers exists and is free
+            if( (this.getCell(row, column).getHeight() == Height.GROUND) && (this.getCell(row, column).getWorker() == null) && (row >= 0) && (row < 5) && (column >= 0) && (column < 5)) {
+                //check if th first worker is already set
+                if(this.turnPlayer.getWorkers()[0].getCurrentCell() == null){
+                    //add the first worker
+                    this.getCell(row, column).setWorker(this.turnPlayer.getWorkers()[0]);
+                    this.turnPlayer.getWorkers()[0].setCurrentCell(this.getCell(row, column));
+                }
+
+                else{
+                    //add the second worker
+                    this.getCell(row, column).setWorker(this.turnPlayer.getWorkers()[1]);
+                    this.turnPlayer.getWorkers()[0].setCurrentCell(this.getCell(row, column));
+                }
+
+            }
+            else{
+                throw new IllegalCellException();
+            }
+        }
+
+        else{
+            throw new IllegalAddException();
+        }
 
     }
 
