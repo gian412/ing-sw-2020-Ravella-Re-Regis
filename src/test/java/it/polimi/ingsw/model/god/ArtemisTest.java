@@ -71,7 +71,7 @@ public class ArtemisTest {
         secondCell.setWorker(null);
 
         // Initialization of the third cell
-        Cell thirdCell = new Cell(2, 1);
+        Cell thirdCell = board.getCell(2, 1);
         thirdCell.setHeight(Height.FIRST_FLOOR);
         thirdCell.setWorker(null);
 
@@ -81,14 +81,14 @@ public class ArtemisTest {
             god.makeMove(worker, firstCommand);
 
             assertTrue("hadMove must be true", god.hadMove);
-            assertEquals("worker's previous position must be firstCell", worker.getCurrentCell(), firstCell);
+            assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
 
             try {
                 god.makeMove(worker, secondCommand);
 
                 assertTrue("hadMoveSecond must be true", god.hadMoveSecond);
-                assertEquals("worker's previous position must be secondCell", worker.getCurrentCell(), secondCell);
+                assertEquals("worker's previous position must be secondCell", worker.getPreviousCell(), secondCell);
                 assertEquals("worker's position must be thirdCell", worker.getCurrentCell(), thirdCell);
 
             } catch (IllegalMoveException e1) {

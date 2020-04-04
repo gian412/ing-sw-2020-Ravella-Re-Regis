@@ -35,12 +35,12 @@ public class Apollo extends God{
      */
     @Override
     public void move(Worker worker, Cell cell) throws IllegalMoveException {
-        if( cell.getWorker() == null ){
+        if( cell.getWorker() == null ){ // worker can move without forcing anyone
             if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
                 if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){
                     try {
-                        board.moveWorker(worker, cell);
-                        hadWin = board.checkWin(worker);
+                        board.moveWorker(worker, cell); // move the worker
+                        hadWin = board.checkWin(worker); // check the win
                     } catch (IllegalMoveException e){
                         throw new IllegalMoveException();
                     }
@@ -50,17 +50,22 @@ public class Apollo extends God{
             }else{
                 throw new IllegalMoveException();
             }
-        }else{
-            if (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0){
-                Worker otherWorker = cell.getWorker();
-                Cell actualCell = worker.getCurrentCell();
-                try {
-                    board.moveWorker(worker, cell);
-                    board.moveWorker(otherWorker, actualCell);
-                } catch (IllegalMoveException e) {
+        }else{ // worker had to force the otherWorker to exchange position with him
+            if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
+                if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){
+                    try {
+                        Worker otherWorker = cell.getWorker();
+                        Cell actualCell = worker.getCurrentCell();
+                        board.moveWorker(worker, cell); // move the worker
+                        board.moveWorker(otherWorker, actualCell); // force otherWorker
+                        hadWin = board.checkWin(worker); // check the win
+                    } catch (IllegalMoveException e){
+                        throw new IllegalMoveException();
+                    }
+                } else{
                     throw new IllegalMoveException();
                 }
-            } else{
+            }else{
                 throw new IllegalMoveException();
             }
 

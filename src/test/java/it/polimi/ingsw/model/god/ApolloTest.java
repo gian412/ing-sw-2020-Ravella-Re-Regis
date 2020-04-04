@@ -78,7 +78,7 @@ public class ApolloTest {
             god.makeMove(worker1, command);
 
             assertTrue("hadMove must be true", god.hadMove);
-            assertEquals("worker1's previous position must be firstCell", worker1.getCurrentCell(), firstCell);
+            assertEquals("worker1's previous position must be firstCell", worker1.getPreviousCell(), firstCell);
             assertEquals("worker1's position must be secondCell", worker1.getCurrentCell(), secondCell);
             assertEquals("worker2's previous position must be secondCell", worker2.getPreviousCell(), secondCell);
             assertEquals("worker2's position must be forced to be firstCell", worker2.getCurrentCell(), firstCell);
