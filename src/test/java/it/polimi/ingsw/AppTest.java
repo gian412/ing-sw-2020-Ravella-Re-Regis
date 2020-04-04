@@ -31,8 +31,8 @@ public class AppTest
         apolloTest.hadMoveAndForcedTest();
         apolloTest.hadBuildNotDomeTest();
         apolloTest.hadBuildDomeTest();
-        apolloTest.hadWinYesTest();
-        apolloTest.hadWinNoTest();
+        apolloTest.HadWinTrueTest();
+        apolloTest.HadWinFalseTest();
 
         // class Artemis
         ArtemisTest artemisTest = new ArtemisTest();
@@ -40,8 +40,8 @@ public class AppTest
         artemisTest.hadMoveSecondTest();
         artemisTest.hadBuildNotDomeTest();
         artemisTest.hadBuildDomeTest();
-        artemisTest.hadWinYesTest();
-        artemisTest.hadWinNoTest();
+        artemisTest.HadWinTrueTest();
+        artemisTest.HadWinFalseTest();
     }
 
 }

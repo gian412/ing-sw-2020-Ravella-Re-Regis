@@ -167,7 +167,7 @@ public class ApolloTest {
 
     @Test
     @DisplayName("hadWin = true")
-    public void hadWinYesTest(){
+    public void HadWinTrueTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -196,14 +196,14 @@ public class ApolloTest {
             assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method hadWinYesTest in class ApolloTest: " + e.toString());
-            fail("Exception in hadWinYesTest in class ApolloTest");
+            System.err.println("Error e in method HadWinTrueTest in class ApolloTest: " + e.toString());
+            fail("Exception in HadWinTrueTest in class ApolloTest");
         }
     }
 
     @Test
     @DisplayName("hadWin = false")
-    public void hadWinNoTest(){
+    public void HadWinFalseTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -232,8 +232,8 @@ public class ApolloTest {
             assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method hadWinNoTest in class ApolloTest: " + e.toString());
-            fail("Exception in hadWinNoTest in class ApolloTest");
+            System.err.println("Error e in method HadWinFalseTest in class ApolloTest: " + e.toString());
+            fail("Exception in HadWinFalseTest in class ApolloTest");
         }
     }
 

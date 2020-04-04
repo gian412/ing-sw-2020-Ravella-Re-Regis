@@ -218,7 +218,7 @@ public class HephaestusTest {
 
     @Test
     @DisplayName("hadWin = true")
-    public void hadWinYesTest(){
+    public void HadWinTrueTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -247,14 +247,14 @@ public class HephaestusTest {
             assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method hadWinYesTest in class HephaestusTest: " + e.toString());
-            fail("Exception in hadWinYesTest in class HephaestusTest");
+            System.err.println("Error e in method HadWinTrueTest in class HephaestusTest: " + e.toString());
+            fail("Exception in HadWinTrueTest in class HephaestusTest");
         }
     }
 
     @Test
     @DisplayName("hadWin = false")
-    public void hadWinNoTest(){
+    public void HadWinFalseTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -283,8 +283,8 @@ public class HephaestusTest {
             assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method hadWinNoTest in class HephaestusTest: " + e.toString());
-            fail("Exception in hadWinNoTest in class HephaestusTest");
+            System.err.println("Error e in method HadWinFalseTest in class HephaestusTest: " + e.toString());
+            fail("Exception in HadWinFalseTest in class HephaestusTest");
         }
     }
 
