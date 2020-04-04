@@ -179,4 +179,11 @@ public class Cell {
 
         return myCell.toString();
     }
-}
+
+
+    /**
+     *
+     * @param canMoveUp
+     */
+    // canMoveUp's set and reset
+    public void setCanMoveUp( boolean canMoveUp ){/*Player.canMoveUp = canMoveUp*/}
