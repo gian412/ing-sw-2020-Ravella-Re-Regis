@@ -46,7 +46,7 @@ public class Controller {
     public boolean addWorker(int row, int column){
         try {
             game.getBoard().addWorker(row, column);
-        } catch (IllegalCellException e) {
+        } catch (IllegalCellException | IllegalAddException e) {
             e.printStackTrace();
             return false;
         }
