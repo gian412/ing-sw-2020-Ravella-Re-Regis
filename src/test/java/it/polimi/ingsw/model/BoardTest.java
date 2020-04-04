@@ -45,14 +45,13 @@ public class BoardTest {
 
         Board board = new Board();
         Player player = new Player("player1", 10);
-        Worker worker = new Worker("worker1", player);
+        Worker worker = new Worker("player10", player);
+        board.setTurnPlayer(player);
 
         try{
             board.addWorker(1 ,1 );
         }
-        catch (IllegalAddException e) {
-            System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
-        } catch (IllegalCellException e) {
+        catch (IllegalAddException | IllegalCellException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
         }
 
@@ -62,8 +61,9 @@ public class BoardTest {
         worker.setCurrentCell(cell);
 
 
-        /*assertTrue("previousCell in worker is the old current cell and currentCell is the new cell",
-                worker.getCurrentCell().equals(newCell) && worker.getPreviousCell().equals(oldCell));*/
+        assertTrue("now there is a worker in the cell 1,1 and below to player1",
+                board.getCell(1,1).getWorker().WORKER_ID.equals(worker.WORKER_ID)  &&
+                            player.getWorkers()[0].WORKER_ID.equals(worker.WORKER_ID) );
 
 
     }
