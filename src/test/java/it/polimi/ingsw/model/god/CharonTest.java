@@ -7,56 +7,17 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertFalse;
 
-public class AthenaTest {
+public class CharonTest {
 
     @Test
-    @DisplayName("hadMoved no upward")
-    public void hadMovedNoUpwardTest(){
+    @DisplayName("hadMoved")
+    public void hadMovedTest(){
 
         // Initialization of the parameters
         Board board = new Board();
         Command command = new Command(1, 1, CommandType.MOVE);
-        God god = new Athena(board);
-        Player player = new Player("Name", 18);
-        player.setDivinity(god);
-        Worker worker = new Worker("Id", player);
-
-        // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
-        firstCell.setHeight(Height.SECOND_FLOOR);
-        firstCell.setWorker(worker);
-
-        // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
-        secondCell.setHeight(Height.SECOND_FLOOR);
-        secondCell.setWorker(null);
-
-        worker.setCurrentCell(firstCell);
-
-        try {
-            god.makeMove(worker, command);
-
-            assertTrue("hadMoved must be true", god.hadMoved);
-            assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
-            assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
-            assertTrue("Worker.canMoveUp must be true", worker.isCanMoveUp());
-
-        } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMovedTest in class AthenaTest: " + e.toString());
-            fail("Exception in hadMovedNoUpwardTest in class AthenaTest");
-        }
-    }
-
-    @Test
-    @DisplayName("hadMoved upward")
-    public void hadMovedUpwardTest(){
-
-        // Initialization of the parameters
-        Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
-        God god = new Athena(board);
+        God god = new Charon(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
@@ -67,7 +28,7 @@ public class AthenaTest {
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(1, 1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -79,11 +40,56 @@ public class AthenaTest {
             assertTrue("hadMoved must be true", god.hadMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
-            assertFalse("Worker.canMoveUp must be true", worker.isCanMoveUp());
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMovedTest in class AthenaTest: " + e.toString());
-            fail("Exception in hadMovedUpwardTest in class AthenaTest");
+            System.err.println("Error e in method hadMovedTest in class CharonrTest: " + e.toString());
+            fail("Exception in hadMovedTest in class CharonTest");
+        }
+    }
+
+    @Test
+    @DisplayName("hadForced")
+    public void hadForcedTest(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(2, 1, CommandType.FORCE);
+        Charon god = new Charon(board);
+        Player player1 = new Player("Name", 18);
+        Player player2 = new Player("otherName", 20);
+        player1.setDivinity(god);
+        Worker worker1 = new Worker("Id 1", player1);
+        Worker worker2 = new Worker("Id 2", player2);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(1,1);
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker1);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(2, 1);
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(worker2);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(0, 1);
+        thirdCell.setHeight(Height.SECOND_FLOOR);
+        thirdCell.setWorker(null);
+
+        worker1.setCurrentCell(firstCell);
+        worker2.setCurrentCell(secondCell);
+
+        try {
+            god.makeMove(worker1, command);
+
+            assertTrue("hadMoved must be true", god.hadForced);
+            assertEquals("worker1's position must be firstCell", worker1.getCurrentCell(), firstCell);
+            assertEquals("worker2's previous position must be firstCell", worker2.getPreviousCell(), secondCell);
+            assertEquals("worker2's position must be secondCell", worker2.getCurrentCell(), thirdCell);
+
+        } catch (IllegalMoveException e) {
+            System.err.println("Error e in method hadForcedTest in class CharonTest: " + e.toString());
+            fail("Exception in hadForcedTest in class CharonTest");
         }
     }
 
@@ -94,7 +100,7 @@ public class AthenaTest {
         // Initialization of the parameters
         Board board = new Board();
         Command command = new Command(1, 1, CommandType.BUILD);
-        God god = new Athena(board);
+        God god = new Charon(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
@@ -119,8 +125,8 @@ public class AthenaTest {
             assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadBuildNotDomeTest in class AthenaTest: " + e.toString());
-            fail("Exception in hadBuildNotDomeTest in class AthenaTest");
+            System.err.println("Error e in method hadBuildNotDomeTest in class CharonTest: " + e.toString());
+            fail("Exception in hadBuildNotDomeTest in class CharonTest");
         }
     }
 
@@ -131,7 +137,7 @@ public class AthenaTest {
         // Initialization of the parameters
         Board board = new Board();
         Command command = new Command(1, 1, CommandType.BUILD_DOME);
-        God god = new Athena(board);
+        God god = new Charon(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
@@ -153,11 +159,11 @@ public class AthenaTest {
             god.makeMove(worker, command);
 
             assertTrue("hadBuild must be true", god.hadBuild);
-            assertSame("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
+            assertEquals("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadBuildDomeTest in class AthenaTest: " + e.toString());
-            fail("Exception in habBuildDomeTest in class AthenaTest");
+            System.err.println("Error e in method hadBuildDomeTest in class CharonTest: " + e.toString());
+            fail("Exception in hadBuildDomeTest in class CharonTest");
         }
     }
 
@@ -168,7 +174,7 @@ public class AthenaTest {
         // Initialization of the parameters
         Board board = new Board();
         Command command = new Command(1, 1, CommandType.MOVE);
-        God god = new Athena(board);
+        God god = new Charon(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
@@ -189,11 +195,11 @@ public class AthenaTest {
             god.makeMove(worker, command);
 
             assertTrue( "hadWin must be true", god.hadWin );
-            assertSame("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
+            assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method HadWinTrueTest in class AthenaTest: " + e.toString());
-            fail("Exception in HadWinTrueTest in class AthenaTest");
+            System.err.println("Error e in method HadWinTrueTest in class CharonTest: " + e.toString());
+            fail("Exception in HadWinTrueTest in class CharonTest");
         }
     }
 
@@ -204,7 +210,7 @@ public class AthenaTest {
         // Initialization of the parameters
         Board board = new Board();
         Command command = new Command(1, 1, CommandType.MOVE);
-        God god = new Athena(board);
+        God god = new Charon(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
@@ -225,10 +231,11 @@ public class AthenaTest {
             god.makeMove(worker, command);
 
             assertFalse( "hadWin must be false", god.hadWin );
+            assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method HadWinFalseTest in class AthenaTest: " + e.toString());
-            fail("Exception in HadWinFalseTest in class AthenaTest");
+            System.err.println("Error e in method HadWinFalseTest in class CharonTest: " + e.toString());
+            fail("Exception in HadWinFalseTest in class CharonTest");
         }
     }
 

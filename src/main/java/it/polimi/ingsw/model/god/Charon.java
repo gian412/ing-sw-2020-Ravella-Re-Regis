@@ -41,22 +41,31 @@ public class Charon extends God {
 
             switch (command.commandType){
                 case FORCE:
-                    if(!hadForced && !hadMove && !hadBuild && worker.getCurrentCell().cellDistance(cell)){
+                    if(!hadForced && !hadMoved && !hadBuild && worker.getCurrentCell().cellDistance(cell) && cell.getWorker()!=null){
 
                         Pair directionOfWorker = worker.getCurrentCell().getDirection(cell);
-                        Pair cellCoordinates = new Pair(worker.getCurrentCell().X - directionOfWorker.x, worker.getCurrentCell().Y - directionOfWorker.y);
-                        board.moveWorker(cell.getWorker(), board.getCell(cellCoordinates.x, cellCoordinates.y));
-                        hadForced = true;
-                        break;
+                        Cell forcedCell = board.getCell(worker.getCurrentCell().X - directionOfWorker.x, worker.getCurrentCell().Y - directionOfWorker.y);
+                        if ( forcedCell.getWorker()==null && forcedCell.getHeight()!=Height.DOME ){
+                            try {
+                                board.forceWorker(cell.getWorker(), forcedCell);
+                                hadForced = true;
+                                break;
+                            } catch (IllegalMoveException e){
+                                throw new IllegalMoveException();
+                            }
+                        } else {
+                            throw new IllegalMoveException();
+                        }
+
                     } else {
                         throw new IllegalMoveException();
                     }
 
                 case MOVE:
-                    if (!hadMove && !hadBuild && !hadWin) {
+                    if (!hadMoved && !hadBuild && !hadWin) {
                         try {
                             super.move(worker, cell);
-                            hadMove = true;
+                            hadMoved = true;
                             hadWin = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
@@ -67,7 +76,7 @@ public class Charon extends God {
                     }
 
                 case BUILD:
-                    if ( hadMove && !hadBuild && !hadWin){
+                    if ( hadMoved && !hadBuild && !hadWin){
                         try {
                             super.build(cell, false);
                             hadBuild = true;

@@ -113,6 +113,30 @@ public class Board {
         }
     }
 
+    /**
+     * Force a worker in another cell
+     *
+     * @author Gianluca Regis
+     * @param worker the worker that the player moves
+     * @param cell the cell in which the player moves the worker
+     */
+    public void forceWorker(Worker worker, Cell cell) throws IllegalMoveException{
+        if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5)){
+
+            this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y).setWorker(null);
+            worker.setPreviousCell(this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y));
+
+            this.getCell(cell.X, cell.Y).setWorker(worker);
+            worker.setCurrentCell(this.getCell(cell.X, cell.Y));
+
+            //update the proxyBoard after a legal move
+            this.updateProxyBoard();
+        }
+        else{
+            throw new IllegalMoveException();
+        }
+    }
+
     /** TODO implement the method (adds a worker in [row, column], the worker is the turnplayer's one)
      *
      * @param row
@@ -206,6 +230,26 @@ public class Board {
 
     public void addView(RemoteView remoteView){
         proxy.addObserver(remoteView);
+    }
+
+    /**
+     * Count the number of complete towers in the board
+     *
+     * @author Gianluca Regis
+     * @return true if there are at least five completed towers in the board, otherwise return false
+     */
+    public boolean countCompleteTower(){
+        byte completedTowers = 0;
+        for(int i=0;i<5;i++){
+            for(int j=0;j<5;j++){
+                if (cells[i][j].getHeight() == Height.DOME){
+                    completedTowers++;
+                }
+            }
+        }
+        if (completedTowers >= 5)
+            return true;
+        return false;
     }
 
     /**

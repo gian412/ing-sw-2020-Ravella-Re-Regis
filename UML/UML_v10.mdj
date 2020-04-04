@@ -4331,7 +4331,7 @@
 											"top": 984,
 											"width": 390.26025390625,
 											"height": 13,
-											"text": "#hadMove: boolean",
+											"text": "#hadMoved: boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -9071,7 +9071,7 @@
 											"top": 566,
 											"width": 407.0625,
 											"height": 13,
-											"text": "-hadMoveSecond: boolean",
+											"text": "-hadMovedSecond: boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -15869,7 +15869,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFw6P/gFMfoI6w="
 							},
-							"name": "hadMove",
+							"name": "hadMoved",
 							"visibility": "protected",
 							"type": "boolean"
 						},
@@ -17110,7 +17110,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFxIoWkbTBr50A="
 							},
-							"name": "hadMoveSecond",
+							"name": "hadMovedSecond",
 							"visibility": "private",
 							"type": "boolean"
 						}
