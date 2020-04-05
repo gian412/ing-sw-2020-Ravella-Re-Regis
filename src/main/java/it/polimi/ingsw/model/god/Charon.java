@@ -114,5 +114,14 @@ public class Charon extends God {
 
     }
 
-
+    /**
+     * Reset local variable for class Charon using the super method and adding local variables
+     *
+     * @author Gianluca Regis
+     */
+    @Override
+    protected void resetLocalVariables() {
+        super.resetLocalVariables();
+        this.hadForced = false;
+    }
 }
