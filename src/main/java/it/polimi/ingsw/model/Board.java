@@ -258,14 +258,11 @@ public class Board {
      * @return true if there are at least five completed towers in the board, otherwise return false
      */
     public boolean countCompleteTower(){
-        byte completedTowers = 0;
-        for(int i=0;i<5;i++){
-            for(int j=0;j<5;j++){
-                if (cells[i][j].getHeight() == Height.DOME){
-                    completedTowers++;
-                }
-            }
-        }
+        int completedTowers = 0;
+        for(int row = 0; row < cells.length; row++)
+            for(int column = 0; column < cells[row].length; column++)
+                if(cells[row][column].isCompleted())completedTowers++;
+
         return completedTowers >= 5;
     }
 

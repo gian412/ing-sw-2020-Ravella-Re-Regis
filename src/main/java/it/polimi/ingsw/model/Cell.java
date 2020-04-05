@@ -8,6 +8,8 @@ public class Cell {
     public final int X;
     public final int Y;
 
+    private boolean isCompleted;
+
     /**
      * the constructor of class Cell
      *
@@ -22,6 +24,7 @@ public class Cell {
         this.X = x;
         this.Y = y;
         this.height = Height.GROUND;
+        isCompleted = false;
     }
 
     /**
@@ -91,6 +94,7 @@ public class Cell {
                 break;
             case THIRD_FLOOR:
                 this.height = Height.DOME;
+                isCompleted = true;
                 break;
         }
     }
@@ -190,4 +194,9 @@ public class Cell {
 
         return myCell.toString();
     }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
 }
