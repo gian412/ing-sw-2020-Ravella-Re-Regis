@@ -12,7 +12,7 @@ import static org.junit.Assert.assertFalse;
 public class AthenaTest {
 
     @Test
-    @DisplayName("hadMove")
+    @DisplayName("hadMove no upward")
     public void hadMoveNoUpwardTest(){
 
         // Initialization of the parameters
@@ -163,7 +163,7 @@ public class AthenaTest {
 
     @Test
     @DisplayName("hadWin = true")
-    public void hadWinYesTest(){
+    public void HadWinTrueTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -192,14 +192,14 @@ public class AthenaTest {
             assertSame("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method hadWinYesTest in class AthenaTest: " + e.toString());
-            fail("Exception in hadWinYesTest in class AthenaTest");
+            System.err.println("Error e in method HadWinTrueTest in class AthenaTest: " + e.toString());
+            fail("Exception in HadWinTrueTest in class AthenaTest");
         }
     }
 
     @Test
     @DisplayName("hadWin = false")
-    public void hadWinNoTest(){
+    public void HadWinFalseTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -227,8 +227,8 @@ public class AthenaTest {
             assertFalse( "hadWin must be false", god.hadWin );
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method hadWinNoTest in class AthenaTest: " + e.toString());
-            fail("Exception in hadWinNoTest in class AthenaTest");
+            System.err.println("Error e in method HadWinFalseTest in class AthenaTest: " + e.toString());
+            fail("Exception in HadWinFalseTest in class AthenaTest");
         }
     }
 

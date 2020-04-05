@@ -95,8 +95,6 @@ public class ControllerTest {
         Game g = new Game();
         Controller controller = new Controller(g);
 
-
-
         controller.addPlayer("Marco", 30);
         controller.addPlayer("Gianluca", 35);
 
@@ -108,7 +106,8 @@ public class ControllerTest {
         }
 
         controller.startGame();
-        controller.addWorker(1, 0);
+        controller.addWorker(0, 0);
+        controller.commitMove("Marco", new Command(0, 1, CommandType.MOVE), 0);
         controller.commitMove("Marco", new Command(0, 0, CommandType.BUILD), 0);
 
         assertEquals("Built a floor in a cell", g.getBoard().getCell(0, 0).getHeight(), Height.FIRST_FLOOR);
@@ -136,6 +135,7 @@ public class ControllerTest {
         controller.commitMove("Marco", new Command(1, 1, CommandType.MOVE), 0);
 
         assertNotNull("moved a worker in (1, 1)", g.getBoard().getCell(1, 1).getWorker());
+        assertNull("in (0, 0) the worker must be null", g.getBoard().getCell(0,0).getWorker());
     }
 
 

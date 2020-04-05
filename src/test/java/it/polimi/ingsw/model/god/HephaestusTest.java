@@ -123,7 +123,7 @@ public class HephaestusTest {
     }
 
     @Test
-    @DisplayName("hadBuildSecond")
+    @DisplayName("hadBuildSecond not a dome")
     public void hadBuildSecondNotDomeTest(){
 
         // Initialization of the parameters
@@ -151,74 +151,28 @@ public class HephaestusTest {
         try {
             god.makeMove(worker, firstCommand);
 
-            assertTrue("hadMove must be true", god.hadBuild);
+            assertTrue("hadBuild must be true", god.hadBuild);
             assertEquals("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.FIRST_FLOOR);
 
             try {
                 god.makeMove(worker, secondCommand);
 
-                assertTrue("hadMoveSecond must be true", god.hadBuildSecond);
+                assertTrue("hadBuildSecond must be true", god.hadBuildSecond);
                 assertEquals("thirdCell's Height must be one bigger than before", secondCell.getHeight(), Height.SECOND_FLOOR);
 
             } catch (IllegalMoveException e1) {
                 System.err.println("Error e1 in method hadBuildSecondTest in class HephaestusTest : " + e1.toString());
-                fail("Exception in hadBuildSecondTest in class HephaestusTest");
+                fail("Exception in hadBuildSecondNotDomeTest in class HephaestusTest");
             }
         } catch (IllegalMoveException e2) {
             System.err.println("Error e2 in method hadBuildSecondTest in class HephaestusTest :" + e2.toString());
-            fail("Exception in hadBuildSecondTest in class HephaestusTest");
+            fail("Exception in hadBuildSecondNotDomeTest in class HephaestusTest");
         }
-
-
-
-
-
-
     }
-
-    /*@Test
-    @DisplayName("hadBuildSecond")
-    public void hadBuildSecondDomeTest(){
-
-        // Initialization of the parameters
-        Board board = new Board();
-        Command firstCommand = new Command(1, 1, CommandType.BUILD_DOME);
-        Command secondCommand = new Command(1, 1, CommandType.BUILD_DOME);
-        Hephaestus god = new Hephaestus(board);
-        Player player = new Player("Name", 18);
-        player.setDivinity(god);
-        Worker worker = new Worker("Id", player);
-        god.hadMove = true;
-
-        // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
-        firstCell.setHeight(Height.GROUND);
-        firstCell.setWorker(worker);
-
-        // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
-        secondCell.setHeight(Height.SECOND_FLOOR);
-        secondCell.setWorker(null);
-
-        worker.setCurrentCell(firstCell);
-
-        try {
-            god.makeMove(worker, firstCommand);
-
-            assertTrue("hadMove must be true", god.hadBuild);
-            assertEquals("secondCell's Height must be DOME", secondCell.getHeight(), Height.THIRD_FLOOR);
-
-            assertThrows("Build a dome as second move must throw an exception",  IllegalMoveException.class, () -> god.makeMove(worker, secondCommand));
-
-        } catch (IllegalMoveException e1) {
-            System.err.println("Error e1 in method hadBuildSecondDomeTest in class HephaestusTest :" + e1.toString());
-            fail("Exception in hadBuildSecondDomeTest in class HephaestusTest");
-        }
-    }*/
 
     @Test
     @DisplayName("hadWin = true")
-    public void hadWinYesTest(){
+    public void HadWinTrueTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -247,14 +201,14 @@ public class HephaestusTest {
             assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method hadWinYesTest in class HephaestusTest: " + e.toString());
-            fail("Exception in hadWinYesTest in class HephaestusTest");
+            System.err.println("Error e in method HadWinTrueTest in class HephaestusTest: " + e.toString());
+            fail("Exception in HadWinTrueTest in class HephaestusTest");
         }
     }
 
     @Test
     @DisplayName("hadWin = false")
-    public void hadWinNoTest(){
+    public void HadWinFalseTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -283,8 +237,8 @@ public class HephaestusTest {
             assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method hadWinNoTest in class HephaestusTest: " + e.toString());
-            fail("Exception in hadWinNoTest in class HephaestusTest");
+            System.err.println("Error e in method HadWinFalseTest in class HephaestusTest: " + e.toString());
+            fail("Exception in HadWinFalseTest in class HephaestusTest");
         }
     }
 

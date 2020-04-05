@@ -3,10 +3,11 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.view.Observable;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardProxy extends Observable<BoardProxy> {
+public class BoardProxy extends Observable<BoardProxy> implements Serializable {
 
     private Height[][] boardScheme;
     private Map<String, Pair> workers;

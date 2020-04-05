@@ -85,7 +85,7 @@ public class AtlasTest {
     }
 
     @Test
-    @DisplayName("hadBuild a dome")
+    @DisplayName("hadBuild a dome in right position")
     public void hadBuildDomeInRightPositionTest(){
 
         // Initialization of the parameters
@@ -122,7 +122,7 @@ public class AtlasTest {
     }
 
     @Test
-    @DisplayName("hadBuild a dome")
+    @DisplayName("hadBuild a dome in an other position")
     public void hadBuildDomeInOtherPositionTest(){
 
         // Initialization of the parameters
@@ -160,7 +160,7 @@ public class AtlasTest {
 
     @Test
     @DisplayName("hadWin = true")
-    public void hadWinYesTest(){
+    public void HadWinTrueTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -189,14 +189,14 @@ public class AtlasTest {
             assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method hadWinYesTest in class AtlasTest: " + e.toString());
-            fail("Exception in hadWinYesTest in class AtlasTest");
+            System.err.println("Error e in method HadWinTrueTest in class AtlasTest: " + e.toString());
+            fail("Exception in HadWinTrueTest in class AtlasTest");
         }
     }
 
     @Test
     @DisplayName("hadWin = false")
-    public void hadWinNoTest(){
+    public void HadWinFalseTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -225,8 +225,8 @@ public class AtlasTest {
             assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method hadWinNoTest in class AtlasTest: " + e.toString());
-            fail("Exception in hadWinNoTest in class AtlasTest");
+            System.err.println("Error e in method HadWinFalseTest in class AtlasTest: " + e.toString());
+            fail("Exception in HadWinFalseTest in class AtlasTest");
         }
     }
 

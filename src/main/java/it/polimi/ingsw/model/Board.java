@@ -163,7 +163,7 @@ public class Board {
 
         //check the win with and without Pan
         if (worker.getOwner().getDivinity().NAME.equals("PAN")){
-            if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference == -2){
+            if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
                 hadWin = worker;
                 proxy.setWinner(worker.getOwner());
                 proxy.updateProxy();
