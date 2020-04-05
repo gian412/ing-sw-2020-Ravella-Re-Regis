@@ -36,7 +36,7 @@ public class Triton extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (cell.isPerimeter()){
+                    if (cell.isPerimeter() && !hadBuild && !hadWin){
                         try {
                             super.move(worker, cell);
                             hadMoved = true;

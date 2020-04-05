@@ -8,7 +8,7 @@ public class Board {
     private BoardProxy proxy;
     private Cell[][] cells;
     private Player turnPlayer;
-    private Worker hadWin;
+    private Player hadWin;
 
     /**
      * class' constructor
@@ -20,7 +20,6 @@ public class Board {
      */
     // class constructor with the initialization of cells
     public Board(){
-        proxy = new BoardProxy();
         hadWin = null;
         cells = new Cell[5][5];
         for(int i=0;i<5;i++){
@@ -31,10 +30,6 @@ public class Board {
 
         proxy = new BoardProxy();
         proxy.updateProxy();
-    }
-
-    public BoardProxy getProxy() {
-        return proxy;
     }
 
     /**
@@ -62,9 +57,6 @@ public class Board {
     public void changeTurnPlayer(){
         turnPlayer = turnPlayer.getNextPlayer();
     }
-
-    // this method return true if the worker is able to move up
-    public boolean ableToMoveUp( Worker worker ){return true;}
 
     /**
      * build a structure on the board
@@ -137,7 +129,7 @@ public class Board {
         }
     }
 
-    /** TODO implement the method (adds a worker in [row, column], the worker is the turnplayer's one)
+    /** TODO: implement the method (adds a worker in [row, column], the worker is the turnplayer's one)
      *
      * @param row
      * @param column
@@ -189,7 +181,7 @@ public class Board {
             //check the win with and without Pan
             if (worker.getOwner().getDivinity().NAME.equals("PAN")){
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
-                    hadWin = worker;
+                    hadWin = worker.getOwner();
                     proxy.setWinner(worker.getOwner());
                     proxy.updateProxy();
                     return true;
@@ -199,7 +191,7 @@ public class Board {
 
             } else if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || countCompleteTower()){
-                    hadWin = worker;
+                    hadWin = worker.getOwner();
                     proxy.setWinner(worker.getOwner());
                     proxy.updateProxy();
                     return true;
@@ -208,7 +200,9 @@ public class Board {
                 }
             } else{
                 if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
-                    hadWin = worker;
+                    hadWin = worker.getOwner();
+                    proxy.setWinner(worker.getOwner());
+                    proxy.updateProxy();
                     return true;
                 } else{
                     return false;
@@ -217,7 +211,7 @@ public class Board {
         } else {
             if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
                 if (countCompleteTower()){
-                    hadWin = worker;
+                    hadWin = worker.getOwner();
                     proxy.setWinner(worker.getOwner());
                     proxy.updateProxy();
                     return true;
