@@ -40,12 +40,12 @@ public class Athena extends God{
                 case MOVE:
                     if (!hadMove && !hadBuild && !hadWin) {
                         if (!worker.isCanMoveUp()){
-                            board.setCanMoveUp(true);
+                            worker.setCanMoveUp(true);
                         }
                         try {
                             super.move(worker, cell);
                             if (worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())>0){
-                                board.setCanMoveUp(false);
+                                worker.setCanMoveUp(false);
                             }
                             hadMove = true;
                             hadWin = board.checkWin(worker);

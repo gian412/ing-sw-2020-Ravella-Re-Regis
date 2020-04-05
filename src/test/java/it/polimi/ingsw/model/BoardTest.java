@@ -39,5 +39,35 @@ public class BoardTest {
     }
 
 
+    @Test
+    @DisplayName("addFirstWorkerTest")
+    public void addFirstWorkerTest(){
+
+        Board board = new Board();
+        Player player = new Player("player1", 10);
+        Worker worker = new Worker("worker1", player);
+
+        try{
+            board.addWorker(1 ,1 );
+        }
+        catch (IllegalAddException e) {
+            System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
+        } catch (IllegalCellException e) {
+            System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
+        }
+
+        Cell cell = new Cell(1,1);
+        cell.setWorker(worker);
+
+        worker.setCurrentCell(cell);
+
+
+        /*assertTrue("previousCell in worker is the old current cell and currentCell is the new cell",
+                worker.getCurrentCell().equals(newCell) && worker.getPreviousCell().equals(oldCell));*/
+
+
+    }
+
+
 
 }

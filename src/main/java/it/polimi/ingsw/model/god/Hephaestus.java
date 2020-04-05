@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.Height;
 
 public class Hephaestus extends God {
 
-    private boolean hadBuildSecond;
+    protected boolean hadBuildSecond;
     private  Cell previousCell;
 
     /**

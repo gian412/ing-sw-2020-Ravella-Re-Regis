@@ -168,9 +168,8 @@ public class Cell {
     public String toString() {
         StringBuilder myCell = new StringBuilder();
 
-        if(this.worker == null)
+        if (this.worker == null)
             myCell.append(this.height.toString().toUpperCase().charAt(0));
-
         else {
             myCell.append(this.height.toString().toUpperCase().charAt(0));
             myCell.append('/');

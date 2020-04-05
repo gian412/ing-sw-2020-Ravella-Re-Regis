@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 
 import static org.junit.Assert.*;
 
-public class ArtemisTest {
+public class MinotaurTest {
 
     @Test
     @DisplayName("hadMove")
@@ -17,7 +17,7 @@ public class ArtemisTest {
         // Initialization of the parameters
         Board board = new Board();
         Command command = new Command(1, 1, CommandType.MOVE);
-        God god = new Artemis(board);
+        God god = new Minotaur(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
@@ -28,7 +28,7 @@ public class ArtemisTest {
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(1, 1);
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -42,67 +42,57 @@ public class ArtemisTest {
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMoveTest in class ArtemisTest: " + e.toString());
-            fail("Exception in hadMoveTest in class ArtemisTest");
+            System.err.println("Error e in method hadMoveTest in class MinotaurTest: " + e.toString());
+            fail("Exception in hadMoveTest in class MinotaurTest");
         }
     }
 
     @Test
-    @DisplayName("hadMoveSecond")
-    public void hadMoveSecondTest(){
+    @DisplayName("hadMove and hadForced")
+    public void hadMoveAndForcedTest(){
 
         // Initialization of the parameters
         Board board = new Board();
-        Command firstCommand = new Command(1, 1, CommandType.MOVE);
-        Command secondCommand = new Command(2, 1, CommandType.MOVE);
-        Artemis god = new Artemis(board);
-        Player player = new Player("Name", 18);
-        player.setDivinity(god);
-        Worker worker = new Worker("Id", player);
+        Command command = new Command(1, 1, CommandType.MOVE);
+        God god = new Minotaur(board);
+        Player player1 = new Player("Name1", 18);
+        Player player2 = new Player("Name2", 18);
+        player1.setDivinity(god);
+        Worker worker1 = new Worker("Id1", player1);
+        Worker worker2 = new Worker("Id2", player2);
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
-        firstCell.setHeight(Height.SECOND_FLOOR);
-        firstCell.setWorker(worker);
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker1);
 
         // Initialization of the second cell
         Cell secondCell = board.getCell(1,1);
-        secondCell.setHeight(Height.GROUND);
-        secondCell.setWorker(null);
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(worker2);
 
         // Initialization of the third cell
+
         Cell thirdCell = board.getCell(2, 1);
-        thirdCell.setHeight(Height.FIRST_FLOOR);
+        thirdCell.setHeight(Height.GROUND);
         thirdCell.setWorker(null);
 
-        worker.setCurrentCell(firstCell);
+        worker1.setCurrentCell(firstCell);
+        worker2.setCurrentCell(secondCell);
 
         try {
-            god.makeMove(worker, firstCommand);
+            god.makeMove(worker1, command);
 
             assertTrue("hadMove must be true", god.hadMove);
-            assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
-            assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
+            assertEquals("worker1's previous position must be firstCell", worker1.getPreviousCell(), firstCell);
+            assertEquals("worker1's position must be secondCell", worker1.getCurrentCell(), secondCell);
+            assertEquals("worker2's previous position must be secondCell", worker2.getPreviousCell(), secondCell);
+            assertEquals("worker2's position must be forced to be thirdCell", worker2.getCurrentCell(), thirdCell);
 
-            try {
-                god.makeMove(worker, secondCommand);
-
-                assertTrue("hadMoveSecond must be true", god.hadMoveSecond);
-                assertEquals("worker's previous position must be secondCell", worker.getPreviousCell(), secondCell);
-                assertEquals("worker's position must be thirdCell", worker.getCurrentCell(), thirdCell);
-
-            } catch (IllegalMoveException e1) {
-                System.err.println("Error e1 in method hadMoveSecondTest in class ArtemisTest : " + e1.toString());
-                fail("Exception in hadMoveSecondTest in class ArtemisTest");
-            }
-        } catch (IllegalMoveException e2) {
-            System.err.println("Error e2 in method hadMoveSecondTest in class ArtemisTest :" + e2.toString());
-            fail("Exception in hadMoveSecondTest in class ArtemisTest");
+        } catch (IllegalMoveException e) {
+            System.err.println("Error e in method hadMoveAndForcedTest in class MinotaurTest: " + e.toString());
+            fail("Exception in hadMoveAndForcedTest in class MinotaurTest");
         }
-
-
-
-
 
 
     }
@@ -114,7 +104,7 @@ public class ArtemisTest {
         // Initialization of the parameters
         Board board = new Board();
         Command command = new Command(1, 1, CommandType.BUILD);
-        God god = new Artemis(board);
+        God god = new Minotaur(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
@@ -139,8 +129,8 @@ public class ArtemisTest {
             assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadBuildNotDomeTest in class ArtemisTest: " + e.toString());
-            fail("Exception in hadBuildNotDomeTest in class ArtemisTest");
+            System.err.println("Error e in method hadBuildNotDomeTest in class MinotaurTest: " + e.toString());
+            fail("Exception in hadBuildNotDomeTest in class MinotaurTest");
         }
     }
 
@@ -151,7 +141,7 @@ public class ArtemisTest {
         // Initialization of the parameters
         Board board = new Board();
         Command command = new Command(1, 1, CommandType.BUILD_DOME);
-        God god = new Artemis(board);
+        God god = new Minotaur(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
@@ -173,11 +163,11 @@ public class ArtemisTest {
             god.makeMove(worker, command);
 
             assertTrue("hadBuild must be true", god.hadBuild);
-            assertSame("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
+            assertEquals("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadBuildDomeTest in class ArtemisTest: " + e.toString());
-            fail("Exception in hadBuildDomeTest in class ArtemisTest");
+            System.err.println("Error e in method hadBuildDomeTest in class MinotaurTest: " + e.toString());
+            fail("Exception in hadBuildDomeTest in class MinotaurTest");
         }
     }
 
@@ -188,7 +178,7 @@ public class ArtemisTest {
         // Initialization of the parameters
         Board board = new Board();
         Command command = new Command(1, 1, CommandType.MOVE);
-        God god = new Artemis(board);
+        God god = new Minotaur(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
@@ -209,11 +199,11 @@ public class ArtemisTest {
             god.makeMove(worker, command);
 
             assertTrue( "hadWin must be true", god.hadWin );
-            assertSame("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
+            assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method HadWinTrueTest in class ArtemisTest: " + e.toString());
-            fail("Exception in HadWinTrueTest in class ArtemisTest");
+            System.err.println("Error e in method HadWinTrueTest in class MinotaurTest: " + e.toString());
+            fail("Exception in HadWinTrueTest in class MinotaurTest");
         }
     }
 
@@ -224,7 +214,7 @@ public class ArtemisTest {
         // Initialization of the parameters
         Board board = new Board();
         Command command = new Command(1, 1, CommandType.MOVE);
-        God god = new Artemis(board);
+        God god = new Minotaur(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
@@ -245,10 +235,11 @@ public class ArtemisTest {
             god.makeMove(worker, command);
 
             assertFalse( "hadWin must be false", god.hadWin );
+            assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method HadWinFalseTest in class ArtemisTest: " + e.toString());
-            fail("Exception in HadWinFalseTest in class ArtemisTest");
+            System.err.println("Error e in method HadWinFalseTest in class MinotaurTest: " + e.toString());
+            fail("Exception in HadWinFalseTest in class MinotaurTest");
         }
     }
 

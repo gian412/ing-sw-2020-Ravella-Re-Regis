@@ -63,10 +63,6 @@ public class Board {
         turnPlayer = turnPlayer.getNextPlayer();
     }
 
-    // canMoveUp's set and reset
-    public void setCanMoveUp( boolean canMoveUp ){/*Player.canMoveUp = canMoveUp*/}
-
-
     // this method return true if the worker is able to move up
     public boolean ableToMoveUp( Worker worker ){return true;}
 
@@ -121,7 +117,7 @@ public class Board {
      *
      * @param row
      * @param column
-     * @throws IllegalCellException, IllegalAddException
+     * @throws IllegalCellException,IllegalAddException
      */
     public void addWorker(int row, int column) throws IllegalCellException, IllegalAddException{
 
@@ -151,7 +147,6 @@ public class Board {
         else{
             throw new IllegalAddException();
         }
-
     }
 
     /**
@@ -168,7 +163,7 @@ public class Board {
 
         //check the win with and without Pan
         if (worker.getOwner().getDivinity().NAME.equals("PAN")){
-            if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference == -2){
+            if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
                 hadWin = worker;
                 proxy.setWinner(worker.getOwner());
                 proxy.updateProxy();
