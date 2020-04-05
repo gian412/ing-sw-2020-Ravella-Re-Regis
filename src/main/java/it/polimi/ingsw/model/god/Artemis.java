@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.*;
 
 public class Artemis extends God {
 
-    protected boolean hadMoveSecond;
+    protected boolean hadMovedSecond;
 
     /**
      * Class' constructor that use the super class' constructor
@@ -16,7 +16,7 @@ public class Artemis extends God {
     // class constructor with the initialization of board using the super constructor
     public Artemis(Board board) {
         super(board, "ARTEMIS");
-        this.hadMoveSecond = false;
+        this.hadMovedSecond = false;
     }
 
     /**
@@ -41,19 +41,19 @@ public class Artemis extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMove && !hadMoveSecond && !hadWin && !hadBuild){
+                    if (!hadMoved && !hadMovedSecond && !hadWin && !hadBuild){
                         try {
                             super.move(worker, cell);
-                            hadMove = true;
+                            hadMoved = true;
                             hadWin = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else if (hadMove && !hadMoveSecond && !hadWin && !hadBuild){
+                    } else if (hadMoved && !hadMovedSecond && !hadWin && !hadBuild){
                         try {
                             super.move(worker, cell);
-                            hadMoveSecond = true;
+                            hadMovedSecond = true;
                             hadWin = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e){
@@ -64,7 +64,7 @@ public class Artemis extends God {
                     }
 
                 case BUILD:
-                    if (hadMove && !hadWin && !hadBuild){
+                    if (hadMoved && !hadWin && !hadBuild){
                         try {
                             super.build(cell, false);
                             hadBuild = true;
@@ -109,6 +109,6 @@ public class Artemis extends God {
     @Override
     protected void resetLocalVariables() {
         super.resetLocalVariables();
-        this.hadMoveSecond = false;
+        this.hadMovedSecond = false;
     }
 }

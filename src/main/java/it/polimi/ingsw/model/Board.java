@@ -113,6 +113,30 @@ public class Board {
         }
     }
 
+    /**
+     * Force a worker in another cell
+     *
+     * @author Gianluca Regis
+     * @param worker the worker that the player moves
+     * @param cell the cell in which the player moves the worker
+     */
+    public void forceWorker(Worker worker, Cell cell) throws IllegalMoveException{
+        if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5)){
+
+            this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y).setWorker(null);
+            worker.setPreviousCell(this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y));
+
+            this.getCell(cell.X, cell.Y).setWorker(worker);
+            worker.setCurrentCell(this.getCell(cell.X, cell.Y));
+
+            //update the proxyBoard after a legal move
+            this.updateProxyBoard();
+        }
+        else{
+            throw new IllegalMoveException();
+        }
+    }
+
     /** TODO implement the method (adds a worker in [row, column], the worker is the turnplayer's one)
      *
      * @param row
@@ -152,34 +176,59 @@ public class Board {
     /**
      * check the winning condition
      *
-     * @author Gial+nluca regis
+     * @author Gianluca regis
      * @param worker the worker that the player have just moved
      * @return true if the player wins, false if the player doesn't win
      */
     // method that check if the worker had win after the last move
     public boolean checkWin(Worker worker){
 
-        byte heightDifference = worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight());
+        if (worker.getPreviousCell()!=null){
+            byte heightDifference = worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight());
 
-        //check the win with and without Pan
-        if (worker.getOwner().getDivinity().NAME.equals("PAN")){
-            if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
-                hadWin = worker;
-                proxy.setWinner(worker.getOwner());
-                proxy.updateProxy();
-                return true;
+            //check the win with and without Pan
+            if (worker.getOwner().getDivinity().NAME.equals("PAN")){
+                if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
+                    hadWin = worker;
+                    proxy.setWinner(worker.getOwner());
+                    proxy.updateProxy();
+                    return true;
+                } else{
+                    return false;
+                }
+
+            } else if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
+                if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || countCompleteTower()){
+                    hadWin = worker;
+                    proxy.setWinner(worker.getOwner());
+                    proxy.updateProxy();
+                    return true;
+                } else {
+                    return false;
+                }
             } else{
-                return false;
+                if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
+                    hadWin = worker;
+                    return true;
+                } else{
+                    return false;
+                }
             }
-
-        } else{
-            if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
-                hadWin = worker;
-                return true;
+        } else {
+            if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
+                if (countCompleteTower()){
+                    hadWin = worker;
+                    proxy.setWinner(worker.getOwner());
+                    proxy.updateProxy();
+                    return true;
+                } else {
+                    return false;
+                }
             } else{
                 return false;
             }
         }
+
 
     }
 
@@ -206,6 +255,24 @@ public class Board {
 
     public void addView(RemoteView remoteView){
         proxy.addObserver(remoteView);
+    }
+
+    /**
+     * Count the number of complete towers in the board
+     *
+     * @author Gianluca Regis
+     * @return true if there are at least five completed towers in the board, otherwise return false
+     */
+    public boolean countCompleteTower(){
+        byte completedTowers = 0;
+        for(int i=0;i<5;i++){
+            for(int j=0;j<5;j++){
+                if (cells[i][j].getHeight() == Height.DOME){
+                    completedTowers++;
+                }
+            }
+        }
+        return completedTowers >= 5;
     }
 
     /**

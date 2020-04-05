@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
 public class ApolloTest {
 
     @Test
-    @DisplayName("hadMove")
-    public void hadMoveTest(){
+    @DisplayName("hadMoved")
+    public void hadMovedTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -37,19 +37,19 @@ public class ApolloTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadMove must be true", god.hadMove);
+            assertTrue("hadMoved must be true", god.hadMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMoveTest in class ApolloTest: " + e.toString());
-            fail("Exception in hadMoveTest in class ApolloTest");
+            System.err.println("Error e in method hadMovedTest in class ApolloTest: " + e.toString());
+            fail("Exception in hadMovedTest in class ApolloTest");
         }
     }
 
     @Test
-    @DisplayName("hadMove and hadForced")
-    public void hadMoveAndForcedTest(){
+    @DisplayName("hadMoved and hadForced")
+    public void hadMovedAndForcedTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -77,15 +77,15 @@ public class ApolloTest {
         try {
             god.makeMove(worker1, command);
 
-            assertTrue("hadMove must be true", god.hadMove);
+            assertTrue("hadMoved must be true", god.hadMoved);
             assertEquals("worker1's previous position must be firstCell", worker1.getPreviousCell(), firstCell);
             assertEquals("worker1's position must be secondCell", worker1.getCurrentCell(), secondCell);
             assertEquals("worker2's previous position must be secondCell", worker2.getPreviousCell(), secondCell);
             assertEquals("worker2's position must be forced to be firstCell", worker2.getCurrentCell(), firstCell);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMoveAndForcedTest in class ApolloTest: " + e.toString());
-            fail("Exception in hadMoveAndForcedTest in class ApolloTest");
+            System.err.println("Error e in method hadMovedAndForcedTest in class ApolloTest: " + e.toString());
+            fail("Exception in hadMovedAndForcedTest in class ApolloTest");
         }
 
 
@@ -102,7 +102,7 @@ public class ApolloTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -139,7 +139,7 @@ public class ApolloTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);

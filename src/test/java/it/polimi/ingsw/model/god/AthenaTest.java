@@ -12,8 +12,8 @@ import static org.junit.Assert.assertFalse;
 public class AthenaTest {
 
     @Test
-    @DisplayName("hadMove no upward")
-    public void hadMoveNoUpwardTest(){
+    @DisplayName("hadMoved no upward")
+    public void hadMovedNoUpwardTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -38,20 +38,20 @@ public class AthenaTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadMove must be true", god.hadMove);
+            assertTrue("hadMoved must be true", god.hadMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
             assertTrue("Worker.canMoveUp must be true", worker.isCanMoveUp());
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMoveTest in class AthenaTest: " + e.toString());
-            fail("Exception in hadMoveNoUpwardTest in class AthenaTest");
+            System.err.println("Error e in method hadMovedTest in class AthenaTest: " + e.toString());
+            fail("Exception in hadMovedNoUpwardTest in class AthenaTest");
         }
     }
 
     @Test
-    @DisplayName("hadMove upward")
-    public void hadMoveUpwardTest(){
+    @DisplayName("hadMoved upward")
+    public void hadMovedUpwardTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -76,14 +76,14 @@ public class AthenaTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadMove must be true", god.hadMove);
+            assertTrue("hadMoved must be true", god.hadMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
             assertFalse("Worker.canMoveUp must be true", worker.isCanMoveUp());
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMoveTest in class AthenaTest: " + e.toString());
-            fail("Exception in hadMoveUpwardTest in class AthenaTest");
+            System.err.println("Error e in method hadMovedTest in class AthenaTest: " + e.toString());
+            fail("Exception in hadMovedUpwardTest in class AthenaTest");
         }
     }
 
@@ -98,7 +98,7 @@ public class AthenaTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -135,7 +135,7 @@ public class AthenaTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);

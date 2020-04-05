@@ -27,8 +27,8 @@ public class AppTest
 
         // class Apollo
         ApolloTest apolloTest = new ApolloTest();
-        apolloTest.hadMoveTest();
-        apolloTest.hadMoveAndForcedTest();
+        apolloTest.hadMovedTest();
+        apolloTest.hadMovedAndForcedTest();
         apolloTest.hadBuildNotDomeTest();
         apolloTest.hadBuildDomeTest();
         apolloTest.HadWinTrueTest();
@@ -36,8 +36,8 @@ public class AppTest
 
         // class Artemis
         ArtemisTest artemisTest = new ArtemisTest();
-        artemisTest.hadMoveTest();
-        artemisTest.hadMoveSecondTest();
+        artemisTest.hadMovedTest();
+        artemisTest.hadMovedSecondTest();
         artemisTest.hadBuildNotDomeTest();
         artemisTest.hadBuildDomeTest();
         artemisTest.HadWinTrueTest();

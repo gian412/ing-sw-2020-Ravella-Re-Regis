@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
 public class AtlasTest {
 
     @Test
-    @DisplayName("hadMove")
-    public void hadMoveTest(){
+    @DisplayName("hadMoved")
+    public void hadMovedTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -37,13 +37,13 @@ public class AtlasTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadMove must be true", god.hadMove);
+            assertTrue("hadMoved must be true", god.hadMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMoveTest in class AtlasTest: " + e.toString());
-            fail("Exception in hadMoveTest in class AtlasTest");
+            System.err.println("Error e in method hadMovedTest in class AtlasTest: " + e.toString());
+            fail("Exception in hadMovedTest in class AtlasTest");
         }
     }
 
@@ -58,7 +58,7 @@ public class AtlasTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -95,7 +95,7 @@ public class AtlasTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -132,7 +132,7 @@ public class AtlasTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);

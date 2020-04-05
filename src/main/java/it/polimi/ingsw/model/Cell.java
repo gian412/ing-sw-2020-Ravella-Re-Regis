@@ -105,14 +105,16 @@ public class Cell {
      * @return an array of two integer with the two coordinates x and y
      */
     // method that return the direction of the movement of the worker
-    public int[] getDirection(Cell secondCell){
+    public Pair getDirection(Cell secondCell){
 
         int[] direction = new int[2];
 
         direction[0] = secondCell.X - this.X;
         direction[1] = secondCell.Y - this.Y;
 
-        return direction;
+        Pair pair = new Pair(direction[0], direction[1]);
+
+        return pair;
     }
 
     /**
@@ -136,6 +138,16 @@ public class Cell {
     }
 
     /**
+     * Check if the cell is a perimeter cell
+     *
+     * @author Gianluca Regis
+     * @return true if the cell is a perimeter cell, otherwise return false
+     */
+    public boolean isPerimeter(){
+        return this.X == 0 || this.X == 4 || this.Y == 0 || this.Y == 4;
+    }
+
+    /**
      * compare two cells
      *
      * override the method equals of the class Object
@@ -144,7 +156,7 @@ public class Cell {
      * @param o is the cell to compare
      * @return true if two cells are equal
      */
-    // equals implementetion for cell
+    // equals implementation for cell
     @Override
     public boolean equals(Object o){
 

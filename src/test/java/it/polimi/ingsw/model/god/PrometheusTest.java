@@ -12,8 +12,8 @@ import static org.junit.Assert.fail;
 public class PrometheusTest {
 
     @Test
-    @DisplayName("hadMove")
-    public void hadMoveTest(){
+    @DisplayName("hadMoved")
+    public void hadMovedTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -38,13 +38,13 @@ public class PrometheusTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadMove must be true", god.hadMove);
+            assertTrue("hadMoved must be true", god.hadMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMoveTest in class PrometheusTest: " + e.toString());
-            fail("Exception in hadMoveTest in class PrometheusTest");
+            System.err.println("Error e in method hadMovedTest in class PrometheusTest: " + e.toString());
+            fail("Exception in hadMovedTest in class PrometheusTest");
         }
     }
 
@@ -59,7 +59,7 @@ public class PrometheusTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -96,7 +96,7 @@ public class PrometheusTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -153,7 +153,7 @@ public class PrometheusTest {
             assertTrue("hadBuildBefore must be true", god.hadBuildBefore);
             assertEquals("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.FIRST_FLOOR);
 
-            god.hadMove = true;
+            god.hadMoved = true;
 
             try {
                 god.makeMove(worker, secondCommand);
@@ -213,7 +213,7 @@ public class PrometheusTest {
             assertTrue("hadBuildBefore must be true", god.hadBuildBefore);
             assertEquals("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.DOME);
 
-            god.hadMove = true;
+            god.hadMoved = true;
 
             try {
                 god.makeMove(worker, secondCommand);

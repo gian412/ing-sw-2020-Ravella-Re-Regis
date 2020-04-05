@@ -37,10 +37,10 @@ public class Atlas extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMove && !hadBuild && !hadWin) {
+                    if (!hadMoved && !hadBuild && !hadWin) {
                         try {
                             super.move(worker, cell);
-                            hadMove = true;
+                            hadMoved = true;
                             hadWin = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
@@ -51,7 +51,7 @@ public class Atlas extends God {
                     }
 
                 case BUILD:
-                    if (hadMove && !hadBuild && !hadWin) {
+                    if (hadMoved && !hadBuild && !hadWin) {
                         try {
                             super.build(cell, false);
                             hadBuild = true;
@@ -64,7 +64,7 @@ public class Atlas extends God {
                     }
 
                 case BUILD_DOME:
-                    if (hadMove && !hadBuild && !hadWin) {
+                    if (hadMoved && !hadBuild && !hadWin) {
                         try {
                             super.build(cell, true);
                             hadBuild = true;

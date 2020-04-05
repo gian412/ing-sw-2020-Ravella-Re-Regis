@@ -36,10 +36,10 @@ public class Pan extends  God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMove && !hadBuild && !hadWin) {
+                    if (!hadMoved && !hadBuild && !hadWin) {
                         try {
                             super.move(worker, cell);
-                            hadMove = true;
+                            hadMoved = true;
                             hadWin = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
@@ -50,7 +50,7 @@ public class Pan extends  God {
                     }
 
                 case BUILD:
-                    if ( hadMove && !hadBuild && !hadWin){
+                    if ( hadMoved && !hadBuild && !hadWin){
                         try {
                             super.build(cell, false);
                             hadBuild = true;

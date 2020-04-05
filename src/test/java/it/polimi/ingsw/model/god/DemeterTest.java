@@ -12,8 +12,8 @@ import static org.junit.Assert.fail;
 public class DemeterTest {
 
     @Test
-    @DisplayName("hadMove")
-    public void hadMoveTest(){
+    @DisplayName("hadMoved")
+    public void hadMovedTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -38,13 +38,13 @@ public class DemeterTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadMove must be true", god.hadMove);
+            assertTrue("hadMoved must be true", god.hadMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMoveTest in class DemeterTest: " + e.toString());
-            fail("Exception in hadMoveTest in class DemeterTest");
+            System.err.println("Error e in method hadMovedTest in class DemeterTest: " + e.toString());
+            fail("Exception in hadMovedTest in class DemeterTest");
         }
     }
 
@@ -59,7 +59,7 @@ public class DemeterTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -96,7 +96,7 @@ public class DemeterTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -134,7 +134,7 @@ public class DemeterTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -156,13 +156,13 @@ public class DemeterTest {
         try {
             god.makeMove(worker, firstCommand);
 
-            assertTrue("hadMove must be true", god.hadBuild);
+            assertTrue("hadMoved must be true", god.hadBuild);
             assertEquals("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.FIRST_FLOOR);
 
             try {
                 god.makeMove(worker, secondCommand);
 
-                assertTrue("hadMoveSecond must be true", god.hadBuildSecond);
+                assertTrue("hadMovedSecond must be true", god.hadBuildSecond);
                 assertEquals("thirdCell's Height must be one bigger than before", thirdCell.getHeight(), Height.SECOND_FLOOR);
 
             } catch (IllegalMoveException e1) {
@@ -193,7 +193,7 @@ public class DemeterTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMove = true;
+        god.hadMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -215,13 +215,13 @@ public class DemeterTest {
         try {
             god.makeMove(worker, firstCommand);
 
-            assertTrue("hadMove must be true", god.hadBuild);
+            assertTrue("hadMoved must be true", god.hadBuild);
             assertEquals("secondCell's Height must be DOME", secondCell.getHeight(), Height.DOME);
 
             try {
                 god.makeMove(worker, secondCommand);
 
-                assertTrue("hadMoveSecond must be true", god.hadBuildSecond);
+                assertTrue("hadMovedSecond must be true", god.hadBuildSecond);
                 assertEquals("thirdCell's Height must be DOME", thirdCell.getHeight(), Height.DOME);
 
             } catch (IllegalMoveException e1) {

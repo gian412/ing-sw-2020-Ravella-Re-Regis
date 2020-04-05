@@ -38,7 +38,7 @@ public class Athena extends God{
 
             switch (command.commandType) {
                 case MOVE:
-                    if (!hadMove && !hadBuild && !hadWin) {
+                    if (!hadMoved && !hadBuild && !hadWin) {
                         if (!worker.isCanMoveUp()){
                             worker.setCanMoveUp(true);
                         }
@@ -47,7 +47,7 @@ public class Athena extends God{
                             if (worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())>0){
                                 worker.setCanMoveUp(false);
                             }
-                            hadMove = true;
+                            hadMoved = true;
                             hadWin = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
@@ -58,7 +58,7 @@ public class Athena extends God{
                     }
 
                 case BUILD:
-                    if (hadMove && !hadBuild && !hadWin) {
+                    if (hadMoved && !hadBuild && !hadWin) {
                         try {
                             super.build(cell, false);
                             hadBuild = true;

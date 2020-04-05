@@ -46,10 +46,10 @@ public class Hephaestus extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMove && !hadBuild && !hadBuildSecond && !hadWin){
+                    if (!hadMoved && !hadBuild && !hadBuildSecond && !hadWin){
                         try {
                             super.move(worker, cell);
-                            hadMove = true;
+                            hadMoved = true;
                             hadWin = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
@@ -60,7 +60,7 @@ public class Hephaestus extends God {
                     }
 
                 case BUILD:
-                    if (hadMove && !hadBuild && !hadBuildSecond && !hadWin){
+                    if (hadMoved && !hadBuild && !hadBuildSecond && !hadWin){
                         try {
                             super.build(cell, false);
                             previousCell = cell;
@@ -69,7 +69,7 @@ public class Hephaestus extends God {
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else if (hadMove && hadBuild && !hadBuildSecond && !hadWin && previousCell!=null && (previousCell.equals(cell)) && cell.getHeight()!=Height.THIRD_FLOOR && cell.getHeight()!=Height.DOME){
+                    } else if (hadMoved && hadBuild && !hadBuildSecond && !hadWin && previousCell!=null && (previousCell.equals(cell)) && cell.getHeight()!=Height.THIRD_FLOOR && cell.getHeight()!=Height.DOME){
                         try {
                             super.build(cell, false);
                             hadBuildSecond = true;
@@ -82,7 +82,7 @@ public class Hephaestus extends God {
                     }
 
                 case BUILD_DOME:
-                    if (hadMove && !hadBuild && !hadBuildSecond && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
+                    if (hadMoved && !hadBuild && !hadBuildSecond && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(cell, false);
                             previousCell = cell;
