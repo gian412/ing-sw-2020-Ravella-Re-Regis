@@ -29,7 +29,7 @@ public class Controller {
                         command
                 );
             }catch(IllegalMoveException | NullPointerException exc){
-                System.err.println(exc.getMessage());
+                System.err.println(exc.getMessage() + " controller generated");
                 return  false;
             }
         }
