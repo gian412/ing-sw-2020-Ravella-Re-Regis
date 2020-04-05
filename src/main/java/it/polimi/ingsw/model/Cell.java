@@ -138,6 +138,16 @@ public class Cell {
     }
 
     /**
+     * Check if the cell is a perimeter cell
+     *
+     * @author Gianluca Regis
+     * @return true if the cell is a perimeter cell, otherwise return false
+     */
+    public boolean isPerimeter(){
+        return this.X == 0 || this.X == 4 || this.Y == 0 || this.Y == 4;
+    }
+
+    /**
      * compare two cells
      *
      * override the method equals of the class Object
@@ -146,7 +156,7 @@ public class Cell {
      * @param o is the cell to compare
      * @return true if two cells are equal
      */
-    // equals implementetion for cell
+    // equals implementation for cell
     @Override
     public boolean equals(Object o){
 
