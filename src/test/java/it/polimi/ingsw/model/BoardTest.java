@@ -68,6 +68,87 @@ public class BoardTest {
 
     }
 
+    @Test
+    @DisplayName("buildTestIfThePlayerBuildsADomeInALevel3Cell")
+    public void build1Test(){
+
+        Board board = new Board();
+        Cell cell = new Cell(1,1);
+        board.getCell(1,1).setHeight(Height.THIRD_FLOOR);
 
 
+        try {
+            board.build(cell, true);
+        }
+        catch (IllegalMoveException e) {
+            System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
+            fail("the cell doesn't exist");
+
+        }
+
+        assertTrue("the player builds in cell 1,1 a dome in a third level tower and completed it",
+                board.getCell(1, 1).isCompleted() && board.getCell(1,1).getHeight() == Height.DOME);
+    }
+
+    @Test
+    @DisplayName("buildTestIfThePlayerBuildsADomeInANotLevel3Cell")
+    public void build2Test(){
+
+        Board board = new Board();
+        Cell cell = new Cell(1,1);
+        board.getCell(1,1).setHeight(Height.GROUND);
+
+
+        try {
+            board.build(cell, true);
+        }
+        catch (IllegalMoveException e) {
+            System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
+            fail("the cell doesn't exist");
+
+        }
+
+        assertTrue("the player builds in cell 1,1 a dome in a not level three cell so the tower isn't completed",
+                !board.getCell(1, 1).isCompleted() && board.getCell(1,1).getHeight() == Height.DOME);
+    }
+
+    @Test
+    @DisplayName("buildTestIfThePlayerBuilds")
+    public void build3Test(){
+
+        Board board = new Board();
+        Cell cell = new Cell(1,1);
+        board.getCell(1,1).setHeight(Height.GROUND);
+
+
+        try {
+            board.build(cell, false);
+        }
+        catch (IllegalMoveException e) {
+            System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
+            fail("the cell doesn't exist");
+
+        }
+
+        assertTrue("the player builds in cell 1,1 a new floor and the tower isn't completed",
+                !board.getCell(1, 1).isCompleted() && board.getCell(1,1).getHeight() == Height.FIRST_FLOOR);
+    }
+
+    @Test
+    @DisplayName("buildTestIfTheCellDoes'tExist")
+    public void build4Test(){
+
+        Board board = new Board();
+        Cell cell = new Cell(8,8);
+        board.getCell(1,1).setHeight(Height.GROUND);
+
+
+        try {
+            board.build(cell, false);
+        }
+        catch (IllegalMoveException e) {
+            System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
+            assertTrue("the cell doesn't exist", true);
+        }
+    }
 }
