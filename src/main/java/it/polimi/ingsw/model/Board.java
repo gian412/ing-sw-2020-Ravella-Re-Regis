@@ -68,10 +68,16 @@ public class Board {
 
         if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5)){
             if(isDome){
-                cell.setHeight(Height.DOME);
+                if(this.getCell(cell.X, cell.Y).getHeight() == Height.THIRD_FLOOR) {
+                    this.getCell(cell.X, cell.Y).setHeight(Height.DOME);
+                    this.getCell(cell.X, cell.Y).setIsCompleted();
+                }
+                else{
+                    this.getCell(cell.X, cell.Y).setHeight(Height.DOME);
+                }
             }
             else {
-                cell.buildFloor();
+                this.getCell(cell.X, cell.Y).buildFloor();
             }
             this.updateProxyBoard();
         }
@@ -129,11 +135,15 @@ public class Board {
         }
     }
 
-    /** TODO: implement the method (adds a worker in [row, column], the worker is the turnplayer's one)
+    /** put a worker on the board
      *
-     * @param row
-     * @param column
+     * at the start of the game the player put his workers on the board
+     *
+     * @param row is the row of the board in which the player inserts his worker
+     * @param column is the column of the board in which the player inserts his worker
      * @throws IllegalCellException,IllegalAddException
+     * illegalCellException is the cell doesn't exist
+     * illegalAddException if the player has already put his two workers
      */
     public void addWorker(int row, int column) throws IllegalCellException, IllegalAddException{
 

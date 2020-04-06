@@ -195,6 +195,10 @@ public class Cell {
         return myCell.toString();
     }
 
+    public void setIsCompleted(){
+        this.isCompleted = true;
+    }
+
     public boolean isCompleted() {
         return isCompleted;
     }
