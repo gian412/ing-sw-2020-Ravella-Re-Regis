@@ -66,7 +66,7 @@ public class Board {
      */
     public void build(Cell originCell, Cell buildCell, boolean isDome) throws IllegalMoveException{
 
-        if((buildCell.X >= 0) && (buildCell.X < 5) && (buildCell.Y >= 0) && (buildCell.Y < 5)){
+        if((buildCell.X >= 0) && (buildCell.X < 5) && (buildCell.Y >= 0) && (buildCell.Y < 5) && originCell.cellDistance(buildCell)){
             if(isDome){
                 if(this.getCell(buildCell.X, buildCell.Y).getHeight() == Height.THIRD_FLOOR) {
                     this.getCell(buildCell.X, buildCell.Y).buildFloor();

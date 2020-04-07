@@ -139,7 +139,7 @@ public class BoardTest {
 
     @Test
     @DisplayName("addFirstWorkerTest")
-    public void addFirstWorkerTest(){
+    public void addWorker1Test(){
 
         Board board = new Board();
         Player player = new Player("player1", 10);
@@ -166,8 +166,38 @@ public class BoardTest {
 
 
     }
+/*
+    @Test
+    @DisplayName("addSecondWorkerTest")
+    public void addWorker2Test(){
+
+     /*   Board board = new Board();
+        Player player1 = new Player("player1", 10);
+        Player player2 = new Player("player2", 15);
+        Worker worker = new Worker("player10", player);
+        board.setTurnPlayer(player);
+
+        try{
+            board.addWorker(1 ,1 );
+        }
+        catch (IllegalAddException | IllegalCellException e) {
+            System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
+            fail("test failed");
+        }
+
+        Cell cell = new Cell(1,1);
+        cell.setWorker(worker);
+
+        worker.setCurrentCell(cell);
 
 
+        assertTrue("now there is a worker in the cell 1,1 and below to player1",
+                board.getCell(1,1).getWorker().WORKER_ID.equals(worker.WORKER_ID)  &&
+                        player.getWorkers()[0].WORKER_ID.equals(worker.WORKER_ID) );
+
+
+    }
+*/
 
     @Test
     @DisplayName("buildTestIfThePlayerBuildsADomeInALevel3Cell")
@@ -175,11 +205,11 @@ public class BoardTest {
 
         Board board = new Board();
         Cell cell = new Cell(1,1);
-        board.getCell(1,1).setHeight(Height.THIRD_FLOOR);
+        Cell cellWorker = new Cell(0,0);
 
 
         try {
-            board.build(cell, true);
+            board.build(cellWorker, cell, true);
         }
         catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
@@ -196,11 +226,11 @@ public class BoardTest {
 
         Board board = new Board();
         Cell cell = new Cell(1,1);
-        board.getCell(1,1).setHeight(Height.GROUND);
+        Cell cellWorker = new Cell(0,0);
 
 
         try {
-            board.build(cell, true);
+            board.build(cellWorker, cell, true);
         }
         catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
@@ -218,11 +248,11 @@ public class BoardTest {
 
         Board board = new Board();
         Cell cell = new Cell(1,1);
-        board.getCell(1,1).setHeight(Height.GROUND);
+        Cell cellWorker = new Cell(0,0);
 
 
         try {
-            board.build(cell, false);
+            board.build(cellWorker, cell, false);
         }
         catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
@@ -240,11 +270,11 @@ public class BoardTest {
 
         Board board = new Board();
         Cell cell = new Cell(8,8);
-        board.getCell(1,1).setHeight(Height.GROUND);
+        Cell cellWorker = new Cell(0,0);
 
 
         try {
-            board.build(cell, false);
+            board.build(cellWorker, cell, false);
             fail("test failed");
         }
         catch (IllegalMoveException e) {
@@ -252,4 +282,24 @@ public class BoardTest {
             assertTrue("the cell doesn't exist", true);
         }
     }
+
+    @Test
+    @DisplayName("buildTestIfTheCellIsn'tAdjacent")
+    public void build5Test(){
+
+        Board board = new Board();
+        Cell cell = new Cell(3,3);
+        Cell cellWorker = new Cell(0,0);
+
+
+        try {
+            board.build(cellWorker, cell, false);
+            fail("test failed");
+        }
+        catch (IllegalMoveException e) {
+            System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
+            assertTrue("the cell isn't adjacent", true);
+        }
+    }
+
 }
