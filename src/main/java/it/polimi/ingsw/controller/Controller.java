@@ -1,8 +1,10 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.view.Observable;
+import it.polimi.ingsw.view.Observer;
 
-public class Controller {
+public class Controller implements Observer {
 
     private Game game;
 
@@ -93,6 +95,13 @@ public class Controller {
      */
     public void startGame(){
         game.startGame();
+    }
+
+
+    @Override
+    public void update(Object message) {
+
+
     }
 
 
