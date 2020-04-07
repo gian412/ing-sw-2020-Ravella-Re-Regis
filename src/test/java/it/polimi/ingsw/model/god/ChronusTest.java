@@ -145,26 +145,31 @@ public class ChronusTest {
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,0);
+        firstCell.setIsCompleted();
         firstCell.setHeight(Height.DOME);
         firstCell.setWorker(null);
 
         // Initialization of the second cell
         Cell secondCell = board.getCell(0,1);
+        secondCell.setIsCompleted();
         secondCell.setHeight(Height.DOME);
         secondCell.setWorker(null);
 
         // Initialization of the third cell
         Cell thirdCell = board.getCell(0,2);
+        thirdCell.setIsCompleted();
         thirdCell.setHeight(Height.DOME);
         thirdCell.setWorker(null);
 
         // Initialization of the fourth cell
         Cell fourthCell = board.getCell(0,3);
+        fourthCell.setIsCompleted();
         fourthCell.setHeight(Height.DOME);
         fourthCell.setWorker(null);
 
         // Initialization of the fifth cell
         Cell fifthCell = board.getCell(0,4);
+        fifthCell.setIsCompleted();
         fifthCell.setHeight(Height.DOME);
         fifthCell.setWorker(null);
 
@@ -175,7 +180,7 @@ public class ChronusTest {
             god.makeMove(worker, command);
 
             assertTrue( "hadWin must be true", god.hadWin );
-            assertEquals("The number of completed towers must be at list 5", board.countCompleteTower(), true);
+            assertTrue("The number of completed towers must be at list 5", board.countCompleteTower());
 
         } catch (IllegalMoveException e){
             System.err.println("Error e in method HadWinTrueTest in class ChronusTest: " + e.toString());

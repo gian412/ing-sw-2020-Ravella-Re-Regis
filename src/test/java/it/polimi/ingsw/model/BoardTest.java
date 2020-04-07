@@ -136,7 +136,7 @@ public class BoardTest {
             assertTrue("the cell doesn't exist and there is an IllegalMoveException", true);
         }
     }
-    
+
     @Test
     @DisplayName("addFirstWorkerTest")
     public void addFirstWorkerTest(){
@@ -166,6 +166,8 @@ public class BoardTest {
 
 
     }
+
+
 
     @Test
     @DisplayName("buildTestIfThePlayerBuildsADomeInALevel3Cell")

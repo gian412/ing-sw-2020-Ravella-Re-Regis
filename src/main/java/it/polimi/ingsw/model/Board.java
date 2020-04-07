@@ -69,8 +69,7 @@ public class Board {
         if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5)){
             if(isDome){
                 if(this.getCell(cell.X, cell.Y).getHeight() == Height.THIRD_FLOOR) {
-                    this.getCell(cell.X, cell.Y).setHeight(Height.DOME);
-                    this.getCell(cell.X, cell.Y).setIsCompleted();
+                    this.getCell(cell.X, cell.Y).buildFloor();
                 }
                 else{
                     this.getCell(cell.X, cell.Y).setHeight(Height.DOME);
