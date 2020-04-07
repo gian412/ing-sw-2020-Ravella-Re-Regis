@@ -5,7 +5,6 @@ import it.polimi.ingsw.view.RemoteView;
 
 import java.util.ArrayList;
 
-import it.polimi.ingsw.view.Observable;
 import it.polimi.ingsw.view.Observer;
 
 public class Controller implements Observer {
@@ -102,5 +101,16 @@ public class Controller implements Observer {
         game.startGame();
     }
 
+    public Player getTurnPlayer(){
+        return this.game.getTurnPlayer();
+    }
 
+    @Override
+    public void update(Object message) {
+        if(!(message instanceof PlayerCommand) ) throw new IllegalArgumentException();
+        else{
+            commitMove(((PlayerCommand) message).player.getNAME(), ((PlayerCommand) message).getCommand(), ((PlayerCommand) message).getWorkerIndex());
+        }
+
+    }
 }
