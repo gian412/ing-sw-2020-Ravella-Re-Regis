@@ -61,22 +61,22 @@ public class Board {
     /**
      * build a structure on the board
      *
-     * @param cell cell in which the player wants to build
+     * @param buildCell cell in which the player wants to build
      * @param isDome is true if a god, who has the ability to build dome not only after the third level, build a dome
      */
-    public void build(Cell cell, boolean isDome) throws IllegalMoveException{
+    public void build(Cell originCell, Cell buildCell, boolean isDome) throws IllegalMoveException{
 
-        if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5)){
+        if((buildCell.X >= 0) && (buildCell.X < 5) && (buildCell.Y >= 0) && (buildCell.Y < 5)){
             if(isDome){
-                if(this.getCell(cell.X, cell.Y).getHeight() == Height.THIRD_FLOOR) {
-                    this.getCell(cell.X, cell.Y).buildFloor();
+                if(this.getCell(buildCell.X, buildCell.Y).getHeight() == Height.THIRD_FLOOR) {
+                    this.getCell(buildCell.X, buildCell.Y).buildFloor();
                 }
                 else{
-                    this.getCell(cell.X, cell.Y).setHeight(Height.DOME);
+                    this.getCell(buildCell.X, buildCell.Y).setHeight(Height.DOME);
                 }
             }
             else {
-                this.getCell(cell.X, cell.Y).buildFloor();
+                this.getCell(buildCell.X, buildCell.Y).buildFloor();
             }
             this.updateProxyBoard();
         }

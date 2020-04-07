@@ -78,21 +78,21 @@ public abstract class God {
      * The method throw an IllegalMoveException if the piece can't be built in the given cell
      *
      * @author Gianluca Regis
-     * @param cell is the cell in which you're building the new piece
+     * @param buildCell is the cell in which you're building the new piece
      * @param isDome is true if Atlas build a dome in any position
      * @throws IllegalMoveException in case the move isn't legal
      */
-    public void build(Cell cell, boolean isDome) throws IllegalMoveException {
+    public void build(Cell originCell, Cell buildCell, boolean isDome) throws IllegalMoveException {
         // build
-        if( cell.getWorker() == null && cell.getHeight() != Height.DOME && isDome ){
+        if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && isDome ){
             try {
-                board.build( cell, true );
+                board.build(originCell, buildCell, true );
             } catch (IllegalMoveException e){
                 throw new IllegalMoveException();
             }
-        }else if( cell.getWorker() == null && cell.getHeight() != Height.DOME && !isDome){
+        }else if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && !isDome){
             try{
-                board.build( cell, false );
+                board.build(originCell, buildCell, false );
             } catch (IllegalMoveException e) {
                 throw new IllegalMoveException();
             }
