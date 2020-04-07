@@ -1,10 +1,15 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.view.RemoteView;
+
+import java.util.ArrayList;
+
 
 public class Controller {
 
     private Game game;
+    private ArrayList<RemoteView> remoteViews;
 
     public Controller(Game g){
         this.game = g;
@@ -95,5 +100,7 @@ public class Controller {
         game.startGame();
     }
 
-
+    public Player getTurnPlayer() {
+        return game.getTurnPlayer();
+    }
 }
