@@ -2,8 +2,10 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Player;
 
+import java.util.ArrayList;
+
 public class LobbyController {
 
-    private Player[] players;
+    private ArrayList<Player> players;
 
 }
