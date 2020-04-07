@@ -29,7 +29,7 @@ public class RemoteView implements Observer<BoardProxy>, Runnable {
     @Override
     public void run() {
         if (controller.getTurnPlayer().equals(player)){
-
+            
         } else {
             // Send an error message via socket
         }
