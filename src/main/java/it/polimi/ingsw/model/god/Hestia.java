@@ -56,7 +56,7 @@ public class Hestia extends God {
                 case BUILD:
                     if (hadMoved && !hadBuild && !hadBuildSecond && !hadWin){
                         try {
-                            super.build(cell, false);
+                            super.build(worker.getCurrentCell(), cell, false);
                             hadBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
@@ -64,7 +64,7 @@ public class Hestia extends God {
                         }
                     } else if (hadMoved && hadBuild && !hadBuildSecond && !hadWin && cell.isPerimeter() ){
                         try {
-                            super.build(cell, false);
+                            super.build(worker.getCurrentCell(), cell, false);
                             hadBuildSecond = true;
                             break;
                         } catch (IllegalMoveException e){
@@ -77,7 +77,7 @@ public class Hestia extends God {
                 case BUILD_DOME:
                     if (hadMoved && !hadBuild && !hadBuildSecond && !hadWin && cell.getHeight()==Height.THIRD_FLOOR){
                         try {
-                            super.build(cell, false);
+                            super.build(worker.getCurrentCell(), cell, false);
                             hadBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
@@ -85,7 +85,7 @@ public class Hestia extends God {
                         }
                     } else if (hadMoved && hadBuild && !hadBuildSecond && !hadWin && cell.isPerimeter() && cell.getHeight()==Height.THIRD_FLOOR){
                         try {
-                            super.build(cell, false);
+                            super.build(worker.getCurrentCell(), cell, false);
                             hadBuildSecond = true;
                             break;
                         } catch (IllegalMoveException e){

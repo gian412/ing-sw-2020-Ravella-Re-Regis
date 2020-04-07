@@ -53,7 +53,7 @@ public class Atlas extends God {
                 case BUILD:
                     if (hadMoved && !hadBuild && !hadWin) {
                         try {
-                            super.build(cell, false);
+                            super.build(worker.getCurrentCell(), cell, false);
                             hadBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
@@ -66,7 +66,7 @@ public class Atlas extends God {
                 case BUILD_DOME:
                     if (hadMoved && !hadBuild && !hadWin) {
                         try {
-                            super.build(cell, true);
+                            super.build(worker.getCurrentCell(), cell, true);
                             hadBuild = true;
                             break;
                         } catch (IllegalMoveException e) {

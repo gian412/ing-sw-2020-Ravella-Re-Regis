@@ -93,7 +93,7 @@ public class Minotaur extends God {
                 case BUILD:
                     if (hadMoved && !hadBuild && !hadWin){
                         try {
-                            super.build(cell, false);
+                            super.build(worker.getCurrentCell(), cell, false);
                             hadBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
@@ -106,7 +106,7 @@ public class Minotaur extends God {
                 case BUILD_DOME:
                     if (cell.getHeight() == Height.THIRD_FLOOR){
                         try {
-                            super.build(cell, false);
+                            super.build(worker.getCurrentCell(), cell, false);
                             hadBuild = true;
                             break;
                         } catch (IllegalMoveException e) {

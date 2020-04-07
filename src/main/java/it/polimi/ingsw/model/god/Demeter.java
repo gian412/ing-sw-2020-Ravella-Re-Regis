@@ -57,7 +57,7 @@ public class Demeter extends God {
                 case BUILD:
                     if (hadMoved && !hadBuild && !hadBuildSecond && !hadWin){
                         try {
-                            super.build(cell, false);
+                            super.build(worker.getCurrentCell(), cell, false);
                             previousCell = cell;
                             hadBuild = true;
                             break;
@@ -66,7 +66,7 @@ public class Demeter extends God {
                         }
                     } else if (hadMoved && hadBuild && !hadBuildSecond && !hadWin && previousCell!=null && !(previousCell.equals(cell))){
                         try {
-                            super.build(cell, false);
+                            super.build(worker.getCurrentCell(), cell, false);
                             hadBuildSecond = true;
                             break;
                         } catch (IllegalMoveException e){
@@ -79,7 +79,7 @@ public class Demeter extends God {
                 case BUILD_DOME:
                     if (hadMoved && !hadBuild && !hadBuildSecond && !hadWin && cell.getHeight()==Height.THIRD_FLOOR){
                         try {
-                            super.build(cell, false);
+                            super.build(worker.getCurrentCell(), cell, false);
                             previousCell = cell;
                             hadBuild = true;
                             break;
@@ -88,7 +88,7 @@ public class Demeter extends God {
                         }
                     } else if (hadMoved && hadBuild && !hadBuildSecond && !hadWin && previousCell!=null && !(previousCell.equals(cell)) && cell.getHeight()==Height.THIRD_FLOOR){
                         try {
-                            super.build(cell, false);
+                            super.build(worker.getCurrentCell(), cell, false);
                             hadBuildSecond = true;
                             break;
                         } catch (IllegalMoveException e){
