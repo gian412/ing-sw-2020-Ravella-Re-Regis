@@ -5,9 +5,10 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.Observer;
 import java.net.Socket;
+import java.util.Observable;
 
 
-public class RemoteView implements Observer<BoardProxy> {
+public class RemoteView implements Observer<BoardProxy>, Runnable {
     Socket connSocket;
     Controller controller;
     Player player;
@@ -23,5 +24,14 @@ public class RemoteView implements Observer<BoardProxy> {
     @Override
     public void update(BoardProxy message) {
         //send the message through the socket
+    }
+
+    @Override
+    public void run() {
+        if (controller.getTurnPlayer().equals(player)){
+            
+        } else {
+            // Send an error message via socket
+        }
     }
 }

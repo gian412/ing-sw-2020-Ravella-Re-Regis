@@ -1,12 +1,17 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.view.RemoteView;
+
+import java.util.ArrayList;
+
 import it.polimi.ingsw.view.Observable;
 import it.polimi.ingsw.view.Observer;
 
 public class Controller implements Observer {
 
     private Game game;
+    private ArrayList<RemoteView> remoteViews;
 
     public Controller(Game g){
         this.game = g;
@@ -95,13 +100,6 @@ public class Controller implements Observer {
      */
     public void startGame(){
         game.startGame();
-    }
-
-
-    @Override
-    public void update(Object message) {
-
-
     }
 
 
