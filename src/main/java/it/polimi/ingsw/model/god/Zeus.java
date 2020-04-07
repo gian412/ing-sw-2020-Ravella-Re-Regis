@@ -22,16 +22,16 @@ public class Zeus extends God {
      * This Override is able to build a piece under the worker
      *
      * @author Gianluca Regis
-     * @param cell is the cell in which you're building the new piece
+     * @param buildCell is the cell in which you're building the new piece
      * @param isDome is true if Atlas build a dome in any position
      * @throws IllegalMoveException in case the move isn't legal
      */
     @Override
-    public void build(Cell cell, boolean isDome) throws IllegalMoveException {
+    public void build(Cell originCell, Cell buildCell, boolean isDome) throws IllegalMoveException {
         // build
-        if( cell.getHeight() != Height.THIRD_FLOOR && cell.getHeight() != Height.DOME && !isDome ){
+        if( buildCell.getHeight() != Height.THIRD_FLOOR && buildCell.getHeight() != Height.DOME && !isDome ){
             try {
-                board.build( cell, false );
+                board.build(originCell, buildCell, false );
             } catch (IllegalMoveException e){
                 throw new IllegalMoveException();
             }
@@ -78,7 +78,7 @@ public class Zeus extends God {
                     if (worker.getCurrentCell()!=cell){
                         if ( hadMoved && !hadBuild && !hadWin){
                             try {
-                                super.build(cell, false);
+                                super.build(worker.getCurrentCell(), cell, false);
                                 hadBuild = true;
                                 break;
                             } catch (IllegalMoveException e) {
@@ -90,7 +90,7 @@ public class Zeus extends God {
                     } else {
                         if ( hadMoved && !hadBuild && !hadWin){
                             try {
-                                this.build(cell, false);
+                                this.build(cell, cell, false);
                                 hadBuild = true;
                                 break;
                             } catch (IllegalMoveException e) {
@@ -104,7 +104,7 @@ public class Zeus extends God {
                 case BUILD_DOME:
                     if (cell.getHeight() == Height.THIRD_FLOOR){
                         try {
-                            super.build(cell, false);
+                            super.build(cell, cell, false);
                             hadBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
