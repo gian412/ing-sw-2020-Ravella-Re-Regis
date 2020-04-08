@@ -1,7 +1,5 @@
 package it.polimi.ingsw.view;
 
-import com.sun.tools.jdeprscan.scan.Scan;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;

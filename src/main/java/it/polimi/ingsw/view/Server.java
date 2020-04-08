@@ -17,18 +17,14 @@ public class Server implements Runnable{
     private List<ClientHandler> waitingClients;
     private List<ClientHandler> playingClients;
     private int clientsNumber;
+    private final int PORT = 1337;
 
     /**
      * Class constructor whit the initialization of the serverSocket
      * @author Gianluca Regis
-     * @param port is the port in which the connection is waited
      */
-    public Server(int port) {
-        try {
-            serverSocket = new ServerSocket(port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Server() throws IOException{
+        this.serverSocket = new ServerSocket(PORT);
     }
 
     /**
@@ -97,15 +93,17 @@ public class Server implements Runnable{
     @Override
     public void run() {
 
-        try {
-            while (true) {
+        System.out.println("Server ready on port " + PORT);
+        while (true) {
+            try {
                 Socket socket = serverSocket.accept();
                 ClientHandler client = new ClientHandler(socket, this);
                 executor.submit(client);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
 
     }
 }
