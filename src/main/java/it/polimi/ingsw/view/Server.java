@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Game;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,6 +26,8 @@ public class Server implements Runnable{
      */
     public Server() throws IOException{
         this.serverSocket = new ServerSocket(PORT);
+        waitingClients = new ArrayList<>();
+        playingClients = new ArrayList<>();
     }
 
     /**
