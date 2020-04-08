@@ -7,7 +7,8 @@ import java.util.ArrayList;
 
 import it.polimi.ingsw.view.Observer;
 
-public class Controller implements Observer {
+
+public class Controller implements Observer, Runnable {
 
     private Game game;
 
@@ -114,6 +115,11 @@ public class Controller implements Observer {
                     ((PlayerCommand) message).getWorkerIndex()
             );
         }
+
+    }
+
+    @Override
+    public void run() {
 
     }
 }
