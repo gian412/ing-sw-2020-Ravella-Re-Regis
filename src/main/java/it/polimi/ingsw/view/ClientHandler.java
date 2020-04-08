@@ -1,0 +1,48 @@
+package it.polimi.ingsw.view;
+
+import com.sun.tools.jdeprscan.scan.Scan;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
+
+public class ClientHandler implements Runnable{
+
+    private final Socket socket;
+    private final Server server;
+    private String name;
+
+    public ClientHandler(Socket socket, Server server) {
+        this.socket = socket;
+        this.server = server;
+    }
+
+    public void starGame(){
+
+    }
+
+    @Override
+    public void run() {
+
+        try {
+            Scanner socketIn = new Scanner(socket.getInputStream());
+            PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
+            socketOut.println("Insert your name, buddy!");
+            socketOut.flush();
+            this.name = socketIn.nextLine();
+
+            if (server.isLobbyEmpty()){
+                socketOut.println("Creating new game. How many player do you want to play with?");
+                socketOut.flush();
+                server.setClientsNumber(socketIn.nextInt());
+            }
+            server.lobby(this);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+    }
+}
