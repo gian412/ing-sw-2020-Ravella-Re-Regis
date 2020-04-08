@@ -67,9 +67,11 @@ public class Server implements Runnable{
     public void run() {
 
         try {
-            Socket socket = serverSocket.accept();
-            ClientHandler client = new ClientHandler(socket, this);
-            executor.submit(client);
+            while (true) {
+                Socket socket = serverSocket.accept();
+                ClientHandler client = new ClientHandler(socket, this);
+                executor.submit(client);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
