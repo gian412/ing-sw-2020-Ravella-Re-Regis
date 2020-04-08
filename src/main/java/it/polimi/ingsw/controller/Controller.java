@@ -10,7 +10,6 @@ import it.polimi.ingsw.view.Observer;
 public class Controller implements Observer {
 
     private Game game;
-    private ArrayList<RemoteView> remoteViews;
 
     public Controller(Game g){
         this.game = g;
@@ -109,7 +108,11 @@ public class Controller implements Observer {
     public void update(Object message) {
         if(!(message instanceof PlayerCommand) ) throw new IllegalArgumentException();
         else{
-            commitMove(((PlayerCommand) message).player.getNAME(), ((PlayerCommand) message).getCommand(), ((PlayerCommand) message).getWorkerIndex());
+            commitMove(
+                    ((PlayerCommand) message).player.getNAME(),
+                    ((PlayerCommand) message).getCommand(),
+                    ((PlayerCommand) message).getWorkerIndex()
+            );
         }
 
     }
