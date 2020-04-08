@@ -14,25 +14,52 @@ public class ClientHandler implements Runnable{
     private String name;
     private int age;
 
+    /**
+     * Getter of ClientHandler.socket
+     *
+     * @author Elia Ravella
+     * @return a Socket that represent ClientHandler.socket
+     */
     public Socket getSocket() {
         return socket;
     }
 
+    /**
+     * Getter of ClientHandler.age
+     *
+     * @author Elia Ravella
+     * @return an integer that represent ClientHandler.age
+     */
     public int getAge() {
         return age;
     }
 
+    /**
+     * Getter of ClientHandler.name
+     *
+     * @author Elia Ravella
+     * @return a String that represent ClientHandler.name
+     */
     public String getName() {
         return name;
     }
 
-
-
+    /**
+     * Class constructor with the initialization of the socket and the server for the specific user
+     * @param socket the socket of the user
+     * @param server the server which the user is connected to
+     */
     public ClientHandler(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
     }
 
+    /**
+     * Run method for the runnable class ClientHandler.
+     * This method open the input and output steams of the socket, asks and receives user's name and age
+     * and, if the player is the first of the game to connect, the number of players. Then it call
+     * Server.lobby method in order to insert the player in the lobby
+     */
     @Override
     public void run() {
 

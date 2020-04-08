@@ -18,6 +18,11 @@ public class Server implements Runnable{
     private List<ClientHandler> playingClients;
     private int clientsNumber;
 
+    /**
+     * Class constructor whit the initialization of the serverSocket
+     * @author Gianluca Regis
+     * @param port is the port in which the connection is waited
+     */
     public Server(int port) {
         try {
             serverSocket = new ServerSocket(port);
@@ -26,14 +31,29 @@ public class Server implements Runnable{
         }
     }
 
+    /**
+     * Setter for clientsNumber
+     * @author Gianluca Regis
+     * @param clientsNumber the integer to which clientsNumber is to be set
+     */
     public void setClientsNumber(int clientsNumber) {
         this.clientsNumber = clientsNumber;
     }
 
+    /**
+     * Getter for waitingClients.size
+     * @return waitingClients.isEmpty
+     */
     public boolean isLobbyEmpty() {
         return waitingClients.isEmpty();
     }
 
+    /**
+     * Method that simulates a lobby for users in which there is the waiting/playing lists' manager
+     *
+     * @authors Gianluca Regis, Elia Ravella
+     * @param client the ClientHandler class of the user who enter the lobby
+     */
     public synchronized void lobby(ClientHandler client) {
 
         waitingClients.add(client);
@@ -46,6 +66,11 @@ public class Server implements Runnable{
         }
     }
 
+    /**
+     * The method that starts the game
+     *
+     * @author Elia Ravella
+     */
     private void startPlaying() {
         // creating game and controller
         Game g = new Game();
@@ -63,6 +88,12 @@ public class Server implements Runnable{
 
     }
 
+    /**
+     * The method run for the runnable class Server.
+     * This method receive the incoming connections and call the ClientHandler in a thread
+     *
+     * @author Gianluca Regis
+     */
     @Override
     public void run() {
 
