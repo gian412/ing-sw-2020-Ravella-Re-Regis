@@ -62,21 +62,27 @@ public class ClientHandler implements Runnable{
     public void run() {
 
         try {
-            Scanner socketIn = new Scanner(socket.getInputStream());
-            PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
-            socketOut.println("Insert your name, buddy!");
-            socketOut.flush();
-            this.name = socketIn.nextLine();
+            Scanner socketIn = new Scanner(socket.getInputStream()); // Open input stream with socket
+            PrintWriter socketOut = new PrintWriter(socket.getOutputStream()); // Open output stream with socket
+            socketOut.println("Insert your name, buddy!"); // Write name request
+            socketOut.flush(); // Send name request through socket stream
+            this.name = socketIn.nextLine(); // Receive name
 
-            socketOut.println("and now tell me, how old are you?");
-            socketOut.flush();
-            this.age = socketIn.nextInt();
+            socketOut.println("and now tell me, how old are you?"); // Write age request
+            socketOut.flush(); // Send age request through socket stream
+            this.age = socketIn.nextInt(); // Receive age
 
             if (server.isLobbyEmpty()){
                 socketOut.println("Creating new game. How many player do you want to play with?");
                 socketOut.flush();
                 server.setClientsNumber(socketIn.nextInt());
+                socketOut.println("The game will start when all the players will be connected");
+                socketOut.flush();
+            } else {
+                socketOut.println("Adding you to an existing game. The game is composed by "+server.getClientsNumber()+" player.");
             }
+            socketOut.println("The game will start when all the players will be connected");
+            socketOut.flush();
             server.lobby(this);
 
         } catch (IOException e){

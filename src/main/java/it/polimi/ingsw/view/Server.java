@@ -28,7 +28,17 @@ public class Server implements Runnable{
     }
 
     /**
+     * Getter for clientNumber
+     *
+     * @author Gianluca Regis
+     * @return clientNumber
+     */
+    public int getClientsNumber() {
+        return this.clientsNumber;
+    }
+    /**
      * Setter for clientsNumber
+     *
      * @author Gianluca Regis
      * @param clientsNumber the integer to which clientsNumber is to be set
      */
