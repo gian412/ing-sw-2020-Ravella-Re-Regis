@@ -110,7 +110,11 @@ public class Controller implements Observer, Runnable {
     public void update(Object message) {
         if(!(message instanceof PlayerCommand) ) throw new IllegalArgumentException();
         else{
-            commitMove(((PlayerCommand) message).player.getNAME(), ((PlayerCommand) message).getCommand(), ((PlayerCommand) message).getWorkerIndex());
+            commitMove(
+                    ((PlayerCommand) message).player.getNAME(),
+                    ((PlayerCommand) message).getCommand(),
+                    ((PlayerCommand) message).getWorkerIndex()
+            );
         }
 
     }

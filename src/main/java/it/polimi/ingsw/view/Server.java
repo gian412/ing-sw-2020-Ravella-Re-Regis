@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.model.Game;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -26,9 +29,11 @@ public class Server implements Runnable{
     public void setClientsNumber(int clientsNumber) {
         this.clientsNumber = clientsNumber;
     }
+
     public boolean isLobbyEmpty() {
         return waitingClients.isEmpty();
     }
+
     public synchronized void lobby(ClientHandler client) {
 
         waitingClients.add(client);
@@ -36,10 +41,25 @@ public class Server implements Runnable{
             // move waiting in
             playingClients.addAll(waitingClients);
             waitingClients.clear();
-            // Controller controller = new Controller(new Game)
-            // executor.submit(controller)
+
+            startPlaying();
+        }
+    }
+
+    private void startPlaying() {
+        // creating game and controller
+        Game g = new Game();
+        Controller controller = new Controller(g);
+
+        // adding players, setting observers
+        for(ClientHandler x : playingClients){
+            controller.addPlayer(x.getName(), x.getAge());
+            RemoteView rv = new RemoteView(x.getSocket(), controller, x.getName());
+            rv.addObserver(controller);
+            g.getBoard().addView(rv);
         }
 
+        controller.startGame();
 
     }
 

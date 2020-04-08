@@ -17,10 +17,10 @@ public class RemoteView extends Observable implements Observer<BoardProxy>, Runn
     private Controller controller;
     private Player player;
 
-    public RemoteView(Socket socket, Controller controller, Player player){
+    public RemoteView(Socket socket, Controller controller, String player){
         this.connSocket = socket;
         this.controller = controller;
-        this.player = player;
+        this.player = new Player(player, -1);
     }
 
     @Override
