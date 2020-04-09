@@ -73,15 +73,13 @@ public class ClientHandler implements Runnable{
             this.age = socketIn.nextInt(); // Receive age
 
             if (server.isLobbyEmpty()){
-                socketOut.println("Creating new game. How many player do you want to play with?");
+                socketOut.println("Creating new game. How many player do you want to play with? (2 or 3 player allowed)");
                 socketOut.flush();
                 server.setClientsNumber(socketIn.nextInt());
-                socketOut.println("The game will start when all the players will be connected");
-                socketOut.flush();
             } else {
                 socketOut.println("Adding you to an existing game. The game is composed by "+server.getClientsNumber()+" player.");
             }
-            socketOut.println("The game will start when all the players will be connected");
+            socketOut.println("The game will start when all the players will be connected. Please wait...");
             socketOut.flush();
             server.lobby(this);
 
