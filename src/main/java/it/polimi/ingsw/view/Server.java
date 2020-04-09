@@ -86,15 +86,15 @@ public class Server implements Runnable{
      */
     private void startPlaying() {
         // creating game and controller
-        Game g = new Game();
-        Controller controller = new Controller(g);
+        Game game = new Game();
+        Controller controller = new Controller(game);
 
         // adding players, setting observers
         for(ClientHandler x : playingClients){
             controller.addPlayer(x.getName(), x.getAge());
-            RemoteView rv = new RemoteView(x.getSocket(), controller, x.getName());
-            rv.addObserver(controller);
-            g.getBoard().addView(rv);
+            RemoteView remoteView = new RemoteView(x.getSocket(), controller, x.getName());
+            remoteView.addObserver(controller);
+            game.getBoard().addView(remoteView);
         }
 
         controller.startGame();
