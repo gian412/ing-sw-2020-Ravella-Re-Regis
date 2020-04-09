@@ -10,27 +10,26 @@ public class BoardTest {
 
     @Test
     @DisplayName("moveWorkerTestIfThePlayerMovesSuccesfully")
-    public void moveWorker1Test(){
+    public void moveWorker1Test() {
 
         Board board = new Board();
         Player player = new Player("player1", 10);
         Worker worker = new Worker("worker1", player);
 
-        board.getCell(0,0).setWorker(worker);
-        worker.setCurrentCell(board.getCell(0,0));
+        board.getCell(0, 0).setWorker(worker);
+        worker.setCurrentCell(board.getCell(0, 0));
 
         try {
             board.moveWorker(worker, board.getCell(1, 1));
-        }
-        catch( IllegalMoveException e){
+        } catch (IllegalMoveException e) {
             System.err.println("Error e in method moveWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
         }
 
-        Cell oldCell = new Cell(0,0 );
+        Cell oldCell = new Cell(0, 0);
         oldCell.setWorker(null);
 
-        Cell newCell = new Cell( 1, 1 );
+        Cell newCell = new Cell(1, 1);
         newCell.setWorker(worker);
 
         assertTrue("previousCell in worker is the old current cell and currentCell is the new cell",
@@ -41,21 +40,20 @@ public class BoardTest {
 
     @Test
     @DisplayName("moveWorkerTestIfThePlayerMovesInACellWHicHDoesn'tExist")
-    public void moveWorker2Test(){
+    public void moveWorker2Test() {
 
         Board board = new Board();
         Player player = new Player("player1", 10);
         Worker worker = new Worker("worker1", player);
 
-        board.getCell(0,0).setWorker(worker);
-        worker.setCurrentCell(board.getCell(0,0));
-        Cell cell = new Cell(6,6);
+        board.getCell(0, 0).setWorker(worker);
+        worker.setCurrentCell(board.getCell(0, 0));
+        Cell cell = new Cell(6, 6);
 
         try {
             board.moveWorker(worker, cell);
             fail("test failed");
-        }
-        catch( IllegalMoveException e){
+        } catch (IllegalMoveException e) {
             System.err.println("Error e in method moveWorkerTest in class BoardTest " + e.toString());
             assertTrue("there is an error because the cell doesn't exist",
                     true);
@@ -87,27 +85,26 @@ public class BoardTest {
 
     @Test
     @DisplayName("forceWorkerTestIfaWorkerIsBoundToMoveToAnOtherCell")
-    public void forceWorker1Test(){
+    public void forceWorker1Test() {
 
         Board board = new Board();
         Player player = new Player("player1", 10);
         Worker worker = new Worker("worker1", player);
 
-        board.getCell(0,0).setWorker(worker);
-        worker.setCurrentCell(board.getCell(0,0));
+        board.getCell(0, 0).setWorker(worker);
+        worker.setCurrentCell(board.getCell(0, 0));
 
         try {
             board.forceWorker(worker, board.getCell(4, 3));
-        }
-        catch( IllegalMoveException e){
+        } catch (IllegalMoveException e) {
             System.err.println("Error e in method moveWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
         }
 
-        Cell oldCell = new Cell(0,0 );
+        Cell oldCell = new Cell(0, 0);
         oldCell.setWorker(null);
 
-        Cell newCell = new Cell( 4, 3 );
+        Cell newCell = new Cell(4, 3);
         newCell.setWorker(worker);
 
         assertTrue("previousCell in worker is the old current cell and currentCell is the new cell",
@@ -116,22 +113,21 @@ public class BoardTest {
 
     @Test
     @DisplayName("forceWorkerTestIfaWorkerIsBoundToMoveInACellWhichDoesn'tExist")
-    public void forceWorker2Test(){
+    public void forceWorker2Test() {
 
         Board board = new Board();
         Player player = new Player("player1", 10);
         Worker worker = new Worker("worker1", player);
 
-        board.getCell(0,0).setWorker(worker);
-        worker.setCurrentCell(board.getCell(0,0));
+        board.getCell(0, 0).setWorker(worker);
+        worker.setCurrentCell(board.getCell(0, 0));
 
-        Cell cell = new Cell(5,5);
+        Cell cell = new Cell(5, 5);
 
         try {
             board.forceWorker(worker, cell);
             fail("test Failed");
-        }
-        catch( IllegalMoveException e){
+        } catch (IllegalMoveException e) {
             System.err.println("Error e in method moveWorkerTest in class BoardTest " + e.toString());
             assertTrue("the cell doesn't exist and there is an IllegalMoveException", true);
         }
@@ -139,30 +135,29 @@ public class BoardTest {
 
     @Test
     @DisplayName("addFirstWorkerTest")
-    public void addWorker1Test(){
+    public void addWorker1Test() {
 
         Board board = new Board();
         Player player = new Player("player1", 10);
         Worker worker = new Worker("player10", player);
         board.setTurnPlayer(player);
 
-        try{
-            board.addWorker(1 ,1 );
-        }
-        catch (IllegalAddException | IllegalCellException e) {
+        try {
+            board.addWorker(1, 1);
+        } catch (IllegalAddException | IllegalCellException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
         }
 
-        Cell cell = new Cell(1,1);
+        Cell cell = new Cell(1, 1);
         cell.setWorker(worker);
 
         worker.setCurrentCell(cell);
 
 
         assertTrue("now there is a worker in the cell 1,1 and below to player1",
-                board.getCell(1,1).getWorker().WORKER_ID.equals(worker.WORKER_ID)  &&
-                            player.getWorkers()[0].WORKER_ID.equals(worker.WORKER_ID) );
+                board.getCell(1, 1).getWorker().WORKER_ID.equals(worker.WORKER_ID) &&
+                        player.getWorkers()[0].WORKER_ID.equals(worker.WORKER_ID));
 
 
     }
@@ -201,83 +196,80 @@ public class BoardTest {
 
     @Test
     @DisplayName("buildTestIfThePlayerBuildsADomeInALevel3Cell")
-    public void build1Test(){
+    public void build1Test() {
 
         Board board = new Board();
-        Cell cell = new Cell(1,1);
-        Cell cellWorker = new Cell(0,0);
+        Cell cell = new Cell(1, 1);
+        Cell cellWorker = new Cell(0, 0);
+        board.getCell(1, 1).setHeight(Height.THIRD_FLOOR);
 
 
         try {
             board.build(cellWorker, cell, true);
-        }
-        catch (IllegalMoveException e) {
+        } catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
         }
 
         assertTrue("the player builds in cell 1,1 a dome in a third level tower and completed it",
-                board.getCell(1, 1).isCompleted() && board.getCell(1,1).getHeight() == Height.DOME);
+                board.getCell(1, 1).isCompleted() && board.getCell(1, 1).getHeight() == Height.DOME);
     }
 
     @Test
     @DisplayName("buildTestIfThePlayerBuildsADomeInANotLevel3Cell")
-    public void build2Test(){
+    public void build2Test() {
 
         Board board = new Board();
-        Cell cell = new Cell(1,1);
-        Cell cellWorker = new Cell(0,0);
+        Cell cell = new Cell(1, 1);
+        Cell cellWorker = new Cell(0, 0);
 
 
         try {
             board.build(cellWorker, cell, true);
-        }
-        catch (IllegalMoveException e) {
+        } catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
 
         }
 
         assertTrue("the player builds in cell 1,1 a dome in a not level three cell so the tower isn't completed",
-                !board.getCell(1, 1).isCompleted() && board.getCell(1,1).getHeight() == Height.DOME);
+                !board.getCell(1, 1).isCompleted() && board.getCell(1, 1).getHeight() == Height.DOME);
     }
 
     @Test
     @DisplayName("buildTestIfThePlayerBuilds")
-    public void build3Test(){
+    public void build3Test() {
 
         Board board = new Board();
-        Cell cell = new Cell(1,1);
-        Cell cellWorker = new Cell(0,0);
+        Cell cell = new Cell(1, 1);
+        Cell cellWorker = new Cell(0, 0);
 
 
         try {
             board.build(cellWorker, cell, false);
-        }
-        catch (IllegalMoveException e) {
+        } catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
 
         }
 
         assertTrue("the player builds in cell 1,1 a new floor and the tower isn't completed",
-                !board.getCell(1, 1).isCompleted() && board.getCell(1,1).getHeight() == Height.FIRST_FLOOR);
+                !board.getCell(1, 1).isCompleted() && board.getCell(1, 1).getHeight() == Height.FIRST_FLOOR);
     }
 
     @Test
     @DisplayName("buildTestIfTheCellDoes'tExist")
-    public void build4Test(){
+    public void build4Test() {
 
         Board board = new Board();
-        Cell cell = new Cell(8,8);
-        Cell cellWorker = new Cell(0,0);
+        Cell cell = new Cell(8, 8);
+        Cell cellWorker = new Cell(0, 0);
 
 
         try {
             board.build(cellWorker, cell, false);
             fail("test failed");
-        }
-        catch (IllegalMoveException e) {
+        } catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
             assertTrue("the cell doesn't exist", true);
         }
@@ -285,21 +277,66 @@ public class BoardTest {
 
     @Test
     @DisplayName("buildTestIfTheCellIsn'tAdjacent")
-    public void build5Test(){
+    public void build5Test() {
 
         Board board = new Board();
-        Cell cell = new Cell(3,3);
-        Cell cellWorker = new Cell(0,0);
+        Cell cell = new Cell(3, 3);
+        Cell cellWorker = new Cell(0, 0);
 
 
         try {
             board.build(cellWorker, cell, false);
             fail("test failed");
-        }
-        catch (IllegalMoveException e) {
+        } catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
             assertTrue("the cell isn't adjacent", true);
         }
     }
 
+
+
+
+
+
+
+    @Test
+    @DisplayName("countCompleteTowerTestTrue")
+    public void countCompleteTower1Test() {
+
+        Board board = new Board();
+
+        board.getCell(1, 1).setIsCompleted();
+        board.getCell(2, 2).setIsCompleted();
+        board.getCell(3, 3).setIsCompleted();
+        board.getCell(4, 4).setIsCompleted();
+        board.getCell(0, 0).setIsCompleted();
+
+
+        assertTrue("there are 5 or more towers completed",
+                board.countCompleteTower());
+    }
+
+    @Test
+    @DisplayName("countCompleteTowerTestFalse")
+    public void countCompleteTower2Test() {
+
+        Board board = new Board();
+
+        board.getCell(2, 2).setIsCompleted();
+        board.getCell(3, 3).setIsCompleted();
+        board.getCell(4, 4).setIsCompleted();
+        board.getCell(0, 0).setIsCompleted();
+
+
+        assertTrue("there are less than 5 towers completed",
+                !board.countCompleteTower());
+    }
+
+
+
 }
+
+
+
+
+
