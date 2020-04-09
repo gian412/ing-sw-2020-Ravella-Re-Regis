@@ -77,7 +77,8 @@ public class ClientHandler implements Runnable{
                 socketOut.flush();
                 server.setClientsNumber(socketIn.nextInt());
             } else {
-                socketOut.println("Adding you to an existing game. The game is composed by "+server.getClientsNumber()+" player.");
+                socketOut.println("Adding you to an existing game. The game is composed by " + server.getClientsNumber() + " players.");
+                socketOut.flush();
             }
             socketOut.println("The game will start when all the players will be connected. Please wait...");
             socketOut.flush();
