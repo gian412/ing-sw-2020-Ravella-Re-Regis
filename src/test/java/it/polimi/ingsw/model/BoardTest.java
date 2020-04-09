@@ -161,18 +161,17 @@ public class BoardTest {
 
 
     }
-/*
+
     @Test
     @DisplayName("addSecondWorkerTest")
     public void addWorker2Test(){
 
-     /*   Board board = new Board();
+        Board board = new Board();
         Player player1 = new Player("player1", 10);
-        Player player2 = new Player("player2", 15);
-        Worker worker = new Worker("player10", player);
-        board.setTurnPlayer(player);
+        board.setTurnPlayer(player1);
 
         try{
+            board.addWorker(0,0);
             board.addWorker(1 ,1 );
         }
         catch (IllegalAddException | IllegalCellException e) {
@@ -180,19 +179,64 @@ public class BoardTest {
             fail("test failed");
         }
 
-        Cell cell = new Cell(1,1);
-        cell.setWorker(worker);
 
-        worker.setCurrentCell(cell);
+        Worker worker1 = new Worker("player10", player1);
+        Worker worker2 = new Worker("player11", player1);
+
+        Cell cell1 = new Cell(0,0);
+        cell1.setWorker(worker1);
+
+        Cell cell2 = new Cell(1,1);
+        cell2.setWorker(worker2);
 
 
-        assertTrue("now there is a worker in the cell 1,1 and below to player1",
-                board.getCell(1,1).getWorker().WORKER_ID.equals(worker.WORKER_ID)  &&
-                        player.getWorkers()[0].WORKER_ID.equals(worker.WORKER_ID) );
-
-
+        assertTrue("the player sets his two workers on the board",
+                board.getCell(0,0).getWorker().WORKER_ID.equals(worker1.WORKER_ID)  &&
+                        player1.getWorkers()[0].WORKER_ID.equals(worker1.WORKER_ID) &&
+                        board.getCell(1,1).getWorker().WORKER_ID.equals(worker2.WORKER_ID)  &&
+                        player1.getWorkers()[1].WORKER_ID.equals(worker2.WORKER_ID));
     }
-*/
+
+    @Test
+    @DisplayName("addThirdWorkerTest")
+    public void addWorker3Test() {
+
+        Board board = new Board();
+        Player player1 = new Player("player1", 10);
+        board.setTurnPlayer(player1);
+
+        try {
+            board.addWorker(0, 0);
+            board.addWorker(1, 1);
+            board.addWorker(2, 2);
+            fail("test failed");
+        } catch (IllegalAddException e) {
+            System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
+            assertTrue("you can't add a third worker", true);
+        } catch (IllegalCellException e) {
+            fail("test failed");
+        }
+    }
+
+    @Test
+    @DisplayName("addWorkerTestInnInvalidCell")
+    public void addWorker4Test() {
+
+        Board board = new Board();
+        Player player1 = new Player("player1", 10);
+        board.setTurnPlayer(player1);
+
+        try {
+            board.addWorker(5, 5);
+            fail("test failed");
+        } catch (IllegalAddException e) {
+            fail("test failed");
+        } catch (IllegalCellException e) {
+            System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
+            assertTrue("you can't add a worker in an invalid cell", true);
+
+        }
+    }
 
     @Test
     @DisplayName("buildTestIfThePlayerBuildsADomeInALevel3Cell")
@@ -299,6 +343,12 @@ public class BoardTest {
 
 
 
+
+
+
+
+
+
     @Test
     @DisplayName("countCompleteTowerTestTrue")
     public void countCompleteTower1Test() {
@@ -328,8 +378,8 @@ public class BoardTest {
         board.getCell(0, 0).setIsCompleted();
 
 
-        assertTrue("there are less than 5 towers completed",
-                !board.countCompleteTower());
+        assertFalse("there are less than 5 towers completed",
+                board.countCompleteTower());
     }
 
 
