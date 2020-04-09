@@ -51,6 +51,7 @@ public class Board {
 
     public void setTurnPlayer(Player player) {
         this.turnPlayer = player;
+        updateProxyBoard();
     }
 
 

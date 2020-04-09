@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.Observer;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 
@@ -17,10 +18,17 @@ public class RemoteView extends Observable implements Observer<BoardProxy>, Runn
     private Controller controller;
     private Player player;
 
+    ObjectOutputStream toClient;
+
     public RemoteView(Socket socket, Controller controller, String player){
-        this.connSocket = socket;
         this.controller = controller;
+        this.connSocket = socket;
         this.player = new Player(player, -1);
+        try {
+            this.toClient = new ObjectOutputStream(this.connSocket.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -39,7 +47,11 @@ public class RemoteView extends Observable implements Observer<BoardProxy>, Runn
 
     @Override
     public void update(BoardProxy message) {
-        //send the message through the socket
+        try {
+            toClient.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
