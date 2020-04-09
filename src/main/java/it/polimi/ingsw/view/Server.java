@@ -114,6 +114,7 @@ public class Server implements Runnable{
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
+                System.out.println("Connection accepted, dispatching Client Handler");
                 ClientHandler client = new ClientHandler(socket, this);
                 executor.submit(client);
             } catch (IOException e) {
