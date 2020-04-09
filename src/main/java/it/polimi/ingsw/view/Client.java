@@ -7,12 +7,11 @@ import java.util.Scanner;
 
 public class Client {
 
-    private final String IP = "127.0.0.1";
-    private final int PORT = 1337;
-
 
     public void run() throws IOException {
 
+        String IP = "127.0.0.1";
+        int PORT = 1337;
         Socket socket = new Socket(IP, PORT); // Start the socket connection
         System.out.println("Connection established");
 
@@ -23,8 +22,28 @@ public class Client {
         // Open the input streams with the user
         Scanner stdIn = new Scanner(System.in);
 
+        System.out.println("Welcome to Santorini!\n" + // Ask...
+                "Do you want to play with CLI or with GUI?" + // ... interface...
+                " (type \"CLI\" for CLI interface or \"GUI\" for GUI interface"); // ... preference
+        String line = stdIn.nextLine(); // Read preference
+
+        boolean cliInterface;
+        while (true) { // Wait a valid input
+            if (line.toUpperCase().equals("CLI")){
+                cliInterface = true; // Set interface to  CLI
+                break;
+            } else if (line.toUpperCase().equals("GUI")) {
+                cliInterface = false; // Set interface to GUI
+                break;
+            } else {
+                System.out.println("Invalid input.\n\n"+ // Ask...
+                        "Do you want to play with CLI or with GUI?" + // ... interface...
+                        " (type \"CLI\" for CLI interface or \"GUI\" for GUI interface)"); // ... preference
+                line = stdIn.nextLine();
+            }
+        }
         // Name request
-        String line = socketIn.nextLine(); // Receive name request
+        line = socketIn.nextLine(); // Receive name request
         System.out.println(line); // Print name request
 
         line = stdIn.nextLine(); // Read name
@@ -36,17 +55,36 @@ public class Client {
         System.out.println(line); // Print age request
 
         int number = stdIn.nextInt(); // Read age
-        socketOut.println(number); // Write age on socket stream
-        socketOut.flush(); // Send age
+
+        while (true) { // Wait a valid input
+            if (number >= 1 && number <= 99) {
+                socketOut.println(number); // Write age on socket stream
+                socketOut.flush(); // Send age
+                break;
+            } else {
+                System.out.println("Invalid input.\n\n" + line); // Print age request
+                number = stdIn.nextInt(); // Read age
+            }
+        }
 
         // Number of player request or confirm of the insertion in lobby
         line = socketIn.nextLine(); // Receive message
-        if (line.equals("Creating new game. How many player do you want to play with?")) { // If message is number of player request
+        if (line.equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) { // If message is number of player request
             System.out.println(line); // Print number of player request
 
             number = stdIn.nextInt(); // Read number of player
-            socketOut.println(number); // Write number of player on socket stream
-            socketOut.flush(); // Send number of player
+            while (true) {
+                if (number==2 || number==3) {
+                    socketOut.println(number); // Write number of player on socket stream
+                    socketOut.flush(); // Send number of player
+                    break;
+                } else {
+                    System.out.println("Invalid input\n\n" +
+                            "How many player do you want to play with? (2 or 3 player allowed)"); // Print number of player request
+                    number = stdIn.nextInt(); // Read number of player
+                }
+            }
+
         } else {
             line = socketIn.nextLine(); // Receive message
             System.out.println(line); // Print message
