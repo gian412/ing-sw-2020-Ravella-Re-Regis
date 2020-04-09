@@ -84,7 +84,7 @@ public class Server implements Runnable{
      *
      * @author Elia Ravella
      */
-    private void startPlaying() {
+    private synchronized void startPlaying() {
         // creating game and controller
         Game g = new Game();
         Controller controller = new Controller(g);
@@ -98,6 +98,8 @@ public class Server implements Runnable{
         }
 
         controller.startGame();
+
+        playingClients.clear();
 
     }
 
