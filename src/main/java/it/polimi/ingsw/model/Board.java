@@ -147,10 +147,10 @@ public class Board {
      */
     public void addWorker(int row, int column) throws IllegalCellException, IllegalAddException{
 
-        // check if the two workers are alredy set with the first cell
+        // check if the two workers are already set with the first cell
         if( (this.turnPlayer.getWorkers()[0].getCurrentCell() == null) || (this.turnPlayer.getWorkers()[1].getCurrentCell() == null)) {
             // check if the cell where the player wants to put the workers exists and is free
-            if( (this.getCell(row, column).getHeight() == Height.GROUND) && (this.getCell(row, column).getWorker() == null) && (row >= 0) && (row < 5) && (column >= 0) && (column < 5)) {
+            if( (row >= 0) && (row < 5) && (column >= 0) && (column < 5) && (this.getCell(row, column).getHeight() == Height.GROUND) && (this.getCell(row, column).getWorker() == null)) {
                 //check if th first worker is already set
                 if(this.turnPlayer.getWorkers()[0].getCurrentCell() == null){
                     //add the first worker
@@ -161,7 +161,7 @@ public class Board {
                 else{
                     //add the second worker
                     this.getCell(row, column).setWorker(this.turnPlayer.getWorkers()[1]);
-                    this.turnPlayer.getWorkers()[0].setCurrentCell(this.getCell(row, column));
+                    this.turnPlayer.getWorkers()[1].setCurrentCell(this.getCell(row, column));
                 }
 
             }
