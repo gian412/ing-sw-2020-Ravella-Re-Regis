@@ -24,8 +24,12 @@ public class Server implements Runnable{
      * Class constructor whit the initialization of the serverSocket
      * @author Gianluca Regis
      */
-    public Server() throws IOException{
-        this.serverSocket = new ServerSocket(PORT);
+    public Server() {
+        try {
+            this.serverSocket = new ServerSocket(PORT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         waitingClients = new ArrayList<>();
         playingClients = new ArrayList<>();
     }
