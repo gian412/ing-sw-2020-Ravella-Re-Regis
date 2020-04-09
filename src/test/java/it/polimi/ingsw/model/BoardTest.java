@@ -1,6 +1,10 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.god.Apollo;
+import it.polimi.ingsw.model.god.Chronus;
+import it.polimi.ingsw.model.god.God;
+import it.polimi.ingsw.model.god.Pan;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
@@ -338,16 +342,81 @@ public class BoardTest {
     }
 
 
+    @Test
+    @DisplayName("checkWinTestNormalWin")
+    public void checkWin1Test() {
 
+        Board board = new Board();
 
+        Cell cell1 = new Cell(1,1);
+        cell1.setHeight(Height.SECOND_FLOOR);
+        Cell cell2 = new Cell(2,2);
+        cell2.setHeight(Height.THIRD_FLOOR);
 
+        Player player = new Player("player", 10);
+        God god = new Apollo(board);
+        player.setDivinity(god);
+        Worker worker = new Worker("player1", player);
 
+        worker.setCurrentCell(cell2);
+        worker.setPreviousCell(cell1);
 
+        boolean check = board.checkWin(worker);
 
+        assertTrue("the worker has won", check);
+    }
 
+    @Test
+    @DisplayName("checkWinTestIfTheGodIsPan")
+    public void checkWin2Test() {
 
+        Board board = new Board();
 
+        Cell cell1 = new Cell(1,1);
+        cell1.setHeight(Height.SECOND_FLOOR);
+        Cell cell2 = new Cell(2,2);
+        cell2.setHeight(Height.GROUND);
 
+        Player player = new Player("player", 10);
+        God god = new Pan(board);
+        player.setDivinity(god);
+        Worker worker = new Worker("player1", player);
+
+        worker.setCurrentCell(cell2);
+        worker.setPreviousCell(cell1);
+
+        boolean check = board.checkWin(worker);
+
+        assertTrue("the worker has won", check);
+    }
+
+    @Test
+    @DisplayName("checkWinTestIfTheGodIsChronus")
+    public void checkWin3Test() {
+
+        Board board = new Board();
+
+        Cell cell1 = board.getCell(0,0);
+        Cell cell2 = board.getCell(1,1);
+
+        Player player = new Player("player", 10);
+        God god = new Chronus(board);
+        player.setDivinity(god);
+        Worker worker = new Worker("player1", player);
+
+        worker.setCurrentCell(cell2);
+        worker.setPreviousCell(cell1);
+
+        board.getCell(4,0).setIsCompleted();
+        board.getCell(4,1).setIsCompleted();
+        board.getCell(4,2).setIsCompleted();
+        board.getCell(4,3).setIsCompleted();
+        board.getCell(4,4).setIsCompleted();
+
+        boolean check = board.checkWin(worker);
+
+        assertTrue("the worker has won", check);
+    }
 
     @Test
     @DisplayName("countCompleteTowerTestTrue")
