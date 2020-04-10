@@ -2,10 +2,13 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.god.God;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Game {
 
-    private ArrayList<Player> playerList;
+
+    private List<Player> playerList;
     private Board board;
     private God[] gods;
 
@@ -48,7 +51,7 @@ public class Game {
 
     // this methods needs to set all the nextPlayer's attributes
     public void startGame(){
-
+        Collections.sort(playerList);
         for(int i = 0; i < playerList.size(); i++){
             if(i != playerList.size() - 1) playerList.get(i).setNextPlayer(playerList.get(i + 1));
             else playerList.get(i).setNextPlayer(playerList.get(0));
