@@ -64,12 +64,8 @@ public class ClientHandler implements Runnable{
         try {
             Scanner socketIn = new Scanner(socket.getInputStream()); // Open input stream with socket
             PrintWriter socketOut = new PrintWriter(socket.getOutputStream()); // Open output stream with socket
-            socketOut.println("Insert your name, buddy!"); // Write name request
-            socketOut.flush(); // Send name request through socket stream
-            this.name = socketIn.nextLine(); // Receive name
 
-            socketOut.println("and now tell me, how old are you?"); // Write age request
-            socketOut.flush(); // Send age request through socket stream
+            this.name = socketIn.nextLine(); // Receive name
             this.age = socketIn.nextInt(); // Receive age
 
             if (server.isLobbyEmpty()){

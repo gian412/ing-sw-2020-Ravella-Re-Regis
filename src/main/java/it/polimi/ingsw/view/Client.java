@@ -43,16 +43,14 @@ public class Client {
             }
         }
         // Name request
-        line = socketIn.nextLine(); // Receive name request
-        System.out.println(line); // Print name request
+        System.out.println("Insert your name, buddy!"); // Print name request
 
         line = stdIn.nextLine(); // Read name
-        socketOut.println(line); // Write name request on socket stream
-        socketOut.flush(); // Send name request
+        socketOut.println(line); // Write name on socket stream
+        socketOut.flush(); // Send name
 
         // Age request
-        line = socketIn.nextLine(); // Receive age request
-        System.out.println(line); // Print age request
+        System.out.println("and now tell me, how old are you?"); // Print age request
 
         int number = stdIn.nextInt(); // Read age
 
