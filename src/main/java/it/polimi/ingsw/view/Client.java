@@ -86,11 +86,20 @@ public class Client {
             }
 
         } else {
-            line = socketIn.nextLine(); // Receive message
             System.out.println(line); // Print message
         }
         line = socketIn.nextLine(); // Receive message
         System.out.println(line); // Print message
+
+        /*if (cliInterface) {
+            CLIView view = new CLIView(socket);
+        } else {
+            GUIView view = new GUIView(socket);
+        }
+        view.run();
+        */
+
+
 
     }
 }
