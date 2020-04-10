@@ -40,7 +40,7 @@ public class Athena extends God{
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasWon) { // If the player has not move, build and won
                         if (!worker.isCanMoveUp()){ // If the worker can't move up...
-                            worker.setCanMoveUp(true); // ... reset the action of Athena's power
+                            worker.setCanMoveUp(true); // ... reset the action that Athena's power have on other player
                         }
                         try {
                             super.move(worker, cell); // Call super-class' move method
