@@ -32,17 +32,17 @@ public class Chronus extends God {
     public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null){
-            hadWin = board.checkWin(worker);
-            if(!hadWin){
+            hasWon = board.checkWin(worker);
+            if(!hasWon){
                 Cell cell = board.getCell(command.cellX, command.cellY);
 
                 switch (command.commandType){
                     case MOVE:
-                        if (!hadMoved && !hadBuild && !hadWin) {
+                        if (!hasMoved && !hasBuild && !hasWon) {
                             try {
                                 super.move(worker, cell);
-                                hadMoved = true;
-                                hadWin = board.checkWin(worker);
+                                hasMoved = true;
+                                hasWon = board.checkWin(worker);
                                 break;
                             } catch (IllegalMoveException e) {
                                 throw new IllegalMoveException();
@@ -52,11 +52,11 @@ public class Chronus extends God {
                         }
 
                     case BUILD:
-                        if ( hadMoved && !hadBuild && !hadWin){
+                        if ( hasMoved && !hasBuild && !hasWon){
                             try {
                                 super.build(worker.getCurrentCell(), cell, false);
-                                hadBuild = true;
-                                hadWin = board.checkWin(worker);
+                                hasBuild = true;
+                                hasWon = board.checkWin(worker);
                                 break;
                             } catch (IllegalMoveException e) {
                                 throw new IllegalMoveException();
@@ -69,8 +69,8 @@ public class Chronus extends God {
                         if (cell.getHeight() == Height.THIRD_FLOOR){
                             try {
                                 super.build(worker.getCurrentCell(), cell, false);
-                                hadBuild = true;
-                                hadWin = board.checkWin(worker);
+                                hasBuild = true;
+                                hasWon = board.checkWin(worker);
                                 break;
                             } catch (IllegalMoveException e) {
                                 throw new IllegalMoveException();

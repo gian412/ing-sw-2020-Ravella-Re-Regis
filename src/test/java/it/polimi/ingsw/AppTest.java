@@ -27,21 +27,21 @@ public class AppTest
 
         // class Apollo
         ApolloTest apolloTest = new ApolloTest();
-        apolloTest.hadMovedTest();
-        apolloTest.hadMovedAndForcedTest();
-        apolloTest.hadBuildNotDomeTest();
-        apolloTest.hadBuildDomeTest();
-        apolloTest.HadWinTrueTest();
-        apolloTest.HadWinFalseTest();
+        apolloTest.hasMovedTest();
+        apolloTest.hasMovedAndForcedTest();
+        apolloTest.hasBuildNotDomeTest();
+        apolloTest.hasBuildDomeTest();
+        apolloTest.hasWonTrueTest();
+        apolloTest.hasWonFalseTest();
 
         // class Artemis
         ArtemisTest artemisTest = new ArtemisTest();
-        artemisTest.hadMovedTest();
-        artemisTest.hadMovedSecondTest();
-        artemisTest.hadBuildNotDomeTest();
-        artemisTest.hadBuildDomeTest();
-        artemisTest.HadWinTrueTest();
-        artemisTest.HadWinFalseTest();
+        artemisTest.hasMovedTest();
+        artemisTest.hasMovedSecondTest();
+        artemisTest.hasBuildNotDomeTest();
+        artemisTest.hasBuildDomeTest();
+        artemisTest.hasWonTrueTest();
+        artemisTest.hasWonFalseTest();
     }
 
 }

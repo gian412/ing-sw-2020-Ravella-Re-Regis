@@ -8,7 +8,7 @@ public class Board {
     private BoardProxy proxy;
     private Cell[][] cells;
     private Player turnPlayer;
-    private Player hadWin;
+    private Player hasWon;
 
     /**
      * class' constructor
@@ -20,7 +20,7 @@ public class Board {
      */
     // class constructor with the initialization of cells
     public Board(){
-        hadWin = null;
+        hasWon = null;
         cells = new Cell[5][5];
         for(int i=0;i<5;i++){
             for(int j=0;j<5;j++){
@@ -181,7 +181,7 @@ public class Board {
      * @param worker the worker that the player have just moved
      * @return true if the player wins, false if the player doesn't win
      */
-    // method that check if the worker had win after the last move
+    // method that check if the worker has win after the last move
     public boolean checkWin(Worker worker){
 
         if (worker.getPreviousCell()!=null){
@@ -190,7 +190,7 @@ public class Board {
             //check the win with and without Pan
             if (worker.getOwner().getDivinity().NAME.equals("PAN")){
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
-                    hadWin = worker.getOwner();
+                    hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner());
                     proxy.updateProxy();
                     return true;
@@ -200,7 +200,7 @@ public class Board {
 
             } else if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || countCompleteTower()){
-                    hadWin = worker.getOwner();
+                    hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner());
                     proxy.updateProxy();
                     return true;
@@ -209,7 +209,7 @@ public class Board {
                 }
             } else{
                 if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
-                    hadWin = worker.getOwner();
+                    hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner());
                     proxy.updateProxy();
                     return true;
@@ -220,7 +220,7 @@ public class Board {
         } else {
             if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
                 if (countCompleteTower()){
-                    hadWin = worker.getOwner();
+                    hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner());
                     proxy.updateProxy();
                     return true;

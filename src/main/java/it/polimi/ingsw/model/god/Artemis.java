@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.*;
 
 public class Artemis extends God {
 
-    protected boolean hadMovedSecond;
+    protected boolean hasMovedSecond;
 
     /**
      * Class' constructor that use the super class' constructor
@@ -16,7 +16,7 @@ public class Artemis extends God {
     // class constructor with the initialization of board using the super constructor
     public Artemis(Board board) {
         super(board, "ARTEMIS");
-        this.hadMovedSecond = false;
+        this.hasMovedSecond = false;
     }
 
     /**
@@ -41,20 +41,20 @@ public class Artemis extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMoved && !hadMovedSecond && !hadWin && !hadBuild){
+                    if (!hasMoved && !hasMovedSecond && !hasWon && !hasBuild){
                         try {
                             super.move(worker, cell);
-                            hadMoved = true;
-                            hadWin = board.checkWin(worker);
+                            hasMoved = true;
+                            hasWon = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else if (hadMoved && !hadMovedSecond && !hadWin && !hadBuild){
+                    } else if (hasMoved && !hasMovedSecond && !hasWon && !hasBuild){
                         try {
                             super.move(worker, cell);
-                            hadMovedSecond = true;
-                            hadWin = board.checkWin(worker);
+                            hasMovedSecond = true;
+                            hasWon = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e){
                             throw new IllegalMoveException();
@@ -64,10 +64,10 @@ public class Artemis extends God {
                     }
 
                 case BUILD:
-                    if (hadMoved && !hadWin && !hadBuild){
+                    if (hasMoved && !hasWon && !hasBuild){
                         try {
                             super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -80,7 +80,7 @@ public class Artemis extends God {
                     if (cell.getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -109,6 +109,6 @@ public class Artemis extends God {
     @Override
     protected void resetLocalVariables() {
         super.resetLocalVariables();
-        this.hadMovedSecond = false;
+        this.hasMovedSecond = false;
     }
 }

@@ -77,11 +77,11 @@ public class Minotaur extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMoved && !hadBuild && !hadWin){
+                    if (!hasMoved && !hasBuild && !hasWon){
                         try {
                             this.move(worker, cell);
-                            hadMoved = true;
-                            hadWin = board.checkWin(worker);
+                            hasMoved = true;
+                            hasWon = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -91,10 +91,10 @@ public class Minotaur extends God {
                     }
 
                 case BUILD:
-                    if (hadMoved && !hadBuild && !hadWin){
+                    if (hasMoved && !hasBuild && !hasWon){
                         try {
                             super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -107,7 +107,7 @@ public class Minotaur extends God {
                     if (cell.getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
