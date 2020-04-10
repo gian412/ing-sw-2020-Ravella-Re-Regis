@@ -79,6 +79,6 @@ public class Player implements Comparable<Player>{
 
     @Override
     public int compareTo(@NotNull Player other) {
-        return other.getAge() - this.getAge();
+        return this.getAge() - other.getAge();
     }
 }
