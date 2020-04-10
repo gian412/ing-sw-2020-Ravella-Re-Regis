@@ -152,7 +152,6 @@ public class ControllerTest {
         assertEquals("Gianluca", g.getTurnPlayer().getNAME() );
     }
 
-
 }
 
 
