@@ -40,7 +40,7 @@ public class Apollo extends God{
                 if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
                     try {
                         board.moveWorker(worker, cell); // Call board's move method
-                        hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
+                        hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                     } catch (IllegalMoveException e){
                         throw new IllegalMoveException();
                     }
@@ -58,7 +58,7 @@ public class Apollo extends God{
                         Cell actualCell = worker.getCurrentCell(); // Get the reference to the cell where I'm now
                         board.moveWorker(worker, cell); // Call board's move method
                         board.moveWorker(otherWorker, actualCell); // Call board's move method on otherWorker
-                        hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
+                        hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                     } catch (IllegalMoveException e){
                         throw new IllegalMoveException();
                     }
@@ -95,11 +95,11 @@ public class Apollo extends God{
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hasMoved && !hasBuild && !hasWon) { // If the player has not move, build and win
+                    if (!hasMoved && !hasBuild && !hasWon) { // If the player has not move, build and won
                         try {
                             this.move(worker, cell); // Call Apollo's move method
                             hasMoved = true; // Store the information that the worker has moved
-                            hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
+                            hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             break;
                         } catch (IllegalMoveException e){
                             throw new IllegalMoveException();

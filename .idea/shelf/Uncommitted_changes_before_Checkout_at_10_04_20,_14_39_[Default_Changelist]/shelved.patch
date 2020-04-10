@@ -1,0 +1,49 @@
+Index: src/main/java/it/polimi/ingsw/model/god/God.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.polimi.ingsw.model.god;\n\nimport it.polimi.ingsw.controller.Command;\nimport it.polimi.ingsw.model.*;\n\npublic abstract class God {\n\n    protected Board board;\n    public final String NAME;\n    protected boolean hadMoved;\n    protected boolean hadBuild;\n    protected boolean hadWin;\n\n    /**\n     * Class' constructor with the initialization of boar and NAME\n     *\n     * @author Gianluca Regis\n     * @param board indicates the board of the game\n     * @param NAME indicates the name of the god\n     */\n    // class constructor with the initialization of board\n    public God(Board board, String NAME){\n        this.board = board;\n        this.NAME = NAME;\n        this.hadMoved = false;\n        this.hadBuild = false;\n        this.hadWin = false;\n    }\n\n    /**\n     * Actions made every turn\n     *\n     * This abstract method was made in order to simulate actions made by any divinity in each turn.\n     * The method will be implemented in every child class\n     *\n     * @author Gianluca Regis\n     * @param worker is the worker who is doing the actions\n     * @param command is the command which need to be interpreted\n     * @throws IllegalMoveException in case the action isn't legal\n     */\n    // abstract class' abstract method\n    public abstract void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException;\n\n    /**\n     * Move the worker\n     *\n     * Move the worker using board.moveWorker(Worker worker, Cell cell) and then check if the worker had\n     * win using board.checkWin(Worker worker) and saving this result in the class' variable hadWind.\n     * The method throw an IllegalMoveException if the worker can't move in the given cell\n     *\n     * @author Gianluca Regis\n     * @param worker is the worker you are moving\n     * @param cell is the cell in which you're moving the worker\n     * @throws IllegalMoveException in case the move isn't legal\n     */\n    public void move(Worker worker, Cell cell) throws IllegalMoveException{\n\n        if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {\n            if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){\n                try {\n                    board.moveWorker(worker, cell);\n                    hadWin = board.checkWin(worker);\n                } catch (IllegalMoveException e){\n                    throw new IllegalMoveException();\n                }\n\n            } else{\n                throw new IllegalMoveException();\n            }\n        }else{\n            throw new IllegalMoveException();\n        }\n\n    }\n\n    /**\n     * Build a new piece in the cell passed as parameter using board-build(Cell cell, boolean isDome).\n     * The method throw an IllegalMoveException if the piece can't be built in the given cell\n     *\n     * @author Gianluca Regis\n     * @param buildCell is the cell in which you're building the new piece\n     * @param isDome is true if Atlas build a dome in any position\n     * @throws IllegalMoveException in case the move isn't legal\n     */\n    public void build(Cell originCell, Cell buildCell, boolean isDome) throws IllegalMoveException {\n        // build\n        if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && isDome ){\n            try {\n                board.build(originCell, buildCell, true );\n            } catch (IllegalMoveException e){\n                throw new IllegalMoveException();\n            }\n        }else if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && !isDome){\n            try{\n                board.build(originCell, buildCell, false );\n            } catch (IllegalMoveException e) {\n                throw new IllegalMoveException();\n            }\n        } else{\n            throw new IllegalMoveException();\n        }\n    }\n\n    /**\n     * Reset local variable for class God\n     *\n     * @author Gianluca Regis\n     */\n    protected void resetLocalVariables(){\n        this.hadMoved = false;\n        this.hadBuild = false;\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/it/polimi/ingsw/model/god/God.java	(revision 890e901f3d4ed21ce7ab0a858d605f193bc968d5)
++++ src/main/java/it/polimi/ingsw/model/god/God.java	(date 1586522379000)
+@@ -55,15 +55,14 @@
+      */
+     public void move(Worker worker, Cell cell) throws IllegalMoveException{
+ 
+-        if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
+-            if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){
++        if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't occupied and it isn't a dome and it isn't more then 1 floor far
++            if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
+                 try {
+-                    board.moveWorker(worker, cell);
+-                    hadWin = board.checkWin(worker);
++                    board.moveWorker(worker, cell); // Call the move method of the board
++                    hadWin = board.checkWin(worker); // Check if the worker had win and store the result in hadWin
+                 } catch (IllegalMoveException e){
+                     throw new IllegalMoveException();
+                 }
+-
+             } else{
+                 throw new IllegalMoveException();
+             }
+@@ -84,15 +83,15 @@
+      */
+     public void build(Cell originCell, Cell buildCell, boolean isDome) throws IllegalMoveException {
+         // build
+-        if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && isDome ){
++        if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && isDome ){ // If the cell isn't occupied and it isn't a dome and the piece to build is a dome
+             try {
+-                board.build(originCell, buildCell, true );
++                board.build(originCell, buildCell, true ); // Call the build method of the board
+             } catch (IllegalMoveException e){
+                 throw new IllegalMoveException();
+             }
+-        }else if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && !isDome){
++        }else if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && !isDome){ // If the cell isn't occupied and it isn't a dome and the piece to build isn't a dome
+             try{
+-                board.build(originCell, buildCell, false );
++                board.build(originCell, buildCell, false ); // Call the build method of the board
+             } catch (IllegalMoveException e) {
+                 throw new IllegalMoveException();
+             }

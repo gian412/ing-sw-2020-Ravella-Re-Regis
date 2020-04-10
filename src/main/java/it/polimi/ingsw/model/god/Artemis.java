@@ -42,17 +42,17 @@ public class Artemis extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hasMoved && !hasMovedSecond && !hasBuild && !hasWon){ // If the player has not moved, moved second, build and win
+                    if (!hasMoved && !hasMovedSecond && !hasBuild && !hasWon){ // If the player has not moved, moved second, build and won
                         try {
                             super.move(worker, cell); // Call super-class' move method
                             startingCell = cell; // Save the starting position of the worker
                             hasMoved = true; // Store the information that the worker has moved
-                            hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
+                            hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else if (hasMoved && !hasMovedSecond && !hasBuild && !hasWon && !(cell.equals(startingCell))){ // If the player has moved but has not moved second, build and win and the cell isn't equal to the starting cell
+                    } else if (hasMoved && !hasMovedSecond && !hasBuild && !hasWon && !(cell.equals(startingCell))){ // If the player has moved but has not moved second, build and won and the cell isn't equal to the starting cell
                         try {
                             super.move(worker, cell); // Call super-class' move method
                             hasMovedSecond = true; // Store the information that the worker has moved second
