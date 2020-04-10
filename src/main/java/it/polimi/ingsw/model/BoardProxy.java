@@ -12,6 +12,7 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     private Height[][] boardScheme;
     private Map<String, Pair> workers;
     private Player winner, turnPlayer;
+    private String choosingGods;
 
     public BoardProxy(){
         boardScheme = new Height[5][5];
@@ -44,6 +45,14 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
 
     public void updateProxy(){
         notify(this);
+    }
+
+    public String getChoosingGods() {
+        return choosingGods;
+    }
+
+    public void setChoosingGods(String choosingGods) {
+        this.choosingGods = choosingGods;
     }
 
     @Override

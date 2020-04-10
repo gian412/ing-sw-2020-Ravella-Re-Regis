@@ -98,7 +98,6 @@ public class Server implements Runnable{
         }
 
         controller.startGame();
-
         playingClients.clear();
 
     }

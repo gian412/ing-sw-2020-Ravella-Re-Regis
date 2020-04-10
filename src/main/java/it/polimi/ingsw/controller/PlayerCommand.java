@@ -2,7 +2,9 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Player;
 
-public class PlayerCommand {
+import java.io.Serializable;
+
+public class PlayerCommand implements Serializable {
     Player player;
     Command cmd;
     int workerIndex;

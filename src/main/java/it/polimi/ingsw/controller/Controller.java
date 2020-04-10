@@ -19,7 +19,7 @@ public class Controller implements Observer, Runnable {
     /**actually modifies the mode
      *
      * this function passes the "command" from the user to the divinity, that then modifie the Board accordingly
-     * TODO better exceptions management
+     *
      *
      * @author Elia Ravella
      * @param player the player in control of the (Remote)View
@@ -97,23 +97,39 @@ public class Controller implements Observer, Runnable {
      *
      * @author Elia Ravella
      */
-    public void startGame(){
-        game.startGame();
-    }
+    public void startGame(){ game.startGame(); }
 
     public Player getTurnPlayer(){
         return this.game.getTurnPlayer();
     }
 
+    /**
+     * the method update is triggered by a remoteview change. it decodes the message from the client
+     * and executes accordingly
+     * @param message
+     */
     @Override
     public void update(Object message) {
         if(!(message instanceof PlayerCommand) ) throw new IllegalArgumentException();
+
+        // this if is triggered during game setup
+        if(this.game.getTurnPlayer().getDivinity() == null && ((PlayerCommand) message).player.getDivinity() != null) {
+            try {
+                this.game.setPlayerDivinity(((PlayerCommand) message).player.getNAME(), ((PlayerCommand) message).player.getDivinity());
+            } catch (NoSuchPlayerException e) {
+                e.printStackTrace();
+            }
+        }
         else{
-            commitMove(
-                    ((PlayerCommand) message).player.getNAME(),
-                    ((PlayerCommand) message).getCommand(),
-                    ((PlayerCommand) message).getWorkerIndex()
-            );
+            if(((PlayerCommand) message).cmd.commandType == CommandType.CHANGE_TURN)
+                changeTurnPlayer();
+            else {
+                commitMove(
+                        ((PlayerCommand) message).player.getNAME(),
+                        ((PlayerCommand) message).getCommand(),
+                        ((PlayerCommand) message).getWorkerIndex()
+                );
+            }
         }
 
     }
