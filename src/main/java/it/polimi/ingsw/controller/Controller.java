@@ -7,7 +7,8 @@ import java.util.ArrayList;
 
 import it.polimi.ingsw.view.Observer;
 
-public class Controller implements Observer {
+
+public class Controller implements Observer<PlayerCommand>, Runnable {
 
     private Game game;
 
@@ -18,7 +19,7 @@ public class Controller implements Observer {
     /**actually modifies the mode
      *
      * this function passes the "command" from the user to the divinity, that then modifie the Board accordingly
-     * TODO better exceptions management
+     *
      *
      * @author Elia Ravella
      * @param player the player in control of the (Remote)View
@@ -96,23 +97,51 @@ public class Controller implements Observer {
      *
      * @author Elia Ravella
      */
-    public void startGame(){
-        game.startGame();
-    }
+    public void startGame(){ game.startGame(); }
 
     public Player getTurnPlayer(){
         return this.game.getTurnPlayer();
     }
 
     @Override
-    public void update(Object message) {
-        if(!(message instanceof PlayerCommand) ) throw new IllegalArgumentException();
+    public void run() {
+
+    }
+
+    /**
+     * the method update is triggered by a remoteview change. it decodes the message from the client
+     * and executes accordingly
+     * @param message the update content
+     */
+    @Override
+    public void update(PlayerCommand message) {
+        if(message == null ) throw new IllegalArgumentException();
+
+        // this if is triggered during game setup
+        if(this.game.getTurnPlayer().getDivinity() == null && message.player.getDivinity() != null) {
+            try {
+                this.game.setPlayerDivinity(message.player.getNAME(), message.player.getDivinity());
+            } catch (NoSuchPlayerException e) {
+                e.printStackTrace();
+            }
+        }
+
         else{
-            commitMove(
-                    ((PlayerCommand) message).player.getNAME(),
-                    ((PlayerCommand) message).getCommand(),
-                    ((PlayerCommand) message).getWorkerIndex()
-            );
+            if(message.cmd.commandType == CommandType.CHANGE_TURN)
+                changeTurnPlayer();
+            else if(message.cmd.commandType == CommandType.ADD_WORKER){
+                addWorker(
+                        message.cmd.cellX,
+                        message.cmd.cellY
+                );
+            }
+            else {
+                commitMove(
+                        message.player.getNAME(),
+                        message.getCommand(),
+                        message.getWorkerIndex()
+                );
+            }
         }
 
     }

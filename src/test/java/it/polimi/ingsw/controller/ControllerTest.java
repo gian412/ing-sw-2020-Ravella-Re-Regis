@@ -138,6 +138,19 @@ public class ControllerTest {
         assertNull("in (0, 0) the worker must be null", g.getBoard().getCell(0,0).getWorker());
     }
 
+    @Test
+    @DisplayName("testing the ordering")
+    public void testOrderPlayersAtStartGame(){
+        Game g = new Game();
+        Controller controller = new Controller(g);
+
+        controller.addPlayer("Marco", 35);
+        controller.addPlayer("Gianluca", 31);
+
+        controller.startGame();
+
+        assertEquals("Gianluca", g.getTurnPlayer().getNAME() );
+    }
 
 }
 
