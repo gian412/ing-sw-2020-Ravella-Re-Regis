@@ -80,4 +80,9 @@ public class Game {
 
         return players.toString();
     }
+
+    public ArrayList<Player> getPlayerList(){
+        return playerList;
+    }
+
 }
