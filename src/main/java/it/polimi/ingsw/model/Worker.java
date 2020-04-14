@@ -11,7 +11,7 @@ public class Worker {
     /**
      * Class' constructor
      *
-     * inizialize worker's id, the worker's owner and the other parameters to null
+     * initialize worker's id, the worker's owner and the other parameters to null
      *
      * @author Marco Re
      * @param workerId indicate worker's id
