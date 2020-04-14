@@ -66,8 +66,9 @@ public class Board {
      * @param buildCell cell in which the player wants to build
      * @param isDome is true if a god, who has the ability to build dome not only after the third level, build a dome
      */
-    public void build(Cell originCell, Cell buildCell, boolean isDome) throws IllegalMoveException{
+    public void build(Cell originCell, Pair coordinates, boolean isDome) throws IllegalMoveException{
 
+        /*
         if((buildCell.X >= 0) && (buildCell.X < 5) && (buildCell.Y >= 0) && (buildCell.Y < 5) && originCell.cellDistance(buildCell)){
             if(isDome){
                 if(this.getCell(buildCell.X, buildCell.Y).getHeight() == Height.THIRD_FLOOR) {
@@ -84,7 +85,7 @@ public class Board {
         }
         else{
             throw new IllegalMoveException();
-        }
+        }*/
     }
 
     /**
@@ -94,9 +95,9 @@ public class Board {
      * @param worker the worker that the player moves
      * @param cell the in in which the player moves the worker
      */
-    public void moveWorker(Worker worker, Cell cell) throws IllegalMoveException{
+    public void moveWorker(Worker worker, Pair coordinates) throws IllegalMoveException{
 
-        if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5) && (worker.getCurrentCell().cellDistance(cell))){
+        /*if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5) && (worker.getCurrentCell().cellDistance(cell))){
 
             this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y).setWorker(null);
             worker.setPreviousCell(this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y));
@@ -109,7 +110,7 @@ public class Board {
         }
         else{
             throw new IllegalMoveException();
-        }
+        }*/
     }
 
     /**
@@ -119,8 +120,9 @@ public class Board {
      * @param worker the worker that the player moves
      * @param cell the cell in which the player moves the worker
      */
-    public void forceWorker(Worker worker, Cell cell) throws IllegalMoveException{
-        if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5)){
+    public void forceWorker(Worker worker, Pair coordinates) throws IllegalMoveException{
+
+        /*if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5)){
 
             this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y).setWorker(null);
             worker.setPreviousCell(this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y));
@@ -133,7 +135,7 @@ public class Board {
         }
         else{
             throw new IllegalMoveException();
-        }
+        }*/
     }
 
     /** put a worker on the board
@@ -146,8 +148,9 @@ public class Board {
      * illegalCellException is the cell doesn't exist
      * illegalAddException if the player has already put his two workers
      */
-    public void addWorker(int row, int column) throws IllegalCellException, IllegalAddException{
+    public void addWorker(Pair coordinates) throws IllegalCellException, IllegalAddException{
 
+        /*
         // check if the two workers are already set with the first cell
         if( (this.turnPlayer.getWorkers()[0].getCurrentCell() == null) || (this.turnPlayer.getWorkers()[1].getCurrentCell() == null)) {
             // check if the cell where the player wants to put the workers exists and is free
@@ -173,7 +176,7 @@ public class Board {
 
         else{
             throw new IllegalAddException();
-        }
+        }*/
     }
 
     /**
