@@ -24,7 +24,7 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
      * @param workerID the number representing the worker (0, 1)
      * @return true if the operation goes fine, false if not
      */
-    public boolean commitMove(String player, Command command, int workerID){
+    public boolean commitCommand(String player, Command command, int workerID){
         if(game.getTurnPlayer().getNAME().equals(player)){
             try{
                 game.getTurnPlayer().getDivinity().executeCommand(
@@ -133,7 +133,7 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
                 );
             }
             else {
-                commitMove(
+                commitCommand(
                         message.player.getNAME(),
                         message.getCommand(),
                         message.getWorkerIndex()
