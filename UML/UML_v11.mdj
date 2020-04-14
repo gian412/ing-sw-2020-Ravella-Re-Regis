@@ -1060,7 +1060,7 @@
 											"top": 1515,
 											"width": 375,
 											"height": 13,
-											"text": "-hadWin: Player",
+											"text": "-hasWon: Player",
 											"horizontalAlignment": 0
 										}
 									],
@@ -4808,7 +4808,7 @@
 											"top": 1577,
 											"width": 390.26025390625,
 											"height": 13,
-											"text": "#hadWin: boolean",
+											"text": "#hasWon: boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -4825,7 +4825,7 @@
 											"top": 1592,
 											"width": 390.26025390625,
 											"height": 13,
-											"text": "#hadMoved: boolean",
+											"text": "#hasMoved: boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -4842,7 +4842,7 @@
 											"top": 1607,
 											"width": 390.26025390625,
 											"height": 13,
-											"text": "#hadBuild: boolean",
+											"text": "#hasBuild: boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -9649,7 +9649,7 @@
 											"top": 904,
 											"width": 407.0625,
 											"height": 13,
-											"text": "#hadMovedSecond: boolean",
+											"text": "#hasMovedSecond: boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -10357,7 +10357,7 @@
 											"top": 1270,
 											"width": 407.0625,
 											"height": 13,
-											"text": "#hadBuildSecond: boolean",
+											"text": "#hasBuildSecond: boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10605,7 +10605,7 @@
 											"top": 1392,
 											"width": 407.0625,
 											"height": 13,
-											"text": "#hadBuildSecond: boolean",
+											"text": "#hasBuildSecond: boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -11260,7 +11260,7 @@
 											"top": 1758,
 											"width": 407.0625,
 											"height": 13,
-											"text": "#hadBuildSecond: boolean",
+											"text": "#hasBuildSecond: boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -14986,7 +14986,7 @@
 											"top": 1880,
 											"width": 407.0625,
 											"height": 13,
-											"text": "#hadForced: boolean",
+											"text": "#hasForced: boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -15429,7 +15429,7 @@
 											"top": 2124,
 											"width": 407.0625,
 											"height": 13,
-											"text": "#hadBuildSecond: boolean",
+											"text": "#hasBuildSecond: boolean",
 											"horizontalAlignment": 0
 										}
 									],
@@ -19385,7 +19385,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFwyrU696JChQU="
 							},
-							"name": "hadWin",
+							"name": "hasWon",
 							"visibility": "private",
 							"type": {
 								"$ref": "AAAAAAFwyrSAJaHpHkM="
@@ -20894,7 +20894,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFw6P/gFMfoI6w="
 							},
-							"name": "hadWin",
+							"name": "hasWon",
 							"visibility": "protected",
 							"type": "boolean"
 						},
@@ -20904,7 +20904,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFw6P/gFMfoI6w="
 							},
-							"name": "hadMoved",
+							"name": "hasMoved",
 							"visibility": "protected",
 							"type": "boolean"
 						},
@@ -20914,7 +20914,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFw6P/gFMfoI6w="
 							},
-							"name": "hadBuild",
+							"name": "hasBuild",
 							"visibility": "protected",
 							"type": "boolean"
 						}
@@ -22195,7 +22195,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFxIoWkbTBr50A="
 							},
-							"name": "hadMovedSecond",
+							"name": "hasMovedSecond",
 							"visibility": "protected",
 							"type": "boolean"
 						}
@@ -22430,7 +22430,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFxIsbcia+BPEY="
 							},
-							"name": "hadBuildSecond",
+							"name": "hasBuildSecond",
 							"visibility": "protected",
 							"type": "boolean"
 						},
@@ -22576,7 +22576,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFxIs+q1sPkZBY="
 							},
-							"name": "hadBuildSecond",
+							"name": "hasBuildSecond",
 							"visibility": "protected",
 							"type": "boolean"
 						},
@@ -22971,7 +22971,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFxItiRp/zlF9o="
 							},
-							"name": "hadBuildSecond",
+							"name": "hasBuildSecond",
 							"visibility": "protected",
 							"type": "boolean"
 						}
@@ -23113,7 +23113,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFxSua26bkPAkc="
 							},
-							"name": "hadForced",
+							"name": "hasForced",
 							"visibility": "protected",
 							"type": "boolean"
 						}
@@ -23402,7 +23402,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFxSvDL4oGc1Ko="
 							},
-							"name": "hadBuildSecond",
+							"name": "hasBuildSecond",
 							"visibility": "protected",
 							"type": "boolean"
 						}

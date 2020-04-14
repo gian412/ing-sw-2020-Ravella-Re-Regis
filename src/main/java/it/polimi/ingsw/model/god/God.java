@@ -7,9 +7,9 @@ public abstract class God {
 
     protected Board board;
     public final String NAME;
-    protected boolean hadMoved;
-    protected boolean hadBuild;
-    protected boolean hadWin;
+    protected boolean hasMoved;
+    protected boolean hasBuild;
+    protected boolean hasWon;
 
     /**
      * Class' constructor with the initialization of boar and NAME
@@ -22,9 +22,9 @@ public abstract class God {
     public God(Board board, String NAME){
         this.board = board;
         this.NAME = NAME;
-        this.hadMoved = false;
-        this.hadBuild = false;
-        this.hadWin = false;
+        this.hasMoved = false;
+        this.hasBuild = false;
+        this.hasWon = false;
     }
 
     /**
@@ -44,8 +44,8 @@ public abstract class God {
     /**
      * Move the worker
      *
-     * Move the worker using board.moveWorker(Worker worker, Cell cell) and then check if the worker had
-     * win using board.checkWin(Worker worker) and saving this result in the class' variable hadWind.
+     * Move the worker using board.moveWorker(Worker worker, Cell cell) and then check if the worker has
+     * win using board.checkWin(Worker worker) and saving this result in the class' variable hasWond.
      * The method throw an IllegalMoveException if the worker can't move in the given cell
      *
      * @author Gianluca Regis
@@ -55,15 +55,14 @@ public abstract class God {
      */
     public void move(Worker worker, Cell cell) throws IllegalMoveException{
 
-        if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) {
-            if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){
+        if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't occupied and it isn't a dome and it isn't more then 1 floor far
+            if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
                 try {
-                    board.moveWorker(worker, cell);
-                    hadWin = board.checkWin(worker);
+                    board.moveWorker(worker, cell); // Call board's move method
+                    hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
                 } catch (IllegalMoveException e){
                     throw new IllegalMoveException();
                 }
-
             } else{
                 throw new IllegalMoveException();
             }
@@ -84,15 +83,15 @@ public abstract class God {
      */
     public void build(Cell originCell, Cell buildCell, boolean isDome) throws IllegalMoveException {
         // build
-        if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && isDome ){
+        if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && isDome ){ // If the cell isn't occupied and it isn't a dome and the piece to build is a dome
             try {
-                board.build(originCell, buildCell, true );
+                board.build(originCell, buildCell, true ); // Call board's build method
             } catch (IllegalMoveException e){
                 throw new IllegalMoveException();
             }
-        }else if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && !isDome){
+        }else if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && !isDome){ // If the cell isn't occupied and it isn't a dome and the piece to build isn't a dome
             try{
-                board.build(originCell, buildCell, false );
+                board.build(originCell, buildCell, false ); // Call board's build method
             } catch (IllegalMoveException e) {
                 throw new IllegalMoveException();
             }
@@ -107,8 +106,8 @@ public abstract class God {
      * @author Gianluca Regis
      */
     protected void resetLocalVariables(){
-        this.hadMoved = false;
-        this.hadBuild = false;
+        this.hasMoved = false;
+        this.hasBuild = false;
     }
 
 }

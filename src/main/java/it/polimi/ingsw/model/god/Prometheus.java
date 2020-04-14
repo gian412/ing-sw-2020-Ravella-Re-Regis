@@ -4,7 +4,7 @@ import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.model.*;
 
 public class Prometheus extends God {
-    protected boolean hadBuildBefore;
+    protected boolean hasBuildBefore;
 
     /**
      * Class' constructor that use the super class' constructor
@@ -15,7 +15,7 @@ public class Prometheus extends God {
     // class constructor with the initialization of board using the super constructor
     public Prometheus(Board board) {
         super(board, "PROMETHEUS");
-        this.hadBuildBefore = false;
+        this.hasBuildBefore = false;
     }
 
     /**
@@ -39,13 +39,12 @@ public class Prometheus extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMoved && !hadBuild && !hadWin && (!hadBuildBefore || (hadBuildBefore &&
-                            worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())<1))){
+                    if (!hasMoved && !hasBuild && !hasWon && (!hasBuildBefore || worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())<1)){
 
                         try {
                             super.move(worker, cell);
-                            hadMoved = true;
-                            hadWin = board.checkWin(worker);
+                            hasMoved = true;
+                            hasWon = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -56,26 +55,26 @@ public class Prometheus extends God {
                     }
 
                 case BUILD:
-                    if ( !hadBuildBefore && !hadMoved && !hadBuild && !hadWin ){
+                    if ( !hasBuildBefore && !hasMoved && !hasBuild && !hasWon ){
                         super.build(worker.getCurrentCell(), cell, false);
-                        hadBuildBefore = true;
+                        hasBuildBefore = true;
                         break;
-                    } else if ( hadMoved && !hadBuild && !hadWin ){
+                    } else if ( hasMoved && !hasBuild && !hasWon ){
                         super.build(worker.getCurrentCell(), cell, false);
-                        hadBuild = true;
+                        hasBuild = true;
                         break;
                     } else {
                         throw new IllegalMoveException();
                     }
 
                 case BUILD_DOME:
-                    if ( !hadBuildBefore && !hadMoved && !hadBuild && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
+                    if ( !hasBuildBefore && !hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){
                         super.build(worker.getCurrentCell(), cell, false);
-                        hadBuildBefore = true;
+                        hasBuildBefore = true;
                         break;
-                    } else if ( hadMoved && !hadBuild && !hadWin && cell.getHeight() == Height.THIRD_FLOOR ){
+                    } else if ( hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR ){
                         super.build(worker.getCurrentCell(), cell, false);
-                        hadBuild = true;
+                        hasBuild = true;
                         break;
                     } else {
                         throw new IllegalMoveException();
@@ -99,12 +98,12 @@ public class Prometheus extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMoved && !hadBuildSecond && !hadWin){
-                        if ( hadBuild && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<1 ){
+                    if (!hasMoved && !hasBuildSecond && !hasWon){
+                        if ( hasBuild && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<1 ){
                             try {
                                 super.move(worker, cell);
-                                hadMoved = true;
-                                hadWin = board.checkWin(worker);
+                                hasMoved = true;
+                                hasWon = board.checkWin(worker);
                                 break;
                             } catch (IllegalMoveException e) {
                                 throw new IllegalMoveException();
@@ -117,18 +116,18 @@ public class Prometheus extends God {
                     }
 
                 case BUILD:
-                    if (!hadBuild && !hadMoved && !hadBuildSecond && !hadWin){
+                    if (!hasBuild && !hasMoved && !hasBuildSecond && !hasWon){
                         try {
                             super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else if(hadMoved && !hadBuildSecond && !hadWin){
+                    } else if(hasMoved && !hasBuildSecond && !hasWon){
                         try {
                             super.build(worker.getCurrentCell(), cell, false);
-                            hadBuildSecond = true;
+                            hasBuildSecond = true;
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -138,18 +137,18 @@ public class Prometheus extends God {
                     }
 
                 case BUILD_DOME:
-                    if (!hadBuild && !hadMoved && !hadBuildSecond && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
+                    if (!hasBuild && !hasMoved && !hasBuildSecond && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else if(hadMoved && !hadBuildSecond && !hadWin && cell.getHeight() == Height.THIRD_FLOOR){
+                    } else if(hasMoved && !hasBuildSecond && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(worker.getCurrentCell(), cell, false);
-                            hadBuildSecond = true;
+                            hasBuildSecond = true;
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -178,6 +177,6 @@ public class Prometheus extends God {
     @Override
     protected void resetLocalVariables() {
         super.resetLocalVariables();
-        this.hadBuildBefore = false;
+        this.hasBuildBefore = false;
     }
 }

@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.*;
 
 public class Charon extends God {
 
-    protected boolean hadForced;
+    protected boolean hasForced;
 
     /**
      * Class' constructor that use the super class' constructor
@@ -16,7 +16,7 @@ public class Charon extends God {
     // class constructor with the initialization of board using the super constructor
     public Charon(Board board){
         super(board, "CHARON");
-        hadForced = false;
+        hasForced = false;
     }
 
     /**
@@ -41,14 +41,14 @@ public class Charon extends God {
 
             switch (command.commandType){
                 case FORCE:
-                    if(!hadForced && !hadMoved && !hadBuild && worker.getCurrentCell().cellDistance(cell) && cell.getWorker()!=null){
+                    if(!hasForced && !hasMoved && !hasBuild && worker.getCurrentCell().cellDistance(cell) && cell.getWorker()!=null){
 
                         Pair directionOfWorker = worker.getCurrentCell().getDirection(cell);
                         Cell forcedCell = board.getCell(worker.getCurrentCell().X - directionOfWorker.x, worker.getCurrentCell().Y - directionOfWorker.y);
                         if ( forcedCell.getWorker()==null && forcedCell.getHeight()!=Height.DOME ){
                             try {
                                 board.forceWorker(cell.getWorker(), forcedCell);
-                                hadForced = true;
+                                hasForced = true;
                                 break;
                             } catch (IllegalMoveException e){
                                 throw new IllegalMoveException();
@@ -62,11 +62,11 @@ public class Charon extends God {
                     }
 
                 case MOVE:
-                    if (!hadMoved && !hadBuild && !hadWin) {
+                    if (!hasMoved && !hasBuild && !hasWon) {
                         try {
                             super.move(worker, cell);
-                            hadMoved = true;
-                            hadWin = board.checkWin(worker);
+                            hasMoved = true;
+                            hasWon = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -76,10 +76,10 @@ public class Charon extends God {
                     }
 
                 case BUILD:
-                    if ( hadMoved && !hadBuild && !hadWin){
+                    if ( hasMoved && !hasBuild && !hasWon){
                         try {
                             super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -92,7 +92,7 @@ public class Charon extends God {
                     if (cell.getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -122,6 +122,6 @@ public class Charon extends God {
     @Override
     protected void resetLocalVariables() {
         super.resetLocalVariables();
-        this.hadForced = false;
+        this.hasForced = false;
     }
 }

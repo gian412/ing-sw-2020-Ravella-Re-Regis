@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
 public class ArtemisTest {
 
     @Test
-    @DisplayName("hadMoved")
-    public void hadMovedTest(){
+    @DisplayName("hasMoved")
+    public void hasMovedTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -37,19 +37,19 @@ public class ArtemisTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadMoved must be true", god.hadMoved);
+            assertTrue("hasMoved must be true", god.hasMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMovedTest in class ArtemisTest: " + e.toString());
-            fail("Exception in hadMovedTest in class ArtemisTest");
+            System.err.println("Error e in method hasMovedTest in class ArtemisTest: " + e.toString());
+            fail("Exception in hasMovedTest in class ArtemisTest");
         }
     }
 
     @Test
-    @DisplayName("hadMovedSecond")
-    public void hadMovedSecondTest(){
+    @DisplayName("hasMovedSecond")
+    public void hasMovedSecondTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -80,24 +80,24 @@ public class ArtemisTest {
         try {
             god.makeMove(worker, firstCommand);
 
-            assertTrue("hadMoved must be true", god.hadMoved);
+            assertTrue("hasMoved must be true", god.hasMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
 
             try {
                 god.makeMove(worker, secondCommand);
 
-                assertTrue("hadMovedSecond must be true", god.hadMovedSecond);
+                assertTrue("hasMovedSecond must be true", god.hasMovedSecond);
                 assertEquals("worker's previous position must be secondCell", worker.getPreviousCell(), secondCell);
                 assertEquals("worker's position must be thirdCell", worker.getCurrentCell(), thirdCell);
 
             } catch (IllegalMoveException e1) {
-                System.err.println("Error e1 in method hadMovedSecondTest in class ArtemisTest : " + e1.toString());
-                fail("Exception in hadMovedSecondTest in class ArtemisTest");
+                System.err.println("Error e1 in method hasMovedSecondTest in class ArtemisTest : " + e1.toString());
+                fail("Exception in hasMovedSecondTest in class ArtemisTest");
             }
         } catch (IllegalMoveException e2) {
-            System.err.println("Error e2 in method hadMovedSecondTest in class ArtemisTest :" + e2.toString());
-            fail("Exception in hadMovedSecondTest in class ArtemisTest");
+            System.err.println("Error e2 in method hasMovedSecondTest in class ArtemisTest :" + e2.toString());
+            fail("Exception in hasMovedSecondTest in class ArtemisTest");
         }
 
 
@@ -108,8 +108,8 @@ public class ArtemisTest {
     }
 
     @Test
-    @DisplayName("hadBuild not a dome")
-    public void hadBuildNotDomeTest(){
+    @DisplayName("hasBuild not a dome")
+    public void hasBuildNotDomeTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -118,7 +118,7 @@ public class ArtemisTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMoved = true;
+        god.hasMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -135,18 +135,18 @@ public class ArtemisTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadBuild must be true", god.hadBuild);
+            assertTrue("hasBuild must be true", god.hasBuild);
             assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadBuildNotDomeTest in class ArtemisTest: " + e.toString());
-            fail("Exception in hadBuildNotDomeTest in class ArtemisTest");
+            System.err.println("Error e in method hasBuildNotDomeTest in class ArtemisTest: " + e.toString());
+            fail("Exception in hasBuildNotDomeTest in class ArtemisTest");
         }
     }
 
     @Test
-    @DisplayName("hadBuild a dome")
-    public void hadBuildDomeTest(){
+    @DisplayName("hasBuild a dome")
+    public void hasBuildDomeTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -155,7 +155,7 @@ public class ArtemisTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMoved = true;
+        god.hasMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -172,18 +172,18 @@ public class ArtemisTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadBuild must be true", god.hadBuild);
+            assertTrue("hasBuild must be true", god.hasBuild);
             assertSame("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadBuildDomeTest in class ArtemisTest: " + e.toString());
-            fail("Exception in hadBuildDomeTest in class ArtemisTest");
+            System.err.println("Error e in method hasBuildDomeTest in class ArtemisTest: " + e.toString());
+            fail("Exception in hasBuildDomeTest in class ArtemisTest");
         }
     }
 
     @Test
-    @DisplayName("hadWin = true")
-    public void HadWinTrueTest(){
+    @DisplayName("hasWon = true")
+    public void hasWonTrueTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -208,18 +208,18 @@ public class ArtemisTest {
         try{
             god.makeMove(worker, command);
 
-            assertTrue( "hadWin must be true", god.hadWin );
+            assertTrue( "hasWon must be true", god.hasWon );
             assertSame("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method HadWinTrueTest in class ArtemisTest: " + e.toString());
-            fail("Exception in HadWinTrueTest in class ArtemisTest");
+            System.err.println("Error e in method hasWonTrueTest in class ArtemisTest: " + e.toString());
+            fail("Exception in hasWonTrueTest in class ArtemisTest");
         }
     }
 
     @Test
-    @DisplayName("hadWin = false")
-    public void HadWinFalseTest(){
+    @DisplayName("hasWon = false")
+    public void hasWonFalseTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -244,11 +244,11 @@ public class ArtemisTest {
         try{
             god.makeMove(worker, command);
 
-            assertFalse( "hadWin must be false", god.hadWin );
+            assertFalse( "hasWon must be false", god.hasWon );
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method HadWinFalseTest in class ArtemisTest: " + e.toString());
-            fail("Exception in HadWinFalseTest in class ArtemisTest");
+            System.err.println("Error e in method hasWonFalseTest in class ArtemisTest: " + e.toString());
+            fail("Exception in hasWonFalseTest in class ArtemisTest");
         }
     }
 

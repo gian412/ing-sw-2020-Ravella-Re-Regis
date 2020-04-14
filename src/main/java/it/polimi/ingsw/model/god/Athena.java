@@ -33,22 +33,22 @@ public class Athena extends God{
     @Override
     public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
-        if (command != null) {
-            Cell cell = board.getCell(command.cellX, command.cellY);
+        if (command != null) { // If the passed command isn't empty
+            Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
 
             switch (command.commandType) {
                 case MOVE:
-                    if (!hadMoved && !hadBuild && !hadWin) {
-                        if (!worker.isCanMoveUp()){
-                            worker.setCanMoveUp(true);
+                    if (!hasMoved && !hasBuild && !hasWon) { // If the player has not move, build and won
+                        if (!worker.isCanMoveUp()){ // If the worker can't move up...
+                            worker.setCanMoveUp(true); // ... reset the action that Athena's power have on other player
                         }
                         try {
-                            super.move(worker, cell);
-                            if (worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())>0){
-                                worker.setCanMoveUp(false);
+                            super.move(worker, cell); // Call super-class' move method
+                            if (worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())>0){ // If the worker has moved up
+                                worker.setCanMoveUp(false); // Set the canMoveUp parameter to false
                             }
-                            hadMoved = true;
-                            hadWin = board.checkWin(worker);
+                            hasMoved = true; // Store the information that the worker has moved
+                            hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -58,10 +58,10 @@ public class Athena extends God{
                     }
 
                 case BUILD:
-                    if (hadMoved && !hadBuild && !hadWin) {
+                    if (hasMoved && !hasBuild && !hasWon) { // If the player has moved but has not build and won
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            super.build(worker.getCurrentCell(), cell, false); // Call super-class' build method
+                            hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -71,10 +71,10 @@ public class Athena extends God{
                     }
 
                 case BUILD_DOME:
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell'height isn't third floor
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            super.build(worker.getCurrentCell(), cell, false); // Call super-class' build method
+                            hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -84,7 +84,7 @@ public class Athena extends God{
                     }
 
                 case RESET:
-                    super.resetLocalVariables();
+                    super.resetLocalVariables(); // Call super-class' reset method
                     break;
 
                 default:

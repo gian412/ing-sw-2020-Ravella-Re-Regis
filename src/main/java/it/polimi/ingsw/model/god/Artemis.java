@@ -5,7 +5,8 @@ import it.polimi.ingsw.model.*;
 
 public class Artemis extends God {
 
-    protected boolean hadMovedSecond;
+    protected boolean hasMovedSecond;
+    protected Cell startingCell;
 
     /**
      * Class' constructor that use the super class' constructor
@@ -16,7 +17,7 @@ public class Artemis extends God {
     // class constructor with the initialization of board using the super constructor
     public Artemis(Board board) {
         super(board, "ARTEMIS");
-        this.hadMovedSecond = false;
+        this.hasMovedSecond = false;
     }
 
     /**
@@ -36,25 +37,26 @@ public class Artemis extends God {
     @Override
     public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
-        if (command != null){
-            Cell cell = board.getCell(command.cellX, command.cellY);
+        if (command != null){ // If the passed command isn't empty
+            Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hadMoved && !hadMovedSecond && !hadWin && !hadBuild){
+                    if (!hasMoved && !hasMovedSecond && !hasBuild && !hasWon){ // If the player has not moved, moved second, build and won
                         try {
-                            super.move(worker, cell);
-                            hadMoved = true;
-                            hadWin = board.checkWin(worker);
+                            super.move(worker, cell); // Call super-class' move method
+                            startingCell = cell; // Save the starting position of the worker
+                            hasMoved = true; // Store the information that the worker has moved
+                            hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else if (hadMoved && !hadMovedSecond && !hadWin && !hadBuild){
+                    } else if (hasMoved && !hasMovedSecond && !hasBuild && !hasWon && !(cell.equals(startingCell))){ // If the player has moved but has not moved second, build and won and the cell isn't equal to the starting cell
                         try {
-                            super.move(worker, cell);
-                            hadMovedSecond = true;
-                            hadWin = board.checkWin(worker);
+                            super.move(worker, cell); // Call super-class' move method
+                            hasMovedSecond = true; // Store the information that the worker has moved second
+                            hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
                             break;
                         } catch (IllegalMoveException e){
                             throw new IllegalMoveException();
@@ -64,10 +66,10 @@ public class Artemis extends God {
                     }
 
                 case BUILD:
-                    if (hadMoved && !hadWin && !hadBuild){
+                    if (hasMoved && !hasBuild && !hasWon){ // If the player has moved but has not build and won
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            super.build(worker.getCurrentCell(), cell, false); // Call super-class' build method
+                            hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -77,10 +79,10 @@ public class Artemis extends God {
                     }
 
                 case BUILD_DOME:
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell's height is third floor
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
-                            hadBuild = true;
+                            super.build(worker.getCurrentCell(), cell, false); // Call super-class' build method
+                            hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -90,7 +92,7 @@ public class Artemis extends God {
                     }
 
                 case RESET:
-                    this.resetLocalVariables();
+                    this.resetLocalVariables(); // Call Artemis' reset method
                     break;
 
                 default:
@@ -109,6 +111,7 @@ public class Artemis extends God {
     @Override
     protected void resetLocalVariables() {
         super.resetLocalVariables();
-        this.hadMovedSecond = false;
+        this.hasMovedSecond = false;
+        this.startingCell = null;
     }
 }

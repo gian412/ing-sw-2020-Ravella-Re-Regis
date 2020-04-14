@@ -12,8 +12,8 @@ import static org.junit.Assert.fail;
 public class DemeterTest {
 
     @Test
-    @DisplayName("hadMoved")
-    public void hadMovedTest(){
+    @DisplayName("hasMoved")
+    public void hasMovedTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -38,19 +38,19 @@ public class DemeterTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadMoved must be true", god.hadMoved);
+            assertTrue("hasMoved must be true", god.hasMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadMovedTest in class DemeterTest: " + e.toString());
-            fail("Exception in hadMovedTest in class DemeterTest");
+            System.err.println("Error e in method hasMovedTest in class DemeterTest: " + e.toString());
+            fail("Exception in hasMovedTest in class DemeterTest");
         }
     }
 
     @Test
-    @DisplayName("hadBuild not a dome")
-    public void hadBuildNotDomeTest(){
+    @DisplayName("hasBuild not a dome")
+    public void hasBuildNotDomeTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -59,7 +59,7 @@ public class DemeterTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMoved = true;
+        god.hasMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -76,18 +76,18 @@ public class DemeterTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadBuild must be true", god.hadBuild);
+            assertTrue("hasBuild must be true", god.hasBuild);
             assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadBuildNotDomeTest in class DemeterTest: " + e.toString());
-            fail("Exception in hadBuildNotDomeTest in class DemeterTest");
+            System.err.println("Error e in method hasBuildNotDomeTest in class DemeterTest: " + e.toString());
+            fail("Exception in hasBuildNotDomeTest in class DemeterTest");
         }
     }
 
     @Test
-    @DisplayName("hadBuild a dome")
-    public void hadBuildDomeTest(){
+    @DisplayName("hasBuild a dome")
+    public void hasBuildDomeTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -96,7 +96,7 @@ public class DemeterTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMoved = true;
+        god.hasMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -113,18 +113,18 @@ public class DemeterTest {
         try {
             god.makeMove(worker, command);
 
-            assertTrue("hadBuild must be true", god.hadBuild);
+            assertTrue("hasBuild must be true", god.hasBuild);
             assertEquals("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
 
         } catch (IllegalMoveException e) {
-            System.err.println("Error e in method hadBuildDomeTest in class DemeterTest: " + e.toString());
-            fail("Exception in hadBuildDomeTest in class DemeterTest");
+            System.err.println("Error e in method hasBuildDomeTest in class DemeterTest: " + e.toString());
+            fail("Exception in hasBuildDomeTest in class DemeterTest");
         }
     }
 
     @Test
-    @DisplayName("hadBuildSecond not a dome")
-    public void hadBuildSecondNotDomeTest(){
+    @DisplayName("hasBuildSecond not a dome")
+    public void hasBuildSecondNotDomeTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -134,7 +134,7 @@ public class DemeterTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMoved = true;
+        god.hasMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -156,22 +156,22 @@ public class DemeterTest {
         try {
             god.makeMove(worker, firstCommand);
 
-            assertTrue("hadMoved must be true", god.hadBuild);
+            assertTrue("hasMoved must be true", god.hasBuild);
             assertEquals("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.FIRST_FLOOR);
 
             try {
                 god.makeMove(worker, secondCommand);
 
-                assertTrue("hadMovedSecond must be true", god.hadBuildSecond);
+                assertTrue("hasMovedSecond must be true", god.hasBuildSecond);
                 assertEquals("thirdCell's Height must be one bigger than before", thirdCell.getHeight(), Height.SECOND_FLOOR);
 
             } catch (IllegalMoveException e1) {
-                System.err.println("Error e1 in method hadBuildSecondTest in class DemeterTest : " + e1.toString());
-                fail("Exception in hadBuildSecondTest in class DemeterTest");
+                System.err.println("Error e1 in method hasBuildSecondTest in class DemeterTest : " + e1.toString());
+                fail("Exception in hasBuildSecondTest in class DemeterTest");
             }
         } catch (IllegalMoveException e2) {
-            System.err.println("Error e2 in method hadBuildSecondTest in class DemeterTest :" + e2.toString());
-            fail("Exception in hadBuildSecondTest in class DemeterTest");
+            System.err.println("Error e2 in method hasBuildSecondTest in class DemeterTest :" + e2.toString());
+            fail("Exception in hasBuildSecondTest in class DemeterTest");
         }
 
 
@@ -182,8 +182,8 @@ public class DemeterTest {
     }
 
     @Test
-    @DisplayName("hadBuildSecond dome")
-    public void hadBuildSecondDomeTest(){
+    @DisplayName("hasBuildSecond dome")
+    public void hasBuildSecondDomeTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -193,7 +193,7 @@ public class DemeterTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
-        god.hadMoved = true;
+        god.hasMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(0,1);
@@ -215,22 +215,22 @@ public class DemeterTest {
         try {
             god.makeMove(worker, firstCommand);
 
-            assertTrue("hadMoved must be true", god.hadBuild);
+            assertTrue("hasMoved must be true", god.hasBuild);
             assertEquals("secondCell's Height must be DOME", secondCell.getHeight(), Height.DOME);
 
             try {
                 god.makeMove(worker, secondCommand);
 
-                assertTrue("hadMovedSecond must be true", god.hadBuildSecond);
+                assertTrue("hasMovedSecond must be true", god.hasBuildSecond);
                 assertEquals("thirdCell's Height must be DOME", thirdCell.getHeight(), Height.DOME);
 
             } catch (IllegalMoveException e1) {
-                System.err.println("Error e1 in method hadBuildSecondTest in class DemeterTest : " + e1.toString());
-                fail("Exception in hadBuildSecondTest in class DemeterTest");
+                System.err.println("Error e1 in method hasBuildSecondTest in class DemeterTest : " + e1.toString());
+                fail("Exception in hasBuildSecondTest in class DemeterTest");
             }
         } catch (IllegalMoveException e2) {
-            System.err.println("Error e2 in method hadBuildSecondTest in class DemeterTest :" + e2.toString());
-            fail("Exception in hadBuildSecondTest in class DemeterTest");
+            System.err.println("Error e2 in method hasBuildSecondTest in class DemeterTest :" + e2.toString());
+            fail("Exception in hasBuildSecondTest in class DemeterTest");
         }
 
 
@@ -241,8 +241,8 @@ public class DemeterTest {
     }
 
     @Test
-    @DisplayName("hadWin = true")
-    public void HadWinTrueTest(){
+    @DisplayName("hasWon = true")
+    public void hasWonTrueTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -267,18 +267,18 @@ public class DemeterTest {
         try{
             god.makeMove(worker, command);
 
-            assertTrue( "hadWin must be true", god.hadWin );
+            assertTrue( "hasWon must be true", god.hasWon );
             assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method HadWinTrueTest in class DemeterTest: " + e.toString());
-            fail("Exception in HadWinTrueTest in class DemeterTest");
+            System.err.println("Error e in method hasWonTrueTest in class DemeterTest: " + e.toString());
+            fail("Exception in hasWonTrueTest in class DemeterTest");
         }
     }
 
     @Test
-    @DisplayName("hadWin = false")
-    public void HadWinFalseTest(){
+    @DisplayName("hasWon = false")
+    public void hasWonFalseTest(){
 
         // Initialization of the parameters
         Board board = new Board();
@@ -303,12 +303,12 @@ public class DemeterTest {
         try{
             god.makeMove(worker, command);
 
-            assertFalse( "hadWin must be false", god.hadWin );
+            assertFalse( "hasWon must be false", god.hasWon );
             assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
 
         } catch (IllegalMoveException e){
-            System.err.println("Error e in method HadWinFalseTest in class DemeterTest: " + e.toString());
-            fail("Exception in HadWinFalseTest in class DemeterTest");
+            System.err.println("Error e in method hasWonFalseTest in class DemeterTest: " + e.toString());
+            fail("Exception in hasWonFalseTest in class DemeterTest");
         }
     }
 
