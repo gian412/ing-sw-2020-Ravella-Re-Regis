@@ -35,7 +35,7 @@ public class ArtemisTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue("hasMoved must be true", god.hasMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
@@ -78,14 +78,14 @@ public class ArtemisTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, firstCommand);
+            god.executeCommand(worker, firstCommand);
 
             assertTrue("hasMoved must be true", god.hasMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
             assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
 
             try {
-                god.makeMove(worker, secondCommand);
+                god.executeCommand(worker, secondCommand);
 
                 assertTrue("hasMovedSecond must be true", god.hasMovedSecond);
                 assertEquals("worker's previous position must be secondCell", worker.getPreviousCell(), secondCell);
@@ -133,7 +133,7 @@ public class ArtemisTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue("hasBuild must be true", god.hasBuild);
             assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
@@ -170,7 +170,7 @@ public class ArtemisTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue("hasBuild must be true", god.hasBuild);
             assertSame("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
@@ -206,7 +206,7 @@ public class ArtemisTest {
         worker.setCurrentCell(firstCell);
 
         try{
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue( "hasWon must be true", god.hasWon );
             assertSame("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
@@ -242,7 +242,7 @@ public class ArtemisTest {
         worker.setCurrentCell(firstCell);
 
         try{
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertFalse( "hasWon must be false", god.hasWon );
 

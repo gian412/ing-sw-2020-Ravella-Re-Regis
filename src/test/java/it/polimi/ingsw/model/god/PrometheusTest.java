@@ -36,7 +36,7 @@ public class PrometheusTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue("hasMoved must be true", god.hasMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
@@ -74,7 +74,7 @@ public class PrometheusTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue("hasBuild must be true", god.hasBuild);
             assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
@@ -111,7 +111,7 @@ public class PrometheusTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue("hasBuild must be true", god.hasBuild);
             assertEquals("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
@@ -148,7 +148,7 @@ public class PrometheusTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, firstCommand);
+            god.executeCommand(worker, firstCommand);
 
             assertTrue("hasBuildBefore must be true", god.hasBuildBefore);
             assertEquals("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.FIRST_FLOOR);
@@ -156,7 +156,7 @@ public class PrometheusTest {
             god.hasMoved = true;
 
             try {
-                god.makeMove(worker, secondCommand);
+                god.executeCommand(worker, secondCommand);
 
                 assertTrue("hasBuild must be true", god.hasBuild);
                 assertEquals("thirdCell's Height must be one bigger than before", secondCell.getHeight(), Height.SECOND_FLOOR);
@@ -208,7 +208,7 @@ public class PrometheusTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, firstCommand);
+            god.executeCommand(worker, firstCommand);
 
             assertTrue("hasBuildBefore must be true", god.hasBuildBefore);
             assertEquals("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.DOME);
@@ -216,7 +216,7 @@ public class PrometheusTest {
             god.hasMoved = true;
 
             try {
-                god.makeMove(worker, secondCommand);
+                god.executeCommand(worker, secondCommand);
 
                 assertTrue("hasBuild must be true", god.hasBuild);
                 assertEquals("thirdCell's Height must be one bigger than before", secondCell.getHeight(), Height.DOME);
@@ -262,7 +262,7 @@ public class PrometheusTest {
         worker.setCurrentCell(firstCell);
 
         try{
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue( "hasWon must be true", god.hasWon );
             assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
@@ -298,7 +298,7 @@ public class PrometheusTest {
         worker.setCurrentCell(firstCell);
 
         try{
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertFalse( "hasWon must be false", god.hasWon );
             assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);

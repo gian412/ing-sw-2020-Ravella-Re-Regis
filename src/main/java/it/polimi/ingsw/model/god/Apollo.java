@@ -88,7 +88,7 @@ public class Apollo extends God{
      * @throws IllegalMoveException in case the action isn't legal
      */
     @Override
-    public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
+    public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null){ // If the passed command isn't empty
             Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell

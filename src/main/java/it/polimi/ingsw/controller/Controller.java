@@ -1,9 +1,6 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.view.RemoteView;
-
-import java.util.ArrayList;
 
 import it.polimi.ingsw.view.Observer;
 
@@ -30,7 +27,7 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
     public boolean commitMove(String player, Command command, int workerID){
         if(game.getTurnPlayer().getNAME().equals(player)){
             try{
-                game.getTurnPlayer().getDivinity().makeMove(
+                game.getTurnPlayer().getDivinity().executeCommand(
                         game.getTurnPlayer().getWorkers()[workerID],
                         command
                 );
@@ -79,7 +76,7 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
      */
     public void changeTurnPlayer(){
         try{
-            game.getTurnPlayer().getDivinity().makeMove(
+            game.getTurnPlayer().getDivinity().executeCommand(
                     null,
                     new Command(0,0, CommandType.RESET)
             );

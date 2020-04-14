@@ -39,7 +39,7 @@ public abstract class God {
      * @throws IllegalMoveException in case the action isn't legal
      */
     // abstract class' abstract method
-    public abstract void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException;
+    public abstract void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException;
 
     /**
      * Move the worker

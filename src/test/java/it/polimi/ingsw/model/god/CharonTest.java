@@ -35,7 +35,7 @@ public class CharonTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue("hasMoved must be true", god.hasMoved);
             assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
@@ -80,7 +80,7 @@ public class CharonTest {
         worker2.setCurrentCell(secondCell);
 
         try {
-            god.makeMove(worker1, command);
+            god.executeCommand(worker1, command);
 
             assertTrue("hasMoved must be true", god.hasForced);
             assertEquals("worker1's position must be firstCell", worker1.getCurrentCell(), firstCell);
@@ -119,7 +119,7 @@ public class CharonTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue("hasBuild must be true", god.hasBuild);
             assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
@@ -156,7 +156,7 @@ public class CharonTest {
         worker.setCurrentCell(firstCell);
 
         try {
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue("hasBuild must be true", god.hasBuild);
             assertEquals("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
@@ -192,7 +192,7 @@ public class CharonTest {
         worker.setCurrentCell(firstCell);
 
         try{
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertTrue( "hasWon must be true", god.hasWon );
             assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
@@ -228,7 +228,7 @@ public class CharonTest {
         worker.setCurrentCell(firstCell);
 
         try{
-            god.makeMove(worker, command);
+            god.executeCommand(worker, command);
 
             assertFalse( "hasWon must be false", god.hasWon );
             assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);

@@ -33,7 +33,7 @@ public class Hestia extends God {
      * @throws IllegalMoveException in case the action isn't legal
      */
     @Override
-    public void makeMove(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
+    public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command!=null){
             Cell cell = board.getCell(command.cellX, command.cellY);
