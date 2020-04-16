@@ -48,7 +48,7 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
      */
     public boolean addWorker(int row, int column){
         try {
-            game.getBoard().addWorker(row, column);
+            game.getBoard().addWorker(new Pair(row, column));
         } catch (IllegalCellException | IllegalAddException e) {
             e.printStackTrace();
             return false;
