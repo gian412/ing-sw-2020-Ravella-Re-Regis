@@ -58,7 +58,7 @@ public abstract class God {
         if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't occupied and it isn't a dome and it isn't more then 1 floor far
             if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
                 try {
-                    board.moveWorker(worker, cell); // Call board's move method
+                    board.moveWorker(worker, new Pair(cell.X, cell.Y)); // Call board's move method
                     hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
                 } catch (IllegalMoveException e){
                     throw new IllegalMoveException();
@@ -85,13 +85,13 @@ public abstract class God {
         // build
         if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && isDome ){ // If the cell isn't occupied and it isn't a dome and the piece to build is a dome
             try {
-                board.build(originCell, buildCell, true ); // Call board's build method
+                board.build(originCell, new Pair(buildCell.X, buildCell.Y), true ); // Call board's build method
             } catch (IllegalMoveException e){
                 throw new IllegalMoveException();
             }
         }else if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && !isDome){ // If the cell isn't occupied and it isn't a dome and the piece to build isn't a dome
             try{
-                board.build(originCell, buildCell, false ); // Call board's build method
+                board.build(originCell, new Pair(buildCell.X, buildCell.Y), false ); // Call board's build method
             } catch (IllegalMoveException e) {
                 throw new IllegalMoveException();
             }

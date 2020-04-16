@@ -1,13 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.Command;
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.IllegalMoveException;
-import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.Height;
-
-import static it.polimi.ingsw.controller.CommandType.RESET;
+import it.polimi.ingsw.model.*;
 
 public class Apollo extends God{
 
@@ -39,7 +33,7 @@ public class Apollo extends God{
             if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't a dome and it isn't more then 1 floor far
                 if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
                     try {
-                        board.moveWorker(worker, cell); // Call board's move method
+                        board.moveWorker(worker, new Pair(cell.X, cell.Y)); // Call board's move method
                         hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                     } catch (IllegalMoveException e){
                         throw new IllegalMoveException();
@@ -56,8 +50,8 @@ public class Apollo extends God{
                     try {
                         Worker otherWorker = cell.getWorker(); // Get the reference to the worker to force
                         Cell actualCell = worker.getCurrentCell(); // Get the reference to the cell where I'm now
-                        board.moveWorker(worker, cell); // Call board's move method
-                        board.moveWorker(otherWorker, actualCell); // Call board's move method on otherWorker
+                        board.moveWorker(worker, new Pair(cell.X, cell.Y)); // Call board's move method
+                        board.moveWorker(otherWorker, new Pair(actualCell.X, actualCell.Y)); // Call board's move method on otherWorker
                         hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                     } catch (IllegalMoveException e){
                         throw new IllegalMoveException();

@@ -31,7 +31,7 @@ public class Zeus extends God {
         // build
         if( buildCell.getHeight() != Height.THIRD_FLOOR && buildCell.getHeight() != Height.DOME && !isDome ){
             try {
-                board.build(originCell, buildCell, false );
+                board.build(originCell, new Pair(buildCell.X, buildCell.Y), false );
             } catch (IllegalMoveException e){
                 throw new IllegalMoveException();
             }

@@ -47,7 +47,7 @@ public class Charon extends God {
                         Cell forcedCell = board.getCell(worker.getCurrentCell().X - directionOfWorker.x, worker.getCurrentCell().Y - directionOfWorker.y);
                         if ( forcedCell.getWorker()==null && forcedCell.getHeight()!=Height.DOME ){
                             try {
-                                board.forceWorker(cell.getWorker(), forcedCell);
+                                board.forceWorker(cell.getWorker(),new Pair(forcedCell.X, forcedCell.Y));
                                 hasForced = true;
                                 break;
                             } catch (IllegalMoveException e){

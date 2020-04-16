@@ -43,8 +43,8 @@ public class Minotaur extends God {
             if( nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME){
                 Worker otherWorker = cell.getWorker();
                 try {
-                    board.moveWorker(worker, cell);
-                    board.moveWorker(otherWorker, nextCell);
+                    board.moveWorker(worker, new Pair(cell.X, cell.Y));
+                    board.moveWorker(otherWorker, new Pair(nextCell.X, nextCell.Y));
                 } catch (IllegalMoveException e){
                     throw new IllegalMoveException();
                 }
