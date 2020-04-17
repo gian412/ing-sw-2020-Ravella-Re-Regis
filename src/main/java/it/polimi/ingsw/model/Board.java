@@ -63,29 +63,29 @@ public class Board {
     /**
      * build a structure on the board
      *
-     * @param buildCell cell in which the player wants to build
+     * @param originCell cell in which the worker is
+     * @param coordinates coordinates in which the player wants to build
      * @param isDome is true if a god, who has the ability to build dome not only after the third level, build a dome
      */
     public void build(Cell originCell, Pair coordinates, boolean isDome) throws IllegalMoveException{
 
-        /*
-        if((buildCell.X >= 0) && (buildCell.X < 5) && (buildCell.Y >= 0) && (buildCell.Y < 5) && originCell.cellDistance(buildCell)){
+        if((coordinates.x >= 0) && (coordinates.x < 5) && (coordinates.y >= 0) && (coordinates.y < 5) && originCell.cellDistance(coordinates)){
             if(isDome){
-                if(this.getCell(buildCell.X, buildCell.Y).getHeight() == Height.THIRD_FLOOR) {
-                    this.getCell(buildCell.X, buildCell.Y).buildFloor();
+                if(this.getCell(coordinates.x, coordinates.y).getHeight() == Height.THIRD_FLOOR) {
+                    this.getCell(coordinates.x, coordinates.y).buildFloor();
                 }
                 else{
-                    this.getCell(buildCell.X, buildCell.Y).setHeight(Height.DOME);
+                    this.getCell(coordinates.x, coordinates.y).setHeight(Height.DOME);
                 }
             }
             else {
-                this.getCell(buildCell.X, buildCell.Y).buildFloor();
+                this.getCell(coordinates.x, coordinates.y).buildFloor();
             }
             this.updateProxyBoard();
         }
         else{
             throw new IllegalMoveException();
-        }*/
+        }
     }
 
     /**
