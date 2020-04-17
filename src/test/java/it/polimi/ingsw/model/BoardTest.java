@@ -24,7 +24,7 @@ public class BoardTest {
         worker.setCurrentCell(board.getCell(0, 0));
 
         try {
-            board.moveWorker(worker, board.getCell(1, 1));
+            board.moveWorker(worker, new Pair(1, 1));
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method moveWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
@@ -55,7 +55,7 @@ public class BoardTest {
         Cell cell = new Cell(6, 6);
 
         try {
-            board.moveWorker(worker, cell);
+            board.moveWorker(worker, new Pair(6, 6));
             fail("test failed");
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method moveWorkerTest in class BoardTest " + e.toString());
@@ -77,7 +77,7 @@ public class BoardTest {
         Cell cell = new Cell(0, 2);
 
         try {
-            board.moveWorker(worker, cell);
+            board.moveWorker(worker, new Pair(0, 2));
             fail("test failed");
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method moveWorkerTest in class BoardTest " + e.toString());
@@ -99,7 +99,7 @@ public class BoardTest {
         worker.setCurrentCell(board.getCell(0, 0));
 
         try {
-            board.forceWorker(worker, board.getCell(4, 3));
+            board.forceWorker(worker, new Pair(4, 3));
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method moveWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
@@ -129,7 +129,7 @@ public class BoardTest {
         Cell cell = new Cell(5, 5);
 
         try {
-            board.forceWorker(worker, cell);
+            board.forceWorker(worker, new Pair(5, 5));
             fail("test Failed");
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method moveWorkerTest in class BoardTest " + e.toString());
@@ -147,7 +147,7 @@ public class BoardTest {
         board.setTurnPlayer(player);
 
         try {
-            board.addWorker(1, 1);
+            board.addWorker(new Pair(1, 1));
         } catch (IllegalAddException | IllegalCellException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
@@ -175,8 +175,8 @@ public class BoardTest {
         board.setTurnPlayer(player1);
 
         try{
-            board.addWorker(0,0);
-            board.addWorker(1 ,1 );
+            board.addWorker(new Pair(0, 0));
+            board.addWorker(new Pair(1, 1));
         }
         catch (IllegalAddException | IllegalCellException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
@@ -210,9 +210,9 @@ public class BoardTest {
         board.setTurnPlayer(player1);
 
         try {
-            board.addWorker(0, 0);
-            board.addWorker(1, 1);
-            board.addWorker(2, 2);
+            board.addWorker(new Pair(0, 0));
+            board.addWorker(new Pair(1, 1));
+            board.addWorker(new Pair(2, 2));
             fail("test failed");
         } catch (IllegalAddException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
@@ -231,7 +231,7 @@ public class BoardTest {
         board.setTurnPlayer(player1);
 
         try {
-            board.addWorker(5, 5);
+            board.addWorker(new Pair(5, 5));
             fail("test failed");
         } catch (IllegalAddException e) {
             fail("test failed");
@@ -253,7 +253,7 @@ public class BoardTest {
 
 
         try {
-            board.build(cellWorker, cell, true);
+            board.build(cellWorker, new Pair(1, 1), true);
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
@@ -273,7 +273,7 @@ public class BoardTest {
 
 
         try {
-            board.build(cellWorker, cell, true);
+            board.build(cellWorker, new Pair(1, 1), true);
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
@@ -294,7 +294,7 @@ public class BoardTest {
 
 
         try {
-            board.build(cellWorker, cell, false);
+            board.build(cellWorker, new Pair(1, 1), false);
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
             fail("test failed");
@@ -315,7 +315,7 @@ public class BoardTest {
 
 
         try {
-            board.build(cellWorker, cell, false);
+            board.build(cellWorker, new Pair(8, 8), false);
             fail("test failed");
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());
@@ -333,7 +333,7 @@ public class BoardTest {
 
 
         try {
-            board.build(cellWorker, cell, false);
+            board.build(cellWorker, new Pair(3,3), false);
             fail("test failed");
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method addFirstWorkerTest in class BoardTest " + e.toString());

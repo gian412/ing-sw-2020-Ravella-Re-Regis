@@ -29,7 +29,7 @@ public class CellTest {
         Cell cell2 = new Cell(0, 0);
 
         assertTrue("the distance is 1 cell",
-                cell1.cellDistance(cell2));
+                cell1.cellDistance(new Pair(0, 0)));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class CellTest {
         Cell cell2 = new Cell(3, 0);
 
         assertFalse("the distance is not 1 cell",
-                cell1.cellDistance(cell2));
+                cell1.cellDistance(new Pair(3, 0)));
     }
 
     

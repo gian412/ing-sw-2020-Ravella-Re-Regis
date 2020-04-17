@@ -41,7 +41,7 @@ public class Charon extends God {
 
             switch (command.commandType){
                 case FORCE:
-                    if(!hasForced && !hasMoved && !hasBuild && worker.getCurrentCell().cellDistance(cell) && cell.getWorker()!=null){
+                    if(!hasForced && !hasMoved && !hasBuild && worker.getCurrentCell().cellDistance(new Pair(cell.X, cell.Y)) && cell.getWorker()!=null){
 
                         Pair directionOfWorker = worker.getCurrentCell().getDirection(cell);
                         Cell forcedCell = board.getCell(worker.getCurrentCell().X - directionOfWorker.x, worker.getCurrentCell().Y - directionOfWorker.y);
