@@ -128,11 +128,11 @@ public class Cell {
      * @param cell the other cell
      * @return true if the cell is adjacent
      */
-    public boolean cellDistance(Cell cell){
+    public boolean cellDistance(Pair cell){
         int distanceX, distanceY;
 
-        distanceX = this.X - cell.X;
-        distanceY = this.Y - cell.Y;
+        distanceX = this.X - cell.x;
+        distanceY = this.Y - cell.y;
 
         if ((distanceX >= -1) && (distanceX <= 1)) {
             return (distanceY >= -1) && (distanceY <= 1);

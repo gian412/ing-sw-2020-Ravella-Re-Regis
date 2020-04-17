@@ -63,29 +63,29 @@ public class Board {
     /**
      * build a structure on the board
      *
-     * @param buildCell cell in which the player wants to build
+     * @param originCell cell in which the worker is
+     * @param coordinates coordinates in which the player wants to build
      * @param isDome is true if a god, who has the ability to build dome not only after the third level, build a dome
      */
     public void build(Cell originCell, Pair coordinates, boolean isDome) throws IllegalMoveException{
 
-        /*
-        if((buildCell.X >= 0) && (buildCell.X < 5) && (buildCell.Y >= 0) && (buildCell.Y < 5) && originCell.cellDistance(buildCell)){
+        if((coordinates.x >= 0) && (coordinates.x < 5) && (coordinates.y >= 0) && (coordinates.y < 5) && originCell.cellDistance(coordinates)){
             if(isDome){
-                if(this.getCell(buildCell.X, buildCell.Y).getHeight() == Height.THIRD_FLOOR) {
-                    this.getCell(buildCell.X, buildCell.Y).buildFloor();
+                if(this.getCell(coordinates.x, coordinates.y).getHeight() == Height.THIRD_FLOOR) {
+                    this.getCell(coordinates.x, coordinates.y).buildFloor();
                 }
                 else{
-                    this.getCell(buildCell.X, buildCell.Y).setHeight(Height.DOME);
+                    this.getCell(coordinates.x, coordinates.y).setHeight(Height.DOME);
                 }
             }
             else {
-                this.getCell(buildCell.X, buildCell.Y).buildFloor();
+                this.getCell(coordinates.x, coordinates.y).buildFloor();
             }
             this.updateProxyBoard();
         }
         else{
             throw new IllegalMoveException();
-        }*/
+        }
     }
 
     /**
@@ -93,24 +93,24 @@ public class Board {
      *
      * @author Marco Re
      * @param worker the worker that the player moves
-     * @param cell the in in which the player moves the worker
+     * @param coordinates coordinates in which the player moves the worker
      */
     public void moveWorker(Worker worker, Pair coordinates) throws IllegalMoveException{
 
-        /*if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5) && (worker.getCurrentCell().cellDistance(cell))){
+        if((coordinates.x >= 0) && (coordinates.x < 5) && (coordinates.y >= 0) && (coordinates.y < 5) && (worker.getCurrentCell().cellDistance(coordinates))){
 
             this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y).setWorker(null);
             worker.setPreviousCell(this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y));
 
-            this.getCell(cell.X, cell.Y).setWorker(worker);
-            worker.setCurrentCell(this.getCell(cell.X, cell.Y));
+            this.getCell(coordinates.x, coordinates.y).setWorker(worker);
+            worker.setCurrentCell(this.getCell(coordinates.x, coordinates.y));
 
             //update the proxyBoard after a legal move
             this.updateProxyBoard();
         }
         else{
             throw new IllegalMoveException();
-        }*/
+        }
     }
 
     /**
@@ -118,54 +118,52 @@ public class Board {
      *
      * @author Gianluca Regis
      * @param worker the worker that the player moves
-     * @param cell the cell in which the player moves the worker
+     * @param coordinates the cell in which the player moves the worker
      */
     public void forceWorker(Worker worker, Pair coordinates) throws IllegalMoveException{
 
-        /*if((cell.X >= 0) && (cell.X < 5) && (cell.Y >= 0) && (cell.Y < 5)){
+        if((coordinates.x >= 0) && (coordinates.x < 5) && (coordinates.y >= 0) && (coordinates.y < 5)){
 
             this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y).setWorker(null);
             worker.setPreviousCell(this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y));
 
-            this.getCell(cell.X, cell.Y).setWorker(worker);
-            worker.setCurrentCell(this.getCell(cell.X, cell.Y));
+            this.getCell(coordinates.x, coordinates.y).setWorker(worker);
+            worker.setCurrentCell(this.getCell(coordinates.x, coordinates.y));
 
             //update the proxyBoard after a legal move
             this.updateProxyBoard();
         }
         else{
             throw new IllegalMoveException();
-        }*/
+        }
     }
 
     /** put a worker on the board
      *
      * at the start of the game the player put his workers on the board
      *
-     * @param row is the row of the board in which the player inserts his worker
-     * @param column is the column of the board in which the player inserts his worker
-     * @throws IllegalCellException,IllegalAddException
+     * @param coordinates in which the player wants to put the worker
+     * @Throws IllegalCellException,IllegalAddException
      * illegalCellException is the cell doesn't exist
      * illegalAddException if the player has already put his two workers
      */
     public void addWorker(Pair coordinates) throws IllegalCellException, IllegalAddException{
 
-        /*
         // check if the two workers are already set with the first cell
         if( (this.turnPlayer.getWorkers()[0].getCurrentCell() == null) || (this.turnPlayer.getWorkers()[1].getCurrentCell() == null)) {
             // check if the cell where the player wants to put the workers exists and is free
-            if( (row >= 0) && (row < 5) && (column >= 0) && (column < 5) && (this.getCell(row, column).getHeight() == Height.GROUND) && (this.getCell(row, column).getWorker() == null)) {
+            if( (coordinates.x >= 0) && (coordinates.x < 5) && (coordinates.y >= 0) && (coordinates.y < 5) && (this.getCell(coordinates.x, coordinates.y).getHeight() == Height.GROUND) && (this.getCell(coordinates.x, coordinates.y).getWorker() == null)) {
                 //check if th first worker is already set
                 if(this.turnPlayer.getWorkers()[0].getCurrentCell() == null){
                     //add the first worker
-                    this.getCell(row, column).setWorker(this.turnPlayer.getWorkers()[0]);
-                    this.turnPlayer.getWorkers()[0].setCurrentCell(this.getCell(row, column));
+                    this.getCell(coordinates.x, coordinates.y).setWorker(this.turnPlayer.getWorkers()[0]);
+                    this.turnPlayer.getWorkers()[0].setCurrentCell(this.getCell(coordinates.x, coordinates.y));
                 }
 
                 else{
                     //add the second worker
-                    this.getCell(row, column).setWorker(this.turnPlayer.getWorkers()[1]);
-                    this.turnPlayer.getWorkers()[1].setCurrentCell(this.getCell(row, column));
+                    this.getCell(coordinates.x, coordinates.y).setWorker(this.turnPlayer.getWorkers()[1]);
+                    this.turnPlayer.getWorkers()[1].setCurrentCell(this.getCell(coordinates.x, coordinates.y));
                 }
 
             }
@@ -176,7 +174,7 @@ public class Board {
 
         else{
             throw new IllegalAddException();
-        }*/
+        }
     }
 
     /**
