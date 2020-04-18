@@ -77,7 +77,65 @@ public class RemoteViewTest {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
 
 
+    @Test
+    @DisplayName("Checking the correct behavior at startGame (multithreaded)")
+    public void checkStartGameMultiThread(){
+        Thread server = new Thread(() -> {
+            try {
+                // setting up a server
+                ServerSocket serverSocket = new ServerSocket(7007);
+                Socket myClient = serverSocket.accept();
+                System.out.println("[SERVER]Client connected, starting game");
+
+                // after the client connection, instancing and starting the game
+                Game myGame = new Game();
+                Controller controller = new Controller(myGame);
+
+                // adding player: the youngest should receive the "modified" board at startup
+                controller.addPlayer("Marco", 20);
+                controller.addPlayer("Gianluca", 15);
+
+                // Instancing the remoteView
+                RemoteView rv = new RemoteView(myClient, controller, "Gianluca");
+                myGame.getBoard().addView(rv);
+                Thread rvThread = new Thread(rv);
+                rvThread.start();
+
+                // starting the game
+                Thread.sleep(1500); // little delay to "wait for the client"
+                controller.startGame();
+
+
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        });
+
+        server.start();
+
+        // client code
+        Socket clientSocket;
+        try {
+            // connecting to the server
+            clientSocket = new Socket("127.0.0.1", 7007);
+
+            ObjectOutputStream outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+            ObjectInputStream inputStream = new ObjectInputStream(clientSocket.getInputStream());
+
+            BoardProxy proxy = (BoardProxy) inputStream.readObject();
+
+            assertEquals(proxy.getChoosingGods(), "Gianluca");
+            assertNull(proxy.getWinner());
+
+            System.out.println("[CLIENT]\n" + proxy.toString());
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
+
