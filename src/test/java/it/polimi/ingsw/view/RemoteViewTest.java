@@ -5,8 +5,6 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Game;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,63 +12,72 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class RemoteViewTest {
 
     @Test
     @DisplayName("Checking the correct behavior at startGame")
+    /**
+     * in this test I check the correct order of the Players during the startGame procedure
+     * but i make this check as seen by the client. in this test i don't test any of the
+     * Server class functionality
+     *
+     * @authors Ravella Elia
+     */
     public void checkStartGame(){
-        Thread srv = new Thread(() -> {
-
-        });
-
-        Thread client = new Thread(() -> {
-            Socket clientSocket;
+        Thread server = new Thread(() -> {
             try {
-                clientSocket = new Socket("127.0.0.1", 7007);
-                System.out.println("Connected");
-                ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
-                ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
-                BoardProxy myProxy = (BoardProxy) in.readObject();
-                System.out.println(myProxy.toString());
-                System.out.println(myProxy.getChoosingGods());
-                System.out.println(myProxy.getWinner());
+                // setting up a server
+                ServerSocket serverSocket = new ServerSocket(7007);
+                Socket myClient = serverSocket.accept();
+                System.out.println("[SERVER]Client connected, starting game");
 
-                assertTrue(myProxy.getChoosingGods() == "Gianluca", "Player should be the youngest");
-            } catch (ClassNotFoundException | IOException e) {
+                // after the client connection, instancing and starting the game
+                Game myGame = new Game();
+                Controller controller = new Controller(myGame);
+
+                // adding player: the youngest should receive the "modified" board at startup
+                controller.addPlayer("Marco", 20);
+                controller.addPlayer("Gianluca", 15);
+
+                // Instancing the remoteView
+                RemoteView rv = new RemoteView(myClient, controller, "Gianluca");
+                myGame.getBoard().addView(rv);
+
+                // starting the game
+                Thread.sleep(1500); // little delay to "wait for the client"
+                controller.startGame();
+
+
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
+
         });
 
-        //srv.start();
+        server.start();
 
-
-        Socket rvSocket = null;
+        // client code
+        Socket clientSocket;
         try {
-            ServerSocket srvSck = new ServerSocket(7007);
-            System.err.println("Server up");
+            // connecting to the server
+            clientSocket = new Socket("127.0.0.1", 7007);
 
-            client.start();
+            ObjectOutputStream outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+            ObjectInputStream inputStream = new ObjectInputStream(clientSocket.getInputStream());
 
-            rvSocket = srvSck.accept();
-            System.err.println("Connected");
-            Thread.sleep(150);
-        } catch (InterruptedException | IOException e) {
+            BoardProxy proxy = (BoardProxy) inputStream.readObject();
+
+            assertEquals(proxy.getChoosingGods(), "Gianluca");
+            assertNull(proxy.getWinner());
+
+            System.out.println("[CLIENT]\n" + proxy.toString());
+
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        Game g = new Game();
-        Controller controller = new Controller(g);
 
-        controller.addPlayer("Marco", 35);
-        controller.addPlayer("Gianluca", 31);
-
-        System.err.println("Instancing remoteview");
-        RemoteView rv = new RemoteView(rvSocket, controller, "Marco");
-
-        System.out.println("adding observer");
-        g.getBoard().addView(rv);
-
-        System.err.println("Starting game");
-        controller.startGame();
     }
 }
