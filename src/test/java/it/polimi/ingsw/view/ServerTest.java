@@ -14,32 +14,11 @@ public class ServerTest {
 
     @Test
     @DisplayName("Check constructor")
-    public void constructorTest() throws  IOException{
+    public void constructorTest(){
         Server myServer = new Server();
 
         assertEquals(myServer.getClientsNumber(), 0);
         assertTrue(myServer.isLobbyEmpty());
 
-    }
-
-    @Test
-    @DisplayName("Connection Test")
-    public void connectionTest(){
-        Thread srv = new Thread(new Server());
-
-        Thread clientTest = new Thread(() -> {
-            try {
-                Thread.sleep(1000);
-                Socket connSocket = new Socket("127.0.0.1", 1337);
-                Scanner in = new Scanner(connSocket.getInputStream());
-                assertEquals("Insert your name, buddy!", in.nextLine());
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        });
-
-        srv.start();
-        clientTest.start();
     }
 }
