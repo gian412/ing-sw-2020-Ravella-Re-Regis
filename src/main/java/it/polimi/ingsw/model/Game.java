@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.model.god.God;
 import java.util.ArrayList;
 import java.util.Collections;

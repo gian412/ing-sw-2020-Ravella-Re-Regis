@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.god.Pan;
+import it.polimi.ingsw.exceptions.IllegalAddException;
+import it.polimi.ingsw.exceptions.IllegalCellException;
+import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.view.RemoteView;
 
 public class Board {
@@ -67,7 +69,7 @@ public class Board {
      * @param coordinates coordinates in which the player wants to build
      * @param isDome is true if a god, who has the ability to build dome not only after the third level, build a dome
      */
-    public void build(Cell originCell, Pair coordinates, boolean isDome) throws IllegalMoveException{
+    public void build(Cell originCell, Pair coordinates, boolean isDome) throws IllegalMoveException {
 
         if((coordinates.x >= 0) && (coordinates.x < 5) && (coordinates.y >= 0) && (coordinates.y < 5) && originCell.cellDistance(coordinates)){
             if(isDome){
@@ -143,11 +145,11 @@ public class Board {
      * at the start of the game the player put his workers on the board
      *
      * @param coordinates in which the player wants to put the worker
-     * @Throws IllegalCellException,IllegalAddException
+     * @throws IllegalCellException,IllegalAddException
      * illegalCellException is the cell doesn't exist
      * illegalAddException if the player has already put his two workers
      */
-    public void addWorker(Pair coordinates) throws IllegalCellException, IllegalAddException{
+    public void addWorker(Pair coordinates) throws IllegalCellException, IllegalAddException {
 
         // check if the two workers are already set with the first cell
         if( (this.turnPlayer.getWorkers()[0].getCurrentCell() == null) || (this.turnPlayer.getWorkers()[1].getCurrentCell() == null)) {

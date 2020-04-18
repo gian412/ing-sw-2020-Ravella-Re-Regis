@@ -3,7 +3,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Height;
-import it.polimi.ingsw.model.NoSuchPlayerException;
+import it.polimi.ingsw.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.Apollo;
 import it.polimi.ingsw.model.god.Athena;

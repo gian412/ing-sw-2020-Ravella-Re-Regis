@@ -1,5 +1,9 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.exceptions.IllegalAddException;
+import it.polimi.ingsw.exceptions.IllegalCellException;
+import it.polimi.ingsw.exceptions.IllegalMoveException;
+import it.polimi.ingsw.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.model.*;
 
 import it.polimi.ingsw.view.Observer;
