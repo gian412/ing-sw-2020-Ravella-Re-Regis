@@ -76,6 +76,10 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
     public void update(BoardProxy message) {
         try {
             toClient.writeObject(message);
+
+            if(message.getWinner().getNAME().equals("Unexpected Game Over"))
+                connSocket.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

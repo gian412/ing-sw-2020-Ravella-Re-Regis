@@ -121,6 +121,7 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
         // procedure to handle disconnected player
         if(message.cmd.commandType == CommandType.DISCONNECTED){
             game.endGame();
+            game = null;
         }
 
         // this if is triggered during game setup

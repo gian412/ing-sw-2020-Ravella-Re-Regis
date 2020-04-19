@@ -50,8 +50,11 @@ public class Game {
         throw new NoSuchPlayerException();
     }
 
+    /**
+     * @authors Ravella Elia
+     */
     public void endGame(){
-
+        board.endGame();
     }
 
     // this methods needs to set all the nextPlayer's attributes

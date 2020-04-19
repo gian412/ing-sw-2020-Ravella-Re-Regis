@@ -265,6 +265,14 @@ public class Board {
         proxy.addObserver(remoteView);
     }
 
+    /**ends the game
+     *
+     * @authors Ravella Elia
+     */
+    public void endGame(){
+        proxy.setWinner(new Player("Unexpected Game Over", -1));
+    }
+
     /**
      * Count the number of complete towers in the board
      *
