@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.controller.Command;
+import it.polimi.ingsw.controller.CommandType;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.PlayerCommand;
 import it.polimi.ingsw.model.BoardProxy;
@@ -47,15 +49,24 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
      */
     @Override
     public void run(){
-        while(connSocket.isConnected()){
-            PlayerCommand cmd = null;
-            try {
-                cmd = (PlayerCommand) fromClient.readObject(); // blocking operation
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+        if(connSocket.isConnected() && !connSocket.isClosed()){
+            while (true){
+                try {
+                    PlayerCommand playerCommand = (PlayerCommand) fromClient.readObject();
+                    if(playerCommand != null){
+                        notify(playerCommand);
+                    }
+                    else break;
+                } catch (IOException e) {
+                    System.err.println("Client disconnected");
+                    notify(new PlayerCommand(player, new Command(-1, -1, CommandType.DISCONNECTED), -1));
+                    break;
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-
-            notify(cmd);
+        }else{
+            System.err.println("Socket not connected or closed. Shutting down");
         }
     }
 

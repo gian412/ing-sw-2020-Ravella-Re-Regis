@@ -50,6 +50,10 @@ public class Game {
         throw new NoSuchPlayerException();
     }
 
+    public void endGame(){
+
+    }
+
     // this methods needs to set all the nextPlayer's attributes
     public void startGame(){
         Collections.sort(playerList);

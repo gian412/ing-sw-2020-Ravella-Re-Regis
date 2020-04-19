@@ -118,6 +118,11 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
     public void update(PlayerCommand message) {
         if(message == null ) throw new IllegalArgumentException();
 
+        // procedure to handle disconnected player
+        if(message.cmd.commandType == CommandType.DISCONNECTED){
+            game.endGame();
+        }
+
         // this if is triggered during game setup
         if(this.game.getTurnPlayer().getDivinity() == null && message.player.getDivinity() != null) {
             try {
