@@ -26,10 +26,11 @@ public class CellTest {
     public void cellDistance1Test() {
 
         Cell cell1 = new Cell(1,1);
-        Cell cell2 = new Cell(0, 0);
+        Pair pair = new Pair(0, 0);
+
 
         assertTrue("the distance is 1 cell",
-                cell1.cellDistance(new Pair(0, 0)));
+                cell1.cellDistance(pair));
     }
 
     @Test
@@ -37,14 +38,10 @@ public class CellTest {
     public void cellDistance2Test() {
 
         Cell cell1 = new Cell(1,1);
-        Cell cell2 = new Cell(3, 0);
+        Pair pair = new Pair(3, 0);
 
         assertFalse("the distance is not 1 cell",
-                cell1.cellDistance(new Pair(3, 0)));
+                cell1.cellDistance(pair));
     }
-
-    
-
-
 
 }
