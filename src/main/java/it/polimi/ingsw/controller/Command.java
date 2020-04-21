@@ -1,13 +1,12 @@
 package it.polimi.ingsw.controller;
+import it.polimi.ingsw.model.Pair;
 
 public class Command {
-    public final int cellX;
-    public final int cellY;
+    public final Pair coordinates;
     public final CommandType commandType;
 
-    public Command(int x, int y, CommandType ct){
-        this.cellX = x;
-        this.cellY = y;
+    public Command(Pair coordinates, CommandType ct){
+        this.coordinates = coordinates;
         this.commandType = ct;
     }
 }
