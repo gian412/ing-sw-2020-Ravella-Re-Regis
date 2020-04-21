@@ -73,7 +73,7 @@ public class Athena extends God{
                 case BUILD_DOME:
                     Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
 
-                    if (hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell'height isn't third floor
+                    if (hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell'height is third floor
                         try {
                             super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
