@@ -35,13 +35,12 @@ public class Chronus extends God {
         if (command != null){
             hasWon = board.checkWin(worker);
             if(!hasWon){
-                Cell cell = board.getCell(command.cellX, command.cellY);
 
                 switch (command.commandType){
                     case MOVE:
-                        if (!hasMoved && !hasBuild && !hasWon) {
+                        if (!hasMoved && !hasBuild) {
                             try {
-                                super.move(worker, cell);
+                                super.move(worker, new Pair(command.cellX, command.cellY));
                                 hasMoved = true;
                                 hasWon = board.checkWin(worker);
                                 break;
@@ -53,9 +52,9 @@ public class Chronus extends God {
                         }
 
                     case BUILD:
-                        if ( hasMoved && !hasBuild && !hasWon){
+                        if (hasMoved && !hasBuild){
                             try {
-                                super.build(worker.getCurrentCell(), cell, false);
+                                super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                                 hasBuild = true;
                                 hasWon = board.checkWin(worker);
                                 break;
@@ -67,9 +66,10 @@ public class Chronus extends God {
                         }
 
                     case BUILD_DOME:
+                        Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
                         if (cell.getHeight() == Height.THIRD_FLOOR){
                             try {
-                                super.build(worker.getCurrentCell(), cell, false);
+                                super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                                 hasBuild = true;
                                 hasWon = board.checkWin(worker);
                                 break;

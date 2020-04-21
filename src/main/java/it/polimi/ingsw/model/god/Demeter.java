@@ -44,7 +44,7 @@ public class Demeter extends God {
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasBuildSecond && !hasWon){
                         try {
-                            super.move(worker, cell);
+                            super.move(worker, new Pair(command.cellX, command.cellY));
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
                             break;
@@ -58,7 +58,7 @@ public class Demeter extends God {
                 case BUILD:
                     if (hasMoved && !hasBuild && !hasBuildSecond && !hasWon){
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
+                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                             previousCell = cell;
                             hasBuild = true;
                             break;
@@ -67,7 +67,7 @@ public class Demeter extends God {
                         }
                     } else if (hasMoved && hasBuild && !hasBuildSecond && !hasWon && previousCell!=null && !(previousCell.equals(cell))){
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
+                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                             hasBuildSecond = true;
                             break;
                         } catch (IllegalMoveException e){
@@ -80,7 +80,7 @@ public class Demeter extends God {
                 case BUILD_DOME:
                     if (hasMoved && !hasBuild && !hasBuildSecond && !hasWon && cell.getHeight()==Height.THIRD_FLOOR){
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
+                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                             previousCell = cell;
                             hasBuild = true;
                             break;
@@ -89,7 +89,7 @@ public class Demeter extends God {
                         }
                     } else if (hasMoved && hasBuild && !hasBuildSecond && !hasWon && previousCell!=null && !(previousCell.equals(cell)) && cell.getHeight()==Height.THIRD_FLOOR){
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
+                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                             hasBuildSecond = true;
                             break;
                         } catch (IllegalMoveException e){
