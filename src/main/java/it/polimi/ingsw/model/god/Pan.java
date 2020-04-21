@@ -38,7 +38,7 @@ public class Pan extends  God {
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasWon) {
                         try {
-                            super.move(worker, new Pair(command.cellX, command.cellY));
+                            super.move(worker, command.coordinates);
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
                             break;
@@ -52,7 +52,7 @@ public class Pan extends  God {
                 case BUILD:
                     if ( hasMoved && !hasBuild && !hasWon){
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
@@ -63,10 +63,9 @@ public class Pan extends  God {
                     }
 
                 case BUILD_DOME:
-                    Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {

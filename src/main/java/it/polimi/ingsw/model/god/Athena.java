@@ -43,7 +43,7 @@ public class Athena extends God{
                             worker.setCanMoveUp(true); // ... reset the action that Athena's power have on other player
                         }
                         try {
-                            super.move(worker, new Pair(command.cellX, command.cellY)); // Call super-class' move method
+                            super.move(worker, command.coordinates); // Call super-class' move method
                             if (worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())>0){ // If the worker has moved up
                                 worker.setCanMoveUp(false); // Set the canMoveUp parameter to false
                             }
@@ -60,7 +60,7 @@ public class Athena extends God{
                 case BUILD:
                     if (hasMoved && !hasBuild && !hasWon) { // If the player has moved but has not build and won
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
+                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
@@ -71,11 +71,10 @@ public class Athena extends God{
                     }
 
                 case BUILD_DOME:
-                    Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
 
-                    if (hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell'height is third floor
+                    if (hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell'height is third floor
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
+                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {

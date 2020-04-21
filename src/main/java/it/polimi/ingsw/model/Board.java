@@ -42,7 +42,7 @@ public class Board {
      * @return the cell identified by the two parameters
      */
     // cells' getter
-    public Cell getCell(int row, int column) {
+    public Cell getCell(Pair coordinates) {
         return cells[row][column];
     }
 

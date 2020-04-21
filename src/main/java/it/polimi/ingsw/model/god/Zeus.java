@@ -29,7 +29,7 @@ public class Zeus extends God {
      */
     @Override
     public void build(Cell originCell, Pair pair, boolean isDome) throws IllegalMoveException {
-        Cell buildCell = board.getCell(pair.x, pair.y); // Get the reference to the cell
+        Cell buildCell = board.getCell(pair); // Get the reference to the cell
         // build
         if( buildCell.getHeight() != Height.THIRD_FLOOR && buildCell.getHeight() != Height.DOME && !isDome ){
             try {
@@ -59,13 +59,13 @@ public class Zeus extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null){
-            Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
+            Cell cell = board.getCell(command.coordinates); // Get the reference to the cell
 
             switch (command.commandType){
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasWon) {
                         try {
-                            super.move(worker, new Pair(command.cellX, command.cellY));
+                            super.move(worker, command.coordinates);
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
                             break;
@@ -80,7 +80,7 @@ public class Zeus extends God {
                     if (worker.getCurrentCell()!=cell){
                         if ( hasMoved && !hasBuild && !hasWon){
                             try {
-                                super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
+                                super.build(worker.getCurrentCell(), command.coordinates, false);
                                 hasBuild = true;
                                 break;
                             } catch (IllegalMoveException e) {
@@ -92,7 +92,7 @@ public class Zeus extends God {
                     } else {
                         if ( hasMoved && !hasBuild && !hasWon){
                             try {
-                                this.build(cell, new Pair(command.cellX, command.cellY), false);
+                                this.build(cell, command.coordinates, false);
                                 hasBuild = true;
                                 break;
                             } catch (IllegalMoveException e) {
@@ -106,7 +106,7 @@ public class Zeus extends God {
                 case BUILD_DOME:
                     if (cell.getHeight() == Height.THIRD_FLOOR){
                         try {
-                            super.build(cell, new Pair(command.cellX, command.cellY), false);
+                            super.build(cell, command.coordinates, false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
