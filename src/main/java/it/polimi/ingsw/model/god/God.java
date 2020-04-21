@@ -51,15 +51,17 @@ public abstract class God {
      *
      * @author Gianluca Regis
      * @param worker is the worker you are moving
-     * @param cell is the cell in which you're moving the worker
+     * @param pair stands for the coordinates in which you're moving the worker
      * @throws IllegalMoveException in case the move isn't legal
      */
-    public void move(Worker worker, Cell cell) throws IllegalMoveException{
+    protected void move(Worker worker, Pair pair) throws IllegalMoveException{
+
+        Cell cell = board.getCell(pair.x, pair.y); // Get the reference to the cell
 
         if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't occupied and it isn't a dome and it isn't more then 1 floor far
             if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
                 try {
-                    board.moveWorker(worker, new Pair(cell.X, cell.Y)); // Call board's move method
+                    board.moveWorker(worker, pair); // Call board's move method
                     hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
                 } catch (IllegalMoveException e){
                     throw new IllegalMoveException();
@@ -78,21 +80,24 @@ public abstract class God {
      * The method throw an IllegalMoveException if the piece can't be built in the given cell
      *
      * @author Gianluca Regis
-     * @param buildCell is the cell in which you're building the new piece
+     * @param pair stands for the coordinates in which you're building the new piece
      * @param isDome is true if Atlas build a dome in any position
      * @throws IllegalMoveException in case the move isn't legal
      */
-    public void build(Cell originCell, Cell buildCell, boolean isDome) throws IllegalMoveException {
+    public void build(Cell originCell, Pair pair, boolean isDome) throws IllegalMoveException {
+
+        Cell buildCell = board.getCell(pair.x, pair.y); // Get the reference to the cell
+
         // build
         if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && isDome ){ // If the cell isn't occupied and it isn't a dome and the piece to build is a dome
             try {
-                board.build(originCell, new Pair(buildCell.X, buildCell.Y), true ); // Call board's build method
+                board.build(originCell, pair, true ); // Call board's build method
             } catch (IllegalMoveException e){
                 throw new IllegalMoveException();
             }
         }else if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && !isDome){ // If the cell isn't occupied and it isn't a dome and the piece to build isn't a dome
             try{
-                board.build(originCell, new Pair(buildCell.X, buildCell.Y), false ); // Call board's build method
+                board.build(originCell, pair, false ); // Call board's build method
             } catch (IllegalMoveException e) {
                 throw new IllegalMoveException();
             }
