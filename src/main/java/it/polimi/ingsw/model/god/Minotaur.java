@@ -27,14 +27,15 @@ public class Minotaur extends God {
      *
      * @author Gianluca Regis
      * @param worker is the worker you are moving
-     * @param cell is the cell in which you're moving the worker
+     * @param pair stands for the coordinates in which you're moving the worker
      * @throws IllegalMoveException in case the move isn't legal
      */
     @Override
-    public void move(Worker worker, Cell cell) throws IllegalMoveException {
+    public void move(Worker worker, Pair pair) throws IllegalMoveException {
+        Cell cell = board.getCell(pair.x, pair.y); // Get the reference to the cell
         if( cell.getWorker() == null ){
             try {
-                super.move(worker, cell);
+                super.move(worker, pair);
             } catch (IllegalMoveException e) {
                 throw new IllegalMoveException();
             }
@@ -44,7 +45,7 @@ public class Minotaur extends God {
             if( nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME){
                 Worker otherWorker = cell.getWorker();
                 try {
-                    board.moveWorker(worker, new Pair(cell.X, cell.Y));
+                    board.moveWorker(worker, pair);
                     board.moveWorker(otherWorker, new Pair(nextCell.X, nextCell.Y));
                 } catch (IllegalMoveException e){
                     throw new IllegalMoveException();
@@ -74,13 +75,12 @@ public class Minotaur extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command!=null){
-            Cell cell = board.getCell(command.cellX, command.cellY);
 
             switch (command.commandType){
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasWon){
                         try {
-                            this.move(worker, cell);
+                            this.move(worker, new Pair(command.cellX, command.cellY));
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
                             break;
@@ -94,7 +94,7 @@ public class Minotaur extends God {
                 case BUILD:
                     if (hasMoved && !hasBuild && !hasWon){
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
+                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
@@ -105,9 +105,11 @@ public class Minotaur extends God {
                     }
 
                 case BUILD_DOME:
+                    Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
+
                     if (cell.getHeight() == Height.THIRD_FLOOR){
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
+                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
