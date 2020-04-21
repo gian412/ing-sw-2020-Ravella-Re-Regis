@@ -1,11 +1,8 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.Command;
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Cell;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
-import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.Height;
 
 public class Hephaestus extends God {
 
@@ -48,7 +45,7 @@ public class Hephaestus extends God {
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasBuildSecond && !hasWon){
                         try {
-                            super.move(worker, cell);
+                            super.move(worker, new Pair(command.cellX, command.cellY));
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
                             break;
@@ -62,7 +59,7 @@ public class Hephaestus extends God {
                 case BUILD:
                     if (hasMoved && !hasBuild && !hasBuildSecond && !hasWon){
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
+                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                             previousCell = cell;
                             hasBuild = true;
                             break;
@@ -71,7 +68,7 @@ public class Hephaestus extends God {
                         }
                     } else if (hasMoved && hasBuild && !hasBuildSecond && !hasWon && previousCell!=null && (previousCell.equals(cell)) && cell.getHeight()!=Height.THIRD_FLOOR && cell.getHeight()!=Height.DOME){
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
+                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                             hasBuildSecond = true;
                             break;
                         } catch (IllegalMoveException e) {
@@ -84,7 +81,7 @@ public class Hephaestus extends God {
                 case BUILD_DOME:
                     if (hasMoved && !hasBuild && !hasBuildSecond && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){
                         try {
-                            super.build(worker.getCurrentCell(), cell, false);
+                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                             previousCell = cell;
                             hasBuild = true;
                             break;
