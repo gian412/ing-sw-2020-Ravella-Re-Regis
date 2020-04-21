@@ -82,7 +82,7 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
         try{
             game.getTurnPlayer().getDivinity().executeCommand(
                     null,
-                    new Command(0,0, CommandType.RESET)
+                    new Command(new Pair(0, 0), CommandType.RESET)
             );
         }catch(IllegalMoveException | NullPointerException x){
             System.err.println(x.getMessage() + " controller generated");
@@ -138,8 +138,8 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
                 changeTurnPlayer();
             else if(message.cmd.commandType == CommandType.ADD_WORKER){
                 addWorker(
-                        message.cmd.cellX,
-                        message.cmd.cellY
+                        message.cmd.coordinates.x,
+                        message.cmd.coordinates.y
                 );
             }
             else {

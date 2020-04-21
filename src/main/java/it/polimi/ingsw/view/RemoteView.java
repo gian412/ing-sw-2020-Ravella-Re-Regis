@@ -5,6 +5,7 @@ import it.polimi.ingsw.controller.CommandType;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.PlayerCommand;
 import it.polimi.ingsw.model.BoardProxy;
+import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.Observer;
 
@@ -59,7 +60,7 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
                     else break;
                 } catch (IOException e) {
                     System.err.println("Client disconnected");
-                    notify(new PlayerCommand(player, new Command(-1, -1, CommandType.DISCONNECTED), -1));
+                    notify(new PlayerCommand(player, new Command(new Pair(-1, -1), CommandType.DISCONNECTED), -1));
                     break;
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
