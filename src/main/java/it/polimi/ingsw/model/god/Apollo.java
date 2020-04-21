@@ -29,7 +29,7 @@ public class Apollo extends God{
      * @throws IllegalMoveException in case the move isn't legal
      */
     @Override
-    public void move(Worker worker, Pair pair) throws IllegalMoveException {
+    protected void move(Worker worker, Pair pair) throws IllegalMoveException {
         Cell cell = board.getCell(pair.x, pair.y); // Get the reference to the cell
 
         if( cell.getWorker() == null ){ // If worker can move without forcing anyone

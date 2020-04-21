@@ -4774,7 +4774,7 @@
 											"top": 2259,
 											"width": 432.18017578125,
 											"height": 13,
-											"text": "+board: Board",
+											"text": "#board: Board",
 											"horizontalAlignment": 0
 										},
 										{
@@ -4893,7 +4893,7 @@
 											"top": 2357,
 											"width": 432.18017578125,
 											"height": 13,
-											"text": "+move(worker: Worker, cell: Cell): void",
+											"text": "#move(worker: Worker, pair: Pair): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -4910,7 +4910,7 @@
 											"top": 2372,
 											"width": 432.18017578125,
 											"height": 13,
-											"text": "+build(cell: Cell, isDome: boolean): void",
+											"text": "#build(orioginCell: Cell, pair: Pair, isDome: boolean): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8999,7 +8999,7 @@
 											"top": 1456,
 											"width": 448.982421875,
 											"height": 13,
-											"text": "«@Override»+move(worker: Worker, command: Command): void",
+											"text": "«@Override»#move(worker: Worker, pair: Pair): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10415,7 +10415,7 @@
 											"top": 2236,
 											"width": 448.982421875,
 											"height": 13,
-											"text": "«@Override»+move(worker: Worker, cell: Cell): void",
+											"text": "«@Override»#move(worker: Worker, pair: Pair): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -14567,7 +14567,7 @@
 											"top": 2615,
 											"width": 448.982421875,
 											"height": 13,
-											"text": "«@Override»+move(worker: Worker, cell: Cell): void",
+											"text": "«@Override»#move(worker: Worker, pair: Pair): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -15417,7 +15417,7 @@
 											"top": 3090,
 											"width": 448.982421875,
 											"height": 13,
-											"text": "«@Override»+build(cell: Cell, isDome: boolean): void",
+											"text": "«@Override»+build(cell: Cell, pair: Pair, isDome: boolean): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -18678,6 +18678,7 @@
 								"$ref": "AAAAAAFw6P/gFMfoI6w="
 							},
 							"name": "board",
+							"visibility": "protected",
 							"type": {
 								"$ref": "AAAAAAFwyrU696JChQU="
 							}
@@ -18778,6 +18779,7 @@
 								"$ref": "AAAAAAFw6P/gFMfoI6w="
 							},
 							"name": "move",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -18796,9 +18798,9 @@
 									"_parent": {
 										"$ref": "AAAAAAFxInleO4Ou+2g="
 									},
-									"name": "cell",
+									"name": "pair",
 									"type": {
-										"$ref": "AAAAAAFwyrcQyKKBM2c="
+										"$ref": "AAAAAAFxHNjzGBpXmaQ="
 									}
 								},
 								{
@@ -18824,6 +18826,7 @@
 								"$ref": "AAAAAAFw6P/gFMfoI6w="
 							},
 							"name": "build",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -18831,7 +18834,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFxInuwcZaVrHk="
 									},
-									"name": "cell",
+									"name": "orioginCell",
 									"type": {
 										"$ref": "AAAAAAFwyrcQyKKBM2c="
 									}
@@ -18842,12 +18845,23 @@
 									"_parent": {
 										"$ref": "AAAAAAFxInuwcZaVrHk="
 									},
+									"name": "pair",
+									"type": {
+										"$ref": "AAAAAAFxHNjzGBpXmaQ="
+									}
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFxInwgsJgeBkk=",
+									"_parent": {
+										"$ref": "AAAAAAFxInuwcZaVrHk="
+									},
 									"name": "isDome",
 									"type": "boolean"
 								},
 								{
 									"_type": "UMLParameter",
-									"_id": "AAAAAAFxInwgsJgeBkk=",
+									"_id": "AAAAAAFxnIBYkmwk/Mg=",
 									"_parent": {
 										"$ref": "AAAAAAFxInuwcZaVrHk="
 									},
@@ -19792,6 +19806,7 @@
 							},
 							"name": "move",
 							"stereotype": "@Override",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -19810,9 +19825,9 @@
 									"_parent": {
 										"$ref": "AAAAAAFxIrR129apjtY="
 									},
-									"name": "command",
+									"name": "pair",
 									"type": {
-										"$ref": "AAAAAAFxCAOtd53UP3s="
+										"$ref": "AAAAAAFxHNjzGBpXmaQ="
 									}
 								},
 								{
@@ -20495,6 +20510,7 @@
 							},
 							"name": "move",
 							"stereotype": "@Override",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -20513,9 +20529,9 @@
 									"_parent": {
 										"$ref": "AAAAAAFxItTKNOKhJUM="
 									},
-									"name": "cell",
+									"name": "pair",
 									"type": {
-										"$ref": "AAAAAAFwyrcQyKKBM2c="
+										"$ref": "AAAAAAFxHNjzGBpXmaQ="
 									}
 								},
 								{
@@ -20898,6 +20914,7 @@
 							},
 							"name": "move",
 							"stereotype": "@Override",
+							"visibility": "protected",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -20916,9 +20933,9 @@
 									"_parent": {
 										"$ref": "AAAAAAFxSugMOeqhSf8="
 									},
-									"name": "cell",
+									"name": "pair",
 									"type": {
-										"$ref": "AAAAAAFwyrcQyKKBM2c="
+										"$ref": "AAAAAAFxHNjzGBpXmaQ="
 									}
 								},
 								{
@@ -21085,7 +21102,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFxSu5FdUzObNA="
 									},
-									"name": "command"
+									"name": "command",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -21093,7 +21111,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFxSu5FdUzObNA="
 									},
-									"name": "Command"
+									"name": "Command",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -21352,7 +21371,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFxSvNJ+6oEVfU="
 									},
-									"name": "command"
+									"name": "command",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -21360,7 +21380,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFxSvNJ+6oEVfU="
 									},
-									"name": "Command"
+									"name": "Command",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -21458,12 +21479,23 @@
 									"_parent": {
 										"$ref": "AAAAAAFxSvRQfLdX88g="
 									},
+									"name": "pair",
+									"type": {
+										"$ref": "AAAAAAFxHNjzGBpXmaQ="
+									}
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFxSvTiIrxCRwo=",
+									"_parent": {
+										"$ref": "AAAAAAFxSvRQfLdX88g="
+									},
 									"name": "isDome",
 									"type": "boolean"
 								},
 								{
 									"_type": "UMLParameter",
-									"_id": "AAAAAAFxSvTiIrxCRwo=",
+									"_id": "AAAAAAFxnIMwls2UXZ4=",
 									"_parent": {
 										"$ref": "AAAAAAFxSvRQfLdX88g="
 									},

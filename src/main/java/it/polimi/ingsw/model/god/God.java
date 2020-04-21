@@ -84,7 +84,7 @@ public abstract class God {
      * @param isDome is true if Atlas build a dome in any position
      * @throws IllegalMoveException in case the move isn't legal
      */
-    public void build(Cell originCell, Pair pair, boolean isDome) throws IllegalMoveException {
+    protected void build(Cell originCell, Pair pair, boolean isDome) throws IllegalMoveException {
 
         Cell buildCell = board.getCell(pair.x, pair.y); // Get the reference to the cell
 
