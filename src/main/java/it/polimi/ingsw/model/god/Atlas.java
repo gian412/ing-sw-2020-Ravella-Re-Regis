@@ -33,15 +33,15 @@ public class Atlas extends God {
     @Override
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
-        if (command!=null){
+        if (command!=null){ // If the passed command isn't empty
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hasMoved && !hasBuild && !hasWon) {
+                    if (!hasMoved && !hasBuild && !hasWon) { // If the player has not move, build and won
                         try {
-                            super.move(worker, new Pair(command.cellX, command.cellY));
-                            hasMoved = true;
-                            hasWon = board.checkWin(worker);
+                            super.move(worker, new Pair(command.cellX, command.cellY)); // Call super-class' move method
+                            hasMoved = true; // Store the information that the worker has moved
+                            hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -51,10 +51,10 @@ public class Atlas extends God {
                     }
 
                 case BUILD:
-                    if (hasMoved && !hasBuild && !hasWon) {
+                    if (hasMoved && !hasBuild && !hasWon) { // If the player has moved but has not build and won
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
-                            hasBuild = true;
+                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
+                            hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
@@ -64,10 +64,12 @@ public class Atlas extends God {
                     }
 
                 case BUILD_DOME:
-                    if (hasMoved && !hasBuild && !hasWon) {
+                    Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
+
+                    if (hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR) { // If the player has moved but has not build and won and cell'height is third floor
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), true);
-                            hasBuild = true;
+                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), true); // Call super-class' build method
+                            hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();

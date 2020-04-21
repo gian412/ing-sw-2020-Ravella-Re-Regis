@@ -38,7 +38,7 @@ public class Charon extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null){
-            Cell cell = board.getCell(command.cellX, command.cellY);
+            Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
 
             switch (command.commandType){
                 case FORCE:
