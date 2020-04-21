@@ -66,7 +66,7 @@ public class Charon extends God {
                     if (!hasMoved && !hasBuild && !hasWon) {
                         try {
                             super.move(worker, new Pair(command.cellX, command.cellY));
-                            hasMoved = true;
+                            hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
