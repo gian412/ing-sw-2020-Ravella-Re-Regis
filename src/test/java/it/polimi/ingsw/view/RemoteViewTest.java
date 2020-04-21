@@ -137,5 +137,12 @@ public class RemoteViewTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    @DisplayName("disconnection of client test")
+    public  void disconnectTest(){
+
+
+    }
 }
 

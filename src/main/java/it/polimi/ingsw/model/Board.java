@@ -271,6 +271,7 @@ public class Board {
      */
     public void endGame(){
         proxy.setWinner(new Player("Unexpected Game Over", -1));
+        updateProxyBoard();
     }
 
     /**
