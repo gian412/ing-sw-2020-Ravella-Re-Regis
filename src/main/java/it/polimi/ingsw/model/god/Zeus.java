@@ -18,7 +18,7 @@ public class Zeus extends God {
     }
 
     /**
-     * Build a new piece in the cell passed as parameter using board-build(Cell cell, boolean isDome).
+     * Build a new piece in the cell passed as parameter using board.build(Cell cell, Pair coordinates, boolean isDome).
      * The method throw an IllegalMoveException if the piece can't be built in the given cell.
      * This Override is able to build a piece under the worker
      *
