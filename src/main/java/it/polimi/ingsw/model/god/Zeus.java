@@ -23,16 +23,17 @@ public class Zeus extends God {
      * This Override is able to build a piece under the worker
      *
      * @author Gianluca Regis
-     * @param buildCell is the cell in which you're building the new piece
+     * @param pair stands for the coordinates in which you're building the new piece
      * @param isDome is true if Atlas build a dome in any position
      * @throws IllegalMoveException in case the move isn't legal
      */
     @Override
-    public void build(Cell originCell, Cell buildCell, boolean isDome) throws IllegalMoveException {
+    public void build(Cell originCell, Pair pair, boolean isDome) throws IllegalMoveException {
+        Cell buildCell = board.getCell(pair.x, pair.y); // Get the reference to the cell
         // build
         if( buildCell.getHeight() != Height.THIRD_FLOOR && buildCell.getHeight() != Height.DOME && !isDome ){
             try {
-                board.build(originCell, new Pair(buildCell.X, buildCell.Y), false );
+                board.build(originCell, pair, false );
             } catch (IllegalMoveException e){
                 throw new IllegalMoveException();
             }
@@ -58,13 +59,13 @@ public class Zeus extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null){
-            Cell cell = board.getCell(command.cellX, command.cellY);
+            Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
 
             switch (command.commandType){
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasWon) {
                         try {
-                            super.move(worker, cell);
+                            super.move(worker, new Pair(command.cellX, command.cellY));
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
                             break;
@@ -79,7 +80,7 @@ public class Zeus extends God {
                     if (worker.getCurrentCell()!=cell){
                         if ( hasMoved && !hasBuild && !hasWon){
                             try {
-                                super.build(worker.getCurrentCell(), cell, false);
+                                super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
                                 hasBuild = true;
                                 break;
                             } catch (IllegalMoveException e) {
@@ -91,7 +92,7 @@ public class Zeus extends God {
                     } else {
                         if ( hasMoved && !hasBuild && !hasWon){
                             try {
-                                this.build(cell, cell, false);
+                                this.build(cell, new Pair(command.cellX, command.cellY), false);
                                 hasBuild = true;
                                 break;
                             } catch (IllegalMoveException e) {
@@ -105,7 +106,7 @@ public class Zeus extends God {
                 case BUILD_DOME:
                     if (cell.getHeight() == Height.THIRD_FLOOR){
                         try {
-                            super.build(cell, cell, false);
+                            super.build(cell, new Pair(command.cellX, command.cellY), false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
