@@ -95,6 +95,8 @@ public class Server implements Runnable{
             RemoteView remoteView = new RemoteView(x.getSocket(), controller, x.getName());
             remoteView.addObserver(controller);
             game.getBoard().addView(remoteView);
+            Thread rv = new Thread(remoteView);
+            rv.start();
         }
 
         controller.startGame();
@@ -122,7 +124,5 @@ public class Server implements Runnable{
                 e.printStackTrace();
             }
         }
-
-
     }
 }
