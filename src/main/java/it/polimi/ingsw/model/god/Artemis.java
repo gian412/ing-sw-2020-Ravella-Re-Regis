@@ -39,23 +39,22 @@ public class Artemis extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null){ // If the passed command isn't empty
-            Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
 
             switch (command.commandType){
                 case MOVE:
                     if (!hasMoved && !hasMovedSecond && !hasBuild && !hasWon){ // If the player has not moved, moved second, build and won
                         try {
-                            super.move(worker, new Pair(command.cellX, command.cellY)); // Call super-class' move method
-                            startingCell = board.getCell(command.cellX, command.cellY); // Save the starting position of the worker
+                            super.move(worker, command.coordinates); // Call super-class' move method
+                            startingCell = worker.getPreviousCell(); // Save the starting position of the worker
                             hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException();
                         }
-                    } else if (hasMoved && !hasMovedSecond && !hasBuild && !hasWon && !(cell.equals(startingCell))){ // If the player has moved but has not moved second, build and won and the cell isn't equal to the starting cell
+                    } else if (hasMoved && !hasMovedSecond && !hasBuild && !hasWon && !(board.getCell(command.coordinates).equals(startingCell))){ // If the player has moved but has not moved second, build and won and the cell isn't equal to the starting cell
                         try {
-                            super.move(worker, new Pair(command.cellX, command.cellY)); // Call super-class' move method
+                            super.move(worker, command.coordinates); // Call super-class' move method
                             hasMovedSecond = true; // Store the information that the worker has moved second
                             hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
                             break;
@@ -69,7 +68,7 @@ public class Artemis extends God {
                 case BUILD:
                     if (hasMoved && !hasBuild && !hasWon){ // If the player has moved but has not build and won
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
+                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
@@ -80,9 +79,9 @@ public class Artemis extends God {
                     }
 
                 case BUILD_DOME:
-                    if (hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell's height is third floor
+                    if (hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell's height is third floor
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
+                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {

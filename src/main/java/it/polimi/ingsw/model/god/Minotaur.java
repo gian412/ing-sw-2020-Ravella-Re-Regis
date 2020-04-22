@@ -32,7 +32,7 @@ public class Minotaur extends God {
      */
     @Override
     public void move(Worker worker, Pair pair) throws IllegalMoveException {
-        Cell cell = board.getCell(pair.x, pair.y); // Get the reference to the cell
+        Cell cell = board.getCell(pair); // Get the reference to the cell
         if( cell.getWorker() == null ){
             try {
                 super.move(worker, pair);
@@ -41,7 +41,7 @@ public class Minotaur extends God {
             }
         } else{
             Pair direction = worker.getCurrentCell().getDirection( cell );
-            Cell nextCell =  board.getCell( cell.X + direction.x, cell.Y + direction.y );
+            Cell nextCell =  board.getCell( new Pair( cell.X + direction.x, cell.Y + direction.y ) );
             if( nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME){
                 Worker otherWorker = cell.getWorker();
                 try {
@@ -80,7 +80,7 @@ public class Minotaur extends God {
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasWon){
                         try {
-                            this.move(worker, new Pair(command.cellX, command.cellY));
+                            this.move(worker, command.coordinates);
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
                             break;
@@ -94,7 +94,7 @@ public class Minotaur extends God {
                 case BUILD:
                     if (hasMoved && !hasBuild && !hasWon){
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
@@ -105,11 +105,10 @@ public class Minotaur extends God {
                     }
 
                 case BUILD_DOME:
-                    Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
 
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {

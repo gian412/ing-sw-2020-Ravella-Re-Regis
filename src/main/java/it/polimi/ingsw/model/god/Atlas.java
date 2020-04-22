@@ -39,7 +39,7 @@ public class Atlas extends God {
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasWon) { // If the player has not move, build and won
                         try {
-                            super.move(worker, new Pair(command.cellX, command.cellY)); // Call super-class' move method
+                            super.move(worker, command.coordinates); // Call super-class' move method
                             hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             break;
@@ -53,7 +53,7 @@ public class Atlas extends God {
                 case BUILD:
                     if (hasMoved && !hasBuild && !hasWon) { // If the player has moved but has not build and won
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
+                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
@@ -64,11 +64,10 @@ public class Atlas extends God {
                     }
 
                 case BUILD_DOME:
-                    Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
 
-                    if (hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR) { // If the player has moved but has not build and won and cell'height is third floor
+                    if (hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR) { // If the player has moved but has not build and won and cell'height is third floor
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), true); // Call super-class' build method
+                            super.build(worker.getCurrentCell(), command.coordinates, true); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {

@@ -56,7 +56,7 @@ public abstract class God {
      */
     protected void move(Worker worker, Pair pair) throws IllegalMoveException{
 
-        Cell cell = board.getCell(pair.x, pair.y); // Get the reference to the cell
+        Cell cell = board.getCell(pair); // Get the reference to the cell
 
         if ( cell.getWorker() == null && cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't occupied and it isn't a dome and it isn't more then 1 floor far
             if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
@@ -86,7 +86,7 @@ public abstract class God {
      */
     protected void build(Cell originCell, Pair pair, boolean isDome) throws IllegalMoveException {
 
-        Cell buildCell = board.getCell(pair.x, pair.y); // Get the reference to the cell
+        Cell buildCell = board.getCell(pair); // Get the reference to the cell
 
         // build
         if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && isDome ){ // If the cell isn't occupied and it isn't a dome and the piece to build is a dome

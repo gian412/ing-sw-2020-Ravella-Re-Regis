@@ -2,7 +2,12 @@ package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Cell;
+import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.Pair;
+import it.polimi.ingsw.model.Height;
+
 
 public class Charon extends God {
 
@@ -38,14 +43,14 @@ public class Charon extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null){
-            Cell cell = board.getCell(command.coordinates.x, command.coordinates.y); // Get the reference to the cell
+            Cell cell = board.getCell(command.coordinates); // Get the reference to the cell
 
             switch (command.commandType){
                 case FORCE:
                     if(!hasForced && !hasMoved && !hasBuild && worker.getCurrentCell().cellDistance(new Pair(cell.X, cell.Y)) && cell.getWorker()!=null){
 
                         Pair directionOfWorker = worker.getCurrentCell().getDirection(cell);
-                        Cell forcedCell = board.getCell(worker.getCurrentCell().X - directionOfWorker.x, worker.getCurrentCell().Y - directionOfWorker.y);
+                        Cell forcedCell = board.getCell(new Pair(worker.getCurrentCell().X - directionOfWorker.x, worker.getCurrentCell().Y - directionOfWorker.y));
                         if ( forcedCell.getWorker()==null && forcedCell.getHeight()!=Height.DOME ){
                             try {
                                 board.forceWorker(cell.getWorker(),new Pair(forcedCell.X, forcedCell.Y));
@@ -65,8 +70,8 @@ public class Charon extends God {
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasWon) {
                         try {
-                            super.move(worker, new Pair(command.cellX, command.cellY));
-                            hasMoved = true;
+                            super.move(worker, command.coordinates);
+                            hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
@@ -79,7 +84,7 @@ public class Charon extends God {
                 case BUILD:
                     if ( hasMoved && !hasBuild && !hasWon){
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
@@ -92,7 +97,7 @@ public class Charon extends God {
                 case BUILD_DOME:
                     if (cell.getHeight() == Height.THIRD_FLOOR){
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {

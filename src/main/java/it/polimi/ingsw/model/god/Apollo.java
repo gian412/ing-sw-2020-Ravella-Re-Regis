@@ -30,7 +30,7 @@ public class Apollo extends God{
      */
     @Override
     protected void move(Worker worker, Pair pair) throws IllegalMoveException {
-        Cell cell = board.getCell(pair.x, pair.y); // Get the reference to the cell
+        Cell cell = board.getCell(pair); // Get the reference to the cell
 
         if( cell.getWorker() == null ){ // If worker can move without forcing anyone
             if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't a dome and it isn't more then 1 floor far
@@ -93,7 +93,7 @@ public class Apollo extends God{
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasWon) { // If the player has not move, build and won
                         try {
-                            this.move(worker, new Pair(command.cellX, command.cellY)); // Call Apollo's move method
+                            this.move(worker, command.coordinates); // Call Apollo's move method
                             hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             break;
@@ -107,7 +107,7 @@ public class Apollo extends God{
                 case BUILD:
                     if ( hasMoved && !hasBuild && !hasWon){ // If the player has moved but has not build and won
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
+                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
@@ -118,10 +118,9 @@ public class Apollo extends God{
                     }
 
                 case BUILD_DOME:
-                    Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
-                    if (hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell'height is third floor
+                    if (hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell'height is third floor
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
+                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {

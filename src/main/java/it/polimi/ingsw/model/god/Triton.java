@@ -33,13 +33,12 @@ public class Triton extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null){
-            Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
 
             switch (command.commandType){
                 case MOVE:
-                    if (cell.isPerimeter() && !hasBuild && !hasWon){
+                    if (board.getCell(command.coordinates).isPerimeter() && !hasBuild && !hasWon){
                         try {
-                            super.move(worker, new Pair(command.cellX, command.cellY));
+                            super.move(worker, command.coordinates);
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
                             break;
@@ -49,7 +48,7 @@ public class Triton extends God {
                     } else {
                         if (!hasMoved && !hasBuild && !hasWon) {
                             try {
-                                super.move(worker, new Pair(command.cellX, command.cellY));
+                                super.move(worker, command.coordinates);
                                 hasMoved = true;
                                 hasWon = board.checkWin(worker);
                                 break;
@@ -64,7 +63,7 @@ public class Triton extends God {
                 case BUILD:
                     if ( hasMoved && !hasBuild && !hasWon){
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
@@ -75,9 +74,9 @@ public class Triton extends God {
                     }
 
                 case BUILD_DOME:
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false);
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {

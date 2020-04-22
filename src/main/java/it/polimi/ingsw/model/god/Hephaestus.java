@@ -39,13 +39,13 @@ public class Hephaestus extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command!=null){ // If the passed command isn't empty
-            Cell cell = board.getCell(command.cellX, command.cellY); // Get the reference to the cell
+            Cell cell = board.getCell(command.coordinates); // Get the reference to the cell
 
             switch (command.commandType){
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasBuildSecond && !hasWon){ // If the player has not move, build, build second and won
                         try {
-                            super.move(worker, new Pair(command.cellX, command.cellY)); // Call super-class' move method
+                            super.move(worker, command.coordinates); // Call super-class' move method
                             hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             break;
@@ -59,7 +59,7 @@ public class Hephaestus extends God {
                 case BUILD:
                     if (hasMoved && !hasBuild && !hasBuildSecond && !hasWon){ // If the player has moved but has not build, build second and won
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
+                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             previousCell = cell; // Save the position in which the player has build the first time
                             hasBuild = true; // Store the information that the worker has build
                             break;
@@ -69,7 +69,7 @@ public class Hephaestus extends God {
                     } else if (hasMoved && hasBuild && !hasBuildSecond && !hasWon && previousCell!=null && (previousCell.equals(cell)) && cell.getHeight()!=Height.THIRD_FLOOR && cell.getHeight()!=Height.DOME){
                         // If the player has moved and build but has not build second and won and previousCell is equal to cell and cell in not THIRD_FLOOR or DOME
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
+                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuildSecond = true; // Store the information that the worker has build second
                             break;
                         } catch (IllegalMoveException e) {
@@ -82,7 +82,7 @@ public class Hephaestus extends God {
                 case BUILD_DOME:
                     if (hasMoved && !hasBuild && !hasBuildSecond && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell's height is third floor
                         try {
-                            super.build(worker.getCurrentCell(), new Pair(command.cellX, command.cellY), false); // Call super-class' build method
+                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             previousCell = cell; // Save the position in which the player has build the first time
                             hasBuild = true; // Store the information that the worker has build
                             break;
