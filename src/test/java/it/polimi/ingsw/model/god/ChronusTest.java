@@ -17,19 +17,19 @@ public class ChronusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Chronus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.FIRST_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1, 1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -54,7 +54,7 @@ public class ChronusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.BUILD);
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Chronus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
@@ -62,12 +62,12 @@ public class ChronusTest {
         god.hasMoved = true;
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -91,7 +91,7 @@ public class ChronusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.BUILD_DOME);
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Chronus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
@@ -99,12 +99,12 @@ public class ChronusTest {
         god.hasMoved = true;
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -128,48 +128,48 @@ public class ChronusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Chronus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the starting cell
-        Cell startingCell = board.getCell(1, 0);
+        Cell startingCell = board.getCell(new Pair(1, 0));
         startingCell.setHeight(Height.GROUND);
         startingCell.setWorker(worker);
 
         // Initialization of the ending cell
-        Cell endingCell = board.getCell(1, 1);
+        Cell endingCell = board.getCell(new Pair(1, 1));
         endingCell.setHeight(Height.GROUND);
         endingCell.setWorker(null);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,0);
+        Cell firstCell = board.getCell(new Pair(0, 0));
         firstCell.setIsCompleted();
         firstCell.setHeight(Height.DOME);
         firstCell.setWorker(null);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(0,1);
+        Cell secondCell = board.getCell(new Pair(0, 1));
         secondCell.setIsCompleted();
         secondCell.setHeight(Height.DOME);
         secondCell.setWorker(null);
 
         // Initialization of the third cell
-        Cell thirdCell = board.getCell(0,2);
+        Cell thirdCell = board.getCell(new Pair(0, 2));
         thirdCell.setIsCompleted();
         thirdCell.setHeight(Height.DOME);
         thirdCell.setWorker(null);
 
         // Initialization of the fourth cell
-        Cell fourthCell = board.getCell(0,3);
+        Cell fourthCell = board.getCell(new Pair(0, 3));
         fourthCell.setIsCompleted();
         fourthCell.setHeight(Height.DOME);
         fourthCell.setWorker(null);
 
         // Initialization of the fifth cell
-        Cell fifthCell = board.getCell(0,4);
+        Cell fifthCell = board.getCell(new Pair(0, 4));
         fifthCell.setIsCompleted();
         fifthCell.setHeight(Height.DOME);
         fifthCell.setWorker(null);
@@ -195,19 +195,19 @@ public class ChronusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Chronus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -231,19 +231,19 @@ public class ChronusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Chronus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 

@@ -18,19 +18,19 @@ public class PrometheusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.FIRST_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1, 1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -55,7 +55,7 @@ public class PrometheusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.BUILD);
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         Prometheus god = new Prometheus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
@@ -63,12 +63,12 @@ public class PrometheusTest {
         god.hasMoved = true;
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -92,7 +92,7 @@ public class PrometheusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.BUILD_DOME);
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         Prometheus god = new Prometheus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
@@ -100,12 +100,12 @@ public class PrometheusTest {
         god.hasMoved = true;
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -129,20 +129,20 @@ public class PrometheusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command firstCommand = new Command(1, 1, CommandType.BUILD);
-        Command secondCommand = new Command(1, 1, CommandType.BUILD);
+        Command firstCommand = new Command(new Pair(1, 1), CommandType.BUILD);
+        Command secondCommand = new Command(new Pair(1, 1), CommandType.BUILD);
         Prometheus god = new Prometheus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.GROUND);
         secondCell.setWorker(null);
 
@@ -184,25 +184,25 @@ public class PrometheusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command firstCommand = new Command(0, 0, CommandType.BUILD_DOME);
-        Command secondCommand = new Command(1, 1, CommandType.BUILD_DOME);
+        Command firstCommand = new Command(new Pair(0, 0), CommandType.BUILD_DOME);
+        Command secondCommand = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         Prometheus god = new Prometheus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(0,0);
+        Cell secondCell = board.getCell(new Pair(0, 0));
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
         // Initialization of the third cell
-        Cell thirdCell = board.getCell(1, 1);
+        Cell thirdCell = board.getCell(new Pair(1, 1));
         thirdCell.setHeight(Height.THIRD_FLOOR);
         thirdCell.setWorker(null);
 
@@ -244,19 +244,19 @@ public class PrometheusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -280,19 +280,19 @@ public class PrometheusTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 

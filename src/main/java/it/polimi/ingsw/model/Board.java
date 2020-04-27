@@ -168,18 +168,18 @@ public class Board {
         // check if the two workers are already set with the first cell
         if( (this.turnPlayer.getWorkers()[0].getCurrentCell() == null) || (this.turnPlayer.getWorkers()[1].getCurrentCell() == null)) {
             // check if the cell where the player wants to put the workers exists and is free
-            if( (coordinates.x >= 0) && (coordinates.x < 5) && (coordinates.y >= 0) && (coordinates.y < 5) && (this.getCell(coordinates.x, coordinates.y).getHeight() == Height.GROUND) && (this.getCell(coordinates.x, coordinates.y).getWorker() == null)) {
+            if( (coordinates.x >= 0) && (coordinates.x < 5) && (coordinates.y >= 0) && (coordinates.y < 5) && (this.getCell(coordinates).getHeight() == Height.GROUND) && (this.getCell(coordinates).getWorker() == null)) {
                 //check if th first worker is already set
                 if(this.turnPlayer.getWorkers()[0].getCurrentCell() == null){
                     //add the first worker
-                    this.getCell(coordinates.x, coordinates.y).setWorker(this.turnPlayer.getWorkers()[0]);
-                    this.turnPlayer.getWorkers()[0].setCurrentCell(this.getCell(coordinates.x, coordinates.y));
+                    this.getCell(coordinates).setWorker(this.turnPlayer.getWorkers()[0]);
+                    this.turnPlayer.getWorkers()[0].setCurrentCell(this.getCell(coordinates));
                 }
 
                 else{
                     //add the second worker
-                    this.getCell(coordinates.x, coordinates.y).setWorker(this.turnPlayer.getWorkers()[1]);
-                    this.turnPlayer.getWorkers()[1].setCurrentCell(this.getCell(coordinates.x, coordinates.y));
+                    this.getCell(coordinates).setWorker(this.turnPlayer.getWorkers()[1]);
+                    this.turnPlayer.getWorkers()[1].setCurrentCell(this.getCell(coordinates));
                 }
 
             }

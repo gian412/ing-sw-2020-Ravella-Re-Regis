@@ -17,19 +17,19 @@ public class TritonTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.FIRST_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -54,31 +54,31 @@ public class TritonTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command firstCommand = new Command(0, 1, CommandType.MOVE);
-        Command secondCommand = new Command(0, 2, CommandType.MOVE);
-        Command thirdCommand = new Command(0, 3, CommandType.MOVE);
+        Command firstCommand = new Command(new Pair(0, 1), CommandType.MOVE);
+        Command secondCommand = new Command(new Pair(0, 2), CommandType.MOVE);
+        Command thirdCommand = new Command(new Pair(0, 3), CommandType.MOVE);
         Triton god = new Triton(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(1,1);
+        Cell firstCell = board.getCell(new Pair(1, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(0,1);
+        Cell secondCell = board.getCell(new Pair(0, 1));
         secondCell.setHeight(Height.GROUND);
         secondCell.setWorker(null);
 
         // Initialization of the third cell
-        Cell thirdCell = board.getCell(0, 2);
+        Cell thirdCell = board.getCell(new Pair(0, 2));
         thirdCell.setHeight(Height.FIRST_FLOOR);
         thirdCell.setWorker(null);
 
         // Initialization of the fourth cell
-        Cell fourthCell = board.getCell(0, 3);
+        Cell fourthCell = board.getCell(new Pair(0, 3));
         thirdCell.setHeight(Height.GROUND);
         thirdCell.setWorker(null);
 
@@ -130,7 +130,7 @@ public class TritonTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.BUILD);
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
@@ -138,12 +138,12 @@ public class TritonTest {
         god.hasMoved = true;
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -167,7 +167,7 @@ public class TritonTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.BUILD_DOME);
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
@@ -175,12 +175,12 @@ public class TritonTest {
         god.hasMoved = true;
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -204,19 +204,19 @@ public class TritonTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -240,19 +240,19 @@ public class TritonTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 

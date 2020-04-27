@@ -22,8 +22,8 @@ public class BoardTest {
         Player player = new Player("player1", 10);
         Worker worker = new Worker("worker1", player);
 
-        board.getCell(0, 0).setWorker(worker);
-        worker.setCurrentCell(board.getCell(0, 0));
+        board.getCell(new Pair(0,0)).setWorker(worker);
+        worker.setCurrentCell(board.getCell(new Pair (0,0)));
 
         try {
             board.moveWorker(worker, new Pair(1, 1));
@@ -52,8 +52,8 @@ public class BoardTest {
         Player player = new Player("player1", 10);
         Worker worker = new Worker("worker1", player);
 
-        board.getCell(0, 0).setWorker(worker);
-        worker.setCurrentCell(board.getCell(0, 0));
+        board.getCell(new Pair (0,0)).setWorker(worker);
+        worker.setCurrentCell(board.getCell(new Pair (0,0)));
         Pair pair = new Pair(6, 6);
 
         try {
@@ -74,8 +74,8 @@ public class BoardTest {
         Player player = new Player("player1", 10);
         Worker worker = new Worker("worker1", player);
 
-        board.getCell(3, 3).setWorker(worker);
-        worker.setCurrentCell(board.getCell(3, 3));
+        board.getCell(new Pair (3,3)).setWorker(worker);
+        worker.setCurrentCell(board.getCell(new Pair (3,3)));
         Pair pair = new Pair(0, 2);
 
         try {
@@ -97,8 +97,8 @@ public class BoardTest {
         Player player = new Player("player1", 10);
         Worker worker = new Worker("worker1", player);
 
-        board.getCell(0, 0).setWorker(worker);
-        worker.setCurrentCell(board.getCell(0, 0));
+        board.getCell(new Pair (0,0)).setWorker(worker);
+        worker.setCurrentCell(board.getCell(new Pair (0,0)));
 
         try {
             board.forceWorker(worker, new Pair(4, 3));
@@ -125,8 +125,8 @@ public class BoardTest {
         Player player = new Player("player1", 10);
         Worker worker = new Worker("worker1", player);
 
-        board.getCell(0, 0).setWorker(worker);
-        worker.setCurrentCell(board.getCell(0, 0));
+        board.getCell(new Pair (0,0)).setWorker(worker);
+        worker.setCurrentCell(board.getCell(new Pair (0,0)));
 
         Pair pair = new Pair(5, 5);
 
@@ -162,7 +162,7 @@ public class BoardTest {
 
 
         assertTrue("now there is a worker in the cell 1,1 and below to player1",
-                board.getCell(1, 1).getWorker().WORKER_ID.equals(worker.WORKER_ID) &&
+                board.getCell(new Pair (1,1)).getWorker().WORKER_ID.equals(worker.WORKER_ID) &&
                         player.getWorkers()[0].WORKER_ID.equals(worker.WORKER_ID));
 
 
@@ -197,9 +197,9 @@ public class BoardTest {
 
 
         assertTrue("the player sets his two workers on the board",
-                board.getCell(0,0).getWorker().WORKER_ID.equals(worker1.WORKER_ID)  &&
+                board.getCell(new Pair (0,0)).getWorker().WORKER_ID.equals(worker1.WORKER_ID)  &&
                         player1.getWorkers()[0].WORKER_ID.equals(worker1.WORKER_ID) &&
-                        board.getCell(1,1).getWorker().WORKER_ID.equals(worker2.WORKER_ID)  &&
+                        board.getCell(new Pair (1,1)).getWorker().WORKER_ID.equals(worker2.WORKER_ID)  &&
                         player1.getWorkers()[1].WORKER_ID.equals(worker2.WORKER_ID));
     }
 
@@ -251,7 +251,7 @@ public class BoardTest {
         Board board = new Board();
         Pair pair = new Pair(1, 1);
         Cell cellWorker = new Cell(0, 0);
-        board.getCell(1, 1).setHeight(Height.THIRD_FLOOR);
+        board.getCell(new Pair (1,1)).setHeight(Height.THIRD_FLOOR);
 
 
         try {
@@ -262,7 +262,7 @@ public class BoardTest {
         }
 
         assertTrue("the player builds in cell 1,1 a dome in a third level tower and completed it",
-                board.getCell(1, 1).isCompleted() && board.getCell(1, 1).getHeight() == Height.DOME);
+                board.getCell(new Pair (1,1)).isCompleted() && board.getCell(new Pair (1,1)).getHeight() == Height.DOME);
     }
 
     @Test
@@ -283,7 +283,7 @@ public class BoardTest {
         }
 
         assertTrue("the player builds in cell 1,1 a dome in a not level three cell so the tower isn't completed",
-                !board.getCell(1, 1).isCompleted() && board.getCell(1, 1).getHeight() == Height.DOME);
+                !board.getCell(new Pair (1,1)).isCompleted() && board.getCell(new Pair (1,1)).getHeight() == Height.DOME);
     }
 
     @Test
@@ -304,7 +304,7 @@ public class BoardTest {
         }
 
         assertTrue("the player builds in cell 1,1 a new floor and the tower isn't completed",
-                !board.getCell(1, 1).isCompleted() && board.getCell(1, 1).getHeight() == Height.FIRST_FLOOR);
+                !board.getCell(new Pair (1,1)).isCompleted() && board.getCell(new Pair (1,1)).getHeight() == Height.FIRST_FLOOR);
     }
 
     @Test
@@ -398,8 +398,8 @@ public class BoardTest {
 
         Board board = new Board();
 
-        Cell cell1 = board.getCell(0,0);
-        Cell cell2 = board.getCell(1,1);
+        Cell cell1 = board.getCell(new Pair (0,0));
+        Cell cell2 = board.getCell(new Pair (1,1));
 
         Player player = new Player("player", 10);
         God god = new Chronus(board);
@@ -409,11 +409,11 @@ public class BoardTest {
         worker.setCurrentCell(cell2);
         worker.setPreviousCell(cell1);
 
-        board.getCell(4,0).setIsCompleted();
-        board.getCell(4,1).setIsCompleted();
-        board.getCell(4,2).setIsCompleted();
-        board.getCell(4,3).setIsCompleted();
-        board.getCell(4,4).setIsCompleted();
+        board.getCell(new Pair (4,0)).setIsCompleted();
+        board.getCell(new Pair (4,1)).setIsCompleted();
+        board.getCell(new Pair (4,2)).setIsCompleted();
+        board.getCell(new Pair (4,3)).setIsCompleted();
+        board.getCell(new Pair (4,4)).setIsCompleted();
 
         boolean check = board.checkWin(worker);
 
@@ -426,11 +426,11 @@ public class BoardTest {
 
         Board board = new Board();
 
-        board.getCell(1, 1).setIsCompleted();
-        board.getCell(2, 2).setIsCompleted();
-        board.getCell(3, 3).setIsCompleted();
-        board.getCell(4, 4).setIsCompleted();
-        board.getCell(0, 0).setIsCompleted();
+        board.getCell(new Pair (0,0)).setIsCompleted();
+        board.getCell(new Pair (1,1)).setIsCompleted();
+        board.getCell(new Pair (2,2)).setIsCompleted();
+        board.getCell(new Pair (3,3)).setIsCompleted();
+        board.getCell(new Pair (4,4)).setIsCompleted();
 
 
         assertTrue("there are 5 or more towers completed",
@@ -443,10 +443,10 @@ public class BoardTest {
 
         Board board = new Board();
 
-        board.getCell(2, 2).setIsCompleted();
-        board.getCell(3, 3).setIsCompleted();
-        board.getCell(4, 4).setIsCompleted();
-        board.getCell(0, 0).setIsCompleted();
+        board.getCell(new Pair(0, 0)).setIsCompleted();
+        board.getCell(new Pair(2, 2)).setIsCompleted();
+        board.getCell(new Pair(3, 3)).setIsCompleted();
+        board.getCell(new Pair(4, 4)).setIsCompleted();
 
 
         assertFalse("there are less than 5 towers completed",

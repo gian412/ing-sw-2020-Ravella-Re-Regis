@@ -17,19 +17,19 @@ public class ApolloTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.FIRST_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1, 1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -54,7 +54,7 @@ public class ApolloTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player1 = new Player("Name1", 18);
         Player player2 = new Player("Name2", 18);
@@ -63,12 +63,12 @@ public class ApolloTest {
         Worker worker2 = new Worker("Id2", player2);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.FIRST_FLOOR);
         firstCell.setWorker(worker1);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(worker2);
 
@@ -98,7 +98,7 @@ public class ApolloTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.BUILD);
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
@@ -106,12 +106,12 @@ public class ApolloTest {
         god.hasMoved = true;
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
@@ -135,7 +135,7 @@ public class ApolloTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.BUILD_DOME);
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
@@ -143,12 +143,12 @@ public class ApolloTest {
         god.hasMoved = true;
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -172,19 +172,19 @@ public class ApolloTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -208,19 +208,19 @@ public class ApolloTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(1, 1, CommandType.MOVE);
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(0,1);
+        Cell firstCell = board.getCell(new Pair(0, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(1,1);
+        Cell secondCell = board.getCell(new Pair(1, 1));
         secondCell.setHeight(Height.SECOND_FLOOR);
         secondCell.setWorker(null);
 
