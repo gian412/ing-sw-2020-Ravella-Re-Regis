@@ -154,8 +154,12 @@ public class RemoteViewTest {
                 controller.addPlayer("Gianluca", 16);
 
                 // Instancing the remoteView
-                RemoteView rv = new RemoteView(connSocket1, controller, "Gianluca"),
-                        rv2 = new RemoteView(connSocket2, controller, "Marco");
+                RemoteView rv = new RemoteView(connSocket1, controller, "Marco"),
+                        rv2 = new RemoteView(connSocket2, controller, "Gianluca");
+
+                rv.addObserver(controller);
+                rv2.addObserver(controller);
+
                 g.getBoard().addView(rv);
                 g.getBoard().addView(rv2);
 
@@ -182,6 +186,7 @@ public class RemoteViewTest {
                 inputStream.readObject();
 
                 // disconnecting after initial data received: this triggers a "GAME OVER" message
+                System.out.println("Disconnecting client...");
                 connSocket.close();
 
             } catch (IOException | ClassNotFoundException e) {
@@ -198,17 +203,18 @@ public class RemoteViewTest {
             ObjectOutputStream outputStream = new ObjectOutputStream(actualClient.getOutputStream());
             ObjectInputStream inputStream = new ObjectInputStream(actualClient.getInputStream());
 
-            inputStream.readObject(); // initial data
 
-            BoardProxy bp = (BoardProxy) inputStream.readObject(); // should have the "forced game over message"
-            assertEquals("Unexpected Game Over", bp.getWinner().getNAME());
+            inputStream.readObject(); // initial data
+            BoardProxy gameOver = (BoardProxy) inputStream.readObject();
+
+            assertEquals("Unexpected Game Over", ((BoardProxy) inputStream.readObject()).getWinner().getNAME());
 
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
+
+
 }
 

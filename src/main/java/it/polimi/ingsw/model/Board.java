@@ -35,11 +35,10 @@ public class Board {
     }
 
     /**
-     * return a specific cell ofthe board
+     * return a specific cell of the board
      *
-     * @param row is the index of the matrix for the row
-     * @param column is the index of the matrix for the column
-     * @return the cell identified by the two parameters
+     * @param coordinates the x and y coord. of the cell
+     * @return the selected cell
      */
     // cells' getter
     public Cell getCell(Pair coordinates) {
@@ -285,7 +284,7 @@ public class Board {
      */
     public void endGame(){
         proxy.setWinner(new Player("Unexpected Game Over", -1));
-        updateProxyBoard();
+        this.updateProxyBoard();
     }
 
     /**
