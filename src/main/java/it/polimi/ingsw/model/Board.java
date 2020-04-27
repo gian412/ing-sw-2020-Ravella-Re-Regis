@@ -43,7 +43,7 @@ public class Board {
      */
     // cells' getter
     public Cell getCell(Pair coordinates) {
-        return cells[row][column];
+        return cells[coordinates.x][coordinates.y];
     }
 
     // turnPlayer's getter
@@ -73,15 +73,15 @@ public class Board {
 
         if((coordinates.x >= 0) && (coordinates.x < 5) && (coordinates.y >= 0) && (coordinates.y < 5) && originCell.cellDistance(coordinates)){
             if(isDome){
-                if(this.getCell(coordinates.x, coordinates.y).getHeight() == Height.THIRD_FLOOR) {
-                    this.getCell(coordinates.x, coordinates.y).buildFloor();
+                if(this.getCell(coordinates).getHeight() == Height.THIRD_FLOOR) {
+                    this.getCell(coordinates).buildFloor();
                 }
                 else{
-                    this.getCell(coordinates.x, coordinates.y).setHeight(Height.DOME);
+                    this.getCell(coordinates).setHeight(Height.DOME);
                 }
             }
             else {
-                this.getCell(coordinates.x, coordinates.y).buildFloor();
+                this.getCell(coordinates).buildFloor();
             }
             this.updateProxyBoard();
         }
@@ -101,11 +101,18 @@ public class Board {
 
         if((coordinates.x >= 0) && (coordinates.x < 5) && (coordinates.y >= 0) && (coordinates.y < 5) && (worker.getCurrentCell().cellDistance(coordinates))){
 
-            this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y).setWorker(null);
-            worker.setPreviousCell(this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y));
+            this.getCell(new Pair(
+                    worker.getCurrentCell().X,
+                    worker.getCurrentCell().Y)
+            ).setWorker(null);
 
-            this.getCell(coordinates.x, coordinates.y).setWorker(worker);
-            worker.setCurrentCell(this.getCell(coordinates.x, coordinates.y));
+            worker.setPreviousCell(this.getCell(new Pair(
+                    worker.getCurrentCell().X,
+                    worker.getCurrentCell().Y))
+            );
+
+            this.getCell(coordinates).setWorker(worker);
+            worker.setCurrentCell(this.getCell(coordinates));
 
             //update the proxyBoard after a legal move
             this.updateProxyBoard();
@@ -126,11 +133,18 @@ public class Board {
 
         if((coordinates.x >= 0) && (coordinates.x < 5) && (coordinates.y >= 0) && (coordinates.y < 5)){
 
-            this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y).setWorker(null);
-            worker.setPreviousCell(this.getCell(worker.getCurrentCell().X, worker.getCurrentCell().Y));
+            this.getCell(new Pair(
+                    worker.getCurrentCell().X,
+                    worker.getCurrentCell().Y)
+            ).setWorker(null);
 
-            this.getCell(coordinates.x, coordinates.y).setWorker(worker);
-            worker.setCurrentCell(this.getCell(coordinates.x, coordinates.y));
+            worker.setPreviousCell(this.getCell(new Pair(
+                    worker.getCurrentCell().X,
+                    worker.getCurrentCell().Y))
+            );
+
+            this.getCell(coordinates).setWorker(worker);
+            worker.setCurrentCell(this.getCell(coordinates));
 
             //update the proxyBoard after a legal move
             this.updateProxyBoard();

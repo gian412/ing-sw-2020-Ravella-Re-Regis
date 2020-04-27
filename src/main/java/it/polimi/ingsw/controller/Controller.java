@@ -8,6 +8,8 @@ import it.polimi.ingsw.model.*;
 
 import it.polimi.ingsw.view.Observer;
 
+import java.io.IOException;
+
 
 public class Controller implements Observer<PlayerCommand>, Runnable {
 
