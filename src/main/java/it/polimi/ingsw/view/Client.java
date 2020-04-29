@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.view.cli.CliComposer;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -10,6 +12,7 @@ public class Client {
 
     public void run() throws IOException {
 
+        //sposto dopo
         String IP = "127.0.0.1";
         int PORT = 1337;
         Socket socket = new Socket(IP, PORT); // Start the socket connection
@@ -22,7 +25,21 @@ public class Client {
         // Open the input streams with the user
         Scanner stdIn = new Scanner(System.in);
 
-        System.out.println("Welcome to Santorini!\n" + // Ask...
+
+        CliComposer composer = new CliComposer();
+
+        System.out.println(composer.titleMaker());
+
+        System.out.println("\n \t\t\t\t----- Press ENTER to continue -----");
+        /*Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();*/
+        System.in.read();
+
+        System.out.println("\u001B[3J");
+
+
+
+        System.out.println(
                 "Do you want to play with CLI or with GUI?" + // ... interface...
                 " (type \"CLI\" for CLI interface or \"GUI\" for GUI interface"); // ... preference
         String line = stdIn.nextLine(); // Read preference
@@ -86,8 +103,10 @@ public class Client {
         } else {
             System.out.println(line); // Print message
         }
+
         line = socketIn.nextLine(); // Receive message
         System.out.println(line); // Print message
+
 
         /*if (cliInterface) {
             CLIView view = new CLIView(socket);
