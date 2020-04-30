@@ -28,21 +28,20 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
      * @param player the player in control of the (Remote)View
      * @param command the operation the player is wishing to do
      * @param workerID the number representing the worker (0, 1)
-     * @return true if the operation goes fine, false if not
      */
-    public boolean commitCommand(String player, Command command, int workerID){
-        if(game.getTurnPlayer().getNAME().equals(player)){
-            try{
+    public void commitCommand(String player, Command command, int workerID){
+        if(game.getTurnPlayer().getNAME().equals(player)) {
+            try {
                 game.getTurnPlayer().getDivinity().executeCommand(
                         game.getTurnPlayer().getWorkers()[workerID],
                         command
                 );
-            }catch(IllegalMoveException | NullPointerException exc){
-                System.err.println(exc.getMessage() + " controller generated");
-                return  false;
+            } catch (IllegalMoveException exc) {
+                game.getBoard().notifyIllegalMove(exc.getMessage());
+            } catch (NullPointerException exc) {
+                exc.printStackTrace();
             }
         }
-        return true;
     }
 
     /**adds a worker to the board
@@ -136,6 +135,7 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
         }
 
         else{
+            // in-game operations
             if(message.cmd.commandType == CommandType.CHANGE_TURN)
                 changeTurnPlayer();
             else if(message.cmd.commandType == CommandType.ADD_WORKER){
@@ -152,6 +152,5 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
                 );
             }
         }
-
     }
 }

@@ -56,6 +56,10 @@ public class Board {
         updateProxyBoard();
     }
 
+    public void notifyIllegalMove(String message){
+        this.proxy.setIllegalMoveString(message);
+        this.updateProxyBoard();
+    }
 
     public void changeTurnPlayer(){
         turnPlayer = turnPlayer.getNextPlayer();

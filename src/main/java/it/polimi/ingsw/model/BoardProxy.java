@@ -12,7 +12,15 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     private Height[][] boardScheme;
     private Map<String, Pair> workers;
     private Player winner, turnPlayer;
-    private String choosingGods;
+    private String choosingGods, illegalMoveString;
+
+    public String getIllegalMoveString() {
+        return illegalMoveString;
+    }
+
+    public void setIllegalMoveString(String illegalMoveString) {
+        this.illegalMoveString = illegalMoveString;
+    }
 
     public BoardProxy(){
         boardScheme = new Height[5][5];
