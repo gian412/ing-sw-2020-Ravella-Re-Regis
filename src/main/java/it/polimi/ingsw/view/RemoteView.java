@@ -46,9 +46,9 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
     }
 
     /**
-     * runs the remoteview
+     * runs the RemoteView
      *
-     * the main method of the remoteview, it's in charge of scanning the
+     * the main method of the RemoteView, it's in charge of scanning the
      * input stream from the client
      */
     @Override
@@ -64,7 +64,7 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
                 } catch (IOException e) {
                     System.err.println("Client disconnected");
                     disconnected = true;
-                    notify(new PlayerCommand(player, new Command(new Pair(-1, -1), CommandType.DISCONNECTED), -1));
+                    notify(new PlayerCommand(player, new Command(new Pair(-1, -1), CommandType.DISCONNECTED), 0));
                     break;
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -76,7 +76,14 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
     }
 
 
-
+    /**
+     * update method (inherited from the Observer interface) called when the observed object is changed
+     *
+     * send to the client the object changed, the Board in form of a BoardProxy in this case. Also, handles
+     * the case in which a client unexpectedly disconnects
+     *
+     * @param message the changed object
+     */
     @Override
     public void update(BoardProxy message) {
         if(disconnected) return;
@@ -87,9 +94,9 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
                 System.out.println("Unexpected game over, shutting down");
                 connSocket.close();
             }
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             e.printStackTrace();
-        } catch (NullPointerException x){}
+        }
     }
 
 
