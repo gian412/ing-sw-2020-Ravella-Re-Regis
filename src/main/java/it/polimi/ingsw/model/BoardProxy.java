@@ -63,6 +63,11 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
         this.choosingGods = choosingGods;
     }
 
+    /**
+     * returns a string that represents the board. not very useful but can be used in console repr
+     *
+     * @return the string
+     */
     @Override
     public String toString() {
         StringBuilder myBoard = new StringBuilder();

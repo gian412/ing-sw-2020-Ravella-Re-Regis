@@ -56,6 +56,12 @@ public class Board {
         updateProxyBoard();
     }
 
+    /**
+     * updates the remoteviews (by the proxy) informing that an illegal
+     * move has been made
+     *
+     * @param message the description of the illegal move
+     */
     public void notifyIllegalMove(String message){
         this.proxy.setIllegalMoveString(message);
         this.updateProxyBoard();
@@ -253,8 +259,6 @@ public class Board {
                 return false;
             }
         }
-
-
     }
 
     /**
