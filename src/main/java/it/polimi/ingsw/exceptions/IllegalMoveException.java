@@ -8,4 +8,8 @@ public class IllegalMoveException extends Exception{
     public IllegalMoveException(){
         super("Illegal move");
     }
+
+    public IllegalMoveException(String error) {
+        super(error);
+    }
 }
