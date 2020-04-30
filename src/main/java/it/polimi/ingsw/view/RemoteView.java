@@ -98,6 +98,4 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
             e.printStackTrace();
         }
     }
-
-
 }
