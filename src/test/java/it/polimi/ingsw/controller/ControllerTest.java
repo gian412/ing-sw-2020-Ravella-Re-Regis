@@ -19,8 +19,13 @@ public class ControllerTest {
     public void checkAddPlayer(){
         Game g = new Game();
         Controller controller = new Controller(g);
+        Player player = new Player("name", 10);
 
-        assertTrue("I should be able to simply add a Player by name and age" , controller.addPlayer("marco", 30));
+        controller.addPlayer(player.getNAME(), player.getAge());
+
+        assertTrue(g.getPlayers().contains(player.getNAME()));
+        assertTrue(g.getPlayers().contains("10"));
+
     }
 
     @Test
@@ -83,7 +88,7 @@ public class ControllerTest {
         controller.startGame();
         controller.addWorker(1, 0);
 
-        assertNotNull("a worker must be in (1, 0)", g.getBoard().getCell(new Pair (0,1)).getWorker());
+        assertNotNull("a worker must be in (1, 0)", g.getBoard().getCell(new Pair (1,0)).getWorker());
         assertEquals("controller.addWorker adds a playerTurn's worker",
                 g.getBoard().getCell(new Pair (1,0)).getWorker().getOwner(),
                 g.getTurnPlayer()

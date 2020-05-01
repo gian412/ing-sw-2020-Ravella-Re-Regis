@@ -89,8 +89,4 @@ public class Game {
         return players.toString();
     }
 
-    public List<Player> getPlayerList(){
-        return playerList;
-    }
-
 }
