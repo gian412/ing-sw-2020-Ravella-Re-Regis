@@ -123,7 +123,7 @@ public class ZeusTest {
     }
 
     @Test
-    @DisplayName("hasBuild not a dome")
+    @DisplayName("hasBuild under himself")
     public void hasBuildUnderTest(){
 
         // Initialization of the parameters
