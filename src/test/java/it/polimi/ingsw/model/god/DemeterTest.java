@@ -12,6 +12,7 @@ import static org.junit.Assert.fail;
 
 public class DemeterTest {
 
+    // Common tests
     @Test
     @DisplayName("hasMoved")
     public void hasMovedTest(){
@@ -47,6 +48,106 @@ public class DemeterTest {
             System.err.println("Error e in method hasMovedTest in class DemeterTest: " + e.toString());
             fail("Exception in hasMovedTest in class DemeterTest");
         }
+
+    }
+
+    @Test
+    @DisplayName("canMoveUp=false")
+    public void moveWithNotCanMoveUp(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Demeter(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+        worker.setCanMoveUp(false);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveWithNotCanMoveUp in class DemeterTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+    }
+
+    @Test
+    @DisplayName("moveUpMoreThan1Floor")
+    public void moveUpMoreThan1Floor() {
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Demeter(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.GROUND);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveUpMoreThan1Floor in class DemeterTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("moveOnADome")
+    public void moveOnADome() {
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Demeter(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.THIRD_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.DOME);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class DemeterTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
     }
 
     @Test
@@ -121,8 +222,116 @@ public class DemeterTest {
             System.err.println("Error e in method hasBuildDomeTest in class DemeterTest: " + e.toString());
             fail("Exception in hasBuildDomeTest in class DemeterTest");
         }
+
     }
 
+    @Test
+    @DisplayName("has build on a dome")
+    public void hasBuildOnADome() {
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
+        God god = new Demeter(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.DOME);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class DemeterTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("secondCell's Height must be equals to DOME", secondCell.getHeight(), Height.DOME);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasWon = true")
+    public void hasWonTrueTest(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Demeter(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try{
+            god.executeCommand(worker, command);
+
+            assertTrue( "hasWon must be true", god.hasWon );
+            assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
+
+        } catch (IllegalMoveException e){
+            System.err.println("Error e in method hasWonTrueTest in class DemeterTest: " + e.toString());
+            fail("Exception in hasWonTrueTest in class DemeterTest");
+        }
+    }
+
+    @Test
+    @DisplayName("hasWon = false")
+    public void hasWonFalseTest(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Demeter(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.THIRD_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try{
+            god.executeCommand(worker, command);
+
+            assertFalse( "hasWon must be false", god.hasWon );
+            assertEquals("Worker must be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
+
+        } catch (IllegalMoveException e){
+            System.err.println("Error e in method hasWonFalseTest in class DemeterTest: " + e.toString());
+            fail("Exception in hasWonFalseTest in class DemeterTest");
+        }
+    }
+    
+    // Exclusive tests
     @Test
     @DisplayName("hasBuildSecond not a dome")
     public void hasBuildSecondNotDomeTest(){
@@ -239,78 +448,6 @@ public class DemeterTest {
 
 
 
-    }
-
-    @Test
-    @DisplayName("hasWon = true")
-    public void hasWonTrueTest(){
-
-        // Initialization of the parameters
-        Board board = new Board();
-        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
-        God god = new Demeter(board);
-        Player player = new Player("Name", 18);
-        player.setDivinity(god);
-        Worker worker = new Worker("Id", player);
-
-        // Initialization of the first cell
-        Cell firstCell = board.getCell(new Pair(0, 1));
-        firstCell.setHeight(Height.SECOND_FLOOR);
-        firstCell.setWorker(worker);
-
-        // Initialization of the second cell
-        Cell secondCell = board.getCell(new Pair(1, 1));
-        secondCell.setHeight(Height.THIRD_FLOOR);
-        secondCell.setWorker(null);
-
-        worker.setCurrentCell(firstCell);
-
-        try{
-            god.executeCommand(worker, command);
-
-            assertTrue( "hasWon must be true", god.hasWon );
-            assertEquals("worker's position's Height must be THIRD_FLOOR", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
-
-        } catch (IllegalMoveException e){
-            System.err.println("Error e in method hasWonTrueTest in class DemeterTest: " + e.toString());
-            fail("Exception in hasWonTrueTest in class DemeterTest");
-        }
-    }
-
-    @Test
-    @DisplayName("hasWon = false")
-    public void hasWonFalseTest(){
-
-        // Initialization of the parameters
-        Board board = new Board();
-        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
-        God god = new Demeter(board);
-        Player player = new Player("Name", 18);
-        player.setDivinity(god);
-        Worker worker = new Worker("Id", player);
-
-        // Initialization of the first cell
-        Cell firstCell = board.getCell(new Pair(0, 1));
-        firstCell.setHeight(Height.SECOND_FLOOR);
-        firstCell.setWorker(worker);
-
-        // Initialization of the second cell
-        Cell secondCell = board.getCell(new Pair(1, 1));
-        secondCell.setHeight(Height.SECOND_FLOOR);
-        secondCell.setWorker(null);
-
-        worker.setCurrentCell(firstCell);
-
-        try{
-            god.executeCommand(worker, command);
-
-            assertFalse( "hasWon must be false", god.hasWon );
-            assertNotEquals("Worker can't be on the third floor", worker.getCurrentCell().getHeight(), Height.THIRD_FLOOR);
-
-        } catch (IllegalMoveException e){
-            System.err.println("Error e in method hasWonFalseTest in class DemeterTest: " + e.toString());
-            fail("Exception in hasWonFalseTest in class DemeterTest");
-        }
     }
 
 }
