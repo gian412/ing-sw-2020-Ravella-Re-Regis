@@ -85,7 +85,7 @@ public class AtlasTest {
         }
     }
 
-    /*@Test
+    @Test
     @DisplayName("hasBuild a dome in right position")
     public void hasBuildDomeInRightPositionTest(){
 
@@ -104,7 +104,7 @@ public class AtlasTest {
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(new Pair(0,1));
+        Cell secondCell = board.getCell(new Pair(1,1));
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
@@ -157,7 +157,7 @@ public class AtlasTest {
             System.err.println("Error e in method hasBuildDomeTest in class AtlasTest: " + e.toString());
             fail("Exception in hasBuildDomeTest in class AtlasTest");
         }
-    }*/
+    }
 
     @Test
     @DisplayName("hasWon = true")

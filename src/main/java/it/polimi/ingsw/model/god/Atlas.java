@@ -65,7 +65,7 @@ public class Atlas extends God {
 
                 case BUILD_DOME:
 
-                    if (hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR) { // If the player has moved but has not build and won and cell'height is third floor
+                    if (hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() != Height.DOME) { // If the player has moved but has not build and won and cell'height is third floor
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, true); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
