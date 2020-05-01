@@ -17,8 +17,8 @@ public class GameTest {
 
         game.addPlayer("player1", 10);
 
-        assertTrue("the player is added in list player",
-               game.getPlayerList().get(0).equals(player) && (game.getPlayerList().size() == 1));
+        assertTrue(game.getPlayers().contains(player.getNAME()));
+        assertTrue(game.getPlayers().contains("10"));
     }
 
 
