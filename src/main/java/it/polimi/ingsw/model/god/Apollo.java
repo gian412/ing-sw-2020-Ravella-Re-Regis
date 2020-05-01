@@ -45,7 +45,7 @@ public class Apollo extends God{
                     throw new IllegalMoveException("CanMoveUp parameter error");
                 }
             }else{
-                throw new IllegalMoveException("Invalid move parameters");
+                throw new IllegalMoveException("Invalid MOVE parameters");
             }
         }else{ // worker has to force the otherWorker to exchange position with him
             if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't a dome and it isn't more then 1 floor far
