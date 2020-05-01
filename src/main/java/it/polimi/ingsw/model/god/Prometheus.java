@@ -56,26 +56,42 @@ public class Prometheus extends God {
 
                 case BUILD:
                     if ( !hasBuildBefore && !hasMoved && !hasBuild && !hasWon ){
-                        super.build(worker.getCurrentCell(), command.coordinates, false);
-                        hasBuildBefore = true;
-                        break;
+                        try {
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
+                            hasBuildBefore = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException(e.getMessage());
+                        }
                     } else if ( hasMoved && !hasBuild && !hasWon ){
-                        super.build(worker.getCurrentCell(), command.coordinates, false);
-                        hasBuild = true;
-                        break;
+                        try {
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
+                            hasBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException(e.getMessage());
+                        }
                     } else {
                         throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD_DOME:
                     if ( !hasBuildBefore && !hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){
-                        super.build(worker.getCurrentCell(), command.coordinates, false);
-                        hasBuildBefore = true;
-                        break;
+                        try {
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
+                            hasBuildBefore = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException(e.getMessage());
+                        }
                     } else if ( hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR ){
-                        super.build(worker.getCurrentCell(), command.coordinates, false);
-                        hasBuild = true;
-                        break;
+                        try {
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
+                            hasBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException(e.getMessage());
+                        }
                     } else {
                         throw new IllegalMoveException("Invalid command sequence");
                     }
