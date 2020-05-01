@@ -134,11 +134,12 @@ public class Cell {
         distanceX = this.X - cell.x;
         distanceY = this.Y - cell.y;
 
-        if ((distanceX >= 1) && (distanceX <= 1)) {
+        return ( (distanceX>=-1 && distanceX<=1) && (distanceY>=-1 && distanceY<=1) );
+        /*if ((distanceX >= 1) && (distanceX <= 1)) {
             return (distanceY >= -1) && (distanceY <= 1);
         }
         else
-            return false;
+            return false;*/
     }
 
     /**
