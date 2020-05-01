@@ -329,5 +329,53 @@ public class CharonTest {
             fail("Exception in hasWonFalseTest in class CharonTest");
         }
     }
-    
+
+    // Exclusive tests
+    @Test
+    @DisplayName("Force a worker to move")
+    public void forceWorkerToMove() {
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.FORCE);
+        God thisGod = new Charon(board);
+        God otherGod = new Zeus(board);
+        Player thisPlayer = new Player("thisName", 18);
+        Player otherPlayer = new Player("otherName", 18);
+        thisPlayer.setDivinity(thisGod);
+        otherPlayer.setDivinity(otherGod);
+
+        Worker thisWorker = new Worker("Id", thisPlayer);
+        Worker otherWorker = new Worker("otherId", otherPlayer);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(1, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(otherWorker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 2));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(thisWorker);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell((new Pair(1, 3)));
+        thirdCell.setHeight(Height.SECOND_FLOOR);
+        thirdCell.setWorker(null);
+
+        thisWorker.setCurrentCell(secondCell);
+        otherWorker.setCurrentCell(firstCell);
+
+        try {
+            thisGod.executeCommand(thisWorker, command);
+
+            assertTrue("hasForced must be true", ((Charon) thisGod).hasForced);
+            assertEquals("otherWorker's position must be thirdCell", otherWorker.getCurrentCell(), thirdCell);
+
+        } catch (IllegalMoveException e) {
+            System.err.println("Error e in method forceWorkerToMove in class CharonTest: " + e.toString());
+            fail("Exception in forceWorkerToMove in class CharonTest");
+        }
+
+    }
 }
