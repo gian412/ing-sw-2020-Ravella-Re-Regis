@@ -47,11 +47,11 @@ public class Prometheus extends God {
                             hasWon = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
 
                     } else{
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD:
@@ -64,7 +64,7 @@ public class Prometheus extends God {
                         hasBuild = true;
                         break;
                     } else {
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD_DOME:
@@ -77,7 +77,7 @@ public class Prometheus extends God {
                         hasBuild = true;
                         break;
                     } else {
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case RESET:
@@ -85,10 +85,10 @@ public class Prometheus extends God {
                     break;
 
                 default:
-                    throw new IllegalMoveException();
+                    throw new IllegalMoveException("Command type not valid for the current god");
             }
         } else{
-            throw new NullPointerException();
+            throw new NullPointerException("The passed command is null");
         }
     }
 
