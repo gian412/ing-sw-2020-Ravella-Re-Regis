@@ -49,16 +49,13 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
      * @author Elia Ravella
      * @param row the x axis coordinate to be added
      * @param column the y axis coordinate to be added
-     * @return true if can be added there, false if not
      */
-    public boolean addWorker(int row, int column){
+    public void addWorker(int row, int column){
         try {
             game.getBoard().addWorker(new Pair(row, column));
         } catch (IllegalCellException | IllegalAddException e) {
-            e.printStackTrace();
-            return false;
+            game.getBoard().notifyIllegalMove(e.getMessage());
         }
-        return true;
     }
 
     /**adds the player to the game
@@ -69,10 +66,9 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
      * @author Elia Ravella
      * @param playerName the player's name
      * @param age the player's age
-     * @return true if the operation goes fine, false if not
      */
-    public boolean addPlayer(String playerName, int age){
-        return game.addPlayer(playerName, age);
+    public void addPlayer(String playerName, int age){
+        game.addPlayer(playerName, age);
     }
 
     /**Changes the player controlling the board
@@ -99,7 +95,9 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
      *
      * @author Elia Ravella
      */
-    public void startGame(){ game.startGame(); }
+    public void startGame(){
+        game.startGame();
+    }
 
     public Player getTurnPlayer(){
         return this.game.getTurnPlayer();
