@@ -43,10 +43,10 @@ public class Pan extends  God {
                             hasWon = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else {
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD:
@@ -56,10 +56,10 @@ public class Pan extends  God {
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else{
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD_DOME:
@@ -69,10 +69,10 @@ public class Pan extends  God {
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else {
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case RESET:
@@ -80,10 +80,10 @@ public class Pan extends  God {
                     break;
 
                 default:
-                    throw new IllegalMoveException();
+                    throw new IllegalMoveException("Command type not valid for the current god");
             }
         } else{
-            throw new NullPointerException();
+            throw new NullPointerException("The passed command is null");
         }
 
     }
