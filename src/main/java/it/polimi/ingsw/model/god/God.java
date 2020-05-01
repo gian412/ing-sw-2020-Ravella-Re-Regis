@@ -64,13 +64,13 @@ public abstract class God {
                     board.moveWorker(worker, pair); // Call board's move method
                     hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
                 } catch (IllegalMoveException e){
-                    throw new IllegalMoveException();
+                    throw new IllegalMoveException(e.getMessage());
                 }
             } else{
-                throw new IllegalMoveException();
+                throw new IllegalMoveException("CanMoveUp parameter error");
             }
         }else{
-            throw new IllegalMoveException();
+            throw new IllegalMoveException("Invalid MOVE parameters");
         }
 
     }
@@ -93,16 +93,16 @@ public abstract class God {
             try {
                 board.build(originCell, pair, true ); // Call board's build method
             } catch (IllegalMoveException e){
-                throw new IllegalMoveException();
+                throw new IllegalMoveException(e.getMessage());
             }
         }else if( buildCell.getWorker() == null && buildCell.getHeight() != Height.DOME && !isDome){ // If the cell isn't occupied and it isn't a dome and the piece to build isn't a dome
             try{
                 board.build(originCell, pair, false ); // Call board's build method
             } catch (IllegalMoveException e) {
-                throw new IllegalMoveException();
+                throw new IllegalMoveException(e.getMessage());
             }
         } else{
-            throw new IllegalMoveException();
+            throw new IllegalMoveException("Invalid BUILD parameters");
         }
     }
 
