@@ -43,7 +43,7 @@ public class Triton extends God {
                             hasWon = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else {
                         if (!hasMoved && !hasBuild && !hasWon) {
@@ -53,10 +53,10 @@ public class Triton extends God {
                                 hasWon = board.checkWin(worker);
                                 break;
                             } catch (IllegalMoveException e) {
-                                throw new IllegalMoveException();
+                                throw new IllegalMoveException(e.getMessage());
                             }
                         } else {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException("Invalid command sequence");
                         }
                     }
 
@@ -67,10 +67,10 @@ public class Triton extends God {
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else{
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD_DOME:
@@ -80,10 +80,10 @@ public class Triton extends God {
                             hasBuild = true;
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else {
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case RESET:
@@ -91,10 +91,10 @@ public class Triton extends God {
                     break;
 
                 default:
-                    throw new IllegalMoveException();
+                    throw new IllegalMoveException("Command type not valid for the current god");
             }
         } else{
-            throw new NullPointerException();
+            throw new NullPointerException("The passed command is null");
         }
 
     }
