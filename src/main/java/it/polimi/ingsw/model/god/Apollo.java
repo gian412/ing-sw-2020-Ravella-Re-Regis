@@ -39,13 +39,13 @@ public class Apollo extends God{
                         board.moveWorker(worker, pair); // Call board's move method
                         hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                     } catch (IllegalMoveException e){
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException(e.getMessage());
                     }
                 } else{
-                    throw new IllegalMoveException();
+                    throw new IllegalMoveException("CanMoveUp parameter error");
                 }
             }else{
-                throw new IllegalMoveException();
+                throw new IllegalMoveException("Invalid MOVE parameters");
             }
         }else{ // worker has to force the otherWorker to exchange position with him
             if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't a dome and it isn't more then 1 floor far
@@ -57,13 +57,13 @@ public class Apollo extends God{
                         board.moveWorker(otherWorker, new Pair(actualCell.X, actualCell.Y)); // Call board's move method on otherWorker
                         hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                     } catch (IllegalMoveException e){
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException(e.getMessage());
                     }
                 } else{
-                    throw new IllegalMoveException();
+                    throw new IllegalMoveException("CanMoveUp parameter error");
                 }
             }else{
-                throw new IllegalMoveException();
+                throw new IllegalMoveException("Invalid move parameters");
             }
 
         }
@@ -98,10 +98,10 @@ public class Apollo extends God{
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             break;
                         } catch (IllegalMoveException e){
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else {
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD:
@@ -111,10 +111,10 @@ public class Apollo extends God{
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else{
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD_DOME:
@@ -124,10 +124,10 @@ public class Apollo extends God{
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else {
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case RESET:
@@ -135,10 +135,10 @@ public class Apollo extends God{
                     break;
 
                 default:
-                    throw new IllegalMoveException();
+                    throw new IllegalMoveException("Command type not valid for the current god");
             }
         } else{
-            throw new NullPointerException();
+            throw new NullPointerException("The passed command is null");
         }
     }
 

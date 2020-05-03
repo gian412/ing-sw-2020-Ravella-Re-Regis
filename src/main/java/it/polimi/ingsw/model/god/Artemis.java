@@ -50,7 +50,7 @@ public class Artemis extends God {
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else if (hasMoved && !hasMovedSecond && !hasBuild && !hasWon && !(board.getCell(command.coordinates).equals(startingCell))){ // If the player has moved but has not moved second, build and won and the cell isn't equal to the starting cell
                         try {
@@ -59,10 +59,10 @@ public class Artemis extends God {
                             hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
                             break;
                         } catch (IllegalMoveException e){
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else{
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD:
@@ -72,10 +72,10 @@ public class Artemis extends God {
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else{
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD_DOME:
@@ -85,10 +85,10 @@ public class Artemis extends God {
                             hasBuild = true; // Store the information that the worker has build
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
                     } else {
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case RESET:
@@ -96,10 +96,10 @@ public class Artemis extends God {
                     break;
 
                 default:
-                    throw new IllegalMoveException();
+                    throw new IllegalMoveException("Command type not valid for the current god");
             }
         } else{
-            throw new NullPointerException();
+            throw new NullPointerException("The passed command is null");
         }
     }
 

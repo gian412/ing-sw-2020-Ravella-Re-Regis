@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.view.cli.CliComposer;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -10,23 +12,35 @@ public class Client {
 
     public void run() throws IOException {
 
-        String IP = "127.0.0.1";
-        int PORT = 1337;
-        Socket socket = new Socket(IP, PORT); // Start the socket connection
-        System.out.println("Connection established");
-
-        // Open the input/output streams with the socket
-        Scanner socketIn = new Scanner(socket.getInputStream());
-        PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
+        //reset the terminal
+        System.out.println("\033[H\033[J");
 
         // Open the input streams with the user
         Scanner stdIn = new Scanner(System.in);
 
-        System.out.println("Welcome to Santorini!\n" + // Ask...
-                "Do you want to play with CLI or with GUI?" + // ... interface...
-                " (type \"CLI\" for CLI interface or \"GUI\" for GUI interface"); // ... preference
-        String line = stdIn.nextLine(); // Read preference
+        //maker for the title
+        CliComposer composer = new CliComposer();
 
+        //create rhe title
+        System.out.println(composer.titleMaker());
+        System.out.println("\n\t\t\t\t\t\t----- Press ENTER to continue -----");
+        System.in.read();
+
+        //reset the terminal
+        System.out.println("\033[H\033[J");
+
+
+        //log moment where the player insert name, age, and number of player of the game if he is the first player
+        //and says if he wants to use GUI or CLI
+        System.out.println(composer.bannerMaker());
+        String line;
+
+        //ask how the player wants to play
+        System.out.println(
+                "Do you want to play with CLI or with GUI?" + // ... interface...
+                        " (type \"CLI\" for CLI interface or \"GUI\" for GUI interface"); // ... preference
+
+        line = stdIn.nextLine();
         boolean cliInterface;
         while (true) { // Wait a valid input
             if (line.toUpperCase().equals("CLI")){
@@ -42,18 +56,28 @@ public class Client {
                 line = stdIn.nextLine();
             }
         }
-        // Name request
-        System.out.println("Insert your name, buddy!"); // Print name request
+        System.out.println("-------------------------------------------------------------------------------------------\n");
 
+        //create the connection
+        String IP = "127.0.0.1";
+        int PORT = 1337;
+        Socket socket = new Socket(IP, PORT); // Start the socket connection
+        System.out.println("Connection established");
+        // Open the input/output streams with the socket
+        Scanner socketIn = new Scanner(socket.getInputStream());
+        PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
+        System.out.println("-------------------------------------------------------------------------------------------\n");
+
+        // Name request
+        System.out.println("Insert your name, buddy!\n"); // Print name request
         line = stdIn.nextLine(); // Read name
         socketOut.println(line); // Write name on socket stream
         socketOut.flush(); // Send name
+        System.out.println("-------------------------------------------------------------------------------------------\n");
 
         // Age request
-        System.out.println("and now tell me, how old are you?"); // Print age request
-
+        System.out.println("and now tell me, how old are you?\n"); // Print age request
         int number = stdIn.nextInt(); // Read age
-
         while (true) { // Wait a valid input
             if (number >= 1 && number <= 99) {
                 socketOut.println(number); // Write age on socket stream
@@ -64,6 +88,8 @@ public class Client {
                 number = stdIn.nextInt(); // Read age
             }
         }
+        System.out.println("-------------------------------------------------------------------------------------------\n");
+
 
         // Number of player request or confirm of the insertion in lobby
         line = socketIn.nextLine(); // Receive message
@@ -86,10 +112,16 @@ public class Client {
         } else {
             System.out.println(line); // Print message
         }
+
         line = socketIn.nextLine(); // Receive message
         System.out.println(line); // Print message
+        System.out.println("-------------------------------------------------------------------------------------------\n");
 
-        /*if (cliInterface) {
+
+        //parte la cli
+
+
+        /*(cliInterface) {
             CLIView view = new CLIView(socket);
         } else {
             GUIView view = new GUIView(socket);

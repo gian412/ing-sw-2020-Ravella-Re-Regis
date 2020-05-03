@@ -159,7 +159,7 @@ public class Board {
             this.updateProxyBoard();
         }
         else{
-            throw new IllegalMoveException();
+            throw new IllegalMoveException("Invalid FORCE parameters");
         }
     }
 

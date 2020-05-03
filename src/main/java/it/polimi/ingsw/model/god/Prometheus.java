@@ -47,37 +47,53 @@ public class Prometheus extends God {
                             hasWon = board.checkWin(worker);
                             break;
                         } catch (IllegalMoveException e) {
-                            throw new IllegalMoveException();
+                            throw new IllegalMoveException(e.getMessage());
                         }
 
                     } else{
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD:
                     if ( !hasBuildBefore && !hasMoved && !hasBuild && !hasWon ){
-                        super.build(worker.getCurrentCell(), command.coordinates, false);
-                        hasBuildBefore = true;
-                        break;
+                        try {
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
+                            hasBuildBefore = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException(e.getMessage());
+                        }
                     } else if ( hasMoved && !hasBuild && !hasWon ){
-                        super.build(worker.getCurrentCell(), command.coordinates, false);
-                        hasBuild = true;
-                        break;
+                        try {
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
+                            hasBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException(e.getMessage());
+                        }
                     } else {
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case BUILD_DOME:
                     if ( !hasBuildBefore && !hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){
-                        super.build(worker.getCurrentCell(), command.coordinates, false);
-                        hasBuildBefore = true;
-                        break;
+                        try {
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
+                            hasBuildBefore = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException(e.getMessage());
+                        }
                     } else if ( hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR ){
-                        super.build(worker.getCurrentCell(), command.coordinates, false);
-                        hasBuild = true;
-                        break;
+                        try {
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
+                            hasBuild = true;
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException(e.getMessage());
+                        }
                     } else {
-                        throw new IllegalMoveException();
+                        throw new IllegalMoveException("Invalid command sequence");
                     }
 
                 case RESET:
@@ -85,10 +101,10 @@ public class Prometheus extends God {
                     break;
 
                 default:
-                    throw new IllegalMoveException();
+                    throw new IllegalMoveException("Command type not valid for the current god");
             }
         } else{
-            throw new NullPointerException();
+            throw new NullPointerException("The passed command is null");
         }
     }
 

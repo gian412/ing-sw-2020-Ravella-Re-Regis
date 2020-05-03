@@ -66,6 +66,7 @@ public class ClientHandler implements Runnable{
             PrintWriter socketOut = new PrintWriter(socket.getOutputStream()); // Open output stream with socket
 
             this.name = socketIn.nextLine(); // Receive name
+
             this.age = socketIn.nextInt(); // Receive age
 
             if (server.isLobbyEmpty()){
@@ -83,7 +84,6 @@ public class ClientHandler implements Runnable{
         } catch (IOException e){
             e.printStackTrace();
         }
-
-
     }
+
 }
