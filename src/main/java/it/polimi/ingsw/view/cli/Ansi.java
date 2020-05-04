@@ -80,7 +80,7 @@ public class Ansi {
      * @param font is the code of the color for the font
      * @return the instruction to change output's aspect (font)
      */
-    public String Font(String font){
+    public String font(String font){
         return "\u001B[" + font + "m";
     }
 

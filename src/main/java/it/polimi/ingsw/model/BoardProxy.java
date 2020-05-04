@@ -68,6 +68,7 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
      *
      * @return the string
      */
+
     @Override
     public String toString() {
         StringBuilder myBoard = new StringBuilder();

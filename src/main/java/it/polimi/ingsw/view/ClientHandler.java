@@ -65,7 +65,9 @@ public class ClientHandler implements Runnable{
             Scanner socketIn = new Scanner(socket.getInputStream()); // Open input stream with socket
             PrintWriter socketOut = new PrintWriter(socket.getOutputStream()); // Open output stream with socket
 
+            //socketout.write e invio stringa nomi gia connessi con contains
             this.name = socketIn.nextLine(); // Receive name
+
 
             this.age = socketIn.nextInt(); // Receive age
 

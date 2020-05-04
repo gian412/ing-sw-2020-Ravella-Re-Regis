@@ -164,4 +164,11 @@ public class CliComposer {
 
         return write.toString();
     }
+
+    public String boardMaker(){
+
+        return null;
+    }
+
 }
+
