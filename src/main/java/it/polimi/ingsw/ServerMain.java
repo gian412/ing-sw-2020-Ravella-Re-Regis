@@ -11,6 +11,5 @@ public class ServerMain {
         server = new Server(); // Inizializzo il server
         server.run(); // Faccio partire il server
 
-
     }
 }

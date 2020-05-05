@@ -66,6 +66,10 @@ public class ClientHandler implements Runnable{
             PrintWriter socketOut = new PrintWriter(socket.getOutputStream()); // Open output stream with socket
 
             //socketout.write e invio stringa nomi gia connessi con contains
+            String name = server.getPlayerName();
+            socketOut.println(name);
+            socketOut.flush();
+
             this.name = socketIn.nextLine(); // Receive name
 
 
@@ -77,7 +81,7 @@ public class ClientHandler implements Runnable{
                 server.setClientsNumber(socketIn.nextInt());
             } else {
                 socketOut.println("Adding you to an existing game. The game is composed by " + server.getClientsNumber() + " players.");
-                socketOut.flush();
+
             }
             socketOut.println("The game will start when all the players will be connected. Please wait...");
             socketOut.flush();

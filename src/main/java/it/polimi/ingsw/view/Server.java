@@ -105,6 +105,30 @@ public class Server implements Runnable{
     }
 
     /**
+     * returns a string with the name of the players which are waiting the start of the game
+     *
+     *
+     * @authors Marco Re
+     *
+     * @return a string with the names of the player which are waiting the start of the game
+     */
+    public String getPlayerName(){
+        StringBuilder ln = new StringBuilder();
+        ln.append(' ');
+
+        if( waitingClients.isEmpty()) {
+            return ln.toString();
+        }
+        else {
+            for (ClientHandler x : waitingClients) {
+                ln.append(x.getName());
+            }
+
+            return ln.toString();
+        }
+    }
+
+    /**
      * The method run for the runnable class Server.
      * This method receive the incoming connections and call the ClientHandler in a thread
      *
