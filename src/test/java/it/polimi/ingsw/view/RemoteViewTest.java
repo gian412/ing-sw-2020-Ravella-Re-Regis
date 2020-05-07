@@ -215,6 +215,86 @@ public class RemoteViewTest {
         }
     }
 
+    @Test
+    @DisplayName("disconnection of client test, with a retard")
+    public  void disconnectTestWithRetard(){
+
+        // same as disconnectTest, only added a sleep
+        Thread server = new Thread(() -> {
+            try {
+                ServerSocket srv = new ServerSocket(7007);
+                Socket connSocket1 = srv.accept(), // the one to disconnect
+                        connSocket2 = srv.accept(); // the one to play (should receive a different proxy)
+
+                Game g = new Game();
+                Controller controller = new Controller(g);
+
+                controller.addPlayer("Marco", 15);
+                controller.addPlayer("Gianluca", 16);
+
+                // Instancing the remoteView
+                RemoteView rv = new RemoteView(connSocket1, controller, "Marco"),
+                        rv2 = new RemoteView(connSocket2, controller, "Gianluca");
+
+                rv.addObserver(controller);
+                rv2.addObserver(controller);
+
+                g.getBoard().addView(rv);
+                g.getBoard().addView(rv2);
+
+                Thread rvThread = new Thread(rv),
+                        rv2Thread = new Thread(rv2);
+
+                rvThread.start();
+                rv2Thread.start();
+
+                controller.startGame();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Thread clientToDisconnect = new Thread(() -> {
+            try {
+                Socket connSocket = new Socket("127.0.0.1", 7007);
+
+                ObjectOutputStream outputStream = new ObjectOutputStream(connSocket.getOutputStream());
+                ObjectInputStream inputStream = new ObjectInputStream(connSocket.getInputStream());
+
+                inputStream.readObject();
+
+                // disconnecting after initial data received: this triggers a "GAME OVER" message
+                Thread.sleep(3000);
+                System.out.println("Disconnecting client...");
+                connSocket.close();
+
+            } catch (IOException | ClassNotFoundException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        server.start();
+        clientToDisconnect.start();
+
+        try {
+            Socket actualClient = new Socket("127.0.0.1", 7007);
+
+            ObjectOutputStream outputStream = new ObjectOutputStream(actualClient.getOutputStream());
+            ObjectInputStream inputStream = new ObjectInputStream(actualClient.getInputStream());
+
+
+            inputStream.readObject(); // initial data
+            BoardProxy gameOver = (BoardProxy) inputStream.readObject();
+
+            assertEquals("Unexpected Game Over", ((BoardProxy) inputStream.readObject()).getWinner().getNAME());
+
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
 
