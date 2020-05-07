@@ -42,13 +42,13 @@ public class Client {
 
         line = stdIn.nextLine();
 
-        boolean cliInterface;
+        boolean guiInterface;
         while (true) { // Wait a valid input
             if (line.toUpperCase().equals("CLI")){
-                cliInterface = true; // Set interface to  CLI
+                guiInterface = false; // Set interface to  CLI
                 break;
             } else if (line.toUpperCase().equals("GUI")) {
-                cliInterface = false; // Set interface to GUI
+                guiInterface = true; // Set interface to GUI
                 break;
             } else {
                 System.out.println("INVALID INPUT.\n\n"+ // Ask...
@@ -65,6 +65,12 @@ public class Client {
         Socket socket = new Socket(IP, PORT); // Start the socket connection
         System.out.println("Connection established");
         // Open the input/output streams with the socket
+
+        /*if (guiInterface) {
+            guiView(Socket socket);
+            return;
+        }*/
+
         Scanner socketIn = new Scanner(socket.getInputStream());
         PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
         System.out.println("-------------------------------------------------------------------------------------------\n");
@@ -133,20 +139,6 @@ public class Client {
         line = socketIn.nextLine(); // Receive message
         System.out.println(line); // Print message
         System.out.println("-------------------------------------------------------------------------------------------\n");
-
-
-        //parte la cli
-
-
-        /*(cliInterface) {
-            CLIView view = new CLIView(socket);
-        } else {
-            GUIView view = new GUIView(socket);
-        }
-        view.run();
-        */
-
-
 
     }
 }
