@@ -10,6 +10,9 @@ import java.util.Map;
 public class BoardProxy extends Observable<BoardProxy> implements Serializable {
 
     private Height[][] boardScheme;
+
+
+
     private Map<String, Pair> workers;
     private Player winner, turnPlayer;
     private String choosingGods, illegalMoveString;
@@ -25,6 +28,14 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     public BoardProxy(){
         boardScheme = new Height[5][5];
         workers = new HashMap<>();
+    }
+
+    public Height[][] getBoardScheme() {
+        return boardScheme;
+    }
+
+    public Map<String, Pair> getWorkers() {
+        return workers;
     }
 
     public void setTurnPlayer(Player turnPlayer) {
