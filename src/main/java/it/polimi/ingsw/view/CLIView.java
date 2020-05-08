@@ -6,28 +6,76 @@ import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.Socket;
 import java.util.Scanner;
 
 public class CLIView {
+    static Scanner inputStream = new Scanner(System.in);
+    static Scanner inputNet;
+    static PrintStream outNet;
+    static Socket socket;
+    static Player clientPlayer = new Player("", -1);
 
     public static void main(String[] args) {
-        Scanner read = new Scanner(System.in);
-        PrintStream print = new PrintStream(System.out);
+        String command = "";
 
-        Game myGame = new Game();
-        Controller c = new Controller(myGame);
+        while(true){
+            command = inputStream.next();
+            switch(command){
+                case "setname":
+                    String name = inputStream.next();
 
-        c.addPlayer("Rave", 30);
-        c.addPlayer("Rave2", 22);
+                    System.out.print("Insert age: ");
+                    int age = inputStream.nextInt();
 
-        print.println(myGame.getBoard().toString());
+                    clientPlayer = new Player(name, age);
+                    break;
+                case "connect":
+                    try {
+                        socket = new Socket("127.0.0.1", 1337);
+                        inputNet = new Scanner(socket.getInputStream());
+                        outNet = new PrintStream(socket.getOutputStream());
 
-        myGame.getBoard().getCell(new Pair(2, 3)).setWorker(new Worker("1", new Player("Strarave", 30)));
+                        String connectedPlayers = inputNet.nextLine();
+                        outNet.println(clientPlayer.getNAME());
+                        outNet.flush();
+                        outNet.println(clientPlayer.getAge());
+                        outNet.flush();
 
-        print.println(myGame.getBoard().toString());
+                        String message = inputNet.nextLine();
+                        if(message.equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) {
+                            System.out.print("How many Players: ");
+                            outNet.println(inputStream.nextInt());
+                            outNet.flush();
+                        }else{
+                            System.out.println(message);
+                        }
 
+                        System.out.println(inputNet.nextLine());
 
+                        startPlaying(socket);
+
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+            }
+        }
+    }
+
+    static private void startPlaying(Socket connSocket) throws IOException {
+        BoardListener listener = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
+        Thread listen = new Thread(listener);
+        listen.start();
+
+        while(true){
+            System.out.println("Insert command:");
+            inputStream.nextLine();
+        }
 
     }
 }
