@@ -529,7 +529,7 @@ public class AthenaTest {
         try {
             god.executeCommand(worker, null);
             fail("nullCommand in class AthenaTest didn't throw an exception");
-        } catch (IllegalMoveException e) {
+        } catch (NullPointerException | IllegalMoveException e) {
             assertNull(null);
         }
     }

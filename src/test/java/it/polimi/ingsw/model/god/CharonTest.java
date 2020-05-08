@@ -595,7 +595,7 @@ public class CharonTest {
         try {
             god.executeCommand(worker, null);
             fail("nullCommand in class CharonTest didn't throw an exception");
-        } catch (IllegalMoveException e) {
+        } catch (NullPointerException | IllegalMoveException e) {
             assertNull(null);
         }
     }

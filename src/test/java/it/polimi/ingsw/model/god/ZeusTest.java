@@ -595,7 +595,7 @@ public class ZeusTest {
         try {
             god.executeCommand(worker, null);
             fail("nullCommand in class ZeusTest didn't throw an exception");
-        } catch (IllegalMoveException e) {
+        } catch (NullPointerException | IllegalMoveException e) {
             assertNull(null);
         }
     }

@@ -595,7 +595,7 @@ public class ApolloTest {
         try {
             god.executeCommand(worker, null);
             fail("nullCommand in class ApolloTest didn't throw an exception");
-        } catch (IllegalMoveException e) {
+        } catch (NullPointerException | IllegalMoveException e) {
             assertNull(null);
         }
     }
@@ -613,7 +613,7 @@ public class ApolloTest {
         try {
             god.executeCommand(worker, command);
             fail("outOfSwitchCommandType in class ApolloTest didn't throw an exception");
-        } catch (IllegalMoveException e) {
+        } catch (NullPointerException | IllegalMoveException e) {
             assertNull(null);
         }
     }

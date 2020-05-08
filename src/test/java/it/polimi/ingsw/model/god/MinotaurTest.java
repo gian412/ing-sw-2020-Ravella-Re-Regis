@@ -595,7 +595,7 @@ public class MinotaurTest {
         try {
             god.executeCommand(worker, null);
             fail("nullCommand in class MinotaurTest didn't throw an exception");
-        } catch (IllegalMoveException e) {
+        } catch (NullPointerException | IllegalMoveException e) {
             assertNull(null);
         }
     }

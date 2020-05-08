@@ -81,6 +81,9 @@ public class Atlas extends God {
                     super.resetLocalVariables();
                     break;
 
+                default:
+                    throw new IllegalMoveException("Command type not valid for the current god");
+
             }
         } else{
             throw new NullPointerException("The passed command is null");
