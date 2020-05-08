@@ -71,8 +71,6 @@ public class ClientHandler implements Runnable{
             socketOut.flush();
 
             this.name = socketIn.nextLine(); // Receive name
-
-
             this.age = socketIn.nextInt(); // Receive age
 
             if (server.isLobbyEmpty()){

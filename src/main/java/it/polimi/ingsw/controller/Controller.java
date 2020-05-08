@@ -137,7 +137,7 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
             }
             else {
                 commitCommand(
-                        message.player.getNAME(),
+                        message.getPlayer(),
                         message.getCommand(),
                         message.getWorkerIndex()
                 );

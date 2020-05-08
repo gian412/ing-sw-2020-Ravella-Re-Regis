@@ -5,19 +5,19 @@ import it.polimi.ingsw.model.Player;
 import java.io.Serializable;
 
 public class PlayerCommand implements Serializable {
-    Player player;
+    String playerName;
     Command cmd;
     String message;
     int workerIndex;
 
-    public PlayerCommand(Player p, Command c, int workerIndex){
-        player = p;
+    public PlayerCommand(String p, Command c, int workerIndex){
+        playerName = p;
         cmd = c;
         this.workerIndex = workerIndex;
     }
 
-    public Player getPlayer(){
-        return player;
+    public String getPlayer(){
+        return playerName;
     }
 
     public  Command getCommand(){

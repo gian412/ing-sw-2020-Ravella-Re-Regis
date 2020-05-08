@@ -18,7 +18,8 @@ public class CLIView {
     static Scanner inputNet;
     static PrintStream outNet;
     static Socket socket;
-    static Player clientPlayer = new Player("", -1);
+    static String playerName;
+    static int playerAge;
 
     public static void main(String[] args) {
         String command = "";
@@ -27,12 +28,11 @@ public class CLIView {
             command = inputStream.next();
             switch(command){
                 case "setname":
-                    String name = inputStream.next();
+                    playerName = inputStream.next();
 
                     System.out.print("Insert age: ");
-                    int age = inputStream.nextInt();
+                     playerAge = inputStream.nextInt();
 
-                    clientPlayer = new Player(name, age);
                     break;
                 case "connect":
                     try {
@@ -41,9 +41,9 @@ public class CLIView {
                         outNet = new PrintStream(socket.getOutputStream());
 
                         String connectedPlayers = inputNet.nextLine();
-                        outNet.println(clientPlayer.getNAME());
+                        outNet.println(playerName);
                         outNet.flush();
-                        outNet.println(clientPlayer.getAge());
+                        outNet.println(playerAge);
                         outNet.flush();
 
                         String message = inputNet.nextLine();
@@ -87,7 +87,7 @@ public class CLIView {
                     string.append(command[1] + " ");
                     string.append(command[2]);
 
-                    PlayerCommand cmd = new PlayerCommand(clientPlayer, new Command(new Pair(0,0), CommandType.SET_GODS), 0);
+                    PlayerCommand cmd = new PlayerCommand(playerName, new Command(new Pair(0,0), CommandType.SET_GODS), 0);
                     cmd.setMessage(string.toString());
 
                     out.writeObject(cmd);
@@ -95,11 +95,7 @@ public class CLIView {
 
                     break;
 
-
             }
-
-
-
 
         }
 

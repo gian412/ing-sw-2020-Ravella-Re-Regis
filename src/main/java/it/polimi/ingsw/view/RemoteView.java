@@ -64,7 +64,7 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
                 } catch (IOException e) {
                     System.err.println("Client disconnected");
                     disconnected = true;
-                    notify(new PlayerCommand(player, new Command(new Pair(-1, -1), CommandType.DISCONNECTED), 0));
+                    notify(new PlayerCommand(player.getNAME(), new Command(new Pair(-1, -1), CommandType.DISCONNECTED), 0));
                     break;
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
