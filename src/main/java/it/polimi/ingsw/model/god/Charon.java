@@ -95,7 +95,7 @@ public class Charon extends God {
                     }
 
                 case BUILD_DOME:
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;

@@ -104,7 +104,7 @@ public class Zeus extends God {
                     }
 
                 case BUILD_DOME:
-                    if (cell.getHeight() == Height.THIRD_FLOOR){
+                    if (hasMoved && !hasBuild && !hasWon && cell.getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(cell, command.coordinates, false);
                             hasBuild = true;
