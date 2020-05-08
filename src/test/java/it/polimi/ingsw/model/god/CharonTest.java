@@ -353,7 +353,7 @@ public class CharonTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Charon(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
