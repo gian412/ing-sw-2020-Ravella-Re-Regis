@@ -95,7 +95,7 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
                 connSocket.close();
             }
         } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 }

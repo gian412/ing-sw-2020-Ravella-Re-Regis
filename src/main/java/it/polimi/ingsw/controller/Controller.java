@@ -124,8 +124,7 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
         }
 
         if(message.cmd.commandType == CommandType.SET_GODS){
-
-
+            game.getBoard().setChoosingGods(message.getMessage());
         }
         else{
             // in-game operations

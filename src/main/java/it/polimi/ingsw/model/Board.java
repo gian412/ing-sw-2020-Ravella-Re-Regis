@@ -62,7 +62,7 @@ public class Board {
      */
     public void setChoosingGods(String message){
         proxy.setChoosingGods(message);
-        updateProxyBoard();
+        proxy.updateProxy();
     }
 
     /**

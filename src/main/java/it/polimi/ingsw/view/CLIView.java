@@ -86,8 +86,13 @@ public class CLIView {
                     string.append(inputStream.next()+" ");
                     string.append(inputStream.next());
 
-                    //PlayerCommand cmd = new PlayerCommand(clientPlayer, new Command(new Pair(0,0), CommandType.))
+                    PlayerCommand cmd = new PlayerCommand(clientPlayer, new Command(new Pair(0,0), CommandType.SET_GODS), 0);
 
+
+                    cmd.setMessage(string.toString());
+
+                    out.writeObject(cmd);
+                    out.flush();
 
                     break;
 
