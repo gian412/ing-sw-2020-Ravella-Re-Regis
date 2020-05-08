@@ -150,8 +150,8 @@ public class TritonTest {
     }
 
     @Test
-    @DisplayName("hasMovedOutOfBoard")
-    public void hasMovedOutOfBoardTest(){
+    @DisplayName("hasMovedMoreThanOneCell")
+    public void hasMovedMoreThanOneCell(){
 
         // Initialization of the parameters
         Board board = new Board();
