@@ -27,6 +27,7 @@ public class ClientHandlerTest {
             // all the instructions are managed by the view: we don't need that here
             ps.println("Marco");
             ps.println(15);
+            in.nextLine();
 
             // with the first player, i'm expecting to create a new game, so
             assertEquals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)", in.nextLine());
