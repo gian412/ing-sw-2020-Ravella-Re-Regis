@@ -1,5 +1,11 @@
 package it.polimi.ingsw.view.cli;
 
+import it.polimi.ingsw.model.BoardProxy;
+import it.polimi.ingsw.model.Height;
+import it.polimi.ingsw.model.Pair;
+
+import java.util.Map;
+
 public class CliComposer {
 
     //Pattern to write the title SANTORINI in the Cli
@@ -165,7 +171,30 @@ public class CliComposer {
         return write.toString();
     }
 
-    public String boardMaker(){
+    public String boardMaker(BoardProxy board){
+
+        for(int i = 0; i < 5; i++){
+
+            for(int j = 0; j < 5; j++){
+                System.out.print("|");
+                System.out.print(board.getBoardScheme()[i][j].toString().charAt(0));
+
+                boolean found = false;
+                for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
+                    if((entry.getValue().y == i) && (entry.getValue().x == j)) {
+                        System.out.print(entry.getKey().charAt(0));
+                        found = true;
+                    }
+                }
+
+                if(!found) {
+                    System.out.print(" ");
+                }
+                System.out.print("| ");
+            }
+
+            System.out.print("\n");
+        }
 
         return null;
     }
