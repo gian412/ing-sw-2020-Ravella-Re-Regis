@@ -212,6 +212,109 @@ public class TritonTest {
     }
 
     @Test
+    @DisplayName("hasMovedSecondTime")
+    public void hasMovedSecondTime(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Triton(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasMovedSecondTime in class TritonTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuild but hasn't moved")
+    public void hasBuildBeforeHasMoved(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        God god = new Triton(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = false;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasBuildBeforeHasMoved in class TritonTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertFalse("hasBuild must be false", god.hasBuild);
+            assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.SECOND_FLOOR);
+        }
+    }
+
+    @Test
+    @DisplayName("hasBuild a dome but hasn't moved")
+    public void hasBuildDomeBeforeHasMoved(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
+        God god = new Triton(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = false;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasBuildDomeBeforeHasMoved in class TritonTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertFalse("hasBuild must be false", god.hasBuild);
+            assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
+        }
+
+    }
+
+    @Test
     @DisplayName("hasBuild not a dome")
     public void hasBuildNotDomeTest(){
 
