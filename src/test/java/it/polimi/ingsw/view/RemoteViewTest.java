@@ -31,6 +31,9 @@ public class RemoteViewTest {
                 // setting up a server
                 ServerSocket serverSocket = new ServerSocket(7007);
                 Socket myClient = serverSocket.accept();
+
+                serverSocket.close();
+
                 System.out.println("[SERVER]Client connected, starting game");
 
                 // after the client connection, instancing and starting the game
@@ -74,9 +77,13 @@ public class RemoteViewTest {
 
             System.out.println("[CLIENT]\n" + proxy.toString());
 
+            clientSocket.close();
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        server.stop();
     }
 
 
@@ -88,6 +95,9 @@ public class RemoteViewTest {
                 // setting up a server
                 ServerSocket serverSocket = new ServerSocket(7007);
                 Socket myClient = serverSocket.accept();
+
+                serverSocket.close();
+
                 System.out.println("[SERVER]Client connected, starting game");
 
                 // after the client connection, instancing and starting the game
@@ -136,6 +146,8 @@ public class RemoteViewTest {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        server.stop();
     }
 
     @Test
@@ -146,6 +158,8 @@ public class RemoteViewTest {
                 ServerSocket srv = new ServerSocket(7007);
                 Socket connSocket1 = srv.accept(), // the one to disconnect
                         connSocket2 = srv.accept(); // the one to play (should receive a different proxy)
+
+                srv.close();
 
                 Game g = new Game();
                 Controller controller = new Controller(g);
@@ -213,6 +227,8 @@ public class RemoteViewTest {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        server.stop();
     }
 
     @Test
@@ -225,6 +241,8 @@ public class RemoteViewTest {
                 ServerSocket srv = new ServerSocket(7007);
                 Socket connSocket1 = srv.accept(), // the one to disconnect
                         connSocket2 = srv.accept(); // the one to play (should receive a different proxy)
+
+                srv.close();
 
                 Game g = new Game();
                 Controller controller = new Controller(g);
@@ -293,8 +311,8 @@ public class RemoteViewTest {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        server.stop();
     }
-
-
 }
 

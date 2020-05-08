@@ -88,7 +88,6 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
     public void update(BoardProxy message) {
         if(disconnected) return;
         try {
-            System.out.println(message.toString());
 
             toClient.reset();
             toClient.writeObject(message);
