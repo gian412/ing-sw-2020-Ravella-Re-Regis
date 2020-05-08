@@ -178,6 +178,40 @@ public class ApolloTest {
     }
 
     @Test
+    @DisplayName("moveUpWhenCannotMoveUp")
+    public void moveUpWhenCannotMoveUp() {
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Apollo(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        worker.setCanMoveUp(false);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.GROUND);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.FIRST_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveUpWhenCannotMoveUp in class ApolloTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
     @DisplayName("hasBuild not a dome")
     public void hasBuildNotDomeTest(){
 
