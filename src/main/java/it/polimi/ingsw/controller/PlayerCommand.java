@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class PlayerCommand implements Serializable {
     Player player;
     Command cmd;
+    String message;
     int workerIndex;
 
     public PlayerCommand(Player p, Command c, int workerIndex){
@@ -24,6 +25,14 @@ public class PlayerCommand implements Serializable {
     }
     public int getWorkerIndex() {
         return workerIndex;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
 }

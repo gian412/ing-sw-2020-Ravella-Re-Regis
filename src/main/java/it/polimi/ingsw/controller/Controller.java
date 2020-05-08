@@ -123,15 +123,10 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
             return;
         }
 
-        // this if is triggered during game setup
-        if(this.game.getTurnPlayer().getDivinity() == null && message.player.getDivinity() != null) {
-            try {
-                this.game.setPlayerDivinity(message.player.getNAME(), message.player.getDivinity());
-            } catch (NoSuchPlayerException e) {
-                e.printStackTrace();
-            }
-        }
+        if(message.cmd.commandType == CommandType.SET_GODS){
 
+
+        }
         else{
             // in-game operations
             if(message.cmd.commandType == CommandType.CHANGE_TURN)

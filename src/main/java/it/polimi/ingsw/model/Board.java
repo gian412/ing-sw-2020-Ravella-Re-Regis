@@ -57,6 +57,15 @@ public class Board {
     }
 
     /**
+     *
+     * @param message
+     */
+    public void setChoosingGods(String message){
+        proxy.setChoosingGods(message);
+        updateProxyBoard();
+    }
+
+    /**
      * updates the remoteviews (by the proxy) informing that an illegal
      * move has been made
      *

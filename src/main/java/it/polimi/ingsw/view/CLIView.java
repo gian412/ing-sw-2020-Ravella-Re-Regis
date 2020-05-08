@@ -1,15 +1,15 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.controller.Command;
+import it.polimi.ingsw.controller.CommandType;
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.controller.PlayerCommand;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -69,12 +69,34 @@ public class CLIView {
 
     static private void startPlaying(Socket connSocket) throws IOException {
         BoardListener listener = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
+        ObjectOutputStream out = new ObjectOutputStream(connSocket.getOutputStream());
         Thread listen = new Thread(listener);
         listen.start();
 
         while(true){
+
             System.out.println("Insert command:");
-            inputStream.nextLine();
+
+
+            switch(inputStream.next()){
+
+                case "setupgods":
+                    StringBuilder string = new StringBuilder("");
+
+                    string.append(inputStream.next()+" ");
+                    string.append(inputStream.next());
+
+                    //PlayerCommand cmd = new PlayerCommand(clientPlayer, new Command(new Pair(0,0), CommandType.))
+
+
+                    break;
+
+
+            }
+
+
+
+
         }
 
     }

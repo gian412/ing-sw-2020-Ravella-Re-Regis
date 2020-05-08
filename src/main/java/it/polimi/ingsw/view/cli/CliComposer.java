@@ -173,6 +173,10 @@ public class CliComposer {
 
     public String boardMaker(BoardProxy board){
 
+
+        System.out.println("choosingGods: " + board.getChoosingGods());
+
+       // System.out.println("turnPlayer: " + board.getTurnPlayer().getNAME());
         for(int i = 0; i < 5; i++){
 
             for(int j = 0; j < 5; j++){
