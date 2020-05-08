@@ -12,13 +12,13 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     private Height[][] boardScheme;
     private Map<String, Pair> workers;
     private Player winner;
+    private Player turnPlayer;
+    private String choosingGods, illegalMoveString;
 
     public Player getTurnPlayer() {
         return turnPlayer;
     }
 
-    private Player turnPlayer;
-    private String choosingGods, illegalMoveString;
 
     public String getIllegalMoveString() {
         return illegalMoveString;
@@ -86,6 +86,8 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     @Override
     public String toString() {
         StringBuilder myBoard = new StringBuilder();
+
+        myBoard.append(this.choosingGods + "\n\n");
 
         for(int row = 0; row < 5; row++){
             for(int col = 0; col < 5; col++) {

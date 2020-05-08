@@ -1,7 +1,9 @@
 package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.Pair;
 
-public class Command {
+import java.io.Serializable;
+
+public class Command implements Serializable {
     public final Pair coordinates;
     public final CommandType commandType;
 

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
-public class Pair {
+import java.io.Serializable;
+
+public class Pair implements Serializable {
     public final int x;
     public final int y;
 

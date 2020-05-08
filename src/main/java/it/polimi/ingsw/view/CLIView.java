@@ -90,6 +90,7 @@ public class CLIView {
                     PlayerCommand cmd = new PlayerCommand(playerName, new Command(new Pair(0,0), CommandType.SET_GODS), 0);
                     cmd.setMessage(string.toString());
 
+                    out.reset();
                     out.writeObject(cmd);
                     out.flush();
 
