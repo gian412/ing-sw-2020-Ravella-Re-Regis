@@ -492,28 +492,6 @@ public class PrometheusTest {
         }
     }
 
-    @Test
-    @DisplayName("resetGodVariable")
-    public void resetAllGodVariable() {
-        Board board = new Board();
-        Command command = new Command(new Pair(1, 1), CommandType.RESET);
-        God god = new Prometheus(board);
-        Player player = new Player("Name", 18);
-        player.setDivinity(god);
-        Worker worker = new Worker("Id", player);
-
-        god.hasMoved = true;
-        god.hasBuild = true;
-
-        try {
-            god.executeCommand(worker, command);
-            assertFalse("hasMoved isn't false", god.hasMoved);
-            assertFalse("hasBuild isn't false", god.hasBuild);
-        } catch (IllegalMoveException e) {
-            fail("Exception in resetAllGodVariable in class PrometheusTest");
-        }
-    }
-
 
     // Exclusive tests
     @Test
@@ -629,6 +607,30 @@ public class PrometheusTest {
 
 
 
+    }
+
+    @Test
+    @DisplayName("resetPrometheusVariable")
+    public void resetPrometheusVariable() {
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.RESET);
+        Prometheus god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        god.hasMoved = true;
+        god.hasBuild = true;
+        god.hasBuildBefore = true;
+
+        try {
+            god.executeCommand(worker, command);
+            assertFalse("hasMoved isn't false", god.hasMoved);
+            assertFalse("hasBuild isn't false", god.hasBuild);
+            assertFalse("hasBuildSecond isn't false", god.hasBuildBefore);
+        } catch (IllegalMoveException e) {
+            fail("Exception in resetAllGodVariable in class DemeterTest");
+        }
     }
     
 }
