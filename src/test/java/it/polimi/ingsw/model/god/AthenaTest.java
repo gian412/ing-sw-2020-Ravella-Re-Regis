@@ -630,4 +630,44 @@ public class AthenaTest {
         }
     }
 
+    @Test
+    @DisplayName("hasMovedAndResetCanMoveUp")
+    public void hasMovedAndResetCanMoveUp(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Athena(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        worker.setCanMoveUp(false);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.FIRST_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+
+            assertTrue("hasMoved must be true", god.hasMoved);
+            assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
+            assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
+            assertTrue("worker.canMoveUp must be true", worker.isCanMoveUp());
+
+        } catch (IllegalMoveException e) {
+            System.err.println("Error e in method hasMovedAndResetCanMoveUp in class AthenaTest: " + e.toString());
+            fail("Exception in hasMovedAndResetCanMoveUp in class AthenaTest");
+        }
+
+    }
+
 }
