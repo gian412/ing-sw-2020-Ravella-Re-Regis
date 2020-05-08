@@ -560,6 +560,28 @@ public class AtlasTest {
             fail("Exception in hasWonFalseTest in class AtlasTest");
         }
     }
+
+    @Test
+    @DisplayName("resetVariable")
+    public void resetAllGodVariable() {
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.RESET);
+        God god = new Atlas(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        god.hasMoved = true;
+        god.hasBuild = true;
+
+        try {
+            god.executeCommand(worker, command);
+            assertFalse("hasMoved isn't false", god.hasMoved);
+            assertFalse("hasBuild isn't false", god.hasBuild);
+        } catch (IllegalMoveException e) {
+            fail("Exception in resetAllGodVariable in class AtlasTest");
+        }
+    }
     
     // Exclusive tests
     @Test
