@@ -76,19 +76,18 @@ public class CLIView {
         while(true){
 
             System.out.println("Insert command:");
+            String command[] = inputStream.nextLine().split(" ");
 
 
-            switch(inputStream.next()){
+            switch(command[0]){
 
                 case "setupgods":
                     StringBuilder string = new StringBuilder("");
 
-                    string.append(inputStream.next()+" ");
-                    string.append(inputStream.next());
+                    string.append(command[1] + " ");
+                    string.append(command[2]);
 
                     PlayerCommand cmd = new PlayerCommand(clientPlayer, new Command(new Pair(0,0), CommandType.SET_GODS), 0);
-
-
                     cmd.setMessage(string.toString());
 
                     out.writeObject(cmd);
