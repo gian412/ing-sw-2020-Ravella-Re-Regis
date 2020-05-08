@@ -561,28 +561,6 @@ public class HestiaTest {
             fail("Exception in hasWonFalseTest in class HestiaTest");
         }
     }
-
-    @Test
-    @DisplayName("resetGodVariable")
-    public void resetAllGodVariable() {
-        Board board = new Board();
-        Command command = new Command(new Pair(1, 1), CommandType.RESET);
-        God god = new Hestia(board);
-        Player player = new Player("Name", 18);
-        player.setDivinity(god);
-        Worker worker = new Worker("Id", player);
-
-        god.hasMoved = true;
-        god.hasBuild = true;
-
-        try {
-            god.executeCommand(worker, command);
-            assertFalse("hasMoved isn't false", god.hasMoved);
-            assertFalse("hasBuild isn't false", god.hasBuild);
-        } catch (IllegalMoveException e) {
-            fail("Exception in resetAllGodVariable in class HestiaTest");
-        }
-    }
     
     // Exclusive tests
     @Test
@@ -701,6 +679,30 @@ public class HestiaTest {
 
 
 
+    }
+
+    @Test
+    @DisplayName("resetHestiaVariable")
+    public void resetHestiaVariable() {
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.RESET);
+        Hestia god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        god.hasMoved = true;
+        god.hasBuild = true;
+        god.hasBuildSecond = true;
+
+        try {
+            god.executeCommand(worker, command);
+            assertFalse("hasMoved isn't false", god.hasMoved);
+            assertFalse("hasBuild isn't false", god.hasBuild);
+            assertFalse("hasBuildSecond isn't false", god.hasBuildSecond);
+        } catch (IllegalMoveException e) {
+            fail("Exception in resetAllGodVariable in class DemeterTest");
+        }
     }
 
 }
