@@ -320,11 +320,12 @@ public class ApolloTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        Command command = new Command(new Pair(3, 3), CommandType.BUILD);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(new Pair(3, 3));
@@ -357,6 +358,7 @@ public class ApolloTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(new Pair(3, 3));

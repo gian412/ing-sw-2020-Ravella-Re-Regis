@@ -257,6 +257,7 @@ public class PrometheusTest {
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
 
         // Initialization of the first cell
         Cell firstCell = board.getCell(new Pair(3, 3));
