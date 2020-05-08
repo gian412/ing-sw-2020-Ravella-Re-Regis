@@ -315,6 +315,70 @@ public class AtlasTest {
     }
 
     @Test
+    @DisplayName("hasBuildMoreThanOneCell")
+    public void hasBuildMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        God god = new Atlas(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class AtlasTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("worker's position must be firstCell", secondCell.getHeight(), Height.SECOND_FLOOR);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuildDomeMoreThanOneCell")
+    public void hasBuildDomeMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        God god = new Atlas(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class AtlasTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("worker's position must be firstCell", secondCell.getHeight(), Height.THIRD_FLOOR);
+        }
+
+    }
+
+    @Test
     @DisplayName("hasBuild not a dome")
     public void hasBuildNotDomeTest(){
 
