@@ -41,7 +41,7 @@ public class Apollo extends God{
                     } catch (IllegalMoveException e){
                         throw new IllegalMoveException(e.getMessage());
                     }
-                } else{
+                } else {
                     throw new IllegalMoveException("CanMoveUp parameter error");
                 }
             }else{
