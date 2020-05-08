@@ -647,4 +647,83 @@ public class ArtemisTest {
         }
     }
 
+    @Test
+    @DisplayName("hasMovedSecondMoreThanOneCell")
+    public void hasMovedSecondMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command firstCommand = new Command(new Pair(1, 1), CommandType.MOVE);
+        Command secondCommand = new Command(new Pair(3, 3), CommandType.MOVE);
+        Artemis god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.GROUND);
+        secondCell.setWorker(null);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(3, 3));
+        thirdCell.setHeight(Height.FIRST_FLOOR);
+        thirdCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, firstCommand);
+        } catch (IllegalMoveException e) {
+            fail("hasMovedSecondMoreThanOneCell in class ArtemisTest throw an exception in first command");
+        }
+        try {
+            god.executeCommand(worker, secondCommand);
+            fail("hasMovedSecondMoreThanOneCell in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasMovedThirdTime")
+    public void hasMovedThirdTime(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        Artemis god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+        god.hasMovedSecond = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasMovedThirdTime in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
 }
