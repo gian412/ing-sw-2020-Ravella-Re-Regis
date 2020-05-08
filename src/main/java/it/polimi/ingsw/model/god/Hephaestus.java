@@ -7,7 +7,7 @@ import it.polimi.ingsw.exceptions.IllegalMoveException;
 public class Hephaestus extends God {
 
     protected boolean hasBuildSecond;
-    private  Cell previousCell;
+    protected   Cell previousCell;
 
     /**
      * Class' constructor that use the super class' constructor

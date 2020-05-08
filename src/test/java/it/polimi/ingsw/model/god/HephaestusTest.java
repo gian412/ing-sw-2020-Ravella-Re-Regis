@@ -562,28 +562,6 @@ public class HephaestusTest {
         }
     }
 
-    @Test
-    @DisplayName("resetGodVariable")
-    public void resetAllGodVariable() {
-        Board board = new Board();
-        Command command = new Command(new Pair(1, 1), CommandType.RESET);
-        God god = new Hephaestus(board);
-        Player player = new Player("Name", 18);
-        player.setDivinity(god);
-        Worker worker = new Worker("Id", player);
-
-        god.hasMoved = true;
-        god.hasBuild = true;
-
-        try {
-            god.executeCommand(worker, command);
-            assertFalse("hasMoved isn't false", god.hasMoved);
-            assertFalse("hasBuild isn't false", god.hasBuild);
-        } catch (IllegalMoveException e) {
-            fail("Exception in resetAllGodVariable in class HephaestusTest");
-        }
-    }
-
     // Exclusive tests
     @Test
     @DisplayName("hasBuildSecond not a dome")
@@ -630,6 +608,32 @@ public class HephaestusTest {
         } catch (IllegalMoveException e2) {
             System.err.println("Error e2 in method hasBuildSecondTest in class HephaestusTest :" + e2.toString());
             fail("Exception in hasBuildSecondNotDomeTest in class HephaestusTest");
+        }
+    }
+
+    @Test
+    @DisplayName("resetHephaestusVariable")
+    public void resetHephaestusVariable() {
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.RESET);
+        Hephaestus god = new Hephaestus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        god.hasMoved = true;
+        god.hasBuild = true;
+        god.hasBuildSecond = true;
+        god.previousCell = new Cell(1, 1);
+
+        try {
+            god.executeCommand(worker, command);
+            assertFalse("hasMoved isn't false", god.hasMoved);
+            assertFalse("hasBuild isn't false", god.hasBuild);
+            assertFalse("hasBuildSecond isn't false", god.hasBuildSecond);
+            assertNull("hasBuildSecond isn't null", god.previousCell);
+        } catch (IllegalMoveException e) {
+            fail("Exception in resetAllGodVariable in class DemeterTest");
         }
     }
 
