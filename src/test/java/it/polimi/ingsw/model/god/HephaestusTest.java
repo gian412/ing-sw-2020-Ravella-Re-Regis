@@ -562,6 +562,42 @@ public class HephaestusTest {
         }
     }
 
+    @Test
+    @DisplayName("nullCommand")
+    public void nullCommand() {
+        Board board = new Board();
+        God god = new Hephaestus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, null);
+            fail("nullCommand in class HephaestusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+
+    @Test
+    @DisplayName("outOfSwitchCommandType")
+    public void outOfSwitchCommandType() {
+        Command command = new Command(new Pair(1, 1), CommandType.SET_GODS);
+        Board board = new Board();
+        God god = new Hephaestus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("outOfSwitchCommandType in class HephaestusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+    
+
     // Exclusive tests
     @Test
     @DisplayName("hasBuildSecond not a dome")

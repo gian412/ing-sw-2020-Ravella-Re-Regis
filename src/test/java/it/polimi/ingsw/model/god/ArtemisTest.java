@@ -527,6 +527,41 @@ public class ArtemisTest {
         }
     }
 
+    @Test
+    @DisplayName("nullCommand")
+    public void nullCommand() {
+        Board board = new Board();
+        God god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, null);
+            fail("nullCommand in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+
+    @Test
+    @DisplayName("outOfSwitchCommandType")
+    public void outOfSwitchCommandType() {
+        Command command = new Command(new Pair(1, 1), CommandType.SET_GODS);
+        Board board = new Board();
+        God god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("outOfSwitchCommandType in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+
     // Exclusive tests
     @Test
     @DisplayName("hasMovedSecond")
@@ -593,20 +628,20 @@ public class ArtemisTest {
     public void resetArtemisVariable() {
         Board board = new Board();
         Command command = new Command(new Pair(1, 1), CommandType.RESET);
-        God god = new Artemis(board);
+        Artemis god = new Artemis(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
         god.hasMoved = true;
-        ((Artemis)god).hasMovedSecond = true;
+        god.hasMovedSecond = true;
         god.hasBuild = true;
 
         try {
             god.executeCommand(worker, command);
             assertFalse("hasMoved isn't false", god.hasMoved);
             assertFalse("hasBuild isn't false", god.hasBuild);
-            assertFalse("hasMovedSecond isn't false", ((Artemis)god).hasMovedSecond);
+            assertFalse("hasMovedSecond isn't false", god.hasMovedSecond);
         } catch (IllegalMoveException e) {
             fail("Exception in resetAllGodVariable in class ArtemisTest");
         }

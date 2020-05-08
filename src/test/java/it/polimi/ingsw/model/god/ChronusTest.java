@@ -583,6 +583,41 @@ public class ChronusTest {
         }
     }
 
+    @Test
+    @DisplayName("nullCommand")
+    public void nullCommand() {
+        Board board = new Board();
+        God god = new Chronus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, null);
+            fail("nullCommand in class ChronusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+
+    @Test
+    @DisplayName("outOfSwitchCommandType")
+    public void outOfSwitchCommandType() {
+        Command command = new Command(new Pair(1, 1), CommandType.SET_GODS);
+        Board board = new Board();
+        God god = new Chronus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("outOfSwitchCommandType in class ChronusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+
     // Exclusive tests
     @Test
     @DisplayName("hasWon = true 'cause there're five completed tower'")
