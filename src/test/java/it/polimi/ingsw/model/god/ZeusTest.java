@@ -562,7 +562,7 @@ public class ZeusTest {
     }
 
     @Test
-    @DisplayName("resetVariable")
+    @DisplayName("resetGodVariable")
     public void resetAllGodVariable() {
         Board board = new Board();
         Command command = new Command(new Pair(1, 1), CommandType.RESET);
