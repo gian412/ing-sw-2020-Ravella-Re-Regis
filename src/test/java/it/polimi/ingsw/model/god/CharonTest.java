@@ -150,6 +150,34 @@ public class CharonTest {
     }
 
     @Test
+    @DisplayName("hasMovedOutOfBoard")
+    public void hasMovedOutOfBoardTest(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Charon(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class CharonTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
     @DisplayName("hasBuild not a dome")
     public void hasBuildNotDomeTest(){
 
