@@ -52,7 +52,7 @@ public class Minotaur extends God {
                 }
 
             } else{
-                throw new IllegalMoveException("Invalid MOVE parameters");
+                throw new IllegalMoveException("Invalid MOVE parameters: the cell in which other worker would be move is occupied");
             }
         }
     }

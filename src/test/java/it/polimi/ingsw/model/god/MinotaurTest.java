@@ -670,4 +670,88 @@ public class MinotaurTest {
 
     }
 
+    @Test
+    @DisplayName("hasMoved and hasForced in a cell more than 1 away")
+    public void hasMovedAndForcedMoreThanOne(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(2, 1), CommandType.MOVE);
+        God god = new Minotaur(board);
+        Player player1 = new Player("Name1", 18);
+        Player player2 = new Player("Name2", 18);
+        player1.setDivinity(god);
+        Worker worker1 = new Worker("Id1", player1);
+        Worker worker2 = new Worker("Id2", player2);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker1);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(2, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(worker2);
+
+        worker1.setCurrentCell(firstCell);
+        worker2.setCurrentCell(secondCell);
+
+        try {
+            god.executeCommand(worker1, command);
+            fail("moveOnADome in class MinotaurTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker1's position must be firstCell", worker1.getCurrentCell(), firstCell);
+            assertEquals("worker2's position must be secondCell", worker2.getCurrentCell(), secondCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasMoved and hasForced in an occupied cell")
+    public void hasMovedAndForcedInAnOccupiedCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Minotaur(board);
+        Player player1 = new Player("Name1", 18);
+        Player player2 = new Player("Name2", 18);
+        Player player3 = new Player("Name3", 18);
+        player1.setDivinity(god);
+        Worker worker1 = new Worker("Id1", player1);
+        Worker worker2 = new Worker("Id2", player2);
+        Worker worker3 = new Worker("Id3", player3);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker1);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(worker2);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(2, 1));
+        thirdCell.setHeight(Height.GROUND);
+        thirdCell.setWorker(worker3);
+
+        worker1.setCurrentCell(firstCell);
+        worker2.setCurrentCell(secondCell);
+        worker3.setCurrentCell(thirdCell);
+
+        try {
+            god.executeCommand(worker1, command);
+            fail("moveOnADome in class MinotaurTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker1's position must be firstCell", worker1.getCurrentCell(), firstCell);
+            assertEquals("worker2's position must be secondCell", worker2.getCurrentCell(), secondCell);
+            assertEquals("worker3's position must be thirdCell", worker3.getCurrentCell(), thirdCell);
+        }
+
+
+    }
+
 }
