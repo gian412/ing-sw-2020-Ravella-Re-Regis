@@ -652,4 +652,62 @@ public class ZeusTest {
         }
     }
 
+    @Test
+    @DisplayName("hasBuild not a dome in a wrong level")
+    public void hasBuildNotDomeInWrongLevel(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        God god = new Zeus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the second cell
+        Cell cell = board.getCell(new Pair(1, 1));
+        cell.setHeight(Height.THIRD_FLOOR);
+        cell.setWorker(worker);
+
+        worker.setCurrentCell(cell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasBuildNotDomeInWrongLevel in class ZeusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("cell's Height must be same as before", cell.getHeight(), Height.THIRD_FLOOR);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuild second time under himself")
+    public void hasBuildSecondUnderTest(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(0, 1), CommandType.BUILD);
+        God god = new Zeus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+        god.hasBuild = true;
+
+        // Initialization of the first cell
+        Cell cell = board.getCell(new Pair(0, 1));
+        cell.setHeight(Height.SECOND_FLOOR);
+        cell.setWorker(worker);
+
+        worker.setCurrentCell(cell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasBuildSecondUnderTest in class ZeusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("cell's Height must be same as before", cell.getHeight(), Height.SECOND_FLOOR);
+        }
+    }
+
 }

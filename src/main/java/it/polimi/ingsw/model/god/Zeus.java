@@ -32,11 +32,13 @@ public class Zeus extends God {
         Cell buildCell = board.getCell(pair); // Get the reference to the cell
         // build
         if( buildCell.getHeight() != Height.THIRD_FLOOR && buildCell.getHeight() != Height.DOME && !isDome ){
+            board.build(originCell, pair, false );
+            /* Unreachable exception
             try {
                 board.build(originCell, pair, false );
             } catch (IllegalMoveException e){
                 throw new IllegalMoveException(e.getMessage());
-            }
+            }*/
         } else{
             throw new IllegalMoveException("Invalid BUILD parameters");
         }
