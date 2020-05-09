@@ -648,6 +648,51 @@ public class HephaestusTest {
     }
 
     @Test
+    @DisplayName("hasBuildSecond dome in a cell more far than 1")
+    public void hasBuildSecondDomeMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        //Command firstCommand = new Command(new Pair(1, 0), CommandType.BUILD);
+        Command secondCommand = new Command(new Pair(0, 2), CommandType.BUILD);
+        Hephaestus god = new Hephaestus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+        god.hasBuild = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 0));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 0));
+        secondCell.setHeight(Height.GROUND);
+        secondCell.setWorker(null);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(0, 2));
+        thirdCell.setHeight(Height.FIRST_FLOOR);
+        thirdCell.setWorker(null);
+
+        god.previousCell = thirdCell;
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, secondCommand);
+            fail("hasBuildSecondMoreThanOneCell in class DemeterTest didn't throw an exception");
+        } catch (IllegalMoveException e1) {
+            assertEquals("thirdCell's Height must be same as before", thirdCell.getHeight(), Height.FIRST_FLOOR);
+            assertFalse("hasBuildSecond must be false", god.hasBuildSecond);
+        }
+
+    }
+
+    @Test
     @DisplayName("resetHephaestusVariable")
     public void resetHephaestusVariable() {
         Board board = new Board();
