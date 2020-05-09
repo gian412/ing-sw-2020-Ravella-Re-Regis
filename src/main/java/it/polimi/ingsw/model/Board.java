@@ -166,8 +166,7 @@ public class Board {
 
             //update the proxyBoard after a legal move
             this.updateProxyBoard();
-        }
-        else{
+        } else {
             throw new IllegalMoveException("Invalid FORCE parameters");
         }
     }

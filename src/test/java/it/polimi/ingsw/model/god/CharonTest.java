@@ -666,4 +666,156 @@ public class CharonTest {
         }
 
     }
+
+    @Test
+    @DisplayName("forceWorkerToMoveInANotEmptyCell")
+    public void forceWorkerToMoveInANotEmptyCell() {
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.FORCE);
+        Charon thisGod = new Charon(board);
+        God otherGod = new Zeus(board);
+        God thirdGod = new Hestia(board);
+        Player thisPlayer = new Player("thisName", 18);
+        Player otherPlayer = new Player("otherName", 18);
+        Player thirdPlayer = new Player("thirdPlayer", 18);
+        thisPlayer.setDivinity(thisGod);
+        otherPlayer.setDivinity(otherGod);
+        thirdPlayer.setDivinity(thirdGod);
+
+        Worker thisWorker = new Worker("Id", thisPlayer);
+        Worker otherWorker = new Worker("otherId", otherPlayer);
+        Worker thirdWorker = new Worker("thirdId", thirdPlayer);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(1, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(otherWorker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 2));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(thisWorker);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell((new Pair(1, 3)));
+        thirdCell.setHeight(Height.SECOND_FLOOR);
+        thirdCell.setWorker(thirdWorker);
+
+        thisWorker.setCurrentCell(secondCell);
+        otherWorker.setCurrentCell(firstCell);
+        thirdWorker.setCurrentCell(thirdCell);
+
+        try {
+            thisGod.executeCommand(thisWorker, command);
+            fail("forceWorkerToMoveInANotEmptyCell in class CharonTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("otherWorker's position must be firstCell", otherWorker.getCurrentCell(), firstCell);
+            assertEquals("thirdWorker's position must be thirdCell", thirdWorker.getCurrentCell(), thirdCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("Force a worker to move out of board")
+    public void forceWorkerToMoveOutOfBoard() {
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(0, 1), CommandType.FORCE);
+        Charon thisGod = new Charon(board);
+        God otherGod = new Zeus(board);
+        Player thisPlayer = new Player("thisName", 18);
+        Player otherPlayer = new Player("otherName", 18);
+        thisPlayer.setDivinity(thisGod);
+        otherPlayer.setDivinity(otherGod);
+
+        Worker thisWorker = new Worker("Id", thisPlayer);
+        Worker otherWorker = new Worker("otherId", otherPlayer);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(otherWorker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(0, 0));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(thisWorker);
+
+        thisWorker.setCurrentCell(secondCell);
+        otherWorker.setCurrentCell(firstCell);
+
+        try {
+            thisGod.executeCommand(thisWorker, command);
+            fail("Exception in forceWorkerToMove in class CharonTest");
+        } catch (IllegalMoveException e) {
+            assertEquals("otherWorker's position must be firstCell", otherWorker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("Force a worker to move twice")
+    public void forceWorkerToMoveTwice() {
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.FORCE);
+        Charon thisGod = new Charon(board);
+        Player thisPlayer = new Player("thisName", 18);
+        thisPlayer.setDivinity(thisGod);
+        thisGod.hasForced = true;
+
+        Worker thisWorker = new Worker("Id", thisPlayer);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(1, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 2));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(thisWorker);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell((new Pair(1, 3)));
+        thirdCell.setHeight(Height.SECOND_FLOOR);
+        thirdCell.setWorker(null);
+
+        thisWorker.setCurrentCell(secondCell);
+
+        try {
+            thisGod.executeCommand(thisWorker, command);
+            fail("Exception in forceWorkerToMoveTwice in class CharonTest");
+        } catch (IllegalMoveException e) {
+            assertTrue("otherWorker's position must be firstCell", thisGod.hasForced);
+        }
+
+    }
+
+    @Test
+    @DisplayName("resetCharonVariable")
+    public void resetCharonVariable() {
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.RESET);
+        Charon god = new Charon(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        god.hasMoved = true;
+        god.hasForced = true;
+        god.hasBuild = true;
+
+        try {
+            god.executeCommand(worker, command);
+            assertFalse("hasMoved isn't false", god.hasMoved);
+            assertFalse("hasBuild isn't false", god.hasBuild);
+            assertFalse("hasForced isn't false", god.hasForced);
+        } catch (IllegalMoveException e) {
+            fail("Exception in resetAllGodVariable in class ArtemisTest");
+        }
+    }
 }

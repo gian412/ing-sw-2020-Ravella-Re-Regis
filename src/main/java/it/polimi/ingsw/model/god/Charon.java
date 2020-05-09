@@ -50,18 +50,20 @@ public class Charon extends God {
                     if(!hasForced && !hasMoved && !hasBuild && worker.getCurrentCell().cellDistance(new Pair(cell.X, cell.Y)) && cell.getWorker()!=null){
 
                         Pair directionOfWorker = worker.getCurrentCell().getDirection(cell);
-                        Cell forcedCell = board.getCell(new Pair(worker.getCurrentCell().X - directionOfWorker.x, worker.getCurrentCell().Y - directionOfWorker.y));
-                        if ( forcedCell.getWorker()==null && forcedCell.getHeight()!=Height.DOME ){
-                            try {
+
+                        try {
+                            Cell forcedCell = board.getCell(new Pair(worker.getCurrentCell().X - directionOfWorker.x, worker.getCurrentCell().Y - directionOfWorker.y));
+                            if ( forcedCell.getWorker()==null && forcedCell.getHeight()!=Height.DOME ){
                                 board.forceWorker(cell.getWorker(),new Pair(forcedCell.X, forcedCell.Y));
                                 hasForced = true;
                                 break;
-                            } catch (IllegalMoveException e){
-                                throw new IllegalMoveException(e.getMessage());
+                            } else {
+                                throw new IllegalMoveException("Invalid FORCE parameters");
                             }
-                        } else {
-                            throw new IllegalMoveException("Invalid FORCE parameters");
+                        } catch (IllegalMoveException | IndexOutOfBoundsException e){
+                            throw new IllegalMoveException(e.getMessage());
                         }
+
 
                     } else {
                         throw new IllegalMoveException("Invalid command sequence");
@@ -108,7 +110,7 @@ public class Charon extends God {
                     }
 
                 case RESET:
-                    super.resetLocalVariables();
+                    this.resetLocalVariables();
                     break;
 
                 default:
