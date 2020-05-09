@@ -41,8 +41,14 @@ public class Board {
      * @return the selected cell
      */
     // cells' getter
-    public Cell getCell(Pair coordinates) {
-        return cells[coordinates.x][coordinates.y];
+    public Cell getCell(Pair coordinates) throws IndexOutOfBoundsException{
+
+        if(coordinates.x >= 0 && coordinates.x < 5 && coordinates.y >= 0 && coordinates.y < 5) {
+            return cells[coordinates.x][coordinates.y];
+        }
+        else{
+            throw new IndexOutOfBoundsException();
+        }
     }
 
     // turnPlayer's getter
