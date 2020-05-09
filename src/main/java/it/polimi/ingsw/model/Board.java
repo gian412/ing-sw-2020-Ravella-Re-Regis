@@ -51,6 +51,12 @@ public class Board {
         }
     }
 
+
+    public BoardProxy getProxy() {
+        return proxy;
+    }
+
+
     // turnPlayer's getter
     public Player getTurnPlayer() {
         return turnPlayer;
