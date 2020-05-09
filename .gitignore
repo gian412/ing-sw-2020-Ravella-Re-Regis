@@ -1,3 +1,11 @@
-*.class
+# IntelliJ
 .idea
-target
+*.iml
+*.iws
+
+# Maven
+log/
+target/
+
+# Logging
+*.log
