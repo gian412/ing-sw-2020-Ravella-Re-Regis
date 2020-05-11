@@ -222,6 +222,16 @@ public class ControllerTest {
         controller.addPlayer("Marco", 30);
         controller.addPlayer("Gianluca", 35);
 
+        PlayerCommand setGodSet = new PlayerCommand(
+                "Marco",
+                new Command(new Pair(0, 0), CommandType.SET_GODS),
+                0
+        );
+        setGodSet.setMessage("Apollo Hera");
+        controller.update(setGodSet);
+
+        assertEquals("The proxy should have updated accordingly her 'choosingGods field'", "Apollo Hera", g.getBoard().getProxy().getChoosingGods());
+
         PlayerCommand setPlayerDivinity = new PlayerCommand(
                 "Marco",
                 new Command(new Pair(0, 0), CommandType.CHOOSE_GOD),
