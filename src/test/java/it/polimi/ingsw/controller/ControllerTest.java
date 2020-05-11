@@ -158,6 +158,35 @@ public class ControllerTest {
         assertEquals("Gianluca", g.getTurnPlayer().getNAME() );
     }
 
+    @Test
+    @DisplayName("testing the illegal move error catching")
+    public void testIllegalMove(){
+        Game g = new Game();
+        Controller controller = new Controller(g);
+
+        controller.addPlayer("Marco", 30);
+        controller.addPlayer("Gianluca", 35);
+
+        try {
+            g.setPlayerDivinity("Marco", new Apollo(g.getBoard()));
+            g.setPlayerDivinity("Gianluca", new Athena(g.getBoard()));
+        }catch(NoSuchPlayerException x){
+            System.err.println(x.getMessage());
+        }
+
+        controller.startGame();
+
+        // after the initialization of the game, try to
+        // do a illegal move (out-of-bound move)
+        controller.addWorker(0, 0);
+
+        controller.commitCommand("Marco", new Command(new Pair(3, 3), CommandType.MOVE), 0);
+
+        assertEquals("Illegal move", g.getBoard().getProxy().getIllegalMoveString());
+
+
+    }
+
 }
 
 
