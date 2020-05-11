@@ -43,7 +43,6 @@ public class Player implements Comparable<Player>{
         this.actualGame = actualGame;
     }
 
-
     // divinity's getter and setter
     public void setDivinity(God divinity) {
         this.divinity = divinity;
