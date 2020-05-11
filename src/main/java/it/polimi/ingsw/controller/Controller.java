@@ -134,8 +134,8 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
         else if(message.cmd.commandType == CommandType.CHOOSE_GOD){
             try {
                 game.setPlayerDivinity(
-                        game.getTurnPlayer().getNAME(),
-                        (God)Class.forName(message.message).getDeclaredConstructor().newInstance());
+                        message.playerName,
+                        (God)Class.forName("it.polimi.ingsw.model.god." + message.message).getDeclaredConstructor(Board.class).newInstance(game.getBoard()));
             } catch (NoSuchPlayerException | ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }

@@ -212,6 +212,28 @@ public class ControllerTest {
 
         assertEquals("Illegal cell", g.getBoard().getProxy().getIllegalMoveString());
     }
+
+    @Test
+    @DisplayName("full update-function check")
+    public void updateCheck(){
+        Game g = new Game();
+        Controller controller = new Controller(g);
+
+        controller.addPlayer("Marco", 30);
+        controller.addPlayer("Gianluca", 35);
+
+        PlayerCommand setPlayerDivinity = new PlayerCommand(
+                "Marco",
+                new Command(new Pair(0, 0), CommandType.CHOOSE_GOD),
+                0
+        );
+        setPlayerDivinity.setMessage("Apollo");
+
+        controller.update(setPlayerDivinity);
+        controller.startGame();
+
+        assertTrue("Marco should be an 'Apollo' type", g.getTurnPlayer().getDivinity() instanceof Apollo);
+    }
 }
 
 
