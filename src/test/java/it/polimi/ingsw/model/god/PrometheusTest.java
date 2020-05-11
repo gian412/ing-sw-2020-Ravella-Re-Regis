@@ -151,6 +151,167 @@ public class PrometheusTest {
     }
 
     @Test
+    @DisplayName("hasMovedMoreThanOneCell")
+    public void hasMovedMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class PrometheusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("moveUpWhenCannotMoveUp")
+    public void moveUpWhenCannotMoveUp() {
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        worker.setCanMoveUp(false);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.GROUND);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.FIRST_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveUpWhenCannotMoveUp in class PrometheusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasMovedSecondTime")
+    public void hasMovedSecondTime(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasMovedSecondTime in class PrometheusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuildMoreThanOneCell")
+    public void hasBuildMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        God god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class PrometheusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("worker's position must be firstCell", secondCell.getHeight(), Height.SECOND_FLOOR);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuildDomeMoreThanOneCell")
+    public void hasBuildDomeMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
+        God god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class PrometheusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("worker's position must be firstCell", secondCell.getHeight(), Height.THIRD_FLOOR);
+        }
+
+    }
+
+    @Test
     @DisplayName("hasBuild not a dome")
     public void hasBuildNotDomeTest(){
 
@@ -331,6 +492,41 @@ public class PrometheusTest {
         }
     }
 
+    @Test
+    @DisplayName("nullCommand")
+    public void nullCommand() {
+        Board board = new Board();
+        God god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, null);
+            fail("nullCommand in class PrometheusTest didn't throw an exception");
+        } catch (NullPointerException | IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+
+    @Test
+    @DisplayName("outOfSwitchCommandType")
+    public void outOfSwitchCommandType() {
+        Command command = new Command(new Pair(1, 1), CommandType.SET_GODS);
+        Board board = new Board();
+        God god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("outOfSwitchCommandType in class PrometheusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+
 
     // Exclusive tests
     @Test
@@ -446,6 +642,131 @@ public class PrometheusTest {
 
 
 
+    }
+
+    @Test
+    @DisplayName("hasBuildSecondMoreThanOneCell")
+    public void hasBuildSecondDomeMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
+        God god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasBuildFirstMoreThanOneCell in class PrometheusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("secondCell's Height must be same as before", secondCell.getHeight(), Height.THIRD_FLOOR);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuildThirdTime")
+    public void hasBuildThirdTime(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        Prometheus god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+        god.hasBuild = true;
+
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasBuildThirdTime in class PrometheusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("secondCell's Height must be same as before", secondCell.getHeight(), Height.SECOND_FLOOR);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuildFirstMoreThanOneCell")
+    public void hasBuildFirstMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        God god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasBuildFirstMoreThanOneCell in class PrometheusTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("secondCell's Height must be same as before", secondCell.getHeight(), Height.SECOND_FLOOR);
+        }
+
+    }
+
+    @Test
+    @DisplayName("resetPrometheusVariable")
+    public void resetPrometheusVariable() {
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.RESET);
+        Prometheus god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        god.hasMoved = true;
+        god.hasBuild = true;
+        god.hasBuildBefore = true;
+
+        try {
+            god.executeCommand(worker, command);
+            assertFalse("hasMoved isn't false", god.hasMoved);
+            assertFalse("hasBuild isn't false", god.hasBuild);
+            assertFalse("hasBuildSecond isn't false", god.hasBuildBefore);
+        } catch (IllegalMoveException e) {
+            fail("Exception in resetAllGodVariable in class DemeterTest");
+        }
     }
     
 }

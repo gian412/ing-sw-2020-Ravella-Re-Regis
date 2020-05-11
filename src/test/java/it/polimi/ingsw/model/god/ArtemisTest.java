@@ -150,6 +150,203 @@ public class ArtemisTest {
     }
 
     @Test
+    @DisplayName("hasMovedMoreThanOneCell")
+    public void hasMovedMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("moveUpWhenCannotMoveUp")
+    public void moveUpWhenCannotMoveUp() {
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        worker.setCanMoveUp(false);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.GROUND);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.FIRST_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveUpWhenCannotMoveUp in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuild but hasn't moved")
+    public void hasBuildBeforeHasMoved(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        God god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = false;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasBuildBeforeHasMoved in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertFalse("hasBuild must be false", god.hasBuild);
+            assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.SECOND_FLOOR);
+        }
+    }
+
+    @Test
+    @DisplayName("hasBuild a dome but hasn't moved")
+    public void hasBuildDomeBeforeHasMoved(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
+        God god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = false;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasBuildDomeBeforeHasMoved in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertFalse("hasBuild must be false", god.hasBuild);
+            assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuildMoreThanOneCell")
+    public void hasBuildMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        God god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("worker's position must be firstCell", secondCell.getHeight(), Height.SECOND_FLOOR);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuildDomeMoreThanOneCell")
+    public void hasBuildDomeMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
+        God god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("worker's position must be firstCell", secondCell.getHeight(), Height.THIRD_FLOOR);
+        }
+
+    }
+
+    @Test
     @DisplayName("hasBuild not a dome")
     public void hasBuildNotDomeTest(){
 
@@ -330,6 +527,41 @@ public class ArtemisTest {
         }
     }
 
+    @Test
+    @DisplayName("nullCommand")
+    public void nullCommand() {
+        Board board = new Board();
+        God god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, null);
+            fail("nullCommand in class ArtemisTest didn't throw an exception");
+        } catch (NullPointerException | IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+
+    @Test
+    @DisplayName("outOfSwitchCommandType")
+    public void outOfSwitchCommandType() {
+        Command command = new Command(new Pair(1, 1), CommandType.SET_GODS);
+        Board board = new Board();
+        God god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("outOfSwitchCommandType in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+
     // Exclusive tests
     @Test
     @DisplayName("hasMovedSecond")
@@ -388,6 +620,109 @@ public class ArtemisTest {
 
 
 
+
+    }
+
+    @Test
+    @DisplayName("resetArtemisVariable")
+    public void resetArtemisVariable() {
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.RESET);
+        Artemis god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        god.hasMoved = true;
+        god.hasMovedSecond = true;
+        god.hasBuild = true;
+
+        try {
+            god.executeCommand(worker, command);
+            assertFalse("hasMoved isn't false", god.hasMoved);
+            assertFalse("hasBuild isn't false", god.hasBuild);
+            assertFalse("hasMovedSecond isn't false", god.hasMovedSecond);
+        } catch (IllegalMoveException e) {
+            fail("Exception in resetAllGodVariable in class ArtemisTest");
+        }
+    }
+
+    @Test
+    @DisplayName("hasMovedSecondMoreThanOneCell")
+    public void hasMovedSecondMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command firstCommand = new Command(new Pair(1, 1), CommandType.MOVE);
+        Command secondCommand = new Command(new Pair(3, 3), CommandType.MOVE);
+        Artemis god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.GROUND);
+        secondCell.setWorker(null);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(3, 3));
+        thirdCell.setHeight(Height.FIRST_FLOOR);
+        thirdCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, firstCommand);
+        } catch (IllegalMoveException e) {
+            fail("hasMovedSecondMoreThanOneCell in class ArtemisTest throw an exception in first command");
+        }
+        try {
+            god.executeCommand(worker, secondCommand);
+            fail("hasMovedSecondMoreThanOneCell in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasMovedThirdTime")
+    public void hasMovedThirdTime(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        Artemis god = new Artemis(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+        god.hasMovedSecond = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasMovedThirdTime in class ArtemisTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
 
     }
 

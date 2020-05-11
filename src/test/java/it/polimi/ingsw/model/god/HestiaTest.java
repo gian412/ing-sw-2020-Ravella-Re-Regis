@@ -151,6 +151,237 @@ public class HestiaTest {
     }
 
     @Test
+    @DisplayName("hasMovedMoreThanOneCell")
+    public void hasMovedMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class HestiaTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("moveUpWhenCannotMoveUp")
+    public void moveUpWhenCannotMoveUp() {
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        worker.setCanMoveUp(false);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.GROUND);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.FIRST_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveUpWhenCannotMoveUp in class HestiaTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasMovedSecondTime")
+    public void hasMovedSecondTime(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasMovedSecondTime in class HestiaTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertEquals("worker's position must be firstCell", worker.getCurrentCell(), firstCell);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuild but hasn't moved")
+    public void hasBuildBeforeHasMoved(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        God god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = false;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasBuildBeforeHasMoved in class HestiaTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertFalse("hasBuild must be false", god.hasBuild);
+            assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.SECOND_FLOOR);
+        }
+    }
+
+    @Test
+    @DisplayName("hasBuild a dome but hasn't moved")
+    public void hasBuildDomeBeforeHasMoved(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
+        God god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = false;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("hasBuildDomeBeforeHasMoved in class HestiaTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertFalse("hasBuild must be false", god.hasBuild);
+            assertSame("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.THIRD_FLOOR);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuildMoreThanOneCell")
+    public void hasBuildMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD);
+        God god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.SECOND_FLOOR);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class HestiaTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("worker's position must be firstCell", secondCell.getHeight(), Height.SECOND_FLOOR);
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuildDomeMoreThanOneCell")
+    public void hasBuildDomeMoreThanOneCell(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
+        God god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(3, 3));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        worker.setCurrentCell(firstCell);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("moveOnADome in class HestiaTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertSame("worker's position must be firstCell", secondCell.getHeight(), Height.THIRD_FLOOR);
+        }
+
+    }
+
+    @Test
     @DisplayName("hasBuild not a dome")
     public void hasBuildNotDomeTest(){
 
@@ -330,6 +561,42 @@ public class HestiaTest {
             fail("Exception in hasWonFalseTest in class HestiaTest");
         }
     }
+
+    @Test
+    @DisplayName("nullCommand")
+    public void nullCommand() {
+        Board board = new Board();
+        God god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, null);
+            fail("nullCommand in class HestiaTest didn't throw an exception");
+        } catch (NullPointerException | IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+
+    @Test
+    @DisplayName("outOfSwitchCommandType")
+    public void outOfSwitchCommandType() {
+        Command command = new Command(new Pair(1, 1), CommandType.SET_GODS);
+        Board board = new Board();
+        God god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        try {
+            god.executeCommand(worker, command);
+            fail("outOfSwitchCommandType in class HestiaTest didn't throw an exception");
+        } catch (IllegalMoveException e) {
+            assertNull(null);
+        }
+    }
+    
     
     // Exclusive tests
     @Test
@@ -338,8 +605,8 @@ public class HestiaTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command firstCommand = new Command(new Pair(1, 1), CommandType.BUILD);
-        Command secondCommand = new Command(new Pair(0, 1), CommandType.BUILD);
+        Command firstCommand = new Command(new Pair(1, 2), CommandType.BUILD);
+        Command secondCommand = new Command(new Pair(2, 1), CommandType.BUILD);
         Hestia god = new Hestia(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
@@ -347,17 +614,17 @@ public class HestiaTest {
         god.hasMoved = true;
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(new Pair(0, 1));
+        Cell firstCell = board.getCell(new Pair(1, 1));
         firstCell.setHeight(Height.SECOND_FLOOR);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(new Pair(1, 1));
+        Cell secondCell = board.getCell(new Pair(1, 2));
         secondCell.setHeight(Height.GROUND);
         secondCell.setWorker(null);
 
         // Initialization of the third cell
-        Cell thirdCell = board.getCell(new Pair(0, 1));
+        Cell thirdCell = board.getCell(new Pair(2, 1));
         thirdCell.setHeight(Height.FIRST_FLOOR);
         thirdCell.setWorker(null);
 
@@ -397,8 +664,8 @@ public class HestiaTest {
 
         // Initialization of the parameters
         Board board = new Board();
-        Command firstCommand = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
-        Command secondCommand = new Command(new Pair(0, 1), CommandType.BUILD_DOME);
+        Command firstCommand = new Command(new Pair(1, 2), CommandType.BUILD_DOME);
+        Command secondCommand = new Command(new Pair(2, 1), CommandType.BUILD_DOME);
         Hestia god = new Hestia(board);
         Player player = new Player("Name", 18);
         player.setDivinity(god);
@@ -406,17 +673,17 @@ public class HestiaTest {
         god.hasMoved = true;
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(new Pair(0, 1));
+        Cell firstCell = board.getCell(new Pair(1, 1));
         firstCell.setHeight(Height.GROUND);
         firstCell.setWorker(worker);
 
         // Initialization of the second cell
-        Cell secondCell = board.getCell(new Pair(1, 1));
+        Cell secondCell = board.getCell(new Pair(1, 2));
         secondCell.setHeight(Height.THIRD_FLOOR);
         secondCell.setWorker(null);
 
         // Initialization of the third cell
-        Cell thirdCell = board.getCell(new Pair(0, 1));
+        Cell thirdCell = board.getCell(new Pair(2, 1));
         thirdCell.setHeight(Height.THIRD_FLOOR);
         thirdCell.setWorker(null);
 
@@ -448,6 +715,244 @@ public class HestiaTest {
 
 
 
+    }
+
+    @Test
+    @DisplayName("hasBuildSecond not a dome in a cell more than 1 away")
+    public void hasBuildSecondNotDomeMoreThanOne(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command firstCommand = new Command(new Pair(1, 2), CommandType.BUILD);
+        Command secondCommand = new Command(new Pair(3, 1), CommandType.BUILD);
+        Hestia god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(1, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 2));
+        secondCell.setHeight(Height.GROUND);
+        secondCell.setWorker(null);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(3, 1));
+        thirdCell.setHeight(Height.FIRST_FLOOR);
+        thirdCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, firstCommand);
+
+            assertTrue("hasMoved must be true", god.hasBuild);
+            assertEquals("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.FIRST_FLOOR);
+
+            try {
+                god.executeCommand(worker, secondCommand);
+                fail("hasBuildSecondNotDomeMoreThanOne in class HestiaTest didn't throw an exception");
+            } catch (IllegalMoveException e1) {
+                assertEquals("thirdCell's Height must be same as before", thirdCell.getHeight(), Height.FIRST_FLOOR);
+                assertFalse("hasBuildSecond must be false", god.hasBuildSecond);
+            }
+        } catch (IllegalMoveException e2) {
+            System.err.println("Error e2 in method hasBuildSecondTest in class HestiaTest :" + e2.toString());
+            fail("Exception in hasBuildSecondTest in class HestiaTest");
+        }
+
+
+
+
+
+
+    }
+
+    @Test
+    @DisplayName("hasBuildSecond dome in a cell more than 1 away")
+    public void hasBuildSecondDomeMoreThanOne(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command firstCommand = new Command(new Pair(1, 2), CommandType.BUILD_DOME);
+        Command secondCommand = new Command(new Pair(3, 1), CommandType.BUILD_DOME);
+        Hestia god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(1, 1));
+        firstCell.setHeight(Height.GROUND);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 2));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setWorker(null);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(3, 1));
+        thirdCell.setHeight(Height.THIRD_FLOOR);
+        thirdCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, firstCommand);
+
+            assertTrue("hasMoved must be true", god.hasBuild);
+            assertEquals("secondCell's Height must be DOME", secondCell.getHeight(), Height.DOME);
+
+            try {
+                god.executeCommand(worker, secondCommand);
+                fail("hasBuildSecondDomeMoreThanOne in class HestiaTest didn't throw an exception");
+            } catch (IllegalMoveException e1) {
+                assertEquals("thirdCell's Height must be same as before", thirdCell.getHeight(), Height.THIRD_FLOOR);
+                assertFalse("hasBuildSecond must be false", god.hasBuildSecond);
+            }
+        } catch (IllegalMoveException e2) {
+            System.err.println("Error e2 in method hasBuildSecondTest in class HestiaTest :" + e2.toString());
+            fail("Exception in hasBuildSecondTest in class HestiaTest");
+        }
+
+    }
+
+    @Test
+    @DisplayName("hasBuildSecond not a dome on a perimeter cell")
+    public void hasBuildSecondNotDomeOnPerimeter(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command firstCommand = new Command(new Pair(2, 1), CommandType.BUILD);
+        Command secondCommand = new Command(new Pair(0, 1), CommandType.BUILD);
+        Hestia god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(1, 1));
+        firstCell.setHeight(Height.SECOND_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(2, 1));
+        secondCell.setHeight(Height.GROUND);
+        secondCell.setWorker(null);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(0, 1));
+        thirdCell.setHeight(Height.FIRST_FLOOR);
+        thirdCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, firstCommand);
+
+            assertTrue("hasMoved must be true", god.hasBuild);
+            assertEquals("secondCell's Height must be one bigger than before", secondCell.getHeight(), Height.FIRST_FLOOR);
+
+            try {
+                god.executeCommand(worker, secondCommand);
+                fail("hasBuildSecondNotDomeOnPerimeter in class HestiaTest didn't throw an exception");
+            } catch (IllegalMoveException e1) {
+                assertEquals("thirdCell's Height must be same as before", thirdCell.getHeight(), Height.FIRST_FLOOR);
+                assertFalse("hasBuildSecond must be false", god.hasBuildSecond);
+            }
+        } catch (IllegalMoveException e2) {
+            System.err.println("Error e2 in method hasBuildSecondTest in class HestiaTest :" + e2.toString());
+            fail("Exception in hasBuildSecondTest in class HestiaTest");
+        }
+
+
+
+
+
+
+    }
+
+    @Test
+    @DisplayName("hasBuildSecond dome on a perimeter cell")
+    public void hasBuildSecondDomeOnPerimeter(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command firstCommand = new Command(new Pair(2, 1), CommandType.BUILD_DOME);
+        Command secondCommand = new Command(new Pair(0, 1), CommandType.BUILD_DOME);
+        Hestia god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+        god.hasMoved = true;
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(1, 1));
+        firstCell.setHeight(Height.GROUND);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(2, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setWorker(null);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(0, 1));
+        thirdCell.setHeight(Height.THIRD_FLOOR);
+        thirdCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, firstCommand);
+
+            assertTrue("hasMoved must be true", god.hasBuild);
+            assertEquals("secondCell's Height must be DOME", secondCell.getHeight(), Height.DOME);
+
+            try {
+                god.executeCommand(worker, secondCommand);
+                fail("hasBuildSecondDomeOnPerimeter in class HestiaTest didn't throw an exception");
+            } catch (IllegalMoveException e1) {
+                assertEquals("thirdCell's Height must be same as before", thirdCell.getHeight(), Height.THIRD_FLOOR);
+                assertFalse("hasBuildSecond must be false", god.hasBuildSecond);
+            }
+        } catch (IllegalMoveException e2) {
+            System.err.println("Error e2 in method hasBuildSecondTest in class HestiaTest :" + e2.toString());
+            fail("Exception in hasBuildSecondTest in class HestiaTest");
+        }
+
+    }
+
+    @Test
+    @DisplayName("resetHestiaVariable")
+    public void resetHestiaVariable() {
+        Board board = new Board();
+        Command command = new Command(new Pair(1, 1), CommandType.RESET);
+        Hestia god = new Hestia(board);
+        Player player = new Player("Name", 18);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        god.hasMoved = true;
+        god.hasBuild = true;
+        god.hasBuildSecond = true;
+
+        try {
+            god.executeCommand(worker, command);
+            assertFalse("hasMoved isn't false", god.hasMoved);
+            assertFalse("hasBuild isn't false", god.hasBuild);
+            assertFalse("hasBuildSecond isn't false", god.hasBuildSecond);
+        } catch (IllegalMoveException e) {
+            fail("Exception in resetAllGodVariable in class DemeterTest");
+        }
     }
 
 }

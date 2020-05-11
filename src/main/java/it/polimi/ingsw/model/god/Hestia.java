@@ -63,7 +63,7 @@ public class Hestia extends God {
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
                         }
-                    } else if (hasMoved && hasBuild && !hasBuildSecond && !hasWon && cell.isPerimeter() ){
+                    } else if (hasMoved && hasBuild && !hasBuildSecond && !hasWon && !cell.isPerimeter() ){
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuildSecond = true;
@@ -84,7 +84,7 @@ public class Hestia extends God {
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
                         }
-                    } else if (hasMoved && hasBuild && !hasBuildSecond && !hasWon && cell.isPerimeter() && cell.getHeight()==Height.THIRD_FLOOR){
+                    } else if (hasMoved && hasBuild && !hasBuildSecond && !hasWon && !cell.isPerimeter() && cell.getHeight()==Height.THIRD_FLOOR){
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuildSecond = true;

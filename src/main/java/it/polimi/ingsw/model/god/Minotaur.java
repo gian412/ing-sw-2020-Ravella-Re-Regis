@@ -52,7 +52,7 @@ public class Minotaur extends God {
                 }
 
             } else{
-                throw new IllegalMoveException("Invalid MOVE parameters");
+                throw new IllegalMoveException("Invalid MOVE parameters: the cell in which other worker would be move is occupied");
             }
         }
     }
@@ -106,7 +106,7 @@ public class Minotaur extends God {
 
                 case BUILD_DOME:
 
-                    if (board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){
+                    if (hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;

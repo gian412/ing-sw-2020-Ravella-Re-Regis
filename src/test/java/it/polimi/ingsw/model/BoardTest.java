@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.god.Apollo;
 import it.polimi.ingsw.model.god.Chronus;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.model.god.Pan;
+import it.polimi.ingsw.view.Observer;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
@@ -453,9 +454,79 @@ public class BoardTest {
                 board.countCompleteTower());
     }
 
+    @Test
+    @DisplayName("toStringTest")
+    public void toStringTest() {
+
+        Board board = new Board();
+
+        String print = board.toString();
+
+        assertTrue("no error", true);
+    }
+
+    @Test
+    @DisplayName("getCell1Test")
+    public void getCell1Test() {
+
+        Board board = new Board();
+
+        try {
+            Cell cell = new Cell(0,0);
+            if(cell.equals(board.getCell(new Pair(0,0))))
+                assertTrue("the two cell are equals", true);
+            else
+                fail("test failed");
+
+        }
+        catch(IndexOutOfBoundsException e){
+            fail("test failed");
+        }
+    }
+
+    @Test
+    @DisplayName("getCell2Test")
+    public void getCell2Test() {
+
+        Board board = new Board();
+
+        try{
+            Cell cell = new Cell(0,0);
+            if(cell.equals(board.getCell(new Pair(5,5))))
+                fail("test failed");
+            else
+                fail("test failed");
+        }
+
+        catch(IndexOutOfBoundsException e){
+            System.err.println("Error e in method getCell in class BoardTest " + e.toString());
+            assertTrue("the cell doesn't exist", true);
+        }
+    }
+
+    @Test
+    @DisplayName("getTurnPlayerTest")
+    public void getTurnPlayerTest() {
+
+        Board board = new Board();
+        board.setTurnPlayer(new Player("marco", 9 ));
+
+        assertTrue("getTurnPlayer is ok", board.getTurnPlayer().equals(new Player("marco", 9)));
+        }
+
+    @Test
+    @DisplayName("setChoosingGodsTest")
+    public void setChoosingGodsTest() {
+
+        Board board = new Board();
+
+        board.setChoosingGods("message");
+
+        assertTrue("setChoosingGods set a message in boardProxy", board.getProxy().getChoosingGods().equals("message"));
+    }
 
 
-}
+    }
 
 
 
