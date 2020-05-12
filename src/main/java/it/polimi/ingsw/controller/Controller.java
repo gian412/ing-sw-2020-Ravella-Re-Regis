@@ -6,12 +6,14 @@ import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.model.*;
 
+import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.view.Observer;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 
-public class Controller implements Observer<PlayerCommand>, Runnable {
+public class Controller implements Observer<PlayerCommand> {
 
     private Game game;
 
@@ -103,45 +105,52 @@ public class Controller implements Observer<PlayerCommand>, Runnable {
         return this.game.getTurnPlayer();
     }
 
-    @Override
-    public void run() {
-
-    }
-
     /**
      * the method update is triggered by a remoteview change. it decodes the message from the client
      * and executes accordingly
      * @param message the update content
      */
     @Override
-    public void update(PlayerCommand message) {
+    public void update(PlayerCommand message){
         if(message == null ) throw new IllegalArgumentException();
 
-        // procedure to handle disconnected player
-        if(message.cmd.commandType == CommandType.DISCONNECTED){
-            game.endGame();
-            return;
-        }
-        else if(message.cmd.commandType == CommandType.SET_GODS){
-            game.getBoard().setChoosingGods(message.getMessage());
-        }
-        else{
-            // in-game operations
-            if(message.cmd.commandType == CommandType.CHANGE_TURN)
+        switch(message.cmd.commandType){
+            case DISCONNECTED:
+                game.endGame();
+                break;
+
+            case SET_GODS:
+                game.getBoard().setChoosingGods(message.getMessage());
+                break;
+
+            case CHOOSE_GOD:
+                try {
+                    game.setPlayerDivinity(
+                            message.playerName,
+                            (God)Class.forName("it.polimi.ingsw.model.god." + message.message).getDeclaredConstructor(Board.class).newInstance(game.getBoard()));
+                } catch (NoSuchPlayerException | ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case CHANGE_TURN:
                 changeTurnPlayer();
-            else if(message.cmd.commandType == CommandType.ADD_WORKER){
+                break;
+
+            case ADD_WORKER:
                 addWorker(
                         message.cmd.coordinates.x,
                         message.cmd.coordinates.y
                 );
-            }
-            else {
+                break;
+
+            default:
                 commitCommand(
                         message.getPlayer(),
                         message.getCommand(),
                         message.getWorkerIndex()
                 );
-            }
+                break;
         }
     }
 }

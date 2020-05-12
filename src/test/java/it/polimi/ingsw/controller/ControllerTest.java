@@ -158,6 +158,92 @@ public class ControllerTest {
         assertEquals("Gianluca", g.getTurnPlayer().getNAME() );
     }
 
+    @Test
+    @DisplayName("testing the illegal move error catching")
+    public void testIllegalMoveWorker(){
+        Game g = new Game();
+        Controller controller = new Controller(g);
+
+        controller.addPlayer("Marco", 30);
+        controller.addPlayer("Gianluca", 35);
+
+        try {
+            g.setPlayerDivinity("Marco", new Apollo(g.getBoard()));
+            g.setPlayerDivinity("Gianluca", new Athena(g.getBoard()));
+        }catch(NoSuchPlayerException x){
+            System.err.println(x.getMessage());
+        }
+
+        controller.startGame();
+
+        // after the initialization of the game, try to
+        // do a illegal move (out-of-bound move)
+        controller.addWorker(0, 0);
+
+        controller.commitCommand("Marco", new Command(new Pair(3, 3), CommandType.MOVE), 0);
+
+        assertEquals("Illegal move", g.getBoard().getProxy().getIllegalMoveString());
+    }
+
+    @Test
+    @DisplayName("testing the illegal add error catching")
+    public void testIllegalAddWorker(){
+        Game g = new Game();
+        Controller controller = new Controller(g);
+
+        controller.addPlayer("Marco", 30);
+        controller.addPlayer("Gianluca", 35);
+
+        try {
+            g.setPlayerDivinity("Marco", new Apollo(g.getBoard()));
+            g.setPlayerDivinity("Gianluca", new Athena(g.getBoard()));
+        }catch(NoSuchPlayerException x){
+            System.err.println(x.getMessage());
+        }
+
+        controller.startGame();
+
+        // after the initialization of the game, try to
+        // do a illegal move (adding a worker in an occupied cell)
+        controller.addWorker(0, 0);
+        controller.changeTurnPlayer();
+        controller.addWorker(0, 0); // this is illegal
+
+
+        assertEquals("Illegal cell", g.getBoard().getProxy().getIllegalMoveString());
+    }
+
+    @Test
+    @DisplayName("full update-function check")
+    public void updateCheck(){
+        Game g = new Game();
+        Controller controller = new Controller(g);
+
+        controller.addPlayer("Marco", 30);
+        controller.addPlayer("Gianluca", 35);
+
+        PlayerCommand setGodSet = new PlayerCommand(
+                "Marco",
+                new Command(new Pair(0, 0), CommandType.SET_GODS),
+                0
+        );
+        setGodSet.setMessage("Apollo Hera");
+        controller.update(setGodSet);
+
+        assertEquals("The proxy should have updated accordingly her 'choosingGods field'", "Apollo Hera", g.getBoard().getProxy().getChoosingGods());
+
+        PlayerCommand setPlayerDivinity = new PlayerCommand(
+                "Marco",
+                new Command(new Pair(0, 0), CommandType.CHOOSE_GOD),
+                0
+        );
+        setPlayerDivinity.setMessage("Apollo");
+
+        controller.update(setPlayerDivinity);
+        controller.startGame();
+
+        assertTrue("Marco should be an 'Apollo' type", g.getTurnPlayer().getDivinity() instanceof Apollo);
+    }
 }
 
 
