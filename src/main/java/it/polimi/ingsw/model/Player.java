@@ -4,10 +4,11 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.god.God;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Player implements Comparable<Player>{
+public class Player implements Comparable<Player> {
 
     private Game actualGame;
     private final String NAME;

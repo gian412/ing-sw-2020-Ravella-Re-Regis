@@ -21,6 +21,8 @@ public class CLIView {
     static String playerName;
     static int playerAge;
 
+    static ObjectOutputStream out;
+
     public static void main(String[] args) {
         String command = "";
 
@@ -69,7 +71,7 @@ public class CLIView {
 
     static private void startPlaying(Socket connSocket) throws IOException {
         BoardListener listener = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
-        ObjectOutputStream out = new ObjectOutputStream(connSocket.getOutputStream());
+        out = new ObjectOutputStream(connSocket.getOutputStream());
         Thread listen = new Thread(listener);
         listen.start();
 
@@ -77,9 +79,12 @@ public class CLIView {
 
             System.out.println("Insert command:");
             String command[] = inputStream.nextLine().split(" ");
+            PlayerCommand cmd;
 
 
             switch(command[0]){
+
+                // un array con tutti i nomi numero dei dei giusto
 
                 case "setupgods":
                     StringBuilder string = new StringBuilder("");
@@ -87,12 +92,27 @@ public class CLIView {
                     string.append(command[1] + " ");
                     string.append(command[2]);
 
-                    PlayerCommand cmd = new PlayerCommand(playerName, new Command(new Pair(0,0), CommandType.SET_GODS), 0);
+                    cmd = new PlayerCommand(playerName, new Command(new Pair(0,0), CommandType.SET_GODS), 0);
                     cmd.setMessage(string.toString());
 
                     out.reset();
                     out.writeObject(cmd);
                     out.flush();
+
+                    remoteChangeTurn();
+
+                    break;
+
+                    // controllo dio
+                case "selectgods":
+                    cmd = new PlayerCommand(playerName, new Command(new Pair(0,0), CommandType.CHOOSE_GOD), 0);
+                    cmd.setMessage(command[1]);
+
+                    out.reset();
+                    out.writeObject(cmd);
+                    out.flush();
+
+                    remoteChangeTurn();
 
                     break;
 
@@ -100,5 +120,16 @@ public class CLIView {
 
         }
 
+    }
+
+    public static void remoteChangeTurn() throws IOException{
+
+        PlayerCommand cmd = new PlayerCommand(playerName, new Command(new Pair(0,0), CommandType.CHANGE_TURN), 0);
+
+        out.reset();
+        out.writeObject(cmd);
+        out.flush();
+
+        return;
     }
 }

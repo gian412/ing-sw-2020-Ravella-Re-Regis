@@ -11,11 +11,11 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
 
     private Height[][] boardScheme;
     private Map<String, Pair> workers;
-    private Player winner;
-    private Player turnPlayer;
+    private String winPlayer;
+    private String turnPlayer;
     private String choosingGods, illegalMoveString;
 
-    public Player getTurnPlayer() {
+    public String getTurnPlayer() {
         return turnPlayer;
     }
 
@@ -41,16 +41,16 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
         return workers;
     }
 
-    public void setTurnPlayer(Player turnPlayer) {
+    public void setTurnPlayer(String turnPlayer) {
         this.turnPlayer = turnPlayer;
     }
 
-    public void setWinner(Player player){
-        this.winner = player;
+    public void setWinner(String player){
+        this.winPlayer = player;
     }
 
-    public Player getWinner() {
-        return winner;
+    public String getWinner() {
+        return winPlayer;
     }
 
     public void addHeight(int x, int y, Height h){

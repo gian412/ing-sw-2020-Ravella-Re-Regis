@@ -176,7 +176,13 @@ public class CliComposer {
 
         System.out.println("choosingGods: " + board.getChoosingGods());
 
-       // System.out.println("turnPlayer: " + board.getTurnPlayer().getNAME());
+        if(board.getTurnPlayer() != null)
+            System.out.println("Is Playing " + board.getTurnPlayer());
+
+        if(board.getIllegalMoveString() != null)
+            System.out.println("illegal move:  " + board.getIllegalMoveString());
+
+
         for(int i = 0; i < 5; i++){
 
             for(int j = 0; j < 5; j++){

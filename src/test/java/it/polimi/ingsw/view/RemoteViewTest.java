@@ -222,7 +222,7 @@ public class RemoteViewTest {
             inputStream.readObject(); // initial data
             BoardProxy gameOver = (BoardProxy) inputStream.readObject();
 
-            assertEquals("Unexpected Game Over", ((BoardProxy) inputStream.readObject()).getWinner().getNAME());
+            assertEquals("Unexpected Game Over", ((BoardProxy) inputStream.readObject()).getWinner());
 
 
         } catch (IOException | ClassNotFoundException e) {
@@ -306,7 +306,7 @@ public class RemoteViewTest {
             inputStream.readObject(); // initial data
             BoardProxy gameOver = (BoardProxy) inputStream.readObject();
 
-            assertEquals("Unexpected Game Over", ((BoardProxy) inputStream.readObject()).getWinner().getNAME());
+            assertEquals("Unexpected Game Over", ((BoardProxy) inputStream.readObject()).getWinner());
 
 
         } catch (IOException | ClassNotFoundException e) {
