@@ -93,7 +93,7 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
             toClient.writeObject(message);
             toClient.flush();
 
-            if(message.getWinner().getNAME().equals("Unexpected Game Over")) {
+            if(message.getWinner().equals("Unexpected Game Over")) {
                 System.out.println("Unexpected game over, shutting down");
                 connSocket.close();
             }

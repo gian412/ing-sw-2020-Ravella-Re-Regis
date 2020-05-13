@@ -74,7 +74,7 @@ public class Board {
      */
     public void setChoosingGods(String message){
         proxy.setChoosingGods(message);
-        proxy.updateProxy();
+        updateProxyBoard();
     }
 
     /**
@@ -239,7 +239,7 @@ public class Board {
             if (worker.getOwner().getDivinity().NAME.equals("PAN")){
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
                     hasWon = worker.getOwner();
-                    proxy.setWinner(worker.getOwner());
+                    proxy.setWinner(worker.getOwner().getNAME());
                     proxy.updateProxy();
                     return true;
                 } else{
@@ -249,7 +249,7 @@ public class Board {
             } else if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || countCompleteTower()){
                     hasWon = worker.getOwner();
-                    proxy.setWinner(worker.getOwner());
+                    proxy.setWinner(worker.getOwner().getNAME());
                     proxy.updateProxy();
                     return true;
                 } else {
@@ -258,7 +258,7 @@ public class Board {
             } else{
                 if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
                     hasWon = worker.getOwner();
-                    proxy.setWinner(worker.getOwner());
+                    proxy.setWinner(worker.getOwner().getNAME());
                     proxy.updateProxy();
                     return true;
                 } else{
@@ -269,7 +269,7 @@ public class Board {
             if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
                 if (countCompleteTower()){
                     hasWon = worker.getOwner();
-                    proxy.setWinner(worker.getOwner());
+                    proxy.setWinner(worker.getOwner().getNAME());
                     proxy.updateProxy();
                     return true;
                 } else {
@@ -286,6 +286,8 @@ public class Board {
      */
     public void updateProxyBoard(){
         proxy.resetWorkers();
+
+        proxy.setTurnPlayer(turnPlayer.getNAME());
 
         for(int rows = 0; rows < 5; rows++)
             for (int cols = 0; cols < 5; cols++){
@@ -311,7 +313,7 @@ public class Board {
      * @authors Ravella Elia
      */
     public void endGame(){
-        proxy.setWinner(new Player("Unexpected Game Over", -1));
+        proxy.setWinner("Unexpected Game Over");
         this.updateProxyBoard();
     }
 
