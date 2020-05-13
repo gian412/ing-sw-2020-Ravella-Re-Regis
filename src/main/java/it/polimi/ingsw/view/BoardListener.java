@@ -5,13 +5,11 @@ import it.polimi.ingsw.view.cli.CliComposer;
 
 import java.io.ObjectInputStream;
 
-public class BoardListener implements Runnable {
+public class BoardListener extends Observable<BoardProxy> implements Runnable {
     ObjectInputStream inputStream;
-    CliComposer output;
 
     public BoardListener(ObjectInputStream stream){
         inputStream = stream;
-        output = new CliComposer();
     }
 
     @Override
@@ -19,10 +17,11 @@ public class BoardListener implements Runnable {
         while(true){
             try {
                 BoardProxy message = (BoardProxy)inputStream.readObject();
-                output.boardMaker(message);
+                notify(message);
             } catch (Exception e) {
                 break;
             }
         }
     }
+
 }

@@ -4,10 +4,8 @@ import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.controller.CommandType;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.controller.PlayerCommand;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Pair;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.view.cli.CliComposer;
 
 import java.io.*;
 import java.net.Socket;
@@ -20,11 +18,35 @@ public class CLIView {
     static Socket socket;
     static String playerName;
     static int playerAge;
+    static readProxyBoard displayer;
 
     static ObjectOutputStream out;
 
+    static class readProxyBoard implements Observer<BoardProxy>{
+
+        CliComposer out;
+        BoardProxy localProxy;
+
+        public BoardProxy getLocalProxy() {
+            return localProxy;
+        }
+
+        public readProxyBoard(){
+            out = new CliComposer();
+        }
+
+        @Override
+        public void update(BoardProxy message) {
+
+            out.boardMaker(message);
+            localProxy = message;
+        }
+    }
+
+
     public static void main(String[] args) {
         String command = "";
+        displayer = new readProxyBoard();
 
         while(true){
             command = inputStream.next();
@@ -71,9 +93,11 @@ public class CLIView {
 
     static private void startPlaying(Socket connSocket) throws IOException {
         BoardListener listener = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
+        listener.addObserver(displayer);
         out = new ObjectOutputStream(connSocket.getOutputStream());
         Thread listen = new Thread(listener);
         listen.start();
+
 
         while(true){
 
@@ -81,42 +105,53 @@ public class CLIView {
             String command[] = inputStream.nextLine().split(" ");
             PlayerCommand cmd;
 
+            if(displayer.getLocalProxy() != null) {
 
-            switch(command[0]){
+                if (playerName.equals(displayer.getLocalProxy().getTurnPlayer())) {
 
-                // un array con tutti i nomi numero dei dei giusto
 
-                case "setupgods":
-                    StringBuilder string = new StringBuilder("");
+                    switch (command[0]) {
 
-                    string.append(command[1] + " ");
-                    string.append(command[2]);
+                        // un array con tutti i nomi numero dei dei giusto
 
-                    cmd = new PlayerCommand(playerName, new Command(new Pair(0,0), CommandType.SET_GODS), 0);
-                    cmd.setMessage(string.toString());
+                        case "setupgods":
+                            StringBuilder string = new StringBuilder("");
 
-                    out.reset();
-                    out.writeObject(cmd);
-                    out.flush();
+                            string.append(command[1] + " ");
+                            string.append(command[2]);
 
-                    remoteChangeTurn();
+                            cmd = new PlayerCommand(playerName, new Command(new Pair(0, 0), CommandType.SET_GODS), 0);
+                            cmd.setMessage(string.toString());
 
-                    break;
+                            out.reset();
+                            out.writeObject(cmd);
+                            out.flush();
 
-                    // controllo dio
-                case "selectgods":
-                    cmd = new PlayerCommand(playerName, new Command(new Pair(0,0), CommandType.CHOOSE_GOD), 0);
-                    cmd.setMessage(command[1]);
+                            remoteChangeTurn();
 
-                    out.reset();
-                    out.writeObject(cmd);
-                    out.flush();
+                            break;
 
-                    remoteChangeTurn();
+                        // controllo dio
+                        case "selectgods":
+                            cmd = new PlayerCommand(playerName, new Command(new Pair(0, 0), CommandType.CHOOSE_GOD), 0);
+                            cmd.setMessage(command[1]);
 
-                    break;
+                            out.reset();
+                            out.writeObject(cmd);
+                            out.flush();
 
+                            remoteChangeTurn();
+
+                            break;
+                    }
+                } else {
+                    System.out.println("IT IS NOT YOUR TURN !!!!!!!!");
+                }
             }
+            /*}
+            else{
+                System.out.println("IT IS NOT YOUR TURN !!!!!!!!");
+            }*/
 
         }
 
@@ -130,6 +165,5 @@ public class CLIView {
         out.writeObject(cmd);
         out.flush();
 
-        return;
     }
 }
