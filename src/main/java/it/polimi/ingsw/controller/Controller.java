@@ -127,7 +127,11 @@ public class Controller implements Observer<PlayerCommand> {
                 try {
                     game.setPlayerDivinity(
                             message.playerName,
-                            (God)Class.forName("it.polimi.ingsw.model.god." + message.message).getDeclaredConstructor(Board.class).newInstance(game.getBoard()));
+                            (God)Class.forName("it.polimi.ingsw.model.god." + message.message).getDeclaredConstructor(Board.class).newInstance(game.getBoard())
+                    );
+                    game.getBoard().getProxy().setChoosingGods(
+                            game.getBoard().getProxy().getChoosingGods().replace(message.message, "")
+                    );
                 } catch (NoSuchPlayerException | ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
@@ -135,6 +139,7 @@ public class Controller implements Observer<PlayerCommand> {
 
             case CHANGE_TURN:
                 changeTurnPlayer();
+                game.getBoard().updateProxyBoard();
                 break;
 
             case ADD_WORKER:
