@@ -56,9 +56,11 @@ public class CLIView {
 
                     System.out.print("Insert age: ");
                      playerAge = inputStream.nextInt();
+                     inputStream.nextLine();
 
                     break;
                 case "connect":
+                    inputStream.nextLine();
                     try {
                         socket = new Socket("127.0.0.1", 1337);
                         inputNet = new Scanner(socket.getInputStream());
@@ -74,6 +76,7 @@ public class CLIView {
                         if(message.equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) {
                             System.out.print("How many Players: ");
                             outNet.println(inputStream.nextInt());
+                            inputStream.nextLine();
                             outNet.flush();
                         }else{
                             System.out.println(message);
@@ -97,7 +100,6 @@ public class CLIView {
         out = new ObjectOutputStream(connSocket.getOutputStream());
         Thread listen = new Thread(listener);
         listen.start();
-
 
         while(true){
 

@@ -10,6 +10,25 @@ import java.util.Scanner;
 public class Client {
 
 
+    private String playername;
+    private int numberOfPlayers;
+
+    public void setNumberOfPlayers(int num){
+        this.numberOfPlayers = num;
+    }
+
+    public void setPlayername(String name){
+        this.playername = name;
+    }
+
+    public String getPlayername() {
+        return playername;
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
     public void run() throws IOException {
 
         //reset the terminal
@@ -87,6 +106,7 @@ public class Client {
             if ((!name.contains(line)) && !line.isEmpty()) {//true
                 socketOut.println(line); // Write age on socket stream
                 socketOut.flush(); // Send age
+                setPlayername(name);
                 break;
             } else { //false
                 System.out.println("INVALID INPUT.\n\n" +
@@ -100,6 +120,7 @@ public class Client {
         // Age request
         System.out.println("And now tell me, how old are you?\n"); // Print age request
         int number = stdIn.nextInt(); // Read age
+        stdIn.nextLine();
         while (true) { // Wait a valid input
             if (number >= 1 && number <= 99) {
                 socketOut.println(number); // Write age on socket stream
@@ -120,10 +141,12 @@ public class Client {
             System.out.println(line); // Print number of player request
 
             number = stdIn.nextInt(); // Read number of player
+            stdIn.nextLine();
             while (true) {
                 if (number==2 || number==3) {
                     socketOut.println(number); // Write number of player on socket stream
                     socketOut.flush(); // Send number of player
+                    setNumberOfPlayers(number);
                     break;
                 } else {
                     System.out.println("INVALID INPUT\n\n" +
@@ -134,11 +157,20 @@ public class Client {
 
         } else {
             System.out.println(line); // Print message
+
+            if(line.contains("2"))
+                number = 2;
+            else if (line.contains("3"))
+                    number = 3;
+
+            setNumberOfPlayers(number);
         }
 
         line = socketIn.nextLine(); // Receive message
         System.out.println(line); // Print message
         System.out.println("-------------------------------------------------------------------------------------------\n");
+
+        //faccio partire la partita
 
     }
 }
