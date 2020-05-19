@@ -14,6 +14,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -22,8 +23,8 @@ public class CLIGame {
     public static final String[] GODS = {"APOLLO", "ARTEMIS", "ATHENA", "ATLAS", "CHARON", "CHRONUS", "DEMETER", "HEPHAESTUS", "HESTIA", "MINOTAUR", "PAN", "PROMETHEUS", "TRITON", "ZEUS"};
 
     static Scanner inputStream = new Scanner(System.in);
-    static private String playerName;
-    static private int numberOfPlayer;
+    static String playerName;
+    static int numberOfPlayer;
     static CLIGame.readProxyBoard displayer;
 
     static ObjectOutputStream out;
@@ -51,29 +52,12 @@ public class CLIGame {
         }
     }
 
-    static String getPlayerName() {
-        return playerName;
-    }
-
-    static void setPlayerName(String name) {
-        playerName = playerName;
-    }
-
-    static int getNumberOfPlayer() {
-        return numberOfPlayer;
-    }
-
-    static void setNumberOfPlayer(int number) {
-        numberOfPlayer = numberOfPlayer;
-    }
-
-
 
     static private void startPlaying(Socket connSocket, String name, int number) throws IOException {
 
 
-        setNumberOfPlayer(number);
-        setPlayerName(name);
+        numberOfPlayer = number;
+        playerName = name;
 
         BoardListener listener = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
         listener.addObserver(displayer);
@@ -84,9 +68,9 @@ public class CLIGame {
 
         while (true) {
 
-            System.out.println("Insert command:");
+            System.out.print("Insert command:");
 
-            String command = inputStream.nextLine().toUpperCase();
+            String command = inputStream.nextLine().trim().toUpperCase();
             PlayerCommand cmd;
 
             //check if everything is setted to start the game and check if it is your turn
@@ -97,18 +81,18 @@ public class CLIGame {
 
                         //the first player chooses the gods to use
                         case "SETUPGODS":
-                            StringBuilder selectedGods = new StringBuilder("");
+                            StringBuilder selectedGods = new StringBuilder();
                             boolean checked = false;
 
                             if(numberOfPlayer == 2) {
                                 System.out.print("You are the youngest player and you have to choose the gods to use in the game\n" +
                                         "Chose the first god:  ");
-                                inputStream.nextLine().toUpperCase();
+                                input = inputStream.nextLine().trim().toUpperCase();
 
                                 while (!checked) {
 
                                     for (String x : GODS) {
-                                        if (inputStream.equals(x)) {
+                                        if (input.equals(x)) {
                                             selectedGods.append(x + " ");
                                             checked = true;
                                         }
@@ -116,18 +100,18 @@ public class CLIGame {
 
                                     if (!checked) {
                                         System.out.print("INVALID INPUT.\nReinsert a valid god:  ");
-                                        inputStream.nextLine().toUpperCase();
+                                        input = inputStream.nextLine().trim().toUpperCase();
                                     }
                                 }
 
                                 System.out.print("Ok now insert the second god:  ");
-                                inputStream.nextLine().toUpperCase();
+                                input = inputStream.nextLine().trim().toUpperCase();
                                 checked = false;
 
                                 while (!checked) {
 
                                     for (String x : GODS) {
-                                        if (inputStream.equals(x) && !selectedGods.toString().contains(x)) {
+                                        if (input.equals(x) && !selectedGods.toString().contains(x)) {
                                             selectedGods.append(x);
                                             checked = true;
                                         }
@@ -135,7 +119,7 @@ public class CLIGame {
 
                                     if (!checked) {
                                         System.out.print("INVALID INPUT.\nReinsert a valid god:  ");
-                                        inputStream.nextLine().toUpperCase();
+                                        input = inputStream.nextLine().trim().toUpperCase();
                                     }
                                 }
 
@@ -224,7 +208,7 @@ public class CLIGame {
                         // a player chooses his god from the list of possible gods which was chosen by the first player
                         case "SELECTGOD":
                             System.out.print("Choose your god: ");
-                            input = inputStream.nextLine().toUpperCase();
+                            input = inputStream.nextLine().trim().toUpperCase();
 
                             if(displayer.getLocalProxy().getChoosingGods().contains(input)) {
 
