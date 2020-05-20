@@ -28,13 +28,13 @@
     <dependency>
         <groupId>org.jetbrains</groupId>
         <artifactId>annotations-java5</artifactId>
-        <version>RELEASE</version>
+        <version>19.0.0</version>
         <scope>compile</scope>
     </dependency>
     <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter</artifactId>
-        <version>RELEASE</version>
+        <version>5.7.0-M1</version>
         <scope>test</scope>
     </dependency>
   </dependencies>
