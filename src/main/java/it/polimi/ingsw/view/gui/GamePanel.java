@@ -6,14 +6,29 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class GamePanel extends JPanel {
+public class GamePanel {
     public static void main(String[] args) throws IOException {
         JFrame frame = new JFrame();
-        File prove = new File("..\\..\\..\\..\\..\\..\\graphics\\graphics_0000s_0001_god_and_hero_cards_0055_Tyche.png");
+        JLayeredPane layeredPane = frame.getLayeredPane();
+        File image1 = new File("/Users/gianlucaregis/Desktop/27.png");
+        File image2 = new File("/Users/gianlucaregis/Desktop/15.png");
 
-        BufferedImage myPicture = ImageIO.read(prove);
-        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-        frame.add(picLabel);
+        BufferedImage myPicture1 = ImageIO.read(image1);
+        BufferedImage myPicture2 = ImageIO.read(image2);
+
+        JLabel picLabel1 = new JLabel(new ImageIcon(myPicture1));
+        picLabel1.setBounds(200, 200, 200, 200);
+        JLabel picLabel2 = new JLabel(new ImageIcon(myPicture2));
+        picLabel2.setBounds(300, 300, 200, 200);
+
+        layeredPane.add(picLabel1, 1);
+        layeredPane.add(picLabel2, 2);
+
+        //frame.add(layeredPane);
+
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(5000, 5000);
+        frame.setVisible(true);
 
     }
 }
