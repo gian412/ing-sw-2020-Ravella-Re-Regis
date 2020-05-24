@@ -25,7 +25,7 @@ public class LoginGridBagPanel extends JPanel {
      *
      * initializes and instances the GUI elements of the login page and displays them
      *
-     * @author Elia Ravella, Gianluca Regis
+     * @author Gianluca Regis
      * @param toDisplay next panel to be loaded
      */
     public LoginGridBagPanel(GamePanel toDisplay){
