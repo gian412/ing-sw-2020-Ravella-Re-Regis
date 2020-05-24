@@ -8,6 +8,10 @@ import java.util.Scanner;
 
 public class GUILoader extends JFrame{
 
+    /**
+     * @author Elia Ravella
+     * @param args cli arguments
+     */
     public static void main(String[] args) {
         JFrame mainFrame = new JFrame("Santorini");
         GamePanel board = new GamePanel();

@@ -10,10 +10,20 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class LoginPanel extends JPanel {
+    // login page components
     JTextField txtName, txtAge;
     JButton btnLogin;
+
+    // next panel to be loaded
     GamePanel nextPanel;
 
+    /**simple constructor
+     *
+     * initializes and instances the GUI elements of the login page and displays them
+     *
+     * @author Elia Ravella
+     * @param toDisplay next panel to be loaded
+     */
     public LoginPanel(GamePanel toDisplay){
         this.nextPanel = toDisplay;
         txtName = new JTextField("Name");
@@ -27,6 +37,12 @@ public class LoginPanel extends JPanel {
 
     }
 
+    /**
+     * login function
+     *
+     * connects to the server, send the arguments (player's name and player's age) and loads next panel
+     * @author Elia Ravella
+     */
     public void login(){
         Socket connSocket = null;
         try {
