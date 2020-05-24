@@ -2,7 +2,6 @@ package it.polimi.ingsw.view.gui;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.tree.DefaultTreeCellEditor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,10 +13,6 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class LoginPanel extends JPanel {
-
-    // Declaration of connection's constants
-    private final String IP = "127.0.0.1";
-    private final int PORT = 1337;
 
     // login page components
     JTextField txtName, txtAge, txtError;
@@ -88,7 +83,7 @@ public class LoginPanel extends JPanel {
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int age = 0;
+                int age;
                 try {
                     age = Integer.parseInt(txtAge.getText());
                     if (age >= 1 && age <= 99) {
@@ -124,8 +119,11 @@ public class LoginPanel extends JPanel {
      * @author Elia Ravella
      */
     public void login(){
-        Socket connSocket = null;
+        Socket connSocket;
         try {
+            int PORT = 1337;
+            // Declaration of connection's constants
+            String IP = "127.0.0.1";
             connSocket = new Socket(IP, PORT);
             Scanner input = new Scanner(connSocket.getInputStream());
             PrintStream output = new PrintStream(connSocket.getOutputStream());
