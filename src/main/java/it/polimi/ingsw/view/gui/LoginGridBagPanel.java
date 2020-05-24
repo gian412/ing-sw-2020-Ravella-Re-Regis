@@ -205,10 +205,14 @@ public class LoginGridBagPanel {
             input.nextLine();
             input.nextLine();
 
+            loginPanel.remove(labelName);
+            loginPanel.remove(labelAge);
+            loginPanel.remove(labelError);
             loginPanel.remove(txtName);
             loginPanel.remove(txtAge);
             loginPanel.remove(btnLogin);
-            // TODO: go to choseGodsPanel
+
+            new GamePanel(this.loginPanel, connSocket);
         } catch (IOException e) {
             e.printStackTrace();
         }

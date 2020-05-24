@@ -13,32 +13,39 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class GamePanel extends JPanel {
+public class GamePanel{
     Socket socket;
+    JPanel gamePanel;
+    readProxyBoard reader;
 
     class readProxyBoard implements Observer<BoardProxy>{
-        JPanel displayPanel;
+        JTextField displayText;
 
-        public readProxyBoard(JPanel displayPanel){
-            this.displayPanel = displayPanel;
+        public readProxyBoard(JTextField displayText){
+            this.displayText = displayText;
         }
 
         @Override
         public void update(BoardProxy message) {
-            displayPanel.add(new JLabel(message.toString()));
+            displayText.setText(message.getTurnPlayer());
         }
     }
 
-    public void activeGamePanel(Socket connSocket) throws IOException {
-        this.setVisible(true);
-        BoardListener bl = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
-        new ObjectOutputStream(connSocket.getOutputStream());
-        bl.addObserver(new readProxyBoard(this));
-        new Thread(bl).start();
-    }
+    public GamePanel(JPanel panel, Socket connSocket) throws IOException {
+        this.gamePanel = panel;
+        this.socket = connSocket;
 
-    public GamePanel(){
-        this.add(new JTextArea("eccheccazzo"));
-        this.setVisible(false);
+        JTextField txtChoosingGod = new JTextField();
+        reader = new readProxyBoard(txtChoosingGod);
+        JLabel lblDescription = new JLabel("This player is choosing the gods: ");
+
+        BoardListener listener = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
+        new ObjectOutputStream(socket.getOutputStream());
+        listener.addObserver(reader);
+        new Thread(listener).start();
+
+        panel.add(lblDescription);
+        panel.add(txtChoosingGod);
+
     }
 }
