@@ -1,10 +1,6 @@
 package it.polimi.ingsw.view.gui;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.net.Socket;
-import java.util.Scanner;
 
 public class GUILoader extends JFrame{
 
@@ -15,7 +11,8 @@ public class GUILoader extends JFrame{
     public static void main(String[] args) {
         JFrame mainFrame = new JFrame("Santorini");
         GamePanel board = new GamePanel();
-        LoginPanel login = new LoginPanel(board);
+        // LoginPanel login = new LoginPanel(board);
+        LoginGridBagPanel login = new LoginGridBagPanel(board);
 
         mainFrame.add(login);
         mainFrame.setSize(5000, 5000);
