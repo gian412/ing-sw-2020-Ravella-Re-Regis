@@ -18,7 +18,7 @@ public class GUILoader extends JFrame{
         LoginPanel login = new LoginPanel(board);
 
         mainFrame.add(login);
-        mainFrame.setSize(500, 500);
+        mainFrame.setSize(5000, 5000);
         mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
     }
