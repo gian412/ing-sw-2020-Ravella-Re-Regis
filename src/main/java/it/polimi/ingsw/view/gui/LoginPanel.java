@@ -1,6 +1,9 @@
 package it.polimi.ingsw.view.gui;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -9,41 +12,45 @@ import java.util.Scanner;
 public class LoginPanel extends JPanel {
     JTextField txtName, txtAge;
     JButton btnLogin;
+    GamePanel nextPanel;
 
-    public LoginPanel(){
+    public LoginPanel(GamePanel toDisplay){
+        this.nextPanel = toDisplay;
         txtName = new JTextField("Name");
         txtAge = new JTextField("Age");
         btnLogin = new JButton("Login");
+        btnLogin.addActionListener(e -> login());
 
         add(txtName);
         add(txtAge);
         add(btnLogin);
 
     }
-    /*
+
     public void login(){
         Socket connSocket = null;
         try {
             connSocket = new Socket("127.0.0.1", 1337);
-            Scanner x = new Scanner(connSocket.getInputStream());
-            PrintStream y = new PrintStream(connSocket.getOutputStream());
-            y.println("GUIclient");
-            y.flush();
-            y.println(1);
-            y.flush();
-            x.nextLine();
-            x.nextLine();
+            Scanner input = new Scanner(connSocket.getInputStream());
+            PrintStream output = new PrintStream(connSocket.getOutputStream());
 
-            GamePanel board = new GamePanel(connSocket);
-            mainFrame.add(board);
-            board.activeGamePanel();
+            output.println(txtName.getText());
+            output.flush();
+            output.println(Integer.parseInt(txtAge.getText()));
+            output.flush();
+            input.nextLine();
+            input.nextLine();
 
-            mainFrame.setSize(500, 500);
-            mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-            mainFrame.setVisible(true);
-
+            remove(txtName);
+            remove(txtAge);
+            remove(btnLogin);
+            add(nextPanel);
+            nextPanel.activeGamePanel(connSocket);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+
+
+
+    }
 }

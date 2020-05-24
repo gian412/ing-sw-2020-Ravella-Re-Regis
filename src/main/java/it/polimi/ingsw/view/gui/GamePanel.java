@@ -29,14 +29,16 @@ public class GamePanel extends JPanel {
         }
     }
 
-    public void activeGamePanel() throws IOException {
-        BoardListener bl = new BoardListener(new ObjectInputStream(socket.getInputStream()));
-        new ObjectOutputStream(socket.getOutputStream());
+    public void activeGamePanel(Socket connSocket) throws IOException {
+        this.setVisible(true);
+        BoardListener bl = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
+        new ObjectOutputStream(connSocket.getOutputStream());
         bl.addObserver(new readProxyBoard(this));
         new Thread(bl).start();
     }
 
-    public GamePanel(Socket connSocket){
-        this.socket = connSocket;
+    public GamePanel(){
+        this.add(new JTextArea("eccheccazzo"));
+        this.setVisible(false);
     }
 }
