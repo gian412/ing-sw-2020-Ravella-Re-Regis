@@ -145,6 +145,8 @@ public class CLIView {
                             remoteChangeTurn();
 
                             break;
+
+
                     }
                 } else {
                     System.out.println("IT IS NOT YOUR TURN !!!!!!!!");
