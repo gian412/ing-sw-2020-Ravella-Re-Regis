@@ -12,7 +12,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class LoginGridBagPanel extends JPanel {
+public class LoginGridPanel extends JPanel {
 
     // login page components
     JTextField txtName, txtAge;
@@ -26,26 +26,25 @@ public class LoginGridBagPanel extends JPanel {
      *
      * initializes and instances the GUI elements of the login page and displays them
      *
-     * @author Gianluca Regis
-     * @param toDisplay next panel to be loaded
+     * @author Elia Ravella, Gianluca Regis
+     *
      */
-    public LoginGridBagPanel(GamePanel toDisplay){
+    public LoginGridPanel(){
 
-        GridBagLayout layout = new GridBagLayout();
-        setLayout(layout);
+        GridLayout layout = new GridLayout(4, 3);
+        this.setLayout(layout);
+
         // Set panel size
         this.setSize(2000, 2000);
 
-        // Set next panel
-        this.nextPanel = toDisplay;
 
         // Initialization of the textFields
         txtName = new JTextField("Name");
-        //txtName.setBounds(100, 50, 100, 50);
+        txtName.setBounds(100, 50, 100, 50);
         txtAge = new JTextField("Age");
-        //txtAge.setBounds(250, 50, 100, 50);
+        txtAge.setBounds(250, 50, 100, 50);
         txtError = new JLabel();
-        //txtError.setBounds(250, 150, 100, 50);
+        txtError.setBounds(250, 150, 100, 50);
         txtError.setVisible(false);
 
         // Adding focus listeners
@@ -108,37 +107,10 @@ public class LoginGridBagPanel extends JPanel {
         });
 
         // Adding elements to Panel
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill= GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.33;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.gridwidth = 1;
-        add(txtName, constraints);
-
-        constraints = new GridBagConstraints();
-        constraints.fill= GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.33;
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        constraints.gridwidth = 1;
-        add(txtAge, constraints);
-
-        constraints = new GridBagConstraints();
-        constraints.fill= GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.33;
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.gridwidth = 1;
-        add(txtError, constraints);
-
-        constraints = new GridBagConstraints();
-        constraints.fill= GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.33;
-        constraints.gridx = 0;
-        constraints.gridy = 3;
-        constraints.gridwidth = 1;
-        add(btnLogin, constraints);
+        add(txtName);
+        add(txtAge);
+        add(txtError);
+        add(btnLogin);
 
     }
 
@@ -151,9 +123,9 @@ public class LoginGridBagPanel extends JPanel {
     public void login(){
         Socket connSocket;
         try {
+            int PORT = 1337;
             // Declaration of connection's constants
             String IP = "127.0.0.1";
-            int PORT = 1337;
             connSocket = new Socket(IP, PORT);
             Scanner input = new Scanner(connSocket.getInputStream());
             PrintStream output = new PrintStream(connSocket.getOutputStream());

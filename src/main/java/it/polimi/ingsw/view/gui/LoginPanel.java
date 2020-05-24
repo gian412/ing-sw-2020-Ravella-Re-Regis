@@ -15,7 +15,8 @@ import java.util.Scanner;
 public class LoginPanel extends JPanel {
 
     // login page components
-    JTextField txtName, txtAge, txtError;
+    JTextField txtName, txtAge;
+    JLabel txtError;
     JButton btnLogin;
 
     // next panel to be loaded
@@ -41,7 +42,7 @@ public class LoginPanel extends JPanel {
         txtName.setBounds(100, 50, 100, 50);
         txtAge = new JTextField("Age");
         txtAge.setBounds(250, 50, 100, 50);
-        txtError = new JTextField();
+        txtError = new JLabel();
         txtError.setBounds(250, 150, 100, 50);
         txtError.setVisible(false);
 
