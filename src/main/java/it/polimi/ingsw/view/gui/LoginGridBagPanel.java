@@ -12,41 +12,39 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class LoginGridBagPanel extends JPanel {
+public class LoginGridBagPanel {
 
     // login page components
     JTextField txtName, txtAge;
-    JLabel txtError;
+    JLabel labelName, labelAge, labelError;
     JButton btnLogin;
-
-    // next panel to be loaded
-    GamePanel nextPanel;
+    JPanel loginPanel;
 
     /**simple constructor
      *
      * initializes and instances the GUI elements of the login page and displays them
      *
      * @author Gianluca Regis
-     * @param toDisplay next panel to be loaded
+     * @param panel panel to display with login elements
      */
-    public LoginGridBagPanel(GamePanel toDisplay){
+    public LoginGridBagPanel(JPanel panel){
 
+        // Save the received panel
+        loginPanel = panel;
+
+        // Set panel layout
         GridBagLayout layout = new GridBagLayout();
-        setLayout(layout);
+        loginPanel.setLayout(layout);
         // Set panel size
-        this.setSize(2000, 2000);
-
-        // Set next panel
-        this.nextPanel = toDisplay;
+        loginPanel.setSize(2000, 2000);
 
         // Initialization of the textFields
         txtName = new JTextField("Name");
-        //txtName.setBounds(100, 50, 100, 50);
         txtAge = new JTextField("Age");
-        //txtAge.setBounds(250, 50, 100, 50);
-        txtError = new JLabel();
-        //txtError.setBounds(250, 150, 100, 50);
-        txtError.setVisible(false);
+        labelName = new JLabel("Name: ");
+        labelAge = new JLabel("Age: ");
+        labelError = new JLabel();
+        labelError.setVisible(false);
 
         // Adding focus listeners
         txtName.addFocusListener(new FocusListener() {
@@ -74,8 +72,8 @@ public class LoginGridBagPanel extends JPanel {
                     txtAge.setText("Age");
                 } else {
                     txtAge.setBorder(new LineBorder(Color.DARK_GRAY, 0));
-                    txtError.setText("");
-                    txtError.setVisible(false);
+                    labelError.setText("");
+                    labelError.setVisible(false);
                 }
             }
         });
@@ -102,43 +100,85 @@ public class LoginGridBagPanel extends JPanel {
 
             private void txtAgeError() {
                 txtAge.setBorder(new LineBorder(Color.RED, 1));
-                txtError.setText("Invalid age parameter");
-                txtError.setVisible(true);
+                labelError.setText("Invalid age parameter");
+                labelError.setVisible(true);
             }
         });
+
 
         // Adding elements to Panel
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        constraints.anchor = GridBagConstraints.CENTER;
+        loginPanel.add(labelName, constraints);
+
+        constraints = new GridBagConstraints();
+        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 0.33;
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        constraints.anchor = GridBagConstraints.CENTER;
+        loginPanel.add(txtName, constraints);
+
+        constraints = new GridBagConstraints();
+        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 0.33;
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 1;
-        add(txtName, constraints);
+        constraints.gridheight = 6;
+        constraints.anchor = GridBagConstraints.CENTER;
+        loginPanel.add(new JPanel(), constraints);
 
         constraints = new GridBagConstraints();
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
-        constraints.gridx = 0;
-        constraints.gridy = 1;
+        constraints.gridx = 2;
+        constraints.gridy = 0;
         constraints.gridwidth = 1;
-        add(txtAge, constraints);
+        constraints.gridheight = 6;
+        constraints.anchor = GridBagConstraints.CENTER;
+        loginPanel.add(new JPanel(), constraints);
 
         constraints = new GridBagConstraints();
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
-        constraints.gridx = 0;
+        constraints.gridx = 1;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        add(txtError, constraints);
+        loginPanel.add(labelAge, constraints);
 
         constraints = new GridBagConstraints();
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
-        constraints.gridx = 0;
+        constraints.gridx = 1;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
-        add(btnLogin, constraints);
+        loginPanel.add(txtAge, constraints);
+
+        constraints = new GridBagConstraints();
+        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 0.33;
+        constraints.gridx = 1;
+        constraints.gridy = 4;
+        constraints.gridwidth = 1;
+        loginPanel.add(labelError, constraints);
+
+        constraints = new GridBagConstraints();
+        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 0.33;
+        constraints.gridx = 1;
+        constraints.gridy = 5;
+        constraints.gridwidth = 1;
+        loginPanel.add(btnLogin, constraints);
+
+
+
 
     }
 
@@ -165,11 +205,10 @@ public class LoginGridBagPanel extends JPanel {
             input.nextLine();
             input.nextLine();
 
-            remove(txtName);
-            remove(txtAge);
-            remove(btnLogin);
-            add(nextPanel);
-            nextPanel.activeGamePanel(connSocket);
+            loginPanel.remove(txtName);
+            loginPanel.remove(txtAge);
+            loginPanel.remove(btnLogin);
+            // TODO: go to choseGodsPanel
         } catch (IOException e) {
             e.printStackTrace();
         }

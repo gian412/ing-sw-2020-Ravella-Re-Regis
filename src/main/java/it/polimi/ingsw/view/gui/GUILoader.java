@@ -10,11 +10,10 @@ public class GUILoader extends JFrame{
      */
     public static void main(String[] args) {
         JFrame mainFrame = new JFrame("Santorini");
-        // LoginPanel login = new LoginPanel(board);
-        //LoginGridBagPanel login = new LoginGridBagPanel(board);
-        LoginGridPanel login = new LoginGridPanel();
+        JPanel panel = new JPanel();
+        new LoginGridBagPanel(panel);
 
-        mainFrame.add(login);
+        mainFrame.add(panel);
         mainFrame.setSize(500, 500);
         mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
