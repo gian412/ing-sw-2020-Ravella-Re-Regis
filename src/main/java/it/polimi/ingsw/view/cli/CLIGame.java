@@ -64,12 +64,12 @@ public class CLIGame {
 
         while (true) {
 
+            String command = inputStream.nextLine().trim().toUpperCase();
             //check if everything is setted to start the game and check if it is your turn
             if (displayer.getLocalProxy() != null) {
                 if (playerName.equals(displayer.getLocalProxy().getTurnPlayer())) {
 
                     System.out.print("Insert command:");
-                    String command = inputStream.nextLine().trim().toUpperCase();
 
                     switch (command) {
 
@@ -80,21 +80,15 @@ public class CLIGame {
                             System.out.print("You are the youngest player and you have to choose the gods to use in the game\n" +
                                     "Chose the first god:  ");
                             input = inputStream.nextLine().trim().toUpperCase();
-
                             selectedGods.append(checkGod(input, selectedGods));
-
 
                             System.out.print("Ok now insert the second god:  ");
                             input = inputStream.nextLine().trim().toUpperCase();
-
                             selectedGods.append(checkGod(input, selectedGods));
 
-
                             if(numberOfPlayer == 3){
-
                                 System.out.print("And now insert the last god:  ");
                                 input = inputStream.nextLine().toUpperCase();
-
                                 selectedGods.append(checkGod(input, selectedGods));
                             }
 
@@ -105,25 +99,59 @@ public class CLIGame {
 
                         // a player chooses his god from the list of possible gods which was chosen by the first player
                         case "SELECTGOD":
+                            boolean check = false;
+
                             System.out.print("Choose your god: ");
                             input = inputStream.nextLine().trim().toUpperCase();
 
-                            boolean check = false;
-
                             while(!check) {
-
                                 if (displayer.getLocalProxy().getChoosingGods().contains(input)) {
-                                    submitCommand(connSocket, playerName, new Pair(0,0), CommandType.CHOOSE_GOD, 0, input);
                                     check = true;
-
                                 } else {
                                     System.out.print("INVALID INPUT.\nReinsert a valid god:  ");
                                     input = inputStream.nextLine().trim().toUpperCase();
                                 }
                             }
 
+                            submitCommand(connSocket, playerName, new Pair(0,0), CommandType.CHOOSE_GOD, 0, input);
                             remoteChangeTurn();
+                            break;
 
+
+                        case "ADDWORKER":
+
+                            int row, column;
+                            System.out.println("It's time to insert your workers.");
+
+                            System.out.print("Insert the column of your first worker (from 1 to 5): ");
+                            column = inputStream.nextInt() - 1;
+                            inputStream.nextLine();
+
+                            column = checkCoordinates(column);
+
+                            System.out.print("Now insert the row of your first worker (from 1 to 5): ");
+                            row = inputStream.nextInt() - 1;
+                            inputStream.nextLine();
+
+                            row = checkCoordinates(row);
+
+                            submitCommand(connSocket, playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
+
+                            System.out.print("Insert the column of your second worker (from 1 to 5): ");
+                            column = inputStream.nextInt() - 1;
+                            inputStream.nextLine();
+
+                            column = checkCoordinates(column);
+
+                            System.out.print("Now insert the row of your second worker (from 1 to 5): ");
+                            row = inputStream.nextInt() - 1;
+                            inputStream.nextLine();
+
+                            row = checkCoordinates(row);
+
+                            submitCommand(connSocket, playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
+
+                            remoteChangeTurn();
                             break;
 
                     }
@@ -152,6 +180,15 @@ public class CLIGame {
         }
     }
 
+    private static int checkCoordinates(int coordinate){
+
+        while(coordinate < 0 || coordinate > 4 ){
+            System.out.print("INVALID INPUT.\nReinsert a valid valor (from 1 to 5):  ");
+            coordinate = inputStream.nextInt() -1;
+            inputStream.nextLine();
+        }
+        return coordinate;
+    }
 
     private static void remoteChangeTurn() throws IOException {
 
