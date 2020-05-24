@@ -176,10 +176,6 @@ public class LoginGridBagPanel {
         constraints.gridy = 5;
         constraints.gridwidth = 1;
         loginPanel.add(btnLogin, constraints);
-
-
-
-
     }
 
     /**
@@ -202,8 +198,15 @@ public class LoginGridBagPanel {
             output.flush();
             output.println(Integer.parseInt(txtAge.getText()));
             output.flush();
-            input.nextLine();
-            input.nextLine();
+
+            String message = input.nextLine();
+            if(message.equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) {
+                // TODO: changing this to a popupbox/messagebox
+                /*System.out.print("How many Players: ");
+                output.println();*/
+            }else{
+                System.out.println(message);
+            }
 
             loginPanel.remove(labelName);
             loginPanel.remove(labelAge);
