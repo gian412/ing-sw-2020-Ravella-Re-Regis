@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.view.cli.CLIGame;
 import it.polimi.ingsw.view.cli.CliComposer;
 
 import java.io.IOException;
@@ -170,7 +171,7 @@ public class Client {
         System.out.println(line); // Print message
         System.out.println("-------------------------------------------------------------------------------------------\n");
 
-        //faccio partire la partita
-
+        CLIGame game = new CLIGame();
+        game.startPlaying(socket, name, number);
     }
 }

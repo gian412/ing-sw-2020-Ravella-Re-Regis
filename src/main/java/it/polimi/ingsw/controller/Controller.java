@@ -32,6 +32,7 @@ public class Controller implements Observer<PlayerCommand> {
      * @param workerID the number representing the worker (0, 1)
      */
     public void commitCommand(String player, Command command, int workerID){
+        //game.getBoard().notifyIllegalMove("");
         if(game.getTurnPlayer().getNAME().equals(player)) {
             try {
                 game.getTurnPlayer().getDivinity().executeCommand(

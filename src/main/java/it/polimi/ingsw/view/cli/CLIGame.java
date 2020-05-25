@@ -51,9 +51,10 @@ public class CLIGame {
     }
 
 
-    static private void startPlaying(Socket connSocket, String name, int number) throws IOException {
+    static public void startPlaying(Socket connSocket, String name, int number) throws IOException {
         numberOfPlayer = number;
         playerName = name;
+        int row, column;
         String input;
 
         BoardListener listener = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
@@ -64,12 +65,11 @@ public class CLIGame {
 
         while (true) {
 
+            System.out.print("Insert command:");
             String command = inputStream.nextLine().trim().toUpperCase();
             //check if everything is setted to start the game and check if it is your turn
             if (displayer.getLocalProxy() != null) {
                 if (playerName.equals(displayer.getLocalProxy().getTurnPlayer())) {
-
-                    System.out.print("Insert command:");
 
                     switch (command) {
 
@@ -120,7 +120,6 @@ public class CLIGame {
 
                         case "ADDWORKER":
 
-                            int row, column;
                             System.out.println("It's time to insert your workers.");
 
                             System.out.print("Insert the column of your first worker (from 1 to 5): ");
@@ -137,7 +136,7 @@ public class CLIGame {
 
                             submitCommand(connSocket, playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
 
-                            System.out.print("Insert the column of your second worker (from 1 to 5): ");
+                            System.out.print("Insert the column of your second worker : ");
                             column = inputStream.nextInt() - 1;
                             inputStream.nextLine();
 
@@ -153,6 +152,59 @@ public class CLIGame {
 
                             remoteChangeTurn();
                             break;
+
+                        case "MOVE":
+                            int workerIndex;
+
+                            while(true) {
+                                System.out.print("Choose the worker you want to move (indicate the index of the worker: 1 or 2) or QUIT to change your choice: ");
+                                input = inputStream.nextLine().trim().toUpperCase();
+
+                                while (!input.equals(1) || !input.equals(2) || input.equals("CHANGE")) {
+                                    System.out.print("INVALID INPUT.\nReinsert a valid index (1 or 2) or QUIT to change your choice:  ");
+                                    input = inputStream.nextLine().trim().toUpperCase();
+                                }
+
+                                if (input.equals("QUIT")) {
+                                    break;
+                                } else {
+                                    workerIndex = Integer.parseInt(input);
+                                }
+
+                                System.out.print("Insert the cell in which move your worker. Insert the row (from 1 to 5) or QUIT to change your choice: ");
+                                input = inputStream.nextLine().trim().toUpperCase();
+
+                                while (!input.equals(1) || !input.equals(2) || !input.equals(3) || !input.equals(4) || !input.equals(5) || input.equals("CHANGE")) {
+                                    System.out.print("INVALID INPUT.\nReinsert a valid row (from 1 to 5) or QUIT to change your choice:  ");
+                                    input = inputStream.nextLine().trim().toUpperCase();
+                                }
+
+                                if (input.equals("QUIT")) {
+                                    break;
+                                } else {
+                                    row = Integer.parseInt(input) - 1;
+                                }
+
+                                System.out.print("Insert the column (from 1 to 5) or QUIT to change your choice: ");
+                                input = inputStream.nextLine().trim().toUpperCase();
+
+                                while (!input.equals(1) || !input.equals(2) || !input.equals(3) || !input.equals(4) || !input.equals(5) || input.equals("CHANGE")) {
+                                    System.out.print("INVALID INPUT.\nReinsert a valid column (from 1 to 5) or QUIT to change your choice:  ");
+                                    input = inputStream.nextLine().trim().toUpperCase();
+                                }
+
+                                if (input.equals("QUIT")) {
+                                    break;
+                                } else {
+                                    column = Integer.parseInt(input) - 1;
+                                }
+
+                                submitCommand(connSocket, playerName, new Pair(column, row), CommandType.MOVE, workerIndex, "");
+
+
+
+                                break;
+                            }
 
                     }
                 }else {
