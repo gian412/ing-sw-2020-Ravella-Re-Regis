@@ -47,14 +47,14 @@ public class GamePanel implements Runnable{
         }
     }
 
-    public GamePanel(JPanel panel, Socket connSocket) throws IOException {
+    public GamePanel(JPanel panel, Socket connSocket){
         this.gamePanel = panel;
         this.socket = connSocket;
         setupUI(panel);
     }
 
     public void setupUI(JPanel pane){
-        pane = new JPanel(new GridBagLayout());
+        pane.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
         // simple info label
