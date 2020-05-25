@@ -39,9 +39,11 @@ public class GamePanel{
         reader = new readProxyBoard(txtChoosingGod);
         JLabel lblDescription = new JLabel("This player is choosing the gods: ");
 
+        // THIS IS A BLOCKING CALL
+        // todo: figure out how to set the window on "hold" waiting for the game
         BoardListener listener = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
-        new ObjectOutputStream(socket.getOutputStream());
         listener.addObserver(reader);
+        new ObjectOutputStream(socket.getOutputStream());
         new Thread(listener).start();
 
         panel.add(lblDescription);

@@ -194,19 +194,23 @@ public class LoginGridBagPanel {
             Scanner input = new Scanner(connSocket.getInputStream());
             PrintStream output = new PrintStream(connSocket.getOutputStream());
 
+            input.nextLine(); // connected players
+
             output.println(txtName.getText());
             output.flush();
             output.println(Integer.parseInt(txtAge.getText()));
             output.flush();
 
-            String message = input.nextLine();
+            String message = input.nextLine(); // server prompt
             if(message.equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) {
-                // TODO: changing this to a popupbox/messagebox
-                /*System.out.print("How many Players: ");
-                output.println();*/
-            }else{
-                System.out.println(message);
+                int playerNumber = Integer.parseInt(
+                        JOptionPane.showInputDialog(this.loginPanel, "How many players in the game?")
+                );
+                output.println(playerNumber);
+                output.flush();
             }
+            
+            input.nextLine(); // final dialog
 
             loginPanel.remove(labelName);
             loginPanel.remove(labelAge);
@@ -223,5 +227,4 @@ public class LoginGridBagPanel {
 
 
     }
-
 }
