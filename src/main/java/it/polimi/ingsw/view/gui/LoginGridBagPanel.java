@@ -219,7 +219,8 @@ public class LoginGridBagPanel {
             loginPanel.remove(txtAge);
             loginPanel.remove(btnLogin);
 
-            new GamePanel(this.loginPanel, connSocket);
+            GamePanel gamePanel = new GamePanel(this.loginPanel, connSocket);
+            new Thread(gamePanel).start();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -6,6 +6,7 @@ import it.polimi.ingsw.view.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,10 +14,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class GamePanel{
+public class GamePanel implements Runnable{
     Socket socket;
     JPanel gamePanel;
     readProxyBoard reader;
+    BoardListener listener;
+    ObjectOutputStream outputStream;
+
+    @Override
+    public void run() {
+        try {
+            listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
+        }catch(IOException x){
+            x.printStackTrace();
+        }
+
+        listener.addObserver(reader);
+        new Thread(listener).start();
+    }
 
     class readProxyBoard implements Observer<BoardProxy>{
         JTextField displayText;
@@ -34,20 +50,26 @@ public class GamePanel{
     public GamePanel(JPanel panel, Socket connSocket) throws IOException {
         this.gamePanel = panel;
         this.socket = connSocket;
+        setupUI(panel);
+    }
 
-        JTextField txtChoosingGod = new JTextField();
-        reader = new readProxyBoard(txtChoosingGod);
-        JLabel lblDescription = new JLabel("This player is choosing the gods: ");
+    public void setupUI(JPanel pane){
+        pane = new JPanel(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
 
-        // THIS IS A BLOCKING CALL
-        // todo: figure out how to set the window on "hold" waiting for the game
-        BoardListener listener = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
-        listener.addObserver(reader);
-        new ObjectOutputStream(socket.getOutputStream());
-        new Thread(listener).start();
+        // simple info label
+        JLabel lblInfo = new JLabel("this player is choosing gods: ");
+        constraints.gridx = 0;
+        constraints.gridx = 0;
+        pane.add(lblInfo, constraints);
 
-        panel.add(lblDescription);
-        panel.add(txtChoosingGod);
 
+        // textbox for IO
+        JTextField txtIO = new JTextField();
+        constraints.gridx = 1;
+        constraints.gridx = 0;
+        pane.add(txtIO, constraints);
+        // this textBox is also updated by the boardproxy reader
+        reader = new readProxyBoard(txtIO);
     }
 }
