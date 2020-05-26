@@ -9,7 +9,6 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.view.Observer;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 
@@ -32,7 +31,7 @@ public class Controller implements Observer<PlayerCommand> {
      * @param workerID the number representing the worker (0, 1)
      */
     public void commitCommand(String player, Command command, int workerID){
-        //game.getBoard().notifyIllegalMove("");
+
         if(game.getTurnPlayer().getNAME().equals(player)) {
             try {
                 game.getTurnPlayer().getDivinity().executeCommand(
@@ -45,6 +44,7 @@ public class Controller implements Observer<PlayerCommand> {
                 exc.printStackTrace();
             }
         }
+
     }
 
     /**adds a worker to the board
