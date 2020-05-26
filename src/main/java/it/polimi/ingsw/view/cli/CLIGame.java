@@ -26,16 +26,16 @@ public class CLIGame {
     static Scanner inputStream = new Scanner(System.in);
     static String playerName;
     static int numberOfPlayer;
-    static CLIGame.readProxyBoard displayer;
+    static CLIGame.ReadProxyBoard displayer;
     static ObjectOutputStream out;
 
     //internal class that allow to access to the BoardProxy and print the board when receive a notify
-    static class readProxyBoard implements Observer<BoardProxy> {
+    static class ReadProxyBoard implements Observer<BoardProxy> {
 
         CliComposer out;
         BoardProxy localProxy;
 
-        public readProxyBoard() {
+        public ReadProxyBoard() {
             out = new CliComposer();
         }
 
@@ -54,6 +54,7 @@ public class CLIGame {
     static public void startPlaying(Socket connSocket, String name, int number) throws IOException {
         numberOfPlayer = number;
         playerName = name;
+        displayer = new ReadProxyBoard();
         int row, column;
         String input;
 
