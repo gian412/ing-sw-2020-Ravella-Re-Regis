@@ -59,6 +59,7 @@ public class CLIGame {
         String input;
 
         BoardListener listener = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
+        new ObjectOutputStream(connSocket.getOutputStream());
         listener.addObserver(displayer);
         Thread listen = new Thread(listener);
         listen.start();
