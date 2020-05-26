@@ -80,8 +80,9 @@ public class Client {
         System.out.println("-------------------------------------------------------------------------------------------\n");
 
         //create the connection
+        //String IP = "192.168.178.108";
         String IP = "127.0.0.1";
-        int PORT = 1337;
+        int PORT = 13300;
         Socket socket = new Socket(IP, PORT); // Start the socket connection
         System.out.println("Connection established");
         // Open the input/output streams with the socket

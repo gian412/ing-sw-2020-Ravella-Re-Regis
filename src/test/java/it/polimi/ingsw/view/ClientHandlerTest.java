@@ -14,13 +14,13 @@ public class ClientHandlerTest {
     @Test
     @DisplayName("basic testing of the function")
     public void basicTest(){
-        // setting up and starting the server, waiting on port 1337
+        // setting up and starting the server, waiting on port 13300
         Thread server = new Thread(new Server());
         server.start();
 
         try {
             // initializing of the connection, creating a simple player
-            Socket clientSocket = new Socket("127.0.0.1", 1337);
+            Socket clientSocket = new Socket("127.0.0.1", 13300);
             PrintStream ps = new PrintStream(clientSocket.getOutputStream());
             Scanner in = new Scanner(clientSocket.getInputStream());
 
