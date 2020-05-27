@@ -12,7 +12,7 @@ public final class GodMoves {
 
     }
 
-    private void PossibleMove() {
+    private static void PossibleMove() {
 
         // Apollo
         allPossibleMoves.put(GodType.APOLLO,
@@ -73,6 +73,7 @@ public final class GodMoves {
     }
 
     public static CommandType[] getPossibleMove(GodType godType) {
+        PossibleMove();
         return allPossibleMoves.get(godType);
     }
 
