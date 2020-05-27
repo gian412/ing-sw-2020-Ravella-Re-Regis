@@ -4,11 +4,8 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
