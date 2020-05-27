@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.GodType;
 
 public class Prometheus extends God {
     protected boolean hasBuildBefore;
@@ -15,7 +16,7 @@ public class Prometheus extends God {
      */
     // class constructor with the initialization of board using the super constructor
     public Prometheus(Board board) {
-        super(board, "PROMETHEUS");
+        super(board, GodType.PROMETHEUS);
         this.hasBuildBefore = false;
     }
 

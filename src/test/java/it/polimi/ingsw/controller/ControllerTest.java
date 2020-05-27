@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.god.Apollo;
 import it.polimi.ingsw.model.god.Athena;
+import it.polimi.ingsw.utils.CommandType;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 

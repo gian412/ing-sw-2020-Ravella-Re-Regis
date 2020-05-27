@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.IllegalAddException;
 import it.polimi.ingsw.exceptions.IllegalCellException;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
+import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.RemoteView;
 
 public class Board {
@@ -237,7 +238,7 @@ public class Board {
             byte heightDifference = worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight());
 
             //check the win with and without Pan
-            if (worker.getOwner().getDivinity().NAME.equals("PAN")){
+            if (worker.getOwner().getDivinity().NAME.equals(GodType.PAN)){
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
                     hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner().getNAME());
@@ -247,7 +248,7 @@ public class Board {
                     return false;
                 }
 
-            } else if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
+            } else if (worker.getOwner().getDivinity().NAME.equals(GodType.CHRONUS)){
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || countCompleteTower()){
                     hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner().getNAME());
@@ -267,7 +268,7 @@ public class Board {
                 }
             }
         } else {
-            if (worker.getOwner().getDivinity().NAME.equals("CHRONUS")){
+            if (worker.getOwner().getDivinity().NAME.equals(GodType.CHRONUS)){
                 if (countCompleteTower()){
                     hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner().getNAME());

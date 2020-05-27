@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.GodType;
 
 public class Demeter extends God {
 
@@ -17,7 +18,7 @@ public class Demeter extends God {
      */
     // class constructor with the initialization of board using the super constructor
     public Demeter(Board board) {
-        super(board, "DEMETER");
+        super(board, GodType.DEMETER);
         this.hasBuildSecond = false;
     }
 

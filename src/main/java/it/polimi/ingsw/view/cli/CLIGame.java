@@ -1,21 +1,17 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.controller.Command;
-import it.polimi.ingsw.controller.CommandType;
+import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.controller.PlayerCommand;
 import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Pair;
-import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.view.BoardListener;
-import it.polimi.ingsw.view.CLIView;
 import it.polimi.ingsw.view.Observer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.net.Socket;
-import java.util.Arrays;
 import java.util.Scanner;
 
 

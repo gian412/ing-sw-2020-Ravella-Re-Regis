@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.GodType;
 
 public class Atlas extends God {
 
@@ -14,7 +15,7 @@ public class Atlas extends God {
      */
     // class constructor with the initialization of board using the super constructor
     public Atlas(Board board) {
-        super(board, "ATLAS");
+        super(board, GodType.ATLAS);
     }
 
     /**

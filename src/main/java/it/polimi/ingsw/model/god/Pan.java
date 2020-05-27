@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.GodType;
 
 public class Pan extends  God {
 
@@ -14,7 +15,7 @@ public class Pan extends  God {
      */
     // class constructor with the initialization of board using the super constructor
     public Pan(Board board) {
-        super(board, "PAN");
+        super(board, GodType.PAN);
     }
 
     /**

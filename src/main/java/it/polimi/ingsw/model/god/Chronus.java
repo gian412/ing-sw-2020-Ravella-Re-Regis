@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.GodType;
 
 public class Chronus extends God {
 
@@ -14,7 +15,7 @@ public class Chronus extends God {
      */
     // class constructor with the initialization of board using the super constructor
     public Chronus(Board board) {
-        super(board, "CHRONUS");
+        super(board, GodType.CHARON);
     }
 
     /**

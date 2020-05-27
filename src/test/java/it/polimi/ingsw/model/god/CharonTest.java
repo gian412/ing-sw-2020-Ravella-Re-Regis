@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.god;
 
 import it.polimi.ingsw.controller.Command;
-import it.polimi.ingsw.controller.CommandType;
+import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
 import org.junit.Test;

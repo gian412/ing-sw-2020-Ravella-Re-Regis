@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.Pair;
+import it.polimi.ingsw.utils.CommandType;
 
 import java.io.Serializable;
 

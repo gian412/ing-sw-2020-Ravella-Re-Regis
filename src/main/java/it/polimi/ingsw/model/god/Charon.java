@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.model.Height;
+import it.polimi.ingsw.utils.GodType;
 
 
 public class Charon extends God {
@@ -21,7 +22,7 @@ public class Charon extends God {
      */
     // class constructor with the initialization of board using the super constructor
     public Charon(Board board){
-        super(board, "CHARON");
+        super(board, GodType.CHARON);
         hasForced = false;
     }
 

@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.GodType;
 
 public class Hestia extends God {
 
@@ -16,7 +17,7 @@ public class Hestia extends God {
      */
     // class constructor with the initialization of board using the super constructor
     public Hestia(Board board) {
-        super(board, "HESTIA");
+        super(board, GodType.HESTIA);
         this.hasBuildSecond = false;
     }
 

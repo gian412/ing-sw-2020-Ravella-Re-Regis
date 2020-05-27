@@ -3,11 +3,12 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.GodType;
 
 public abstract class God {
 
     protected Board board;
-    public final String NAME;
+    public final GodType NAME;
     protected boolean hasMoved;
     protected boolean hasBuild;
     protected boolean hasWon;
@@ -17,12 +18,12 @@ public abstract class God {
      *
      * @author Gianluca Regis
      * @param board indicates the board of the game
-     * @param NAME indicates the name of the god
+     * @param name indicates the name of the god
      */
     // class constructor with the initialization of board
-    public God(Board board, String NAME){
+    public God(Board board, GodType name){
         this.board = board;
-        this.NAME = NAME;
+        this.NAME = name;
         this.hasMoved = false;
         this.hasBuild = false;
         this.hasWon = false;

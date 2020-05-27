@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
+import it.polimi.ingsw.utils.GodType;
 
 public class Hephaestus extends God {
 
@@ -17,7 +18,7 @@ public class Hephaestus extends God {
      */
     // class constructor with the initialization of board using the super constructor
     public Hephaestus(Board board) {
-        super(board, "HEPHAESTUS");
+        super(board, GodType.HEPHAESTUS);
         this.hasBuildSecond = false;
         this.previousCell = null;
     }

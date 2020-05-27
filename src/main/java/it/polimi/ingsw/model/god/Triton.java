@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.GodType;
 
 public class Triton extends God {
 
@@ -14,7 +15,7 @@ public class Triton extends God {
      */
     // class constructor with the initialization of board using the super constructor
     public Triton(Board board) {
-        super(board, "TRITON");
+        super(board, GodType.TRITON);
     }
 
     /**

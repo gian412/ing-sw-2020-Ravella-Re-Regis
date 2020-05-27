@@ -4,6 +4,7 @@ package it.polimi.ingsw.model.god;
 import it.polimi.ingsw.controller.Command;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.utils.GodType;
 
 public class Minotaur extends God {
 
@@ -15,7 +16,7 @@ public class Minotaur extends God {
      */
     // class constructor with the initialization of board using the super constructor
     public Minotaur(Board board) {
-        super(board, "MINOTAUR");
+        super(board, GodType.MINOTAUR);
     }
 
     /**

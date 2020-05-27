@@ -1,8 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.Command;
-import it.polimi.ingsw.controller.CommandType;
-import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.controller.PlayerCommand;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.cli.CliComposer;
