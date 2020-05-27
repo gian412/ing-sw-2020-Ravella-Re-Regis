@@ -62,7 +62,7 @@ public class CLIView {
                 case "connect":
                     inputStream.nextLine();
                     try {
-                        socket = new Socket("127.0.0.1", 1337);
+                        socket = new Socket("127.0.0.1", 13300);
                         inputNet = new Scanner(socket.getInputStream());
                         outNet = new PrintStream(socket.getOutputStream());
 

@@ -55,7 +55,8 @@ public class GamePanel implements Runnable{
 
     public void setupUI(){
 
-        gamePanel = new JPanel(new GridBagLayout());
+        //gamePanel = new JPanel(new GridBagLayout());
+        gamePanel.setLayout(new GridBagLayout());
 
         GridBagConstraints constraints = new GridBagConstraints();
 
@@ -70,7 +71,6 @@ public class GamePanel implements Runnable{
         JTextField txtIO = new JTextField();
         constraints.gridx = 1;
         constraints.gridy = 0;
-        // constraints.anchor = GridBagConstraints.LAST_LINE_END;
         gamePanel.add(txtIO, constraints);
 
         // this textBox is also updated by the boardproxy reader

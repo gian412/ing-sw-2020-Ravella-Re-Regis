@@ -18,7 +18,7 @@ public class Server implements Runnable{
     private List<ClientHandler> waitingClients;
     private List<ClientHandler> playingClients;
     private int clientsNumber;
-    private final int PORT = 1337;
+    private final int PORT = 13300;
 
     /**
      * Class constructor whit the initialization of the serverSocket

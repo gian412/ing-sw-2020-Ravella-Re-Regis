@@ -189,7 +189,7 @@ public class LoginGridBagPanel {
         try {
             // Declaration of connection's constants
             String IP = "127.0.0.1";
-            int PORT = 1337;
+            int PORT = 13300;
             connSocket = new Socket(IP, PORT);
             Scanner input = new Scanner(connSocket.getInputStream());
             PrintStream output = new PrintStream(connSocket.getOutputStream());
