@@ -4,25 +4,28 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class GamePanel extends JPanel implements Runnable {
-
+public class GameGridBagPanel implements Runnable{
     Socket socket;
+    JPanel gamePanel;
     readProxyBoard reader;
     BoardListener listener;
     ObjectOutputStream outputStream;
 
-    static class readProxyBoard implements Observer<BoardProxy> {
+    class readProxyBoard implements Observer<BoardProxy>{
 
         JTextField displayText;
 
-        public readProxyBoard(JTextField displayText) {
+        public readProxyBoard(JTextField displayText){
             this.displayText = displayText;
         }
 
@@ -33,30 +36,29 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    public GamePanel(Socket connSocket) {
+    public GameGridBagPanel(JPanel panel, Socket connSocket){
+        this.gamePanel = panel;
         this.socket = connSocket;
-        setUpUI();
+        setupUI();
     }
 
     @Override
     public void run() {
-
         try {
             listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
             outputStream = new ObjectOutputStream(socket.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
+        }catch(IOException x){
+            x.printStackTrace();
         }
 
         listener.addObserver(reader);
         new Thread(listener).start();
-
     }
 
-    public void setUpUI() {
+    public void setupUI(){
 
-        StaticFrame.addPanel(this);
-        this.setLayout(new GridBagLayout());
+        //gamePanel = new JPanel(new GridBagLayout());
+        gamePanel.setLayout(new GridBagLayout());
 
         GridBagConstraints constraints = new GridBagConstraints();
 
@@ -64,18 +66,16 @@ public class GamePanel extends JPanel implements Runnable {
         JLabel lblInfo = new JLabel("this player is choosing gods: ");
         constraints.gridx = 0;
         constraints.gridy = 0;
-        this.add(lblInfo, constraints);
+        gamePanel.add(lblInfo, constraints);
 
 
-        // textBox for IO
+        // textbox for IO
         JTextField txtIO = new JTextField();
         constraints.gridx = 1;
         constraints.gridy = 0;
-        this.add(txtIO, constraints);
+        gamePanel.add(txtIO, constraints);
 
-        // this textBox is also updated by the boardProxy reader
+        // this textBox is also updated by the boardproxy reader
         reader = new readProxyBoard(txtIO);
-
     }
-
 }

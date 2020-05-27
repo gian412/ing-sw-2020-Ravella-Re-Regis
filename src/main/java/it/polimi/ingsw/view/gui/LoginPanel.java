@@ -12,31 +12,27 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class LoginGridBagPanel {
+public class LoginPanel extends JPanel {
 
     // login page components
     JTextField txtName, txtAge;
     JLabel labelName, labelAge, labelError;
     JButton btnLogin;
-    JPanel loginPanel;
 
     /**
      *
-     * initializes and instances the GUI elements of the login page and displays them
+     * Initializes and instances the GUI elements of the login page and displays them
      *
      * @author Gianluca Regis
-     * @param panel panel to display with login elements
+     *
      */
-    public LoginGridBagPanel(JPanel panel){
-
-        // Save the received panel
-        loginPanel = panel;
+    public LoginPanel() {
 
         // Set panel layout
         GridBagLayout layout = new GridBagLayout();
-        loginPanel.setLayout(layout);
+        this.setLayout(layout);
         // Set panel size
-        loginPanel.setSize(2000, 2000);
+        this.setSize(2000, 2000);
 
         // Initialization of the textFields
         txtName = new JTextField("Name");
@@ -114,7 +110,7 @@ public class LoginGridBagPanel {
         constraints.gridy = 0;
         constraints.gridwidth = 1;
         constraints.anchor = GridBagConstraints.CENTER;
-        loginPanel.add(labelName, constraints);
+        this.add(labelName, constraints);
 
         constraints = new GridBagConstraints();
         constraints.fill= GridBagConstraints.HORIZONTAL;
@@ -123,7 +119,7 @@ public class LoginGridBagPanel {
         constraints.gridy = 1;
         constraints.gridwidth = 1;
         constraints.anchor = GridBagConstraints.CENTER;
-        loginPanel.add(txtName, constraints);
+        this.add(txtName, constraints);
 
         constraints = new GridBagConstraints();
         constraints.fill= GridBagConstraints.HORIZONTAL;
@@ -133,7 +129,7 @@ public class LoginGridBagPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 6;
         constraints.anchor = GridBagConstraints.CENTER;
-        loginPanel.add(new JPanel(), constraints);
+        this.add(new JPanel(), constraints);
 
         constraints = new GridBagConstraints();
         constraints.fill= GridBagConstraints.HORIZONTAL;
@@ -143,7 +139,7 @@ public class LoginGridBagPanel {
         constraints.gridwidth = 1;
         constraints.gridheight = 6;
         constraints.anchor = GridBagConstraints.CENTER;
-        loginPanel.add(new JPanel(), constraints);
+        this.add(new JPanel(), constraints);
 
         constraints = new GridBagConstraints();
         constraints.fill= GridBagConstraints.HORIZONTAL;
@@ -151,7 +147,7 @@ public class LoginGridBagPanel {
         constraints.gridx = 1;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        loginPanel.add(labelAge, constraints);
+        this.add(labelAge, constraints);
 
         constraints = new GridBagConstraints();
         constraints.fill= GridBagConstraints.HORIZONTAL;
@@ -159,7 +155,7 @@ public class LoginGridBagPanel {
         constraints.gridx = 1;
         constraints.gridy = 3;
         constraints.gridwidth = 1;
-        loginPanel.add(txtAge, constraints);
+        this.add(txtAge, constraints);
 
         constraints = new GridBagConstraints();
         constraints.fill= GridBagConstraints.HORIZONTAL;
@@ -167,7 +163,7 @@ public class LoginGridBagPanel {
         constraints.gridx = 1;
         constraints.gridy = 4;
         constraints.gridwidth = 1;
-        loginPanel.add(labelError, constraints);
+        this.add(labelError, constraints);
 
         constraints = new GridBagConstraints();
         constraints.fill= GridBagConstraints.HORIZONTAL;
@@ -175,16 +171,20 @@ public class LoginGridBagPanel {
         constraints.gridx = 1;
         constraints.gridy = 5;
         constraints.gridwidth = 1;
-        loginPanel.add(btnLogin, constraints);
+        this.add(btnLogin, constraints);
+
     }
 
     /**
-     * login function
+     *
+     * Login function
      *
      * connects to the server, send the arguments (player's name and player's age) and loads next panel
-     * @author Elia Ravella
+     * @author Elia Ravella, Gianluca Regis
+     *
      */
-    public void login(){
+    public void login() {
+
         Socket connSocket;
         try {
             // Declaration of connection's constants
@@ -204,28 +204,22 @@ public class LoginGridBagPanel {
             String message = input.nextLine(); // server prompt
             if(message.equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) {
                 int playerNumber = Integer.parseInt(
-                        JOptionPane.showInputDialog(this.loginPanel, "How many players in the game?")
+                        JOptionPane.showInputDialog(this, "How many players in the game?")
                 );
                 output.println(playerNumber);
                 output.flush();
             }
-            
+
             input.nextLine(); // final dialog
 
-            loginPanel.remove(labelName);
-            loginPanel.remove(labelAge);
-            loginPanel.remove(labelError);
-            loginPanel.remove(txtName);
-            loginPanel.remove(txtAge);
-            loginPanel.remove(btnLogin);
+            StaticFrame.removePanel(this);
+            GamePanel gamePanel = new GamePanel(connSocket);
+            new Thread(gamePanel).start();
 
-            GameGridBagPanel gameGridBagPanel = new GameGridBagPanel(this.loginPanel, connSocket);
-            new Thread(gameGridBagPanel).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-
     }
+
 }
