@@ -21,19 +21,6 @@ public class GamePanel implements Runnable{
     BoardListener listener;
     ObjectOutputStream outputStream;
 
-    @Override
-    public void run() {
-        try {
-            listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
-            outputStream = new ObjectOutputStream(socket.getOutputStream());
-        }catch(IOException x){
-            x.printStackTrace();
-        }
-
-        listener.addObserver(reader);
-        new Thread(listener).start();
-    }
-
     class readProxyBoard implements Observer<BoardProxy>{
         JTextField displayText;
 
@@ -50,25 +37,42 @@ public class GamePanel implements Runnable{
     public GamePanel(JPanel panel, Socket connSocket){
         this.gamePanel = panel;
         this.socket = connSocket;
-        setupUI(panel);
+        setupUI();
     }
 
-    public void setupUI(JPanel pane){
-        pane.setLayout(new GridBagLayout());
+    @Override
+    public void run() {
+        try {
+            listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
+        }catch(IOException x){
+            x.printStackTrace();
+        }
+
+        listener.addObserver(reader);
+        new Thread(listener).start();
+    }
+
+    public void setupUI(){
+
+        gamePanel = new JPanel(new GridBagLayout());
+
         GridBagConstraints constraints = new GridBagConstraints();
 
         // simple info label
         JLabel lblInfo = new JLabel("this player is choosing gods: ");
         constraints.gridx = 0;
-        constraints.gridx = 0;
-        pane.add(lblInfo, constraints);
+        constraints.gridy = 0;
+        gamePanel.add(lblInfo, constraints);
 
 
         // textbox for IO
         JTextField txtIO = new JTextField();
         constraints.gridx = 1;
-        constraints.gridx = 0;
-        pane.add(txtIO, constraints);
+        constraints.gridy = 0;
+        // constraints.anchor = GridBagConstraints.LAST_LINE_END;
+        gamePanel.add(txtIO, constraints);
+
         // this textBox is also updated by the boardproxy reader
         reader = new readProxyBoard(txtIO);
     }
