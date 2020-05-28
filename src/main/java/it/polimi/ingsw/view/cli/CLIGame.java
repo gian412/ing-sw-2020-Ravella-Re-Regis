@@ -58,13 +58,12 @@ public class CLIGame {
 
 
         while (true) {
-
             if (displayer.localProxy != null){
                 if (displayer.localProxy.getTurnPlayer().equals(playerName)){
                     switch (displayer.localProxy.getStatus()){
 
                         case SELECTING_GOD:
-                            if (displayer.localProxy.getChoosingGods().equals(null)){
+                            if (displayer.localProxy.getChoosingGods().equals("")){
                                 StringBuilder selectedGods = new StringBuilder();
 
                                 System.out.print("You are the youngest player and you have to choose the gods to use in the game\n" +
