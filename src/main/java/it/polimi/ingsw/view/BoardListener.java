@@ -23,5 +23,4 @@ public class BoardListener extends Observable<BoardProxy> implements Runnable {
             }
         }
     }
-
 }

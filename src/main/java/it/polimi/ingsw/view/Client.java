@@ -54,29 +54,6 @@ public class Client {
         //and says if he wants to use GUI or CLI
         System.out.println(composer.bannerMaker());
         String line;
-
-        //ask how the player wants to play
-        System.out.println(
-                "Do you want to play with CLI or with GUI?" + // ... interface...
-                        " (type \"CLI\" for CLI interface or \"GUI\" for GUI interface)\n"); // ... preference
-
-        line = stdIn.nextLine();
-
-        boolean guiInterface;
-        while (true) { // Wait a valid input
-            if (line.toUpperCase().equals("CLI")){
-                guiInterface = false; // Set interface to  CLI
-                break;
-            } else if (line.toUpperCase().equals("GUI")) {
-                guiInterface = true; // Set interface to GUI
-                break;
-            } else {
-                System.out.println("INVALID INPUT.\n\n"+ // Ask...
-                        "Do you want to play with CLI or with GUI?" + // ... interface...
-                        " (type \"CLI\" for CLI interface or \"GUI\" for GUI interface)\n"); // ... preference
-                line = stdIn.nextLine();
-            }
-        }
         System.out.println("-------------------------------------------------------------------------------------------\n");
 
         //create the connection
@@ -96,81 +73,32 @@ public class Client {
         PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
         System.out.println("-------------------------------------------------------------------------------------------\n");
 
-
-
-
-
-
-
         // Name request and control
-
         String lobbyNames =  socketIn.nextLine(); // Receive the name of the other players in the lobby
 
-        System.out.println("Insert your name, buddy!\n"); // Print name request
-
-
-
         do {
-            line = stdIn.nextLine().toUpperCase(); // Read name
-            if((lobbyNames.contains(line)) && !line.isEmpty()){
-                System.out.println("INVALID INPUT.\n\n" +
-                        "Reinsert a valid name:\n"); // Print age request
-            }
-        }while(lobbyNames.contains(line) && !line.isEmpty());
+            System.out.println("Insert your name, buddy!\n"); // Print name request
+            line = stdIn.nextLine().toUpperCase();
+        }while(lobbyNames.contains(line));
 
-        socketOut.println(line); // Write age on socket stream
-        socketOut.flush(); // Send age
+        System.out.println("Name accepted!\n");
+        socketOut.println(line);
+        socketOut.flush();
         playername = line;
-
-
-
-
-
-
-
-
-            while()
-
-        while (true) { // Wait a valid input
-
-            if () {//true
-
-
-                break;
-            } else { //false
-
-                line = stdIn.nextLine(); // Read age
-                line = line.toUpperCase();
-            }
-        }
         System.out.println("-------------------------------------------------------------------------------------------\n");
-
-
-
-
-
-
-
-
-
 
         // Age request
-        System.out.println("And now tell me, how old are you?\n"); // Print age request
-        int number = stdIn.nextInt(); // Read age
-        stdIn.nextLine();
-        while (true) { // Wait a valid input
-            if (number >= 1 && number <= 99) {
-                socketOut.println(number); // Write age on socket stream
-                socketOut.flush(); // Send age
-                break;
-            } else {
-                System.out.println("INVALID INPUT.\n\n" +
-                        "Insert a valid age:\n"); // Print age request
-                number = stdIn.nextInt(); // Read age
-            }
-        }
-        System.out.println("-------------------------------------------------------------------------------------------\n");
+        int number;
+        do {
+            System.out.println("And now tell me, how old are you?\n"); // Print age request
+            number = stdIn.nextInt(); // Read age
+            stdIn.nextLine();
+        }while (number < 1 || number > 99);
 
+        System.out.println("Age valid!\n");
+        socketOut.println(number);
+        socketOut.flush();
+        System.out.println("-------------------------------------------------------------------------------------------\n");
 
         // Number of player request or confirm of the insertion in lobby
         line = socketIn.nextLine(); // Receive message
