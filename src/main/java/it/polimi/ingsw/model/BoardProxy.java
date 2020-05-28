@@ -41,6 +41,9 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     public BoardProxy(){
         boardScheme = new Height[5][5];
         workers = new HashMap<>();
+        choosingGods = "";
+        illegalMoveString = "";
+        winPlayer = "";
     }
 
     public Height[][] getBoardScheme() {
