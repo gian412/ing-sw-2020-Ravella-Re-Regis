@@ -35,10 +35,6 @@ public class CLIGame {
             out = new CliComposer();
         }
 
-        public BoardProxy getLocalProxy() {
-            return localProxy;
-        }
-
         @Override
         public void update(BoardProxy message) {
             localProxy = message;
@@ -62,6 +58,82 @@ public class CLIGame {
 
 
         while (true) {
+
+            if (displayer.localProxy != null){
+                if (displayer.localProxy.getTurnPlayer().equals(playerName)){
+                    switch (displayer.localProxy.getStatus()){
+
+                        case SELECTING_GOD:
+                            if (displayer.localProxy.getChoosingGods().equals(null)){
+                                StringBuilder selectedGods = new StringBuilder();
+
+                                System.out.print("You are the youngest player and you have to choose the gods to use in the game\n" +
+                                        "Chose the first god:  ");
+                                input = inputStream.nextLine().trim().toUpperCase();
+                                selectedGods.append(checkGod(input, selectedGods));
+
+                                System.out.print("Ok now insert the second god:  ");
+                                input = inputStream.nextLine().trim().toUpperCase();
+                                selectedGods.append(checkGod(input, selectedGods));
+
+                                if (numberOfPlayer == 3) {
+                                    System.out.print("And now insert the last god:  ");
+                                    input = inputStream.nextLine().toUpperCase();
+                                    selectedGods.append(checkGod(input, selectedGods));
+                                }
+
+                                submitCommand(connSocket, playerName, new Pair(0, 0), CommandType.SET_GODS, 0, selectedGods.toString());
+                                remoteChangeTurn();
+                            }
+                            break;
+
+                        case ADDING_WORKER:
+                            break;
+
+
+                        case PLAYING:
+
+
+                            break;
+
+
+                        case TERMINATOR:
+                            break;
+                    }
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 
             System.out.print("Insert command:");
             String command = inputStream.nextLine().trim().toUpperCase();
@@ -208,7 +280,7 @@ public class CLIGame {
                 }else {
                     System.out.println("IT IS NOT YOUR TURN !!!!!!!!");
                 }
-            }
+            }*/
         }
     }
 

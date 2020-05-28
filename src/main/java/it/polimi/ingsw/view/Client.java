@@ -96,28 +96,63 @@ public class Client {
         PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
         System.out.println("-------------------------------------------------------------------------------------------\n");
 
+
+
+
+
+
+
         // Name request and control
 
-        String name =  socketIn.nextLine(); // Receive the name of the other players in the lobby
+        String lobbyNames =  socketIn.nextLine(); // Receive the name of the other players in the lobby
 
         System.out.println("Insert your name, buddy!\n"); // Print name request
-        line = stdIn.nextLine(); // Read name
-        line = line.toUpperCase();
 
-        while (true) { // Wait a valid input
-            if ((!name.contains(line)) && !line.isEmpty()) {//true
-                socketOut.println(line); // Write age on socket stream
-                socketOut.flush(); // Send age
-                setPlayername(name);
-                break;
-            } else { //false
+
+
+        do {
+            line = stdIn.nextLine().toUpperCase(); // Read name
+            if((lobbyNames.contains(line)) && !line.isEmpty()){
                 System.out.println("INVALID INPUT.\n\n" +
                         "Reinsert a valid name:\n"); // Print age request
+            }
+        }while(lobbyNames.contains(line) && !line.isEmpty());
+
+        socketOut.println(line); // Write age on socket stream
+        socketOut.flush(); // Send age
+        playername = line;
+
+
+
+
+
+
+
+
+            while()
+
+        while (true) { // Wait a valid input
+
+            if () {//true
+
+
+                break;
+            } else { //false
+
                 line = stdIn.nextLine(); // Read age
                 line = line.toUpperCase();
             }
         }
         System.out.println("-------------------------------------------------------------------------------------------\n");
+
+
+
+
+
+
+
+
+
 
         // Age request
         System.out.println("And now tell me, how old are you?\n"); // Print age request
@@ -173,6 +208,6 @@ public class Client {
         System.out.println("-------------------------------------------------------------------------------------------\n");
 
         CLIGame game = new CLIGame();
-        game.startPlaying(socket, name, number);
+        game.startPlaying(socket, playername, number);
     }
 }
