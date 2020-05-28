@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.*;
 
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.utils.CommandType;
+import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.view.Observer;
 
 import java.lang.reflect.InvocationTargetException;
@@ -134,6 +135,9 @@ public class Controller implements Observer<PlayerCommand> {
                     game.getBoard().getProxy().setChoosingGods(
                             game.getBoard().getProxy().getChoosingGods().replace(message.message, "")
                     );
+                    if(game.getBoard().getProxy().getChoosingGods().equals("") || game.getBoard().getProxy().getChoosingGods().equals(" "))
+                        game.getBoard().getProxy().setStatus(GameState.ADDING_WORKER);
+
                 } catch (NoSuchPlayerException | ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
@@ -149,6 +153,9 @@ public class Controller implements Observer<PlayerCommand> {
                         message.cmd.coordinates.x,
                         message.cmd.coordinates.y
                 );
+                if(game.getBoard().getProxy().getWorkers().keySet().size() == 6)
+                    game.getBoard().getProxy().setStatus(GameState.PLAYING);
+
                 break;
 
             default:

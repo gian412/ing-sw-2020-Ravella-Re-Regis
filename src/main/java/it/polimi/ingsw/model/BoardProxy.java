@@ -57,6 +57,7 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
 
     public void setWinner(String player){
         this.winPlayer = player;
+        this.setStatus(GameState.TERMINATOR);
     }
 
     public String getWinner() {
