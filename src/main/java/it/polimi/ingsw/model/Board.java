@@ -65,7 +65,6 @@ public class Board {
 
     public void setTurnPlayer(Player player) {
         this.turnPlayer = player;
-        proxy.setChoosingGods(player.getNAME());
         updateProxyBoard();
     }
 

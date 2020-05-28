@@ -2,6 +2,8 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.model.god.God;
+import it.polimi.ingsw.utils.GameState;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -66,6 +68,7 @@ public class Game {
             else playerList.get(i).setNextPlayer(playerList.get(0));
         }
 
+        board.getProxy().setStatus(GameState.SELECTING_GOD);
         board.setTurnPlayer(playerList.get(0));
     }
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.view.Observable;
 
 import java.io.Serializable;
@@ -13,8 +14,17 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     private Map<String, Pair> workers;
     private String winPlayer;
     private String turnPlayer;
+    private GameState status;
     private String choosingGods, illegalMoveString;
 
+
+    public GameState getStatus() {
+        return status;
+    }
+
+    public void setStatus(GameState status) {
+        this.status = status;
+    }
     public String getTurnPlayer() {
         return turnPlayer;
     }
