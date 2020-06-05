@@ -48,4 +48,7 @@ public enum GodType {
 
     }
 
+    public String getName() {
+        return name;
+    }
 }

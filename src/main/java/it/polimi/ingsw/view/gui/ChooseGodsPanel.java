@@ -4,8 +4,10 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -18,17 +20,19 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     BoardListener listener;
     ObjectOutputStream outputStream;
 
-    static class readProxyBoard implements Observer<BoardProxy> {
+    class readProxyBoard implements Observer<BoardProxy> {
 
-        JTextField displayText;
+        ChooseGodsPanel displayPanel;
 
-        public readProxyBoard(JTextField displayText) {
-            this.displayText = displayText;
+        public readProxyBoard(ChooseGodsPanel displayPanel) {
+            this.displayPanel = displayPanel;
         }
 
         @Override
         public void update(BoardProxy message) {
-            displayText.setText(message.getTurnPlayer());
+            if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+                displayPanel.showAllGods();
+            }
         }
 
     }
@@ -56,23 +60,36 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
     public void setUpUI() {
 
-
-        this.setLayout(new GridBagLayout());
+        reader = new readProxyBoard(this);
+        StaticFrame.addPanel(this);
+        /*this.setLayout(new GridBagLayout());
 
         GridBagConstraints constraints = new GridBagConstraints();
+
+        try {
+            BufferedImage image = ImageIO.read(new File("/home/gianluca/IdeaProjects/ingSw/ing-sw-2020-Ravella-Re-Regis/src/main/java/it/polimi/ingsw/utils/graphics/Apollo.png"));
+            JLabel imageLabel = new JLabel(new ImageIcon(image));
+            this.add(imageLabel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
 
         // this textBox is also updated by the boardProxy reader
         //reader = new readProxyBoard(txtIO);
 
-        StaticFrame.addPanel(this);
+        StaticFrame.addPanel(this);*/
 
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        Image image = new ImageIcon("../../utils/graphics/Apollo.png").getImage();
-        g.drawImage(image, 10, 10, this);
+    public void showAllGods(){
+        try {
+            BufferedImage image = ImageIO.read(new File("src/main/java/it/polimi/ingsw/utils/graphics/Apollo.png"));
+            JLabel imageLabel = new JLabel(new ImageIcon(image));
+            this.add(imageLabel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

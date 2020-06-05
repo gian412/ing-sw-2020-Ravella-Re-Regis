@@ -196,7 +196,8 @@ public class LoginPanel extends JPanel {
 
             input.nextLine(); // connected players
 
-            output.println(txtName.getText());
+            StaticFrame.setPlayerName(txtName.getText());
+            output.println(StaticFrame.getPlayerName());
             output.flush();
             output.println(Integer.parseInt(txtAge.getText()));
             output.flush();
@@ -213,8 +214,8 @@ public class LoginPanel extends JPanel {
             input.nextLine(); // final dialog
 
             StaticFrame.removePanel(this);
-            ChooseGodsPanel gamePanel = new ChooseGodsPanel(connSocket);
-            new Thread(gamePanel).start();
+            ChooseGodsPanel chooseGodsPanel = new ChooseGodsPanel(connSocket);
+            new Thread(chooseGodsPanel).start();
 
         } catch (IOException e) {
             e.printStackTrace();

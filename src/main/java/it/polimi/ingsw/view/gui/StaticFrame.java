@@ -1,8 +1,13 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.utils.GodType;
+
 import javax.swing.*;
 
 public class StaticFrame {
+
+    private static String playerName;
+    private static GodType god;
 
     public static JFrame mainFrame;
 
@@ -37,7 +42,19 @@ public class StaticFrame {
     }
 
 
+    public static String getPlayerName() {
+        return playerName;
+    }
 
+    public static void setPlayerName(String playerName) {
+        StaticFrame.playerName = playerName;
+    }
 
+    public static GodType getGod() {
+        return god;
+    }
 
+    public static void setGod(GodType god) {
+        StaticFrame.god = god;
+    }
 }
