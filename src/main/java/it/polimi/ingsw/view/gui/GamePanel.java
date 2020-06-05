@@ -11,17 +11,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class GamePanel implements Runnable{
+public class GamePanel extends JPanel implements Runnable {
+
     Socket socket;
-    JPanel gamePanel;
     readProxyBoard reader;
     BoardListener listener;
     ObjectOutputStream outputStream;
 
-    class readProxyBoard implements Observer<BoardProxy>{
+    static class readProxyBoard implements Observer<BoardProxy> {
+
         JTextField displayText;
 
-        public readProxyBoard(JTextField displayText){
+        public readProxyBoard(JTextField displayText) {
             this.displayText = displayText;
         }
 
@@ -29,31 +30,35 @@ public class GamePanel implements Runnable{
         public void update(BoardProxy message) {
             displayText.setText(message.getTurnPlayer());
         }
+
     }
 
-    public GamePanel(JPanel panel, Socket connSocket){
-        this.gamePanel = panel;
+    public GamePanel(Socket connSocket) {
         this.socket = connSocket;
-        setupUI();
+        setUpUI();
+        StaticFrame.mainFrame.repaint();
     }
 
     @Override
     public void run() {
+
+
         try {
             listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
             outputStream = new ObjectOutputStream(socket.getOutputStream());
-        }catch(IOException x){
-            x.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         listener.addObserver(reader);
         new Thread(listener).start();
+
     }
 
-    public void setupUI(){
+    public void setUpUI() {
 
-        //gamePanel = new JPanel(new GridBagLayout());
-        gamePanel.setLayout(new GridBagLayout());
+        StaticFrame.addPanel(this);
+        this.setLayout(new GridBagLayout());
 
         GridBagConstraints constraints = new GridBagConstraints();
 
@@ -61,16 +66,18 @@ public class GamePanel implements Runnable{
         JLabel lblInfo = new JLabel("this player is choosing gods: ");
         constraints.gridx = 0;
         constraints.gridy = 0;
-        gamePanel.add(lblInfo, constraints);
+        this.add(lblInfo, constraints);
 
 
-        // textbox for IO
+        // textBox for IO
         JTextField txtIO = new JTextField();
         constraints.gridx = 1;
         constraints.gridy = 0;
-        gamePanel.add(txtIO, constraints);
+        this.add(txtIO, constraints);
 
-        // this textBox is also updated by the boardproxy reader
+        // this textBox is also updated by the boardProxy reader
         reader = new readProxyBoard(txtIO);
+
     }
+
 }
