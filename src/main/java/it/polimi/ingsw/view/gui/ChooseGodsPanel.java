@@ -11,7 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class GamePanel extends JPanel implements Runnable {
+public class ChooseGodsPanel extends JPanel implements Runnable {
 
     Socket socket;
     readProxyBoard reader;
@@ -33,10 +33,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    public GamePanel(Socket connSocket) {
+    public ChooseGodsPanel(Socket connSocket) {
         this.socket = connSocket;
         setUpUI();
-        StaticFrame.mainFrame.repaint();
     }
 
     @Override
@@ -57,27 +56,23 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setUpUI() {
 
-        StaticFrame.addPanel(this);
+
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints constraints = new GridBagConstraints();
 
-        // simple info label
-        JLabel lblInfo = new JLabel("this player is choosing gods: ");
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        this.add(lblInfo, constraints);
 
-
-        // textBox for IO
-        JTextField txtIO = new JTextField();
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        this.add(txtIO, constraints);
 
         // this textBox is also updated by the boardProxy reader
-        reader = new readProxyBoard(txtIO);
+        //reader = new readProxyBoard(txtIO);
+
+        StaticFrame.addPanel(this);
 
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        Image image = new ImageIcon("../../utils/graphics/Apollo.png").getImage();
+        g.drawImage(image, 10, 10, this);
+    }
 }

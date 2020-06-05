@@ -213,7 +213,7 @@ public class LoginPanel extends JPanel {
             input.nextLine(); // final dialog
 
             StaticFrame.removePanel(this);
-            GamePanel gamePanel = new GamePanel(connSocket);
+            ChooseGodsPanel gamePanel = new ChooseGodsPanel(connSocket);
             new Thread(gamePanel).start();
 
         } catch (IOException e) {
