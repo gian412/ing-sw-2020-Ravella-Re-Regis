@@ -36,10 +36,12 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel(Socket connSocket) {
         this.socket = connSocket;
         setUpUI();
+        StaticFrame.mainFrame.repaint();
     }
 
     @Override
     public void run() {
+
 
         try {
             listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
