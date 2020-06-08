@@ -94,9 +94,11 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
             String path = "src/main/java/it/polimi/ingsw/utils/graphics/";
             for(int i = 0; i < 14; i++){
 
-                Image image = ImageIO.read(new File(path + GodType.values()[i].getCapitalizedName() + ".png"));
+                String actualGod = GodType.values()[i].getCapitalizedName();
+                Image image = ImageIO.read(new File(path + actualGod  + ".png"));
                 image = image.getScaledInstance(imageBaseWidth, imageBaseHeight, Image.SCALE_DEFAULT);
                 JButton imageButton = new JButton(new ImageIcon(image));
+                imageButton.setName(actualGod);
 
                 imageButton.addActionListener(new ActionListener() {
                     @Override
@@ -174,6 +176,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
                 }
             });
+            this.add(submit, setConstraint(gods.split(" ").length/2,1 ));
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -211,7 +211,7 @@ public class LoginPanel extends JPanel {
                 output.println(playerNumber);
                 output.flush();
             }else{
-                playerNumber = Integer.parseInt(message.substring(56, 1));
+                playerNumber = Integer.parseInt(message.substring(56, 57));
             }
 
             input.nextLine(); // final dialog
