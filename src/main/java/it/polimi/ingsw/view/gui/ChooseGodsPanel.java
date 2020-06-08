@@ -1,6 +1,10 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.controller.Command;
+import it.polimi.ingsw.controller.PlayerCommand;
 import it.polimi.ingsw.model.BoardProxy;
+import it.polimi.ingsw.model.Pair;
+import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
@@ -10,19 +14,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Arrays;
 
 public class ChooseGodsPanel extends JPanel implements Runnable {
 
     private final int imageBaseWidth = 84;
     private final int imageBaseHeight = 141;
     private final int playerNumber;
+    private String chooseGod = "";
 
     Socket socket;
     readProxyBoard reader;
@@ -43,15 +46,17 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 case SELECTING_GOD:
                     if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
                         if (message.getChoosingGods().equals("")) {
-                            displayPanel.showAllGods();
+                            displayPanel.showGodButtons();
                         } else {
-                            // Chose your god
+                            displayPanel.showGodButtons(message.getChoosingGods());
                         }
                     }
+                    break;
                 case ADDING_WORKER:
                 case PLAYING:
                 case TERMINATOR:
             }
+            displayPanel.revalidate();
         }
     }
 
@@ -81,28 +86,10 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
         this.setLayout(new GridBagLayout());
         reader = new readProxyBoard(this);
         StaticFrame.addPanel(this);
-        /*this.setLayout(new GridBagLayout());
-
-        GridBagConstraints constraints = new GridBagConstraints();
-
-        try {
-            BufferedImage image = ImageIO.read(new File("/home/gianluca/IdeaProjects/ingSw/ing-sw-2020-Ravella-Re-Regis/src/main/java/it/polimi/ingsw/utils/graphics/Apollo.png"));
-            JLabel imageLabel = new JLabel(new ImageIcon(image));
-            this.add(imageLabel);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-        // this textBox is also updated by the boardProxy reader
-        //reader = new readProxyBoard(txtIO);
-
-        StaticFrame.addPanel(this);*/
 
     }
 
-    public void showAllGods(){
+    public void showGodButtons(){
         try {
             String path = "src/main/java/it/polimi/ingsw/utils/graphics/";
             for(int i = 0; i < 14; i++){
@@ -114,12 +101,79 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 imageButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //todo: implement action listener to send gods list
+                        if (chooseGod.split(" ").length >= playerNumber) {
+                            return;
+                        }
+                        JButton button = (JButton) e.getSource();
+                        button.setEnabled(false);
+                        chooseGod += (button.getName()) + " ";
                     }
                 });
 
                 this.add(imageButton, setConstraint(i%7, i/7));
             }
+
+            JButton submit = new JButton("Submit your choice");
+            submit.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    try {
+                        PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.SET_GODS), 0);
+                        commandToSend.setMessage(chooseGod);
+                        outputStream.writeObject(commandToSend);
+                        commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
+                        outputStream.writeObject(commandToSend);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            });
+            this.add(submit, setConstraint(3,3 ));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showGodButtons(String gods){
+        try {
+            String path = "src/main/java/it/polimi/ingsw/utils/graphics/";
+            for(int i = 0; i < gods.split(" ").length; i++){
+
+                String actualGod = gods.split(" ")[i];
+                Image image = ImageIO.read(new File(path + actualGod +  ".png"));
+                image = image.getScaledInstance(imageBaseWidth, imageBaseHeight, Image.SCALE_DEFAULT);
+                JButton imageButton = new JButton(new ImageIcon(image));
+                imageButton.setName(actualGod);
+
+                imageButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        chooseGod = ((JButton) e.getSource()).getName();
+                    }
+                });
+
+                this.add(imageButton, setConstraint(i%gods.split(" ").length, 0));
+            }
+
+            JButton submit = new JButton("Submit your choice");
+            submit.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    try {
+                        PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHOOSE_GOD), 0);
+                        commandToSend.setMessage(chooseGod);
+                        outputStream.writeObject(commandToSend);
+                        commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
+                        outputStream.writeObject(commandToSend);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+
+                }
+            });
 
         } catch (IOException e) {
             e.printStackTrace();
