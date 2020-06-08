@@ -30,8 +30,18 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
         @Override
         public void update(BoardProxy message) {
-            if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
-                displayPanel.showAllGods();
+            switch (message.getStatus()) {
+                case SELECTING_GOD:
+                    if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+                        if (message.getChoosingGods().equals("")) {
+                            displayPanel.showAllGods();
+                        } else {
+                            // Chose your god
+                        }
+                    }
+                case ADDING_WORKER:
+                case PLAYING:
+                case TERMINATOR:
             }
         }
 
