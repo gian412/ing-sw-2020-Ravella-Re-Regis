@@ -46,6 +46,7 @@ public class Ansi {
 
     //utility constant
     public static final String RESET    = "\u001B[0m";
+    public static final String RESET_SCREEN = "\033[H\033[J";
 
     /**
      * constructor of the class Ansi
