@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.view.cli.Ansi;
 import it.polimi.ingsw.view.cli.CLIGame;
 import it.polimi.ingsw.view.cli.CliComposer;
 
@@ -30,7 +31,7 @@ public class Client {
         return numberOfPlayers;
     }
 
-    public void run() throws IOException {
+    public void run() throws IOException{
 
         //reset the terminal
         System.out.println("\033[H\033[J");
@@ -47,8 +48,7 @@ public class Client {
         System.in.read();
 
         //reset the terminal
-        System.out.println("\033[H\033[J");
-
+        System.out.println(Ansi.RESET_SCREEN);
 
         //log moment where the player insert name, age, and number of player of the game if he is the first player
         //and says if he wants to use GUI or CLI
@@ -136,6 +136,6 @@ public class Client {
         System.out.println("-------------------------------------------------------------------------------------------\n");
 
         CLIGame game = new CLIGame();
-        game.startPlaying(socket, playername, number);
+        game.startPlaying(socket, playername, numberOfPlayers);
     }
 }

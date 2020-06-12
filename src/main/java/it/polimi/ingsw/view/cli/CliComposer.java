@@ -174,24 +174,32 @@ public class CliComposer {
         return write.toString();
     }
 
-    public void godList(){
+    public void godList(BoardProxy proxy){
 
         GodType[] gods = {GodType.APOLLO, GodType.ARTEMIS, GodType.ATHENA, GodType.ATLAS, GodType.CHARON, GodType.CHRONUS,
             GodType.DEMETER, GodType.HEPHAESTUS, GodType.HESTIA, GodType.MINOTAUR, GodType.PAN, GodType.PROMETHEUS,
             GodType.TRITON, GodType.ZEUS};
         Ansi maker = new Ansi();
         String change;
-        change = maker.font(Ansi.BLUE);
-
 
         System.out.println(Ansi.RESET_SCREEN);
         System.out.println(bannerMaker() + "\n");
 
         for(GodType x : gods) {
+
+            if(proxy.getChoosingGods().equals(""))
+                change = maker.font(Ansi.BLUE_B);
+            else if(proxy.getChoosingGods().toUpperCase().contains(x.toString()))
+                change = maker.font(Ansi.GREEN_B);
+            else
+                change = maker.font(Ansi.BLUE);
+
             System.out.println("     " + change + x.toString());
             System.out.println("     " + getDescription(x) + "\n");
         }
 
+        if(!proxy.getChoosingGods().equals(""))
+            System.out.println("Choose between GREEN god\n");
     }
 
     private String getDescription(GodType god) {
@@ -218,7 +226,7 @@ public class CliComposer {
             case CHARON:
                 return font +
                         "YOUR MOVE: " + Ansi.RESET +
-                        "Before your Worker moves, you may force a neighboring opponent Worker to the space directly on the other\n          " +
+                        "Before your Worker moves, you may force a neighboring opponent Worker to the space directly on the other \n          " +
                         "side of your Worker, if that space is unoccupied.";
             case CHRONUS:
                 return font +
@@ -262,7 +270,7 @@ public class CliComposer {
         }
     }
 
-    public String boardMaker(BoardProxy board){
+    public void boardMaker(BoardProxy board){
 
 
         System.out.println("choosingGods: " + board.getChoosingGods());
@@ -302,7 +310,6 @@ public class CliComposer {
             System.out.print("\n");
         }
 
-        return null;
     }
 
 }

@@ -1,10 +1,13 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.controller.Command;
+import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.controller.PlayerCommand;
 import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Pair;
+import it.polimi.ingsw.utils.GameState;
+import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
 
@@ -17,58 +20,68 @@ import java.util.Scanner;
 
 public class CLIGame {
 
-    public static final String[] GODS = {"APOLLO", "ARTEMIS", "ATHENA", "ATLAS", "CHARON", "CHRONUS", "DEMETER", "HEPHAESTUS", "HESTIA", "MINOTAUR", "PAN", "PROMETHEUS", "TRITON", "ZEUS"};
+    public final String[] GODS = {"Apollo", "Artemis", "Athena", "Atlas", "Charon", "Chronus", "Demeter", "Hephaestus", "Hestia", "Minotaur", "Pan", "Prometheus", "Triton", "Zeus"};
 
-    static Scanner inputStream = new Scanner(System.in);
-    static String playerName;
-    static int numberOfPlayer;
-    static CLIGame.ReadProxyBoard displayer;
-    static ObjectOutputStream out;
+    private Scanner inputStream = new Scanner(System.in);
+    private String playerName;
+    private int numberOfPlayer;
+    private CLIGame.ReadProxyBoard displayer;
+    private ObjectOutputStream out;
+    private Socket connSocket;
 
     //internal class that allow to access to the BoardProxy and print the board when receive a notify
-    static class ReadProxyBoard implements Observer<BoardProxy> {
+    public class ReadProxyBoard implements Observer<BoardProxy> {
 
-        CliComposer out;
-        BoardProxy localProxy;
+        private CliComposer out;
+        private BoardProxy localProxy;
 
         public ReadProxyBoard() {
             out = new CliComposer();
         }
 
+        public BoardProxy getLocalProxy(){
+            return localProxy;
+        }
+
         @Override
         public void update(BoardProxy message) {
             localProxy = message;
-            out.boardMaker(localProxy);
+            if(localProxy.getStatus().equals(GameState.SELECTING_GOD))
+                out.godList(localProxy);
+            else
+                out.boardMaker(localProxy);
         }
     }
 
 
-    static public void startPlaying(Socket connSocket, String name, int number) throws IOException {
+    public void startPlaying(Socket connection, String name, int number) throws IOException {
         numberOfPlayer = number;
         playerName = name;
         displayer = new ReadProxyBoard();
+        connSocket = connection;
         int row, column;
         String input;
 
         BoardListener listener = new BoardListener(new ObjectInputStream(connSocket.getInputStream()));
-        new ObjectOutputStream(connSocket.getOutputStream());
+        out = new ObjectOutputStream(connSocket.getOutputStream());
         listener.addObserver(displayer);
         Thread listen = new Thread(listener);
         listen.start();
 
 
         while (true) {
+            System.in.read();
             if (displayer.localProxy != null){
-                if (displayer.localProxy.getTurnPlayer().equals(playerName)){
-                    switch (displayer.localProxy.getStatus()){
+                if (displayer.getLocalProxy().getTurnPlayer().equals(playerName)){
+                    switch (displayer.getLocalProxy().getStatus()){
 
                         case SELECTING_GOD:
-                            if (displayer.localProxy.getChoosingGods().equals("")){
+                            if (displayer.getLocalProxy().getChoosingGods().equals("")){
                                 StringBuilder selectedGods = new StringBuilder();
 
                                 System.out.print("You are the youngest player and you have to choose the gods to use in the game\n" +
                                         "Chose the first god:  ");
-                                input = inputStream.nextLine().trim().toUpperCase();
+                                input = inputStream.nextLine().toUpperCase().trim();
                                 selectedGods.append(checkGod(input, selectedGods));
 
                                 System.out.print("Ok now insert the second god:  ");
@@ -81,13 +94,66 @@ public class CLIGame {
                                     selectedGods.append(checkGod(input, selectedGods));
                                 }
 
-                                submitCommand(connSocket, playerName, new Pair(0, 0), CommandType.SET_GODS, 0, selectedGods.toString());
+                                submitCommand(playerName, new Pair(0, 0), CommandType.SET_GODS, 0, selectedGods.toString());
                                 remoteChangeTurn();
+                                break;
                             }
-                            break;
+
+                            if(!displayer.getLocalProxy().getChoosingGods().equals("")){
+                                boolean check = false;
+
+                                System.out.print("Choose your god: ");
+                                input = inputStream.nextLine().trim().toUpperCase();
+
+                                while(!check) {
+                                    if (displayer.getLocalProxy().getChoosingGods().toUpperCase().contains(input)) {
+                                        check = true;
+                                    } else {
+                                        System.out.print("INVALID INPUT.\nReinsert a valid god:  ");
+                                        input = inputStream.nextLine().trim().toUpperCase();
+                                    }
+                                }
+
+                                submitCommand(playerName, new Pair(0,0), CommandType.CHOOSE_GOD, 0, toGod(input));
+                                remoteChangeTurn();
+                                break;
+                            }
 
                         case ADDING_WORKER:
+
+                            System.out.println("It's time to insert your workers.");
+
+                            System.out.print("Insert the column of your first worker (from 1 to 5): ");
+                            column = inputStream.nextInt() - 1;
+                            inputStream.nextLine();
+
+                            column = checkCoordinates(column);
+
+                            System.out.print("Now insert the row of your first worker (from 1 to 5): ");
+                            row = inputStream.nextInt() - 1;
+                            inputStream.nextLine();
+
+                            row = checkCoordinates(row);
+
+                            submitCommand(playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
+
+                            System.out.print("Insert the column of your second worker : ");
+                            column = inputStream.nextInt() - 1;
+                            inputStream.nextLine();
+
+                            column = checkCoordinates(column);
+
+                            System.out.print("Now insert the row of your second worker (from 1 to 5): ");
+                            row = inputStream.nextInt() - 1;
+                            inputStream.nextLine();
+
+                            row = checkCoordinates(row);
+
+                            submitCommand(playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
+
+                            remoteChangeTurn();
                             break;
+
 
 
                         case PLAYING:
@@ -284,15 +350,15 @@ public class CLIGame {
     }
 
 
-    private static String checkGod(String in, StringBuilder selectedGods){
+    private String checkGod(String in, StringBuilder selectedGods){
 
         String input = in;
 
         while (true) {
 
             for (String x : GODS) {
-                if (input.equals(x) && !selectedGods.toString().contains(x)) {
-                    return input;
+                if (input.equals(x.toUpperCase()) && !selectedGods.toString().contains(x.toUpperCase())) {
+                    return x;
                 }
             }
 
@@ -301,7 +367,7 @@ public class CLIGame {
         }
     }
 
-    private static int checkCoordinates(int coordinate){
+    private int checkCoordinates(int coordinate){
 
         while(coordinate < 0 || coordinate > 4 ){
             System.out.print("INVALID INPUT.\nReinsert a valid valor (from 1 to 5):  ");
@@ -311,7 +377,7 @@ public class CLIGame {
         return coordinate;
     }
 
-    private static void remoteChangeTurn() throws IOException {
+    private void remoteChangeTurn() throws IOException{
 
         PlayerCommand cmd = new PlayerCommand(playerName, new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
 
@@ -320,18 +386,51 @@ public class CLIGame {
         out.flush();
     }
 
-    private static void submitCommand(Socket connSocket, String playerName, Pair pair, CommandType type,int workerIndex, String message) throws IOException {
+    private void submitCommand(String playerName, Pair pair, CommandType type,int workerIndex, String message) throws IOException {
 
-        PlayerCommand cmd;
-        out = new ObjectOutputStream(connSocket.getOutputStream());
-
-        cmd = new PlayerCommand(playerName, new Command(pair, type), workerIndex);
+        PlayerCommand cmd = new PlayerCommand(playerName, new Command(pair, type), workerIndex);
         cmd.setMessage(message);
 
         out.reset();
         out.writeObject(cmd);
         out.flush();
 
+    }
+
+    private String toGod(String god){
+
+        switch(god.toUpperCase()){
+
+            case "APOLLO":
+                return GODS[0];
+            case "ARTEMIS":
+                return GODS[1];
+            case "ATHENA":
+                return GODS[2];
+            case "ATLAS":
+                return GODS[3];
+            case "CHARON":
+                return GODS[4];
+            case "CHRONUS":
+                return GODS[5];
+            case "DEMETER":
+                return GODS[6];
+            case "HEPHAESTUS":
+                return GODS[7];
+            case "HESTIA":
+                return GODS[8];
+            case "MINOTAUR":
+                return GODS[9];
+            case "PAN":
+                return GODS[10];
+            case "PROMETHEUS":
+                return GODS[11];
+            case "TRITON":
+                return GODS[12];
+            case "ZEUS":
+                return GODS[13];
+        }
+        return "error";
     }
 
 }
