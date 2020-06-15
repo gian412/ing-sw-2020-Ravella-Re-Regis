@@ -79,6 +79,10 @@ public class Game {
 
     public Player getTurnPlayer(){ return board.getTurnPlayer(); }
 
+    public int getNumberOfPlayers(){
+        return playerList.size();
+    }
+
     public String getPlayers(){
         StringBuilder players = new StringBuilder();
 

@@ -210,6 +210,7 @@ public class Board {
                     //add the second worker
                     this.getCell(coordinates).setWorker(this.turnPlayer.getWorkers()[1]);
                     this.turnPlayer.getWorkers()[1].setCurrentCell(this.getCell(coordinates));
+                    this.updateProxyBoard();
                 }
 
             }

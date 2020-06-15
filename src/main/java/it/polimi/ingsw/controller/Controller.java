@@ -153,8 +153,11 @@ public class Controller implements Observer<PlayerCommand> {
                         message.cmd.coordinates.x,
                         message.cmd.coordinates.y
                 );
-                if(game.getBoard().getProxy().getWorkers().keySet().size() == 6)
+                System.out.println(game.getBoard().getProxy().getWorkers().size() + "check" + 2*game.getNumberOfPlayers());
+                if(game.getBoard().getProxy().getWorkers().size() == (2*game.getNumberOfPlayers())) {
+                    System.out.println("ihdaohfiohafdjhjefda");
                     game.getBoard().getProxy().setStatus(GameState.PLAYING);
+                }
 
                 break;
 

@@ -32,12 +32,19 @@ public class CliComposer {
                     {0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0}
             };
 
+    private String playerName;
+    private int numberOfPlayer;
 
     /**
      * CLiComposer constructor
      *
      * Author Marco Re
      */
+    public CliComposer(String name, int number){
+        playerName = name;
+        numberOfPlayer = number;
+    }
+
     public CliComposer(){
     }
 
@@ -270,9 +277,137 @@ public class CliComposer {
         }
     }
 
+
+
+
+
+
+
     public void boardMaker(BoardProxy board){
 
+        StringBuilder out = new StringBuilder("");
+        Ansi maker = new Ansi();
 
+        System.out.println(Ansi.RESET_SCREEN);
+        System.out.println(bannerMaker() + "\n\n");
+
+        System.out.println("number of worker:" + board.getWorkers().size() + "\n");
+
+
+        out.append("\n     ");
+        for (int k = 0; k < 31; k++) {
+            out.append("-");
+        }
+        out.append("\n");
+
+
+
+        for(int i = 0; i < 5; i++) {
+            for(int k = 0; k < 3; k++) {
+                out.append("     ");
+                for (int j = 0; j < 5; j++) {
+
+
+
+
+                    if(k == 0){
+
+                        boolean found = false;
+
+                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
+                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
+
+                                if(entry.getKey().contains(playerName)){
+                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.BLACK_B) + "     ");
+                                    out.append(Ansi.RESET);
+                                    found = true;
+                                }
+
+
+                            }
+                        }
+
+                        if(!found)
+                            out.append("|     ");
+                    }
+
+
+
+
+
+                    if(k == 1){
+
+
+                        boolean found = false;
+
+                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
+                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
+
+                                if(entry.getKey().contains(playerName)){
+                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.BLACK_B) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                    out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
+                                    out.append(Ansi.RESET);
+                                    found = true;
+                                }
+                                else{
+
+                                }
+
+
+                            }
+                        }
+
+                        if(!found)
+                            out.append("| " + board.getBoardScheme()[i][j].toInt() + "/  ");
+
+
+                    }
+
+
+                    if(k == 2){
+                        boolean found = false;
+
+                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
+                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
+
+                                if(entry.getKey().contains(playerName)){
+                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.BLACK_B) + "     ");
+                                    out.append(Ansi.RESET);
+                                    found = true;
+                                }
+
+
+                            }
+                        }
+
+                        if(!found)
+                            out.append("|     ");
+                    }
+                }
+                out.append("|\n");
+            }
+
+            out.append("     ");
+            for (int k = 0; k < 31; k++) {
+                out.append("-");
+            }
+
+            out.append("\n");
+
+        }
+
+        System.out.println(out.toString());
+
+
+
+
+
+
+
+
+
+        
+/*
         System.out.println("choosingGods: " + board.getChoosingGods());
 
         if(board.getTurnPlayer() != null)
@@ -309,8 +444,7 @@ public class CliComposer {
 
             System.out.print("\n");
         }
-
+*/
     }
-
 }
 
