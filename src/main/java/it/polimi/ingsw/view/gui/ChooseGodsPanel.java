@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -27,6 +28,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     private final int imageBaseHeight = 141;
     private final int playerNumber;
     private String chooseGod = "";
+    String path = "src/main/java/it/polimi/ingsw/utils/graphics/";
 
     Socket socket;
     readProxyBoard reader;
@@ -43,20 +45,21 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
         @Override
         public void update(BoardProxy message) {
-            //clearView();
             switch (message.getStatus()) {
                 case SELECTING_GOD:
-                    if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
-                        if (message.getChoosingGods().equals(""))
-                            displayPanel.showGodButtons();
-                        else {
-                            if (!chooseGod.equals(message.getChoosingGods()))
-                                displayPanel.showGodButtons(message.getChoosingGods());
+                    clearView();
+                    if(message.getTurnPlayer().equals(StaticFrame.getPlayerName())){
+                        if(message.getChoosingGods().equals("")){
+                            showGodButtons();
+                        } else {
+                            showGodButtons(message.getChoosingGods());
                         }
                     }
                     break;
-                case ADDING_WORKER:
 
+                case ADDING_WORKER:
+                    showBoard();
+                    break;
                 case PLAYING:
                 case TERMINATOR:
             }
@@ -92,8 +95,8 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     }
 
     public void showGodButtons(){
+        clearView();
         try {
-            String path = "src/main/java/it/polimi/ingsw/utils/graphics/";
             for(int i = 0; i < 14; i++){
 
                 String actualGod = GodType.values()[i].getCapitalizedName();
@@ -130,7 +133,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                         commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
                         outputStream.writeObject(commandToSend);
                         outputStream.flush();
-                        showWaitMessage();
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -144,6 +146,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     }
 
     public void showGodButtons(String gods) {
+        clearView();
         try {
             String path = "src/main/java/it/polimi/ingsw/utils/graphics/";
             for(int i = 0; i < gods.split(" ").length; i++){
@@ -178,7 +181,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                         commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
                         outputStream.writeObject(commandToSend);
                         outputStream.flush();
-                        showWaitMessage();
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -196,11 +198,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
         for (Component component : this.getComponents())
             this.remove(component);
     }
-    
-    private void showWaitMessage() {
-        JLabel wait = new JLabel("Waiting other players' action");
-        this.add(wait);
-    }
 
     private  GridBagConstraints setConstraint(int gridX, int gridY){
         GridBagConstraints cons = new GridBagConstraints();
@@ -210,5 +207,16 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
         cons.weighty = 0.5;
 
         return cons;
+    }
+
+    private void showBoard(){
+        clearView();
+        try{
+            BufferedImage image = ImageIO.read(new File(path + "_board.png"));
+            super.paintComponent(this.getGraphics());
+            this.getGraphics().drawImage(image, 0, 0, this);
+        }catch(Exception x){
+            x.printStackTrace();
+        }
     }
 }
