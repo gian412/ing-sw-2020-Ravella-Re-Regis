@@ -53,6 +53,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                     }
                     break;
                 case ADDING_WORKER:
+
                 case PLAYING:
                 case TERMINATOR:
             }
@@ -68,8 +69,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-
-
         try {
             listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
             outputStream = new ObjectOutputStream(socket.getOutputStream());

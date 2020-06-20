@@ -20,7 +20,6 @@ public class Game {
      *
      * create a new board
      */
-    // class constructor with the initialization of board
     public Game(){
         playerList = new ArrayList<>();
         board = new Board();

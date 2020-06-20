@@ -132,11 +132,7 @@ public class Controller implements Observer<PlayerCommand> {
                             message.playerName,
                             (God)Class.forName("it.polimi.ingsw.model.god." + message.message).getDeclaredConstructor(Board.class).newInstance(game.getBoard())
                     );
-                    game.getBoard().getProxy().setChoosingGods(
-                            game.getBoard().getProxy().getChoosingGods().replace(message.message, "")
-                    );
-                    if(game.getBoard().getProxy().getChoosingGods().equals("") || game.getBoard().getProxy().getChoosingGods().equals(" "))
-                        game.getBoard().getProxy().setStatus(GameState.ADDING_WORKER);
+
 
                 } catch (NoSuchPlayerException | ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
