@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ChooseGodsPanel extends JPanel implements Runnable {
 
@@ -26,6 +27,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     private final int imageBaseHeight = 141;
     private final int playerNumber;
     private String chooseGod = "";
+    private ArrayList<Component> componentList;
 
     Socket socket;
     readProxyBoard reader;
@@ -44,7 +46,8 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
         public void update(BoardProxy message) {
             switch (message.getStatus()) {
                 case SELECTING_GOD:
-                    if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+                    if (message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && !chooseGod.isEmpty() && !message.getChoosingGods().equals(chooseGod)) {
+                        clearView();
                         if (message.getChoosingGods().equals("")) {
                             displayPanel.showGodButtons();
                         } else {
@@ -64,6 +67,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     public ChooseGodsPanel(Socket connSocket, int playerNumber) {
         this.playerNumber = playerNumber;
         this.socket = connSocket;
+        this.componentList = new ArrayList<>();
         setUpUI();
     }
 
@@ -112,6 +116,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 });
 
                 this.add(imageButton, setConstraint(i%7, i/7));
+                this.componentList.add(imageButton);
             }
 
             JButton submit = new JButton("Submit your choice");
@@ -123,21 +128,26 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                         PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.SET_GODS), 0);
                         commandToSend.setMessage(chooseGod);
                         outputStream.writeObject(commandToSend);
+                        outputStream.flush();
                         commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
                         outputStream.writeObject(commandToSend);
+                        outputStream.flush();
+                        clearView();
+                        showWaitMessage();
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
                 }
             });
             this.add(submit, setConstraint(3,3 ));
+            this.componentList.add(submit);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void showGodButtons(String gods){
+    public void showGodButtons(String gods) {
         try {
             String path = "src/main/java/it/polimi/ingsw/utils/graphics/";
             for(int i = 0; i < gods.split(" ").length; i++){
@@ -156,6 +166,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 });
 
                 this.add(imageButton, setConstraint(i%gods.split(" ").length, 0));
+                this.componentList.add(imageButton);
             }
 
             JButton submit = new JButton("Submit your choice");
@@ -167,8 +178,12 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                         PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHOOSE_GOD), 0);
                         commandToSend.setMessage(chooseGod);
                         outputStream.writeObject(commandToSend);
+                        outputStream.flush();
                         commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
                         outputStream.writeObject(commandToSend);
+                        outputStream.flush();
+                        clearView();
+                        showWaitMessage();
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -176,10 +191,24 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 }
             });
             this.add(submit, setConstraint(gods.split(" ").length/2,1 ));
+            this.componentList.add(submit);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    private void clearView() {
+        for (Component component : this.componentList) {
+            this.remove(component);
+        }
+        this.componentList.clear();
+    }
+    
+    private void showWaitMessage() {
+        JLabel wait = new JLabel("Waiting other players' action");
+        this.add(wait);
+        this.componentList.add(wait);
     }
 
     private  GridBagConstraints setConstraint(int gridX, int gridY){
