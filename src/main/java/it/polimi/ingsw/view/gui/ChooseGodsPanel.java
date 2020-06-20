@@ -27,7 +27,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     private final int imageBaseHeight = 141;
     private final int playerNumber;
     private String chooseGod = "";
-    private ArrayList<Component> componentList;
 
     Socket socket;
     readProxyBoard reader;
@@ -44,14 +43,15 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
         @Override
         public void update(BoardProxy message) {
+            //clearView();
             switch (message.getStatus()) {
                 case SELECTING_GOD:
-                    if (message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && !chooseGod.isEmpty() && !message.getChoosingGods().equals(chooseGod)) {
-                        clearView();
-                        if (message.getChoosingGods().equals("")) {
+                    if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+                        if (message.getChoosingGods().equals(""))
                             displayPanel.showGodButtons();
-                        } else {
-                            displayPanel.showGodButtons(message.getChoosingGods());
+                        else {
+                            if (!chooseGod.equals(message.getChoosingGods()))
+                                displayPanel.showGodButtons(message.getChoosingGods());
                         }
                     }
                     break;
@@ -60,14 +60,13 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 case PLAYING:
                 case TERMINATOR:
             }
-            displayPanel.revalidate();
+            //StaticFrame.mainFrame.setVisible(true);
         }
     }
 
     public ChooseGodsPanel(Socket connSocket, int playerNumber) {
         this.playerNumber = playerNumber;
         this.socket = connSocket;
-        this.componentList = new ArrayList<>();
         setUpUI();
     }
 
@@ -116,7 +115,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 });
 
                 this.add(imageButton, setConstraint(i%7, i/7));
-                this.componentList.add(imageButton);
             }
 
             JButton submit = new JButton("Submit your choice");
@@ -132,7 +130,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                         commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
                         outputStream.writeObject(commandToSend);
                         outputStream.flush();
-                        clearView();
                         showWaitMessage();
                     } catch (IOException e1) {
                         e1.printStackTrace();
@@ -140,7 +137,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 }
             });
             this.add(submit, setConstraint(3,3 ));
-            this.componentList.add(submit);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -161,12 +157,12 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 imageButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        ((JButton)e.getSource()).setEnabled(false);
                         chooseGod = ((JButton) e.getSource()).getName();
                     }
                 });
 
                 this.add(imageButton, setConstraint(i%gods.split(" ").length, 0));
-                this.componentList.add(imageButton);
             }
 
             JButton submit = new JButton("Submit your choice");
@@ -182,7 +178,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                         commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
                         outputStream.writeObject(commandToSend);
                         outputStream.flush();
-                        clearView();
                         showWaitMessage();
                     } catch (IOException e1) {
                         e1.printStackTrace();
@@ -191,7 +186,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 }
             });
             this.add(submit, setConstraint(gods.split(" ").length/2,1 ));
-            this.componentList.add(submit);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -199,16 +193,13 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     }
     
     private void clearView() {
-        for (Component component : this.componentList) {
+        for (Component component : this.getComponents())
             this.remove(component);
-        }
-        this.componentList.clear();
     }
     
     private void showWaitMessage() {
         JLabel wait = new JLabel("Waiting other players' action");
         this.add(wait);
-        this.componentList.add(wait);
     }
 
     private  GridBagConstraints setConstraint(int gridX, int gridY){
