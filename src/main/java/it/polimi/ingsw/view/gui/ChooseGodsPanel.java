@@ -162,10 +162,9 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 imageButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (chooseGod.isEmpty()) {  //If the player has not yet selected a God...
-                            ((JButton)e.getSource()).setEnabled(false); // ... get God's name from the button...
-                            chooseGod = ((JButton) e.getSource()).getName(); // ... and save it
-                        }
+                        ((JButton)e.getSource()).setEnabled(false); // ... get God's name from the button...
+                        chooseGod = ((JButton) e.getSource()).getName(); // ... and save it
+
                     }
                 });
 
