@@ -14,26 +14,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class ChooseGodsPanel extends JPanel implements Runnable {
 
-    private final int imageBaseWidth = 84;
-    private final int imageBaseHeight = 141;
+    private static final int IMAGE_BASE_WIDTH = 84;
+    private static final int IMAGE_BASE_HEIGHT = 141;
     private final int playerNumber;
     private String chooseGod = "";
-    String path = "src/main/java/it/polimi/ingsw/utils/graphics/";
-
-    Socket socket;
-    readProxyBoard reader;
-    BoardListener listener;
-    ObjectOutputStream outputStream;
+    private static final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
+    
+    private final Socket socket;
+    private final ReadProxyBoard reader;
+    private BoardListener listener;
+    private ObjectOutputStream outputStream;
 
     /**
      * Inner class to observe the BoardListener object
@@ -41,11 +39,11 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
      *
      * @author Elia Ravella, Gianluca Regis
      */
-    class readProxyBoard implements Observer<BoardProxy> {
+    class ReadProxyBoard implements Observer<BoardProxy> {
 
         ChooseGodsPanel displayPanel;
 
-        public readProxyBoard(ChooseGodsPanel displayPanel) {
+        public ReadProxyBoard(ChooseGodsPanel displayPanel) {
             this.displayPanel = displayPanel;
         }
 
@@ -86,7 +84,8 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     public ChooseGodsPanel(Socket connSocket, int playerNumber) {
         this.playerNumber = playerNumber;
         this.socket = connSocket;
-        setUpUI();
+        reader = new ReadProxyBoard(this);
+        this.setUpUI();
     }
 
     @Override
@@ -107,10 +106,9 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
      *
      * @author Elia Ravella, Gianluca Regis
      */
-    public void setUpUI() {
-        refreshView();
+    private void setUpUI() {
+        this.refreshView();
         this.setLayout(new GridBagLayout());
-        reader = new readProxyBoard(this);
     }
 
     /**
@@ -126,8 +124,8 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
             Image image;
             JButton imageButton;
             try {
-                image = ImageIO.read(new File(path + actualGod + ".png"))
-                        .getScaledInstance(imageBaseWidth, imageBaseHeight, Image.SCALE_DEFAULT);
+                image = ImageIO.read(new File(PATH + actualGod + ".png"))
+                        .getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
                 imageButton = new JButton(new ImageIcon(image));
             } catch (IOException e) {
                 imageButton = new JButton(actualGod);
@@ -190,8 +188,8 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
             Image image;
             JButton imageButton;
             try {
-                 image = (ImageIO.read(new File(path + actualGod + ".png")))
-                         .getScaledInstance(imageBaseWidth, imageBaseHeight, Image.SCALE_DEFAULT);
+                 image = (ImageIO.read(new File(PATH + actualGod + ".png")))
+                         .getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
                  imageButton = new JButton(new ImageIcon(image));
             }catch(IOException e){
                 imageButton = new JButton(actualGod);
@@ -202,8 +200,10 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
             imageButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ((JButton)e.getSource()).setEnabled(false); // ... get God's name from the button...
-                    chooseGod = ((JButton) e.getSource()).getName(); // ... and save it
+                    if (chooseGod.equals("")) {
+                        ((JButton)e.getSource()).setEnabled(false); // ... get God's name from the button...
+                        chooseGod = ((JButton) e.getSource()).getName(); // ... and save it
+                    }
                 }
             });
             this.add(imageButton, setConstraint(i%gods.split(" ").length, 0));
@@ -230,15 +230,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     }
 
     /**
-     * removes all component from this panel
-     * @author Elia Ravella
-     */
-    private void clearView() {
-        for (Component component : this.getComponents())
-            this.remove(component);
-    }
-
-    /**
      * sets up a basic "GridBagConstraint" object. used during the aligning of the objects in the grid
      * @param gridX column
      * @param gridY row
@@ -257,16 +248,25 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
     /**
      * loads and shows the game board
-     * @author Elia Ravella
+     * @author Elia Ravella, Gianluca Regis
      */
     private void showBoard(){
-        try{
-            BufferedImage image = ImageIO.read(new File(path + "_board.png"));
-            super.paintComponent(this.getGraphics());
-            this.getGraphics().drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
-        }catch(Exception x){
-            x.printStackTrace();
-        }
+    
+        //load next panel
+        GamePanel gamePanel = new GamePanel(this.socket);
+        StaticFrame.removePanel(this);
+        StaticFrame.addPanel(gamePanel);
+        new Thread(gamePanel).start();
+       
+    }
+    
+    /**
+     * removes all component from this panel
+     * @author Elia Ravella
+     */
+    private void clearView() {
+        for (Component component : this.getComponents())
+            this.remove(component);
     }
 
     /**
