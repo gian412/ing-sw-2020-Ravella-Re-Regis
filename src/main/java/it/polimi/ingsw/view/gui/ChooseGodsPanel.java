@@ -35,6 +35,12 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     BoardListener listener;
     ObjectOutputStream outputStream;
 
+    /**
+     * Inner class to observe the BoardListener object
+     * and display the elements that arrive from the socket
+     *
+     * @author Elia Ravella, Gianluca Regis
+     */
     class readProxyBoard implements Observer<BoardProxy> {
 
         ChooseGodsPanel displayPanel;
@@ -43,13 +49,20 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
             this.displayPanel = displayPanel;
         }
 
+        /**
+         * classic update function in the Observer pattern: it receives a BoardProxy object
+         * and interprets the content
+         * @param message object of the update
+         * @author Elia Ravella, Gianluca Regis
+         */
         @Override
         public void update(BoardProxy message) {
             switch (message.getStatus()) {
+                // if the BoardProxy signals a "selecting_god status", a grid with all available gods must be shown
                 case SELECTING_GOD:
                     clearView();
                     if(message.getTurnPlayer().equals(StaticFrame.getPlayerName())){
-                        if(message.getChoosingGods().equals("")){
+                        if(message.getChoosingGods().equals("")){ // this happens when the player is in charge of choosing ALL the gods
                             showGodButtons();
                         } else {
                             showGodButtons(message.getChoosingGods());
@@ -57,6 +70,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                     }
                     break;
 
+                // during the "adding_worker" phase the user should see the board
                 case ADDING_WORKER:
                     showBoard();
                     break;
@@ -66,6 +80,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
             //StaticFrame.mainFrame.setVisible(true);
         }
     }
+
 
     public ChooseGodsPanel(Socket connSocket, int playerNumber) {
         this.playerNumber = playerNumber;
@@ -87,6 +102,11 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
     }
 
+    /**
+     * loads a basic panel in the staticFrame
+     *
+     * @author Elia Ravella, Gianluca Regis
+     */
     public void setUpUI() {
         this.setLayout(new GridBagLayout());
         reader = new readProxyBoard(this);
@@ -94,6 +114,11 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
     }
 
+    /**
+     * loads and show a grid with ALL the gods available to be chosen
+     *
+     * @author Elia Ravella, Gianluca Regis
+     */
     public void showGodButtons(){
         clearView();
         try {
@@ -146,6 +171,11 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * overload of the previous method, just with a reduced set of gods
+     * @param gods the gods to be shown
+     * @author Elia Ravella, Gianluca Regis
+     */
     public void showGodButtons(String gods) {
         clearView();
         try {
@@ -154,8 +184,10 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
                 String actualGod = gods.split(" ")[i];
                 actualGod = actualGod.trim();
+
                 Image image = ImageIO.read(new File(path + actualGod +  ".png"));
                 image = image.getScaledInstance(imageBaseWidth, imageBaseHeight, Image.SCALE_DEFAULT);
+
                 JButton imageButton = new JButton(new ImageIcon(image));
                 imageButton.setName(actualGod);
 
@@ -196,12 +228,23 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
             e.printStackTrace();
         }
     }
-    
+
+    /**
+     * removes all component from this panel
+     * @author Elia Ravella
+     */
     private void clearView() {
         for (Component component : this.getComponents())
             this.remove(component);
     }
 
+    /**
+     * sets up a basic "GridBagConstraint" object. used during the aligning of the objects in the grid
+     * @param gridX column
+     * @param gridY row
+     * @return a GridBagConstraints objects
+     * @author Elia Ravella, Gianluca Regis
+     */
     private  GridBagConstraints setConstraint(int gridX, int gridY){
         GridBagConstraints cons = new GridBagConstraints();
         cons.gridx = gridX;
@@ -212,6 +255,10 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
         return cons;
     }
 
+    /**
+     * loads and shows the game board
+     * @author Elia Ravella
+     */
     private void showBoard(){
         clearView();
         try{
