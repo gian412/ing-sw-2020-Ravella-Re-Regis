@@ -68,16 +68,17 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                             showGodButtons(message.getChoosingGods());
                         }
                     }
+                    refreshView();
                     break;
 
                 // during the "adding_worker" phase the user should see the board
                 case ADDING_WORKER:
+                    clearView();
                     showBoard();
                     break;
                 case PLAYING:
                 case TERMINATOR:
             }
-            refreshView();
         }
     }
 
@@ -85,6 +86,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     public ChooseGodsPanel(Socket connSocket, int playerNumber) {
         this.playerNumber = playerNumber;
         this.socket = connSocket;
+        StaticFrame.addPanel(this);
         setUpUI();
     }
 
@@ -99,7 +101,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
         listener.addObserver(reader);
         new Thread(listener).start();
-
     }
 
     /**
@@ -108,10 +109,10 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
      * @author Elia Ravella, Gianluca Regis
      */
     public void setUpUI() {
+        clearView();
+        refreshView();
         this.setLayout(new GridBagLayout());
         reader = new readProxyBoard(this);
-        StaticFrame.addPanel(this);
-
     }
 
     /**
@@ -120,8 +121,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
      * @author Elia Ravella, Gianluca Regis
      */
     public void showGodButtons(){
-        clearView();
-
         for(int i = 0; i < 14; i++){
 
             String actualGod = GodType.values()[i].getCapitalizedName();
@@ -183,12 +182,12 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
      * @author Elia Ravella, Gianluca Regis
      */
     public void showGodButtons(String gods) {
-        clearView();
-
         for(int i = 0; i < gods.split(" ").length; i++){
 
             String actualGod = gods.split(" ")[i];
             actualGod = actualGod.trim();
+
+            if(actualGod.equals("")) continue; // in case the string is poorly formatted
 
             Image image;
             JButton imageButton;
@@ -268,11 +267,10 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
      * @author Elia Ravella
      */
     private void showBoard(){
-        clearView();
         try{
             BufferedImage image = ImageIO.read(new File(path + "_board.png"));
             super.paintComponent(this.getGraphics());
-            this.getGraphics().drawImage(image, 0, 0, this);
+            this.getGraphics().drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
         }catch(Exception x){
             x.printStackTrace();
         }

@@ -217,6 +217,8 @@ public class LoginPanel extends JPanel {
             input.nextLine(); // final dialog
 
             StaticFrame.removePanel(this);
+
+            //load next panel
             ChooseGodsPanel chooseGodsPanel = new ChooseGodsPanel(connSocket, playerNumber);
             new Thread(chooseGodsPanel).start();
 
