@@ -77,7 +77,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 case PLAYING:
                 case TERMINATOR:
             }
-            //StaticFrame.mainFrame.setVisible(true);
+            refreshView();
         }
     }
 
@@ -121,54 +121,60 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
      */
     public void showGodButtons(){
         clearView();
-        try {
-            for(int i = 0; i < 14; i++){
 
-                String actualGod = GodType.values()[i].getCapitalizedName();
-                Image image = ImageIO.read(new File(path + actualGod  + ".png"));
-                image = image.getScaledInstance(imageBaseWidth, imageBaseHeight, Image.SCALE_DEFAULT);
-                JButton imageButton = new JButton(new ImageIcon(image));
-                imageButton.setName(actualGod);
+        for(int i = 0; i < 14; i++){
 
-                imageButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (chooseGod.split(" ").length >= playerNumber) {
-                            return;
-                        }
-                        JButton button = (JButton) e.getSource();
-                        button.setEnabled(false);
-                        chooseGod += (button.getName()) + " ";
-                    }
-                });
+            String actualGod = GodType.values()[i].getCapitalizedName();
 
-                this.add(imageButton, setConstraint(i%7, i/7));
+            Image image;
+            JButton imageButton;
+            try {
+                image = ImageIO.read(new File(path + actualGod + ".png"))
+                        .getScaledInstance(imageBaseWidth, imageBaseHeight, Image.SCALE_DEFAULT);
+                imageButton = new JButton(new ImageIcon(image));
+            } catch (IOException e) {
+                imageButton = new JButton(actualGod);
             }
 
-            JButton submit = new JButton("Submit your choice");
-            submit.addActionListener(new ActionListener() {
+            imageButton.setName(actualGod);
+
+            imageButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
-                    try {
-                        PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.SET_GODS), 0);
-                        commandToSend.setMessage(chooseGod);
-                        outputStream.writeObject(commandToSend);
-                        outputStream.flush();
-                        commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
-                        outputStream.writeObject(commandToSend);
-                        outputStream.flush();
-                        chooseGod = ""; // Clear the list of chosen Gods
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                    if (chooseGod.split(" ").length >= playerNumber) {
+                        return;
                     }
+                    JButton button = (JButton) e.getSource();
+                    button.setEnabled(false);
+                    chooseGod += (button.getName()) + " ";
                 }
             });
-            this.add(submit, setConstraint(3,3 ));
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            this.add(imageButton, setConstraint(i%7, i/7));
         }
+
+        JButton submit = new JButton("Submit your choice");
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.SET_GODS), 0);
+                    commandToSend.setMessage(chooseGod);
+                    outputStream.writeObject(commandToSend);
+                    outputStream.flush();
+                    commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
+                    outputStream.writeObject(commandToSend);
+                    outputStream.flush();
+                    chooseGod = ""; // Clear the list of chosen Gods
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        this.add(submit, setConstraint(3,3 ));
+
+
     }
 
     /**
@@ -178,55 +184,57 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
      */
     public void showGodButtons(String gods) {
         clearView();
-        try {
-            String path = "src/main/java/it/polimi/ingsw/utils/graphics/";
-            for(int i = 0; i < gods.split(" ").length; i++){
 
-                String actualGod = gods.split(" ")[i];
-                actualGod = actualGod.trim();
+        for(int i = 0; i < gods.split(" ").length; i++){
 
-                Image image = ImageIO.read(new File(path + actualGod +  ".png"));
-                image = image.getScaledInstance(imageBaseWidth, imageBaseHeight, Image.SCALE_DEFAULT);
+            String actualGod = gods.split(" ")[i];
+            actualGod = actualGod.trim();
 
-                JButton imageButton = new JButton(new ImageIcon(image));
-                imageButton.setName(actualGod);
-
-                imageButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        ((JButton)e.getSource()).setEnabled(false); // ... get God's name from the button...
-                        chooseGod = ((JButton) e.getSource()).getName(); // ... and save it
-
-                    }
-                });
-
-                this.add(imageButton, setConstraint(i%gods.split(" ").length, 0));
+            Image image;
+            JButton imageButton;
+            try {
+                 image = (ImageIO.read(new File(path + actualGod + ".png")))
+                         .getScaledInstance(imageBaseWidth, imageBaseHeight, Image.SCALE_DEFAULT);
+                 imageButton = new JButton(new ImageIcon(image));
+            }catch(IOException e){
+                imageButton = new JButton(actualGod);
             }
 
-            JButton submit = new JButton("Submit your choice");
-            submit.addActionListener(new ActionListener() {
+            imageButton.setName(actualGod);
+
+            imageButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
-                    try {
-                        PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHOOSE_GOD), 0);
-                        commandToSend.setMessage(chooseGod);
-                        outputStream.writeObject(commandToSend);
-                        outputStream.flush();
-                        commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
-                        outputStream.writeObject(commandToSend);
-                        outputStream.flush();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
+                    ((JButton)e.getSource()).setEnabled(false); // ... get God's name from the button...
+                    chooseGod = ((JButton) e.getSource()).getName(); // ... and save it
 
                 }
             });
-            this.add(submit, setConstraint(gods.split(" ").length/2,1 ));
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            this.add(imageButton, setConstraint(i%gods.split(" ").length, 0));
         }
+
+        JButton submit = new JButton("Submit your choice");
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHOOSE_GOD), 0);
+                    commandToSend.setMessage(chooseGod);
+                    outputStream.writeObject(commandToSend);
+                    outputStream.flush();
+                    commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
+                    outputStream.writeObject(commandToSend);
+                    outputStream.flush();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        });
+        this.add(submit, setConstraint(gods.split(" ").length/2,1 ));
+
     }
 
     /**
@@ -268,5 +276,16 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
         }catch(Exception x){
             x.printStackTrace();
         }
+    }
+
+    /**
+     * reloads the view, loading all new dynamically added components
+     *
+     * @authore Elia Ravella
+     */
+    private void refreshView(){
+        this.invalidate();
+        this.validate();
+        this.repaint();
     }
 }
