@@ -86,7 +86,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     public ChooseGodsPanel(Socket connSocket, int playerNumber) {
         this.playerNumber = playerNumber;
         this.socket = connSocket;
-        StaticFrame.addPanel(this);
         setUpUI();
     }
 
@@ -109,7 +108,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
      * @author Elia Ravella, Gianluca Regis
      */
     public void setUpUI() {
-        clearView();
         refreshView();
         this.setLayout(new GridBagLayout());
         reader = new readProxyBoard(this);
@@ -206,10 +204,8 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 public void actionPerformed(ActionEvent e) {
                     ((JButton)e.getSource()).setEnabled(false); // ... get God's name from the button...
                     chooseGod = ((JButton) e.getSource()).getName(); // ... and save it
-
                 }
             });
-
             this.add(imageButton, setConstraint(i%gods.split(" ").length, 0));
         }
 
@@ -217,7 +213,6 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 try {
                     PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHOOSE_GOD), 0);
                     commandToSend.setMessage(chooseGod);
@@ -229,11 +224,9 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-
             }
         });
         this.add(submit, setConstraint(gods.split(" ").length/2,1 ));
-
     }
 
     /**
@@ -279,7 +272,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     /**
      * reloads the view, loading all new dynamically added components
      *
-     * @authore Elia Ravella
+     * @author Elia Ravella
      */
     private void refreshView(){
         this.invalidate();
