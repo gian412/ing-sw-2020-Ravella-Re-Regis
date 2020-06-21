@@ -133,6 +133,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                         commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
                         outputStream.writeObject(commandToSend);
                         outputStream.flush();
+                        chooseGod = ""; // Clear the list of chosen Gods
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -152,6 +153,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
             for(int i = 0; i < gods.split(" ").length; i++){
 
                 String actualGod = gods.split(" ")[i];
+                actualGod = parseSplit(actualGod);
                 Image image = ImageIO.read(new File(path + actualGod +  ".png"));
                 image = image.getScaledInstance(imageBaseWidth, imageBaseHeight, Image.SCALE_DEFAULT);
                 JButton imageButton = new JButton(new ImageIcon(image));
@@ -160,8 +162,10 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 imageButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        ((JButton)e.getSource()).setEnabled(false);
-                        chooseGod = ((JButton) e.getSource()).getName();
+                        if (chooseGod == null || chooseGod.isEmpty()) {  //If the player has not yet selected a God...
+                            ((JButton)e.getSource()).setEnabled(false); // ... get God's name from the button...
+                            chooseGod = ((JButton) e.getSource()).getName(); // ... and save it
+                        }
                     }
                 });
 
@@ -197,6 +201,14 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     private void clearView() {
         for (Component component : this.getComponents())
             this.remove(component);
+    }
+    
+    private String parseSplit(String string) {
+        String parsedString = null;
+        if ( string!=null && string.charAt(string.length()-1) == ' ' ) { // If the string have a bag format (space at hte end)
+            parsedString = string.replace(string.substring(string.length() -1), ""); // Replace with a better formatted string
+        }
+        return parsedString;
     }
 
     private  GridBagConstraints setConstraint(int gridX, int gridY){
