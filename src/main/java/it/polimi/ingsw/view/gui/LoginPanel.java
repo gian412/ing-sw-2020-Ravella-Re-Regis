@@ -172,7 +172,6 @@ public class LoginPanel extends JPanel {
         constraints.gridy = 5;
         constraints.gridwidth = 1;
         this.add(btnLogin, constraints);
-
     }
 
     /**
@@ -227,7 +226,5 @@ public class LoginPanel extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }

@@ -21,32 +21,27 @@ public class GamePanel extends JPanel implements Runnable {
 	private final ReadProxyBoard reader;
 	private BoardListener listener;
 	private ObjectOutputStream outputStream;
+	private BoardProxy toDisplay;
 	
 	private static final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
 	
 	/**
 	 * Inner class to observe the BoardListener object
-	 * and display the elements that arrive form the socket
+	 * saves the boardproxy in a local attribute and calls the repaint()
 	 *
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	class ReadProxyBoard implements Observer<BoardProxy> {
-		
-		GamePanel displayPanel;
-		
-		public ReadProxyBoard(GamePanel displayPanel) {
-			this.displayPanel = displayPanel;
-		}
-		
 		@Override
 		public void update(BoardProxy message) {
-		
+			toDisplay = message;
+			refreshView();
 		}
 	}
 	
 	public GamePanel(Socket socket) {
 		this.socket = socket;
-		reader = new ReadProxyBoard(this);
+		reader = new ReadProxyBoard();
 	}
 	
 	@Override
