@@ -46,7 +46,6 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public GamePanel(Socket socket) {
 		this.socket = socket;
-		this.setUpUI(StaticFrame.getGod()); // Set up the UI for the current player based on the God
 		reader = new ReadProxyBoard(this);
 	}
 	
@@ -61,26 +60,29 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		listener.addObserver(reader);
 		new Thread(listener).start();
-	}
-	
-	/**
-	 * Set up the game basic UI
-	 * @param god is the god of the player
-	 * @author Elia Ravella, Gianluca Regis
-	 */
-	private void setUpUI(GodType god) {
-		
+
 		this.refreshView();
-		this.setLayout(new GridBagLayout());
-		try {
-			BufferedImage image = ImageIO.read(new File(PATH + "_board.png"));
-			super.paintComponent(this.getGraphics());
-			this.getGraphics().drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
 	}
-	
+
+	/**
+	 * override of the JPanel original paint method
+	 * allows to do some serious custom painting
+	 * @param g the "Graphics2D" object
+	 * @author Elia Ravella
+	 */
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		BufferedImage img;
+		try {
+			img = ImageIO.read(new File(PATH + "_board.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
+		g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+	}
+
 	/**
 	 * reloads the view, loading all new dynamically added components
 	 *
