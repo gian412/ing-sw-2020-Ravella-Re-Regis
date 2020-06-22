@@ -62,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
 		new Thread(listener).start();
 
 		this.refreshView();
+		StaticFrame.refresh();
 	}
 
 	/**

@@ -99,6 +99,8 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
         listener.addObserver(reader);
         new Thread(listener).start();
+
+        StaticFrame.refresh();
     }
 
     /**
@@ -257,7 +259,8 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
         StaticFrame.removePanel(this);
         StaticFrame.addPanel(gamePanel);
         new Thread(gamePanel).start();
-       
+
+        StaticFrame.refresh();
     }
     
     /**
