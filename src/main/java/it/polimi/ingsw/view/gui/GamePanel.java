@@ -81,7 +81,9 @@ public class GamePanel extends JPanel implements Runnable {
 			return;
 		}
 		g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-		BoardMaker.drawTowers(g, actualBoard, firstOffset, cellLength, interstitialWidth, this);
+		if (actualBoard!=null) {
+			BoardMaker.drawTowers(g, actualBoard, firstOffset, cellLength, interstitialWidth, this);
+		}
 
 	}
 
