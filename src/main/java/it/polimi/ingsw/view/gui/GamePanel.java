@@ -21,9 +21,12 @@ public class GamePanel extends JPanel implements Runnable {
 	private final ReadProxyBoard reader;
 	private BoardListener listener;
 	private ObjectOutputStream outputStream;
-	private BoardProxy toDisplay;
+	private BoardProxy actualBoard;
 	
-	private static final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
+	private final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
+	private final int firstOffset = 34; // px
+	private final int cellLength = 134; // px
+	private final int interstitialWidth = 24; //px
 	
 	/**
 	 * Inner class to observe the BoardListener object
@@ -34,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
 	class ReadProxyBoard implements Observer<BoardProxy> {
 		@Override
 		public void update(BoardProxy message) {
-			toDisplay = message;
+			actualBoard = message;
 			refreshView();
 		}
 	}
@@ -63,6 +66,7 @@ public class GamePanel extends JPanel implements Runnable {
 	/**
 	 * override of the JPanel original paint method
 	 * allows to do some serious custom painting
+	 *
 	 * @param g the "Graphics2D" object
 	 * @author Elia Ravella
 	 */
@@ -77,6 +81,8 @@ public class GamePanel extends JPanel implements Runnable {
 			return;
 		}
 		g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+		BoardMaker.drawTowers(g, actualBoard, firstOffset, cellLength, interstitialWidth, this);
+
 	}
 
 	/**
@@ -89,6 +95,6 @@ public class GamePanel extends JPanel implements Runnable {
 		this.validate();
 		this.repaint();
 	}
-	
-	
+
+
 }
