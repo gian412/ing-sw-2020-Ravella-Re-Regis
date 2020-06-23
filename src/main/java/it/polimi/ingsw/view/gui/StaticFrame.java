@@ -36,12 +36,15 @@ public class StaticFrame {
     public static void addPanel(JPanel panel) {
         mainFrame.add(panel);
     }
+    
+    public static void addLayeredPane(JLayeredPane layeredPane) {
+        mainFrame.add(layeredPane);
+    }
 
     public static void removePanel(JPanel panel) {
         mainFrame.remove(panel);
     }
-
-
+    
     public static String getPlayerName() {
         return playerName;
     }

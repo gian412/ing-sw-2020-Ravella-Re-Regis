@@ -255,9 +255,10 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
     private void showBoard(){
     
         //load next panel
-        GamePanel gamePanel = new GamePanel(this.socket);
+        GamePanel gamePanel = new GamePanel(this.socket); // create the game layered pane
+        gamePanel.setUpUI(); // Add to the game pane the board and the power indicator
         StaticFrame.removePanel(this);
-        StaticFrame.addPanel(gamePanel);
+        StaticFrame.addLayeredPane(gamePanel); // Add game layered pane to the main frame
         new Thread(gamePanel).start();
 
         StaticFrame.refresh();

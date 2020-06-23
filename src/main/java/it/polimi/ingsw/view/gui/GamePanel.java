@@ -15,7 +15,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends JLayeredPane implements Runnable {
 	
 	private final Socket socket;
 	private final ReadProxyBoard reader;
@@ -23,7 +23,6 @@ public class GamePanel extends JPanel implements Runnable {
 	private ObjectOutputStream outputStream;
 	private BoardProxy actualBoard;
 	
-	private final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
 	private final int firstOffset = 34; // px
 	private final int cellLength = 134; // px
 	private final int interstitialWidth = 24; //px
@@ -62,29 +61,27 @@ public class GamePanel extends JPanel implements Runnable {
 		this.refreshView();
 		StaticFrame.refresh();
 	}
-
+	
 	/**
-	 * override of the JPanel original paint method
-	 * allows to do some serious custom painting
+	 * Create and add panels with board and power
 	 *
-	 * @param g the "Graphics2D" object
-	 * @author Elia Ravella
+	 * @author Gianluca Regis
 	 */
-	@Override
-	public void paintComponent(Graphics g){
-		super.paintComponent(g);
-		BufferedImage img;
-		try {
-			img = ImageIO.read(new File(PATH + "_board.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		}
-		g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-		if (actualBoard!=null) {
-			BoardMaker.drawTowers(g, actualBoard, firstOffset, cellLength, interstitialWidth, this);
-		}
-
+	public void setUpUI() {
+		
+		BoardPanel boardPanel = new BoardPanel();
+		PowerPanel powerPanel = new PowerPanel();
+		
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		
+		this.add(boardPanel, gbc, 1);
+		gbc.gridy = 1;
+		this.add(powerPanel, gbc, 2);
+		
 	}
 
 	/**
