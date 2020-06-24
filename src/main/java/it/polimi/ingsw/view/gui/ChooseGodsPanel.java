@@ -223,6 +223,8 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                     commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
                     outputStream.writeObject(commandToSend);
                     outputStream.flush();
+
+                    StaticFrame.setGod(GodType.getTypeFromString(chooseGod));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }

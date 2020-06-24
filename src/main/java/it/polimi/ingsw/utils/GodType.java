@@ -15,6 +15,8 @@ public enum GodType {
 
     public static GodType getTypeFromString(String godName) {
 
+        godName = godName.toUpperCase();
+
         switch (godName) {
             case "APOLLO":
                 return APOLLO;
