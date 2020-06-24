@@ -9,7 +9,6 @@ public class GUILoader extends JFrame{
      * @param args cli arguments
      */
     public static void main(String[] args) {
-        //JFrame mainFrame = new JFrame("Santorini");
         StaticFrame.initFrame("Santorini");
         StaticFrame.addPanel(new LoginPanel());
 
