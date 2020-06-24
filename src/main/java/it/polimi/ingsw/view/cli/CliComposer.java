@@ -7,6 +7,9 @@ import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.ClientHandler;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class CliComposer {
@@ -32,12 +35,19 @@ public class CliComposer {
                     {0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0}
             };
 
+    private String playerName;
+    private int numberOfPlayer;
 
     /**
      * CLiComposer constructor
      *
      * Author Marco Re
      */
+    public CliComposer(String name, int number){
+        playerName = name;
+        numberOfPlayer = number;
+    }
+
     public CliComposer(){
     }
 
@@ -176,6 +186,8 @@ public class CliComposer {
 
     public void godList(BoardProxy proxy){
 
+
+
         GodType[] gods = {GodType.APOLLO, GodType.ARTEMIS, GodType.ATHENA, GodType.ATLAS, GodType.CHARON, GodType.CHRONUS,
             GodType.DEMETER, GodType.HEPHAESTUS, GodType.HESTIA, GodType.MINOTAUR, GodType.PAN, GodType.PROMETHEUS,
             GodType.TRITON, GodType.ZEUS};
@@ -184,6 +196,9 @@ public class CliComposer {
 
         System.out.println(Ansi.RESET_SCREEN);
         System.out.println(bannerMaker() + "\n");
+
+
+        System.out.println("ipiuppoi");
 
         for(GodType x : gods) {
 
@@ -198,8 +213,11 @@ public class CliComposer {
             System.out.println("     " + getDescription(x) + "\n");
         }
 
-        if(!proxy.getChoosingGods().equals(""))
-            System.out.println("Choose between GREEN god\n");
+        if(!proxy.getChoosingGods().equals("") && proxy.getTurnPlayer().equals(playerName))
+            System.out.println("Choose between GREEN gods\n" + "Please push ENTER to continue ......");
+        else
+            if(proxy.getTurnPlayer().equals(playerName))
+                System.out.println("Now is your turn. Please push ENTER to continue......");
     }
 
     private String getDescription(GodType god) {
@@ -270,47 +288,185 @@ public class CliComposer {
         }
     }
 
+
     public void boardMaker(BoardProxy board){
 
+        StringBuilder out = new StringBuilder("");
+        Ansi maker = new Ansi();
 
-        System.out.println("choosingGods: " + board.getChoosingGods());
+        //reset the screen and print the banner
+        System.out.println(Ansi.RESET_SCREEN);
+        System.out.println(bannerMaker() + "\n\n");
 
-        if(board.getTurnPlayer() != null)
-            System.out.println("Is Playing " + board.getTurnPlayer());
+        //System.out.println(board.getPlayers().get(0) + "\n" +board.getPlayers().get(1) + "\n" +board.getPlayers().get(2) + "\n");
 
-        if(board.getIllegalMoveString() != null)
-            System.out.println("illegal move:  " + board.getIllegalMoveString());
-
-        if(board.getStatus() == GameState.SELECTING_GOD)
-            System.out.println("SELECTING GOD");
-        if(board.getStatus() == GameState.TERMINATOR)
-            System.out.println("TERMINATOR");
+        //first line of the board
+        out.append("\n     ");
+        for (int k = 0; k < 31; k++) {
+            out.append("-");
+        }
+        out.append("\n");
 
 
-        for(int i = 0; i < 5; i++){
 
-            for(int j = 0; j < 5; j++){
-                System.out.print("|");
-                System.out.print(board.getBoardScheme()[i][j].toString().charAt(0));
+        for(int i = 0; i < 5; i++) {
+            for(int k = 0; k < 3; k++) {
+                out.append("     ");
+                for (int j = 0; j < 5; j++) {
 
-                boolean found = false;
-                for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
-                    if((entry.getValue().y == i) && (entry.getValue().x == j)) {
-                        System.out.print(entry.getKey().charAt(0));
-                        found = true;
+                    if(k == 0){
+                        boolean found = false;
+
+                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
+                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
+                                if(entry.getKey().contains(playerName)){
+                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.BLACK_B) + "     ");
+                                    out.append(Ansi.RESET);
+                                    found = true;
+                                }
+                                else{
+                                    if(numberOfPlayer == 2){
+                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + "     ");
+                                        out.append(Ansi.RESET);
+                                        found = true;
+                                    }
+
+                                    if(numberOfPlayer == 3){
+
+                                        if(entry.getKey().contains(board.getGods().get(0)) && !entry.getKey().contains(playerName)){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + "     ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+
+                                        if(entry.getKey().contains(board.getGods().get(1)) && !entry.getKey().contains(playerName)){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + "     ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+
+                                        if(entry.getKey().contains(board.getGods().get(2)) && !entry.getKey().contains(playerName)){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + "     ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(!found)
+                            out.append("|     ");
+                    }
+
+                    if(k == 1){
+                        boolean found = false;
+
+                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
+                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
+                                if(entry.getKey().contains(playerName)){
+                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.GREEN) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                    out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
+                                    out.append(Ansi.RESET);
+                                    found = true;
+                                }
+                                else{
+                                    if(numberOfPlayer == 2){
+                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                        out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
+                                        out.append(Ansi.RESET);
+                                        found = true;
+                                    }
+                                    if(numberOfPlayer == 3){
+
+                                        if(entry.getKey().contains(board.getGods().get(0)) && !entry.getKey().contains(playerName)){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                            out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+
+                                        if(entry.getKey().contains(board.getGods().get(1)) && !entry.getKey().contains(playerName)){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                            out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+
+                                        if(entry.getKey().contains(board.getGods().get(2)) && !entry.getKey().contains(playerName)){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                            out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(!found)
+                            out.append("| " + board.getBoardScheme()[i][j].toInt() + "/  ");
+                    }
+
+                    if(k == 2){
+                        boolean found = false;
+
+                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
+                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
+                                if(entry.getKey().contains(playerName)){
+                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.BLACK_B) + "     ");
+                                    out.append(Ansi.RESET);
+                                    found = true;
+                                }
+                                else{
+                                    if(numberOfPlayer == 2){
+                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + "     ");
+                                        out.append(Ansi.RESET);
+                                        found = true;
+                                    }
+                                    if(numberOfPlayer == 3){
+
+                                        if(entry.getKey().contains(board.getGods().get(0)) && !entry.getKey().contains(playerName)){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + "     ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+
+                                        if(entry.getKey().contains(board.getGods().get(1)) && !entry.getKey().contains(playerName)){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + "     ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+
+                                        if(entry.getKey().contains(board.getGods().get(2)) && !entry.getKey().contains(playerName)){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + "     ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if(!found)
+                            out.append("|     ");
                     }
                 }
-
-                if(!found) {
-                    System.out.print(" ");
-                }
-                System.out.print("| ");
+                //put the last | at the end of the line
+                out.append("|\n");
             }
 
-            System.out.print("\n");
+            out.append("     ");
+            for (int k = 0; k < 31; k++) {
+                out.append("-");
+            }
+            out.append("\n");
         }
 
-    }
+        //print the board
+        System.out.println(out.toString());
 
+        //print the message for the current player
+        if(board.getStatus().equals(GameState.ADDING_WORKER) && board.getTurnPlayer().equals(playerName))
+            System.out.println("Now is your turn. Please press ENTER to continue ........");
+    }
 }
 

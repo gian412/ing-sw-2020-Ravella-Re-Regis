@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Map;
 import java.util.Scanner;
 
 
@@ -33,10 +34,14 @@ public class CLIGame {
     public class ReadProxyBoard implements Observer<BoardProxy> {
 
         private CliComposer out;
+        private String playerName;
+        private int numberOfPlayer;
         private BoardProxy localProxy;
 
-        public ReadProxyBoard() {
-            out = new CliComposer();
+        public ReadProxyBoard(String name, int number) {
+            playerName = name;
+            numberOfPlayer = number;
+            out = new CliComposer(playerName, numberOfPlayer);
         }
 
         public BoardProxy getLocalProxy(){
@@ -48,8 +53,13 @@ public class CLIGame {
             localProxy = message;
             if(localProxy.getStatus().equals(GameState.SELECTING_GOD))
                 out.godList(localProxy);
-            else
+            if(localProxy.getStatus().equals(GameState.ADDING_WORKER))
                 out.boardMaker(localProxy);
+            if(localProxy.getStatus().equals(GameState.PLAYING)){
+                out.boardMaker(localProxy);
+                System.out.println("ilvshbkshfbveuhfvhn");
+            }
+
         }
     }
 
@@ -57,7 +67,7 @@ public class CLIGame {
     public void startPlaying(Socket connection, String name, int number) throws IOException {
         numberOfPlayer = number;
         playerName = name;
-        displayer = new ReadProxyBoard();
+        displayer = new ReadProxyBoard(playerName, numberOfPlayer);
         connSocket = connection;
         int row, column;
         String input;
@@ -106,7 +116,7 @@ public class CLIGame {
                                 input = inputStream.nextLine().trim().toUpperCase();
 
                                 while(!check) {
-                                    if (displayer.getLocalProxy().getChoosingGods().toUpperCase().contains(input)) {
+                                    if (displayer.getLocalProxy().getChoosingGods().toUpperCase().contains(input) && (input.length() > 2)) {
                                         check = true;
                                     } else {
                                         System.out.print("INVALID INPUT.\nReinsert a valid god:  ");
@@ -123,33 +133,37 @@ public class CLIGame {
 
                             System.out.println("It's time to insert your workers.");
 
-                            System.out.print("Insert the column of your first worker (from 1 to 5): ");
-                            column = inputStream.nextInt() - 1;
-                            inputStream.nextLine();
+                            do {
+                                System.out.print("Insert the column of your first worker (from 1 to 5): ");
+                                column = inputStream.nextInt() - 1;
+                                inputStream.nextLine();
 
-                            column = checkCoordinates(column);
+                                column = checkCoordinates(column);
 
-                            System.out.print("Now insert the row of your first worker (from 1 to 5): ");
-                            row = inputStream.nextInt() - 1;
-                            inputStream.nextLine();
+                                System.out.print("Now insert the row of your first worker (from 1 to 5): ");
+                                row = inputStream.nextInt() - 1;
+                                inputStream.nextLine();
+                            }while(checkWorker(column, row));
 
-                            row = checkCoordinates(row);
+                            submitCommand(playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
+
+                            do {
+                                System.out.print("Insert the column of your second worker (from 1 to 5): ");
+                                column = inputStream.nextInt() - 1;
+                                inputStream.nextLine();
+
+                                column = checkCoordinates(column);
+
+                                System.out.print("Now insert the row of your second worker (from 1 to 5): ");
+                                row = inputStream.nextInt() - 1;
+                                inputStream.nextLine();
+
+                                row = checkCoordinates(row);
+                            }while(checkWorker(column, row));
 
                             submitCommand(playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
 
-                            System.out.print("Insert the column of your second worker : ");
-                            column = inputStream.nextInt() - 1;
-                            inputStream.nextLine();
-
-                            column = checkCoordinates(column);
-
-                            System.out.print("Now insert the row of your second worker (from 1 to 5): ");
-                            row = inputStream.nextInt() - 1;
-                            inputStream.nextLine();
-
-                            row = checkCoordinates(row);
-
-                            submitCommand(playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
+                            System.out.print("Number of workers: " + displayer.getLocalProxy().getWorkers().size());
 
                             remoteChangeTurn();
                             break;
@@ -159,6 +173,12 @@ public class CLIGame {
                         case PLAYING:
 
 
+                            System.out.print("udajsvbgslihcvglbi.hjsvbòi.bre" +
+                                    "bearb" +
+                                    "etdbtae" +
+                                    "bte" +
+                                    "ntreanaetbfztr" +
+                                    "nrtnrnarngtrntg");
                             break;
 
 
@@ -376,6 +396,16 @@ public class CLIGame {
         }
         return coordinate;
     }
+
+    private boolean checkWorker(int column, int row){
+            for(Map.Entry<String, Pair> entry : displayer.getLocalProxy().getWorkers().entrySet()){
+                if((entry.getValue().y == column) && (entry.getValue().x == row)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
     private void remoteChangeTurn() throws IOException{
 

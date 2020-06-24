@@ -94,4 +94,23 @@ public enum Height {
         }
     }
 
+    public String toInt(){
+
+        switch (this){
+            case DOME:
+                return "4";
+            case THIRD_FLOOR:
+                return  "3";
+            case SECOND_FLOOR:
+                return "2";
+            case FIRST_FLOOR:
+                return "1";
+            case GROUND:
+                return "0";
+            default:
+                return "error";
+        }
+
+    }
+
 }

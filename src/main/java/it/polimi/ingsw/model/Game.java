@@ -4,9 +4,7 @@ import it.polimi.ingsw.exceptions.NoSuchPlayerException;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.utils.GameState;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Game {
 
@@ -78,6 +76,10 @@ public class Game {
 
     public Player getTurnPlayer(){ return board.getTurnPlayer(); }
 
+    public int getNumberOfPlayers(){
+        return playerList.size();
+    }
+
     public String getPlayers(){
         StringBuilder players = new StringBuilder();
 
@@ -91,4 +93,13 @@ public class Game {
         return players.toString();
     }
 
+    public Map<String, String> getGodsMap() {
+        Map<String, String> gods = new HashMap<>();
+
+        for (Player p : playerList) {
+            gods.put(p.getNAME(), p.getDivinity().NAME.toString());
+        }
+
+        return  gods;
+    }
 }
