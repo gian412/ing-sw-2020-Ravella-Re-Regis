@@ -129,25 +129,6 @@ public class CLIGame {
                                 break;
                             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         case ADDING_WORKER:
 
                             System.out.println("It's time to insert your workers.");

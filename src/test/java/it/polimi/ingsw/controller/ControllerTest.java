@@ -223,6 +223,8 @@ public class ControllerTest {
         controller.addPlayer("Marco", 30);
         controller.addPlayer("Gianluca", 35);
 
+        controller.startGame();
+
         PlayerCommand setGodSet = new PlayerCommand(
                 "Marco",
                 new Command(new Pair(0, 0), CommandType.SET_GODS),
@@ -244,6 +246,7 @@ public class ControllerTest {
         controller.startGame();
 
         assertTrue("Marco should be an 'Apollo' type", g.getTurnPlayer().getDivinity() instanceof Apollo);
+        System.out.println(g.getTurnPlayer().getDivinity().getClass().toString());
     }
 }
 

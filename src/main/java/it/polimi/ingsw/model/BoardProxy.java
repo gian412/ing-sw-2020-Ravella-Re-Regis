@@ -1,22 +1,31 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.view.Observable;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BoardProxy extends Observable<BoardProxy> implements Serializable {
 
     private Height[][] boardScheme;
+    private Map<String, String> gods;
     private Map<String, Pair> workers;
     private String winPlayer;
     private String turnPlayer;
     private GameState status;
     private String choosingGods, illegalMoveString;
 
+
+    public Map<String, String> getGods() {
+        return gods;
+    }
+
+    public void setGods(Map<String, String> mapGods){
+        gods = mapGods;
+    }
 
     public GameState getStatus() {
         return status;
@@ -25,10 +34,10 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     public void setStatus(GameState status) {
         this.status = status;
     }
+
     public String getTurnPlayer() {
         return turnPlayer;
     }
-
 
     public String getIllegalMoveString() {
         return illegalMoveString;
