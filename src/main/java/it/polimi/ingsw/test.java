@@ -2,6 +2,8 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.god.Athena;
+import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.RemoteView;
 import it.polimi.ingsw.view.gui.BoardMaker;
 
@@ -14,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Random;
 
 public class test {
@@ -73,6 +76,14 @@ public class test {
                     bp.addHeight(row, col, Height.THIRD_FLOOR);
                 else
                     bp.addHeight(row, col, Height.DOME);
+
+        HashMap<String, String> godsMap = new HashMap();
+        godsMap.put("Player1", "Athena");
+        godsMap.put("Player2", "Charon");
+        bp.setGods(godsMap);
+
+        bp.addWorker("Player10", new Pair(0, 1));
+        bp.addWorker("Player11", new Pair(0, 0));
 
         return bp;
     }

@@ -31,7 +31,7 @@ public class BoardMaker {
      * @author Elia Ravella
      */
     public static void drawTowers(Graphics g, BoardProxy board, int offset, int width, int interstitialWidth, Component obs){
-        BufferedImage first, second, third, dome;
+        BufferedImage first, second, third, dome, godImage;
         try {
             first = ImageIO.read(new File(PATH + "_towerFirstFloor.png"));
             second = ImageIO.read(new File(PATH + "_towerSecondFloor.png"));
@@ -84,6 +84,30 @@ public class BoardMaker {
                         break;
                 }
             }
+
+        for(int i = 0; i < board.getWorkers().keySet().size(); i++){
+            String player = board.getWorkers().keySet().toArray()[i].toString().substring(
+                    0,
+                    board.getWorkers().keySet().toArray()[i].toString().length() - 1
+            );
+            String god = board.getGods().get(player);
+            Pair actualCoordinates = deMap(board.getWorkers().get(board.getWorkers().keySet().toArray()[i]));
+
+            try {
+                godImage = ImageIO.read(new File(PATH + god + "_Worker.png"));
+            }catch(IOException x){
+                x.printStackTrace();
+                return;
+            }
+
+            g.drawImage(godImage,
+                    actualCoordinates.x,
+                    actualCoordinates.y,
+                    CELL_LENGTH,
+                    CELL_LENGTH,
+                    obs
+            );
+        }
     }
 
     /**
@@ -94,11 +118,21 @@ public class BoardMaker {
      * @return the Pair with the mapped coordinates
      */
     public static Pair map(int x, int y){
-
-
         return new Pair(
                 (x/CELL_LENGTH) % (IMAGE_WIDTH/CELL_LENGTH),
                 (y/CELL_LENGTH) % (IMAGE_HEIGHT/CELL_LENGTH)
+        );
+    }
+
+    /**
+     * maps the cells from the grid to the image
+     * @param pair pair to be converted
+     * @return  the converted coord.
+     */
+    private static Pair deMap(Pair pair) {
+        return new Pair(
+                pair.x * CELL_LENGTH,
+                pair.y * CELL_LENGTH
         );
     }
 }
