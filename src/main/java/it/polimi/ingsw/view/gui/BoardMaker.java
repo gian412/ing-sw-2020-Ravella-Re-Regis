@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Height;
+import it.polimi.ingsw.model.Pair;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,6 +13,10 @@ import java.io.IOException;
 public class BoardMaker {
 
     private static final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
+    private static final int
+            IMAGE_WIDTH = 810,
+            IMAGE_HEIGHT = 810,
+            CELL_LENGTH = 162;
 
     /**
      * draws the towers on the board given.
@@ -79,5 +84,21 @@ public class BoardMaker {
                         break;
                 }
             }
+    }
+
+    /**
+     * maps the cells from the image to the grid
+     *
+     * @param x abscissa
+     * @param y ordinate
+     * @return the Pair with the mapped coordinates
+     */
+    public static Pair map(int x, int y){
+
+
+        return new Pair(
+                (x/CELL_LENGTH) % (IMAGE_WIDTH/CELL_LENGTH),
+                (y/CELL_LENGTH) % (IMAGE_HEIGHT/CELL_LENGTH)
+        );
     }
 }

@@ -8,6 +8,8 @@ import it.polimi.ingsw.view.gui.BoardMaker;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +36,15 @@ public class test {
                 paintTowers(g, this);
             }
         };
+
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                Pair coo = BoardMaker.map(e.getX(), e.getY());
+                JOptionPane.showMessageDialog(e.getComponent(), "Cell: " + coo.x + " " + coo.y);
+            }
+        });
 
         mainFrame.setSize(835, 831);
         mainFrame.add(panel);

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.BoardProxy;
+import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
@@ -8,6 +9,8 @@ import it.polimi.ingsw.view.Observer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,12 +25,12 @@ public class GamePanel extends JPanel implements Runnable {
 	private BoardListener listener;
 	private ObjectOutputStream outputStream;
 	private BoardProxy actualBoard;
-	
+
 	private final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
-	private final int firstOffset = 34; // px
-	private final int cellLength = 134; // px
-	private final int interstitialWidth = 24; //px
-	
+	private final int firstOffset = 11; // px
+	private final int cellLength = 137; // px
+	private final int interstitialWidth = 22; //px
+
 	/**
 	 * Inner class to observe the BoardListener object
 	 * saves the boardproxy in a local attribute and calls the repaint()
@@ -41,12 +44,19 @@ public class GamePanel extends JPanel implements Runnable {
 			refreshView();
 		}
 	}
-	
+
 	public GamePanel(Socket socket) {
 		this.socket = socket;
 		reader = new ReadProxyBoard();
+
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Pair cell = BoardMaker.map(e.getX(), e.getY());
+			}
+		});
 	}
-	
+
 	@Override
 	public void run() {
 		try {
@@ -55,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		listener.addObserver(reader);
 		new Thread(listener).start();
 
@@ -84,10 +94,8 @@ public class GamePanel extends JPanel implements Runnable {
 		g.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), this);
 		this.setSize(img.getWidth(), img.getHeight());
 
-		if (actualBoard != null) {
+		if (actualBoard != null)
 			BoardMaker.drawTowers(g, actualBoard, firstOffset, cellLength, interstitialWidth, this);
-		}
-
 	}
 
 	/**
@@ -100,6 +108,4 @@ public class GamePanel extends JPanel implements Runnable {
 		this.validate();
 		this.repaint();
 	}
-
-
 }
