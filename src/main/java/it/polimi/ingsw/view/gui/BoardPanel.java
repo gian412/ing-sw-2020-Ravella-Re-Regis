@@ -32,7 +32,7 @@ public class BoardPanel extends JPanel {
             e.printStackTrace();
             return;
         }
-        g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+        g.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), this);
         
         
     }

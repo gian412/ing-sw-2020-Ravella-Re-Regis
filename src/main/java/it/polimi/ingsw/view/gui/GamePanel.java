@@ -68,19 +68,24 @@ public class GamePanel extends JLayeredPane implements Runnable {
 	 * @author Gianluca Regis
 	 */
 	public void setUpUI() {
-		
+
+		this.setSize(StaticFrame.mainFrame.getSize());
+
 		BoardPanel boardPanel = new BoardPanel();
 		PowerPanel powerPanel = new PowerPanel();
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1;
+		gbc.weighty = 0.9;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		
 		this.add(boardPanel, gbc, 1);
 		gbc.gridy = 1;
-		this.add(powerPanel, gbc, 2);
+		gbc.weighty = 0.1;
+		this.add(powerPanel, gbc, 1);
 		
 	}
 
