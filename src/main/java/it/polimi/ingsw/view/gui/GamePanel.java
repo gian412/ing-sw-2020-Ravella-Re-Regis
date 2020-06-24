@@ -80,8 +80,11 @@ public class GamePanel extends JPanel implements Runnable {
 			e.printStackTrace();
 			return;
 		}
-		g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-		if (actualBoard!=null) {
+
+		g.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), this);
+		this.setSize(img.getWidth(), img.getHeight());
+
+		if (actualBoard != null) {
 			BoardMaker.drawTowers(g, actualBoard, firstOffset, cellLength, interstitialWidth, this);
 		}
 
