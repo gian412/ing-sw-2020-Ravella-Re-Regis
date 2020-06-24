@@ -13,7 +13,7 @@ public class GUILoader extends JFrame{
         StaticFrame.initFrame("Santorini");
         StaticFrame.addPanel(new LoginPanel());
 
-        StaticFrame.setSize(500, 500);
+        StaticFrame.setSize(835, 831);
         StaticFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         StaticFrame.setVisible(true);
     }

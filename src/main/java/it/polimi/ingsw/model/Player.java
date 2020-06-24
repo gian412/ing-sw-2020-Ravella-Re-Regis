@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.god.God;
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class Player implements Comparable<Player> {
     public void selectGod(God[] listDivinity){}
 
     @Override
-    public int compareTo(@NotNull Player other) {
+    public int compareTo(/*@NotNull*/ Player other) {
         return this.getAge() - other.getAge();
     }
 }

@@ -172,7 +172,6 @@ public class LoginPanel extends JPanel {
         constraints.gridy = 5;
         constraints.gridwidth = 1;
         this.add(btnLogin, constraints);
-
     }
 
     /**
@@ -202,7 +201,7 @@ public class LoginPanel extends JPanel {
             output.println(Integer.parseInt(txtAge.getText()));
             output.flush();
 
-            int playerNumber = 0;
+            int playerNumber;
             String message = input.nextLine(); // server prompt
             if(message.equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) {
                  playerNumber = Integer.parseInt(
@@ -216,14 +215,16 @@ public class LoginPanel extends JPanel {
 
             input.nextLine(); // final dialog
 
-            StaticFrame.removePanel(this);
+            //load next panel
             ChooseGodsPanel chooseGodsPanel = new ChooseGodsPanel(connSocket, playerNumber);
+            StaticFrame.removePanel(this);
+            StaticFrame.addPanel(chooseGodsPanel);
             new Thread(chooseGodsPanel).start();
+
+            StaticFrame.refresh();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }

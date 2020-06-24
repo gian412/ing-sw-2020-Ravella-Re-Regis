@@ -57,4 +57,11 @@ public class StaticFrame {
     public static void setGod(GodType god) {
         StaticFrame.god = god;
     }
+
+    public static void refresh(){
+        mainFrame.invalidate();
+        mainFrame.validate();
+        mainFrame.repaint();
+        mainFrame.setVisible(true);
+    }
 }
