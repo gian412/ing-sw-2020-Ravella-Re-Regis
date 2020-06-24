@@ -97,7 +97,7 @@ public class Game {
         Map<String, String> gods = new HashMap<>();
 
         for (Player p : playerList) {
-            gods.put(p.getNAME(), p.getDivinity().NAME.toString());
+            gods.put(p.getNAME(), p.getDivinity().NAME.getCapitalizedName());
         }
 
         return  gods;
