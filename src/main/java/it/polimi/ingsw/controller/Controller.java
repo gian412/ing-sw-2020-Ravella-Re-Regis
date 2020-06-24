@@ -135,8 +135,10 @@ public class Controller implements Observer<PlayerCommand> {
                     game.getBoard().getProxy().setChoosingGods(
                             game.getBoard().getProxy().getChoosingGods().replace(message.message, "")
                     );
-                    if(game.getBoard().getProxy().getChoosingGods().split(" ").length == 0)
+                    if(game.getBoard().getProxy().getChoosingGods().split(" ").length == 0) {
+                        game.getBoard().getProxy().setGods(game.getGodsMap());
                         game.getBoard().getProxy().setStatus(GameState.ADDING_WORKER);
+                    }
 
                 } catch (NoSuchPlayerException | ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
