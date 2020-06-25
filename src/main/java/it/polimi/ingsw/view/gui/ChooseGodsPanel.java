@@ -72,10 +72,8 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 // during the "adding_worker" phase the user should see the board
                 case ADDING_WORKER:
                     clearView();
-                    showBoard();
+                    showBoard(message);
                     break;
-                case PLAYING:
-                case TERMINATOR:
             }
         }
     }
@@ -254,10 +252,10 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
      * loads and shows the game board
      * @author Elia Ravella, Gianluca Regis
      */
-    private void showBoard(){
+    private void showBoard(BoardProxy firstBoard){
     
         //load next panel
-        GamePanel gamePanel = new GamePanel(this.socket);
+        GamePanel gamePanel = new GamePanel(this.socket, firstBoard);
         StaticFrame.removePanel(this);
         StaticFrame.addPanel(gamePanel);
         new Thread(gamePanel).start();
