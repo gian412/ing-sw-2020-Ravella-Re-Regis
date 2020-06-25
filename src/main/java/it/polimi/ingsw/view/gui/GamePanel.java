@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.utils.GameState;
-import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
 
@@ -92,16 +91,19 @@ public class GamePanel extends JPanel implements Runnable {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		BufferedImage img;
+		BufferedImage boardImg;
+		BufferedImage powerImage;
 		try {
-			img = ImageIO.read(new File(PATH + "_board.png"));
+			boardImg = ImageIO.read(new File(PATH + "_board.png"));
+			powerImage = ImageIO.read(new File(PATH + "_power.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
 		}
 
-		g.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), this);
-		this.setSize(img.getWidth(), img.getHeight());
+		g.drawImage(boardImg, 0, 0, boardImg.getWidth(), boardImg.getHeight(), this);
+		g.drawImage(powerImage, 405, 815, powerImage.getWidth(), powerImage.getHeight(), this);
+		this.setSize(boardImg.getWidth(), boardImg.getHeight());
 
 		if (actualBoard != null) {
 			BoardMaker.drawElements(g, actualBoard, firstOffset, cellLength, interstitialWidth, this);
