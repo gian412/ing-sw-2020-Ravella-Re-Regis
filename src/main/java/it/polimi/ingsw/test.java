@@ -56,7 +56,7 @@ public class test {
     }
 
     public static void paintTowers(Graphics g, Component obs){
-        BoardMaker.drawTowers(g, genBoard(), 34, 134, 24, obs);
+        BoardMaker.drawElements(g, genBoard(), 34, 134, 24, obs);
     }
 
     public static BoardProxy genBoard(){
