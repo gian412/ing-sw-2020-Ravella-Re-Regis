@@ -30,7 +30,7 @@ public class BoardMaker {
      * @param interstitialWidth the space between two cells
      * @author Elia Ravella
      */
-    public static void drawTowers(Graphics g, BoardProxy board, int offset, int width, int interstitialWidth, Component obs){
+    public static void drawElements(Graphics g, BoardProxy board, int offset, int width, int interstitialWidth, Component obs){
         BufferedImage first, second, third, dome, godImage;
         try {
             first = ImageIO.read(new File(PATH + "_towerFirstFloor.png"));
