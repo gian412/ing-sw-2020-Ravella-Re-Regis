@@ -1,7 +1,10 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.controller.Command;
+import it.polimi.ingsw.controller.PlayerCommand;
 import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Pair;
+import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
@@ -31,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private final int firstOffset = 11; // px
 	private final int cellLength = 137; // px
 	private final int interstitialWidth = 22; //px
+	private int workersAdded;
 
 	/**
 	 * Inner class to observe the BoardListener object
@@ -49,12 +53,13 @@ public class GamePanel extends JPanel implements Runnable {
 		public void update(BoardProxy message) {
 			actualBoard = message;
 			if(message.getStatus().equals(GameState.ADDING_WORKER) && message.getTurnPlayer().equals(StaticFrame.getPlayerName()))
-				JOptionPane.showConfirmDialog(parentComponent, "Add your fucking workers!");
+				JOptionPane.showConfirmDialog(parentComponent, "Add your workers!");
 			refreshView();
 		}
 	}
 
 	public GamePanel(Socket socket, BoardProxy firstBoard) {
+		workersAdded = 0;
 		this.actualBoard = firstBoard;
 		this.socket = socket;
 		reader = new ReadProxyBoard(this);
@@ -101,7 +106,6 @@ public class GamePanel extends JPanel implements Runnable {
 		if (actualBoard != null) {
 			BoardMaker.drawElements(g, actualBoard, firstOffset, cellLength, interstitialWidth, this);
 		}
-
 	}
 
 	/**
@@ -111,18 +115,64 @@ public class GamePanel extends JPanel implements Runnable {
 	private void appendMouseClickMapper() {
 		// for the first player:
 		if(actualBoard.getStatus().equals(GameState.ADDING_WORKER) && actualBoard.getTurnPlayer().equals(StaticFrame.getPlayerName()))
-			JOptionPane.showConfirmDialog(this, "Add your fucking workers!");
-
-
+			JOptionPane.showConfirmDialog(this, "Add your workers!");
 
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Pair cell = BoardMaker.map(e.getX(), e.getY());
-				JOptionPane.showMessageDialog(e.getComponent(), "Cell: " + cell.x + " " + cell.y);
-				//TODO implement the PlayerCommand send procedure
+				int workerIndex = (workersAdded == 0) ? 0 : 1;
+
+				// TODO remove this dialog
+				JOptionPane.showInputDialog("adding worker number " + workerIndex + " at " + cell.x + " " + cell.y);
+
+				PlayerCommand toSend = new PlayerCommand(
+						StaticFrame.getPlayerName(),
+						new Command(
+								cell,
+								CommandType.ADD_WORKER
+						),
+						workerIndex
+				);
+				workersAdded++;
+
+				// TODO: checking why outputStream is null here
+				try {
+					outputStream.writeObject(toSend);
+					outputStream.flush();
+				} catch(IOException x){
+					x.printStackTrace();
+				}
+
+				checkChangeTurn();
 			}
 		});
+	}
+
+	/**
+	 * used in the "adding workers" phase, this method calls the change of turn when the current player
+	 * has added his quote of workers to the board. (this triggers a board update)
+	 *
+	 * @author Elia Ravella
+	 */
+	private void checkChangeTurn() {
+		if(workersAdded == 2){
+			PlayerCommand changeTurn = new PlayerCommand(
+					StaticFrame.getPlayerName(),
+					new Command(
+							new Pair(0, 0),
+							CommandType.CHANGE_TURN
+					),
+					0
+			);
+
+			try {
+				outputStream.writeObject(changeTurn);
+				outputStream.flush();
+			} catch(IOException x){
+				x.printStackTrace();
+			}
+		}
 	}
 
 	/**
