@@ -1,14 +1,11 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.model.BoardProxy;
-import it.polimi.ingsw.model.Height;
 import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.utils.GodType;
-import it.polimi.ingsw.view.ClientHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +31,38 @@ public class CliComposer {
                     {0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1},
                     {0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0}
             };
+
+    final static int[][] YOU =
+                {   {1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                    {0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                    {0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                    {0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                    {0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                    {0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0}
+            };
+
+    final static int[][] WIN =
+            {   {1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+                {1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1},
+                {0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                {0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                {0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1}
+            };
+
+    final static int[][] LOSE =
+            {   {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0 ,1, 0, 0 ,1, 1, 1, 0, 0, 1, 0, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0 ,0, 1, 0, 1, 0, 0, 0, 1},
+                {1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0}
+            };
+
+
 
     private String playerName;
     private int numberOfPlayer;
@@ -460,5 +489,120 @@ public class CliComposer {
         if(board.getStatus().equals(GameState.ADDING_WORKER) && board.getTurnPlayer().equals(playerName))
             System.out.println("Now is your turn. Please press ENTER to continue ........");
     }
-}
 
+
+    public void terminateGame(BoardProxy board){
+
+        Ansi maker = new Ansi();
+        StringBuilder write = new StringBuilder("");
+
+        System.out.println(Ansi.RESET_SCREEN);
+        System.out.println(bannerMaker() + "\n");
+
+        if(board.getWinner().equals("Unexpected Game Over")){
+            System.out.println("   Unexpected connection ERROR\n\n");
+            System.out.println("   Press ENTER to exit from the game......");
+            return;
+        }
+
+        else {
+            //set font and background
+            String change = maker.bgAndFont(Ansi.BACKGROUND_WHITE_B, Ansi.BLUE_B);
+            write.append(change);
+
+            //put an empty line
+            for (int i = 0; i < 130; i++)
+                write.append(' ');
+            write.append(Ansi.RESET);
+            write.append('\n');
+
+            //insert the title (YOU)
+            for (int i = 0; i < 7; i++) {
+                write.append(change);
+                for (int t = 0; t < 56; t++) {
+                    write.append(' ');
+                }
+
+                for (int j = 0; j < 17; j++) {
+                    if (YOU[i][j] == 0)
+                        write.append(' ');
+                    else
+                        write.append(Unicode.SQUARE);
+                }
+
+                for (int t = 0; t < 57; t++) {
+                    write.append(' ');
+                }
+
+                write.append(Ansi.RESET);
+                write.append(" \n");
+            }
+
+            for (int i = 0; i < 130; i++)
+                write.append(' ');
+            write.append(Ansi.RESET);
+            write.append('\n');
+
+            if (board.getWinner().equals(playerName)) {
+
+                //insert the title (WIN)
+                for (int i = 0; i < 7; i++) {
+                    write.append(change);
+                    for (int t = 0; t < 57; t++) {
+                        write.append(' ');
+                    }
+
+                    for (int j = 0; j < 15; j++) {
+                        if (YOU[i][j] == 0)
+                            write.append(' ');
+                        else
+                            write.append(Unicode.SQUARE);
+                    }
+
+                    for (int t = 0; t < 58; t++) {
+                        write.append(' ');
+                    }
+
+                    write.append(Ansi.RESET);
+                    write.append(" \n");
+                }
+
+                for (int i = 0; i < 130; i++)
+                    write.append(' ');
+                write.append(Ansi.RESET);
+                write.append('\n');
+
+            } else {
+                //insert the title (LOSE)
+                for (int i = 0; i < 7; i++) {
+                    write.append(change);
+                    for (int t = 0; t < 53; t++) {
+                        write.append(' ');
+                    }
+
+                    for (int j = 0; j < 23; j++) {
+                        if (YOU[i][j] == 0)
+                            write.append(' ');
+                        else
+                            write.append(Unicode.SQUARE);
+                    }
+
+                    for (int t = 0; t < 54; t++) {
+                        write.append(' ');
+                    }
+
+                    write.append(Ansi.RESET);
+                    write.append(" \n");
+                }
+
+                for (int i = 0; i < 130; i++)
+                    write.append(' ');
+                write.append(Ansi.RESET);
+                write.append('\n');
+            }
+            System.out.println(write.toString());
+            return;
+        }
+    }
+
+}

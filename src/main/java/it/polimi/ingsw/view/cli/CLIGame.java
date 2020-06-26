@@ -59,8 +59,7 @@ public class CLIGame {
                 out.boardMaker(localProxy);
             }
             if(localProxy.getStatus().equals(GameState.TERMINATOR))
-                return;
-
+                out.terminateGame(localProxy);
         }
     }
 
