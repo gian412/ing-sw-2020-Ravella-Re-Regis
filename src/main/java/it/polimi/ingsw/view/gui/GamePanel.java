@@ -21,7 +21,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends JPanel{
 	
 	private final Socket socket;
 	private final ReadProxyBoard reader;
@@ -62,12 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.actualBoard = firstBoard;
 		this.socket = socket;
 		reader = new ReadProxyBoard(this);
-		setUpUI();
-		appendMouseClickMapper();
-	}
 
-	@Override
-	public void run() {
 		try {
 			listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
 			outputStream = new ObjectOutputStream((socket.getOutputStream()));
@@ -77,7 +72,8 @@ public class GamePanel extends JPanel implements Runnable {
 
 		listener.addObserver(reader);
 		new Thread(listener).start();
-
+		setUpUI();
+		appendMouseClickMapper();
 		this.refreshView();
 		StaticFrame.refresh();
 	}
@@ -202,6 +198,8 @@ public class GamePanel extends JPanel implements Runnable {
 			gridBagConstraints.anchor = GridBagConstraints.PAGE_END;
 			this.add(powerLabel, gridBagConstraints);
 
-		} catch (IOException e) {}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

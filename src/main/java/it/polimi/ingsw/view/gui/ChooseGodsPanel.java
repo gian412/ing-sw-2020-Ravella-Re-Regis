@@ -255,7 +255,6 @@ public class ChooseGodsPanel extends JPanel {
         GamePanel gamePanel = new GamePanel(this.socket, firstBoard);
         StaticFrame.removePanel(this);
         StaticFrame.addPanel(gamePanel);
-        new Thread(gamePanel).start();
 
         StaticFrame.refresh();
     }
