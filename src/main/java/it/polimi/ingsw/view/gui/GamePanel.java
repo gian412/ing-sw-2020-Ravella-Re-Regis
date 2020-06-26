@@ -115,57 +115,56 @@ public class GamePanel extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Pair cell = BoardMaker.map(e.getX(), e.getY());
-				int workerIndex = (workersAdded == 0) ? 0 : 1;
 
-				// TODO remove this dialog
-				JOptionPane.showInputDialog("adding worker number " + workerIndex + " at " + cell.x + " " + cell.y);
+				if(StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
+					// TODO remove this dialog
+					JOptionPane.showInputDialog("adding worker at " + cell.x + " " + cell.y);
 
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(
-								cell,
-								CommandType.ADD_WORKER
-						),
-						workerIndex
-				);
-				workersAdded++;
+					PlayerCommand toSend = new PlayerCommand(
+							StaticFrame.getPlayerName(),
+							new Command(
+									cell,
+									CommandType.ADD_WORKER
+							),
+							0
+					);
+					workersAdded++;
 
-				try {
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				} catch(IOException x){
-					x.printStackTrace();
+					try {
+						outputStream.reset();
+						outputStream.writeObject(toSend);
+						outputStream.flush();
+					} catch (IOException x) {
+						x.printStackTrace();
+					}
+
+					/**
+					 *  procedure to verify if the player already added his 2 workers
+					 */
+					if(workersAdded == 2){
+						PlayerCommand changeTurn = new PlayerCommand(
+								StaticFrame.getPlayerName(),
+								new Command(
+										new Pair(0, 0),
+										CommandType.CHANGE_TURN
+								),
+								0
+						);
+
+						try {
+							outputStream.reset();
+							outputStream.writeObject(changeTurn);
+							outputStream.flush();
+						} catch(IOException x){
+							x.printStackTrace();
+						}
+					}
+
+				} else {
+					JOptionPane.showInputDialog("it is not your turn!");
 				}
-
-				checkChangeTurn();
 			}
 		});
-	}
-
-	/**
-	 * used in the "adding workers" phase, this method calls the change of turn when the current player
-	 * has added his quote of workers to the board. (this triggers a board update)
-	 *
-	 * @author Elia Ravella
-	 */
-	private void checkChangeTurn() {
-		if(workersAdded == 2){
-			PlayerCommand changeTurn = new PlayerCommand(
-					StaticFrame.getPlayerName(),
-					new Command(
-							new Pair(0, 0),
-							CommandType.CHANGE_TURN
-					),
-					0
-			);
-
-			try {
-				outputStream.writeObject(changeTurn);
-				outputStream.flush();
-			} catch(IOException x){
-				x.printStackTrace();
-			}
-		}
 	}
 
 	/**
