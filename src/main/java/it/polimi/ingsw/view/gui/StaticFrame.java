@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.utils.GodType;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class StaticFrame {
 
@@ -34,7 +35,7 @@ public class StaticFrame {
     }
 
     public static void addPanel(JPanel panel) {
-        mainFrame.add(panel);
+        mainFrame.add(panel, 0);
     }
 
     public static void removePanel(JPanel panel) {
