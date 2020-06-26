@@ -12,6 +12,8 @@ import it.polimi.ingsw.view.Observer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -25,6 +27,7 @@ public class BoardPanel extends JPanel{
 	
 	private final Socket socket;
 	private final ReadProxyBoard reader;
+	OptionPanel panel;
 	private BoardListener listener;
 	private ObjectOutputStream outputStream;
 	private BoardProxy actualBoard;
@@ -34,6 +37,23 @@ public class BoardPanel extends JPanel{
 	private final int cellLength = 137; // px
 	private final int interstitialWidth = 22; //px
 	private int workersAdded;
+
+	class OptionPanel extends JPanel {
+		public OptionPanel(){
+			super();
+			JButton button = new JButton("move");
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					panel.setVisible(false);
+				}
+			});
+			this.add(button);
+			this.add(new JButton("build"));
+			this.add(new JButton("force"));
+		}
+	}
+
 
 	/**
 	 * Inner class to observe the BoardListener object
@@ -64,6 +84,10 @@ public class BoardPanel extends JPanel{
 		this.socket = socket;
 		reader = new ReadProxyBoard(this);
 		this.outputStream = outputStream;
+
+		panel = new OptionPanel();
+		panel.setVisible(false);
+		this.add(panel);
 
 		listener.addObserver(reader);
 		appendMouseClickMapper();
@@ -163,7 +187,8 @@ public class BoardPanel extends JPanel{
 						}
 						break;
 					case PLAYING:
-
+						// for debugging
+						panel.setVisible(true);
 						break;
 				}
 			}
