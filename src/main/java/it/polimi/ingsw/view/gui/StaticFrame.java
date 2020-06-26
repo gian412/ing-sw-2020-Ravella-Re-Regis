@@ -35,7 +35,7 @@ public class StaticFrame {
     }
 
     public static void addPanel(JPanel panel) {
-        mainFrame.add(panel, 0);
+        mainFrame.add(panel);
     }
 
     public static void removePanel(JPanel panel) {

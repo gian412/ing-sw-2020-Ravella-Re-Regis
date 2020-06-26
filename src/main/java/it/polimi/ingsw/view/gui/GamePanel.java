@@ -31,11 +31,21 @@ public class GamePanel extends JPanel {
     public GamePanel(JPanel board){
         this.setLayout(new GridBagLayout());
 
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+        GridBagConstraints gridBagConstraints = setConstraints(0, 0, 1, 0.9);
         this.add(board, gridBagConstraints);
 
-        gridBagConstraints.anchor = GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints = setConstraints(0, 1, 1, 0.1);
         this.add(new powerPanel(StaticFrame.getGod()));
+    }
+
+    private GridBagConstraints setConstraints(int x, int y, double weightx, double weighty){
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.weightx = weightx;
+        gridBagConstraints.weighty = weighty;
+        gridBagConstraints.gridx = x;
+        gridBagConstraints.gridy = y;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+
+        return gridBagConstraints;
     }
 }
