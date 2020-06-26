@@ -17,10 +17,11 @@ public class GamePanel extends JPanel {
                 JLabel powerLabel;
                 try {
                     image = ImageIO.read(new File(PATH + god.getCapitalizedName() + "_power.png"))
-                            .getScaledInstance(300, 201, Image.SCALE_DEFAULT);
+                            .getScaledInstance(150, 100, Image.SCALE_DEFAULT);
                     powerLabel = new JLabel(new ImageIcon(image));
 
                     this.add(powerLabel);
+                    this.setSize(150, 100);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -29,12 +30,8 @@ public class GamePanel extends JPanel {
     }
 
     public GamePanel(JPanel board){
-        this.setLayout(new GridBagLayout());
-
-        GridBagConstraints gridBagConstraints = setConstraints(0, 0, 1, 0.9);
-        this.add(board, gridBagConstraints);
-
-        gridBagConstraints = setConstraints(0, 1, 1, 0.1);
+        this.setLayout(new GridLayout(0, 2));
+        this.add(board);
         this.add(new powerPanel(StaticFrame.getGod()));
     }
 

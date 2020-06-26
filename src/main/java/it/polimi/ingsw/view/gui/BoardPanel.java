@@ -66,7 +66,6 @@ public class BoardPanel extends JPanel{
 		this.outputStream = outputStream;
 
 		listener.addObserver(reader);
-		//setUpUI();
 		appendMouseClickMapper();
 		this.refreshView();
 		StaticFrame.refresh();
@@ -110,54 +109,62 @@ public class BoardPanel extends JPanel{
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Pair cell = BoardMaker.map(e.getX(), e.getY());
 
-				if(StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
-					// TODO remove this dialog
-					JOptionPane.showInputDialog("adding worker at " + cell.x + " " + cell.y);
+				switch (actualBoard.getStatus()) {
+					case ADDING_WORKER:
+						Pair cell = BoardMaker.map(e.getX(), e.getY());
 
-					PlayerCommand toSend = new PlayerCommand(
-							StaticFrame.getPlayerName(),
-							new Command(
-									cell,
-									CommandType.ADD_WORKER
-							),
-							0
-					);
-					workersAdded++;
+						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
+							// TODO remove this dialog
+							JOptionPane.showInputDialog("adding worker at " + cell.x + " " + cell.y);
 
-					try {
-						outputStream.reset();
-						outputStream.writeObject(toSend);
-						outputStream.flush();
-					} catch (IOException x) {
-						x.printStackTrace();
-					}
+							PlayerCommand toSend = new PlayerCommand(
+									StaticFrame.getPlayerName(),
+									new Command(
+											cell,
+											CommandType.ADD_WORKER
+									),
+									0
+							);
+							workersAdded++;
 
-					/**
-					 *  procedure to verify if the player already added his 2 workers
-					 */
-					if(workersAdded == 2){
-						PlayerCommand changeTurn = new PlayerCommand(
-								StaticFrame.getPlayerName(),
-								new Command(
-										new Pair(0, 0),
-										CommandType.CHANGE_TURN
-								),
-								0
-						);
+							try {
+								outputStream.reset();
+								outputStream.writeObject(toSend);
+								outputStream.flush();
+							} catch (IOException x) {
+								x.printStackTrace();
+							}
 
-						try {
-							outputStream.reset();
-							outputStream.writeObject(changeTurn);
-							outputStream.flush();
-						} catch(IOException x){
-							x.printStackTrace();
+							/**
+							 *  procedure to verify if the player already added his 2 workers
+							 */
+							if (workersAdded == 2) {
+								PlayerCommand changeTurn = new PlayerCommand(
+										StaticFrame.getPlayerName(),
+										new Command(
+												new Pair(0, 0),
+												CommandType.CHANGE_TURN
+										),
+										0
+								);
+
+								try {
+									outputStream.reset();
+									outputStream.writeObject(changeTurn);
+									outputStream.flush();
+								} catch (IOException x) {
+									x.printStackTrace();
+								}
+							}
+
+						} else {
+							JOptionPane.showInputDialog("it is not your turn!");
 						}
-					}
+						break;
+					case PLAYING:
 
-				} else {
-					JOptionPane.showInputDialog("it is not your turn!");
+						break;
 				}
 			}
 		});
@@ -174,7 +181,4 @@ public class BoardPanel extends JPanel{
 		this.repaint();
 	}
 
-	private void setUpUI() {
-
-	}
 }

@@ -255,10 +255,9 @@ public class ChooseGodsPanel extends JPanel {
 
         //load next panel
         BoardPanel boardPanel = new BoardPanel(this.socket, firstBoard, listener, outputStream);
-        GamePanel gamePanel = new GamePanel(boardPanel);
 
         StaticFrame.removePanel(this);
-        StaticFrame.addPanel(gamePanel);
+        StaticFrame.addPanel(boardPanel);
         StaticFrame.refresh();
     }
     
