@@ -250,12 +250,13 @@ public class ChooseGodsPanel extends JPanel {
      * @author Elia Ravella, Gianluca Regis
      */
     private void showBoard(BoardProxy firstBoard){
-    
+
+        listener.removeObserver(reader);
+
         //load next panel
         GamePanel gamePanel = new GamePanel(this.socket, firstBoard, listener, outputStream);
         StaticFrame.removePanel(this);
         StaticFrame.addPanel(gamePanel);
-
         StaticFrame.refresh();
     }
     
