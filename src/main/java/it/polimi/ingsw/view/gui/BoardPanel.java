@@ -27,7 +27,7 @@ public class BoardPanel extends JPanel{
 	
 	private final Socket socket;
 	private final ReadProxyBoard reader;
-	OptionPanel panel;
+	private OptionPanel optionPanel;
 	private BoardListener listener;
 	private ObjectOutputStream outputStream;
 	private BoardProxy actualBoard;
@@ -45,7 +45,7 @@ public class BoardPanel extends JPanel{
 			button.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					panel.setVisible(false);
+					optionPanel.setVisible(false);
 				}
 			});
 			this.add(button);
@@ -85,9 +85,9 @@ public class BoardPanel extends JPanel{
 		reader = new ReadProxyBoard(this);
 		this.outputStream = outputStream;
 
-		panel = new OptionPanel();
-		panel.setVisible(false);
-		this.add(panel);
+		optionPanel = new OptionPanel();
+		optionPanel.setVisible(false);
+		this.add(optionPanel);
 
 		listener.addObserver(reader);
 		appendMouseClickMapper();
@@ -188,7 +188,7 @@ public class BoardPanel extends JPanel{
 						break;
 					case PLAYING:
 						// for debugging
-						panel.setVisible(true);
+						optionPanel.setVisible(true);
 						break;
 				}
 			}
