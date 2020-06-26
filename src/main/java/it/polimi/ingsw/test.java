@@ -21,6 +21,8 @@ import java.util.Random;
 
 public class test {
     public static void main(String[] args) {
+
+        /*
         // setting up the GUI
         JFrame mainFrame = new JFrame("My Frame");
         JPanel panel = new JPanel(){
@@ -85,6 +87,8 @@ public class test {
         bp.addWorker("Player10", new Pair(0, 1));
         bp.addWorker("Player11", new Pair(0, 0));
 
-        return bp;
+        return bp;*/
+
+
     }
 }

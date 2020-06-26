@@ -12,6 +12,8 @@ import it.polimi.ingsw.view.Observer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -21,10 +23,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class GamePanel extends JPanel implements Runnable {
+public class BoardPanel extends JPanel{
 	
 	private final Socket socket;
 	private final ReadProxyBoard reader;
+	private OptionPanel optionPanel;
 	private BoardListener listener;
 	private ObjectOutputStream outputStream;
 	private BoardProxy actualBoard;
@@ -34,6 +37,23 @@ public class GamePanel extends JPanel implements Runnable {
 	private final int cellLength = 137; // px
 	private final int interstitialWidth = 22; //px
 	private int workersAdded;
+
+	class OptionPanel extends JPanel {
+		public OptionPanel(){
+			super();
+			JButton button = new JButton("move");
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					optionPanel.setVisible(false);
+				}
+			});
+			this.add(button);
+			this.add(new JButton("build"));
+			this.add(new JButton("force"));
+		}
+	}
+
 
 	/**
 	 * Inner class to observe the BoardListener object
@@ -57,27 +77,20 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
-	public GamePanel(Socket socket, BoardProxy firstBoard) {
+	public BoardPanel(Socket socket, BoardProxy firstBoard, BoardListener listener, ObjectOutputStream outputStream) {
 		workersAdded = 0;
+		this.listener = listener;
 		this.actualBoard = firstBoard;
 		this.socket = socket;
 		reader = new ReadProxyBoard(this);
-		setUpUI();
-		appendMouseClickMapper();
-	}
+		this.outputStream = outputStream;
 
-	@Override
-	public void run() {
-		try {
-			listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
-			outputStream = new ObjectOutputStream((socket.getOutputStream()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		optionPanel = new OptionPanel();
+		optionPanel.setVisible(false);
+		this.add(optionPanel);
 
 		listener.addObserver(reader);
-		new Thread(listener).start();
-
+		appendMouseClickMapper();
 		this.refreshView();
 		StaticFrame.refresh();
 	}
@@ -93,17 +106,14 @@ public class GamePanel extends JPanel implements Runnable {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		BufferedImage boardImg;
-		//BufferedImage powerImage;
 		try {
 			boardImg = ImageIO.read(new File(PATH + "_board.png"));
-			//powerImage = ImageIO.read(new File(PATH + "_power.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
 		}
 
 		g.drawImage(boardImg, 0, 0, boardImg.getWidth(), boardImg.getHeight(), this);
-		//g.drawImage(powerImage, 405, 815, powerImage.getWidth(), powerImage.getHeight(), this);
 		this.setSize(boardImg.getWidth(), boardImg.getHeight());
 
 		if (actualBoard != null) {
@@ -123,59 +133,66 @@ public class GamePanel extends JPanel implements Runnable {
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Pair cell = BoardMaker.map(e.getX(), e.getY());
-				int workerIndex = (workersAdded == 0) ? 0 : 1;
 
-				// TODO remove this dialog
-				JOptionPane.showInputDialog("adding worker number " + workerIndex + " at " + cell.x + " " + cell.y);
+				switch (actualBoard.getStatus()) {
+					case ADDING_WORKER:
+						Pair cell = BoardMaker.map(e.getX(), e.getY());
 
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(
-								cell,
-								CommandType.ADD_WORKER
-						),
-						workerIndex
-				);
-				workersAdded++;
+						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
+							// TODO remove this dialog
+							JOptionPane.showInputDialog("adding worker at " + cell.x + " " + cell.y);
 
-				// TODO: checking why outputStream is null here
-				try {
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				} catch(IOException x){
-					x.printStackTrace();
+							PlayerCommand toSend = new PlayerCommand(
+									StaticFrame.getPlayerName(),
+									new Command(
+											cell,
+											CommandType.ADD_WORKER
+									),
+									0
+							);
+							workersAdded++;
+
+							try {
+								outputStream.reset();
+								outputStream.writeObject(toSend);
+								outputStream.flush();
+							} catch (IOException x) {
+								x.printStackTrace();
+							}
+
+							/**
+							 *  procedure to verify if the player already added his 2 workers
+							 */
+							if (workersAdded == 2) {
+								PlayerCommand changeTurn = new PlayerCommand(
+										StaticFrame.getPlayerName(),
+										new Command(
+												new Pair(0, 0),
+												CommandType.CHANGE_TURN
+										),
+										0
+								);
+
+								try {
+									outputStream.reset();
+									outputStream.writeObject(changeTurn);
+									outputStream.flush();
+								} catch (IOException x) {
+									x.printStackTrace();
+								}
+							}
+
+						} else {
+							JOptionPane.showInputDialog("it is not your turn!");
+						}
+						break;
+					case PLAYING:
+						// for debugging
+						optionPanel.setVisible(true);
+						break;
 				}
-
-				checkChangeTurn();
 			}
 		});
-	}
-
-	/**
-	 * used in the "adding workers" phase, this method calls the change of turn when the current player
-	 * has added his quote of workers to the board. (this triggers a board update)
-	 *
-	 * @author Elia Ravella
-	 */
-	private void checkChangeTurn() {
-		if(workersAdded == 2){
-			PlayerCommand changeTurn = new PlayerCommand(
-					StaticFrame.getPlayerName(),
-					new Command(
-							new Pair(0, 0),
-							CommandType.CHANGE_TURN
-					),
-					0
-			);
-
-			try {
-				outputStream.writeObject(changeTurn);
-				outputStream.flush();
-			} catch(IOException x){
-				x.printStackTrace();
-			}
-		}
 	}
 
 	/**
@@ -189,19 +206,4 @@ public class GamePanel extends JPanel implements Runnable {
 		this.repaint();
 	}
 
-	private void setUpUI() {
-		Image image;
-		JLabel powerLabel;
-		try {
-			image = ImageIO.read(new File(PATH + "_power.png"))
-					.getScaledInstance(300, 201, Image.SCALE_DEFAULT);
-			powerLabel = new JLabel(new ImageIcon(image));
-
-			this.setLayout(new GridBagLayout());
-			GridBagConstraints gridBagConstraints = new GridBagConstraints();
-			gridBagConstraints.anchor = GridBagConstraints.PAGE_END;
-			this.add(powerLabel, gridBagConstraints);
-
-		} catch (IOException e) {}
-	}
 }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.utils.GodType;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class StaticFrame {
 

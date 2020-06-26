@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Height;
 import it.polimi.ingsw.model.Pair;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
