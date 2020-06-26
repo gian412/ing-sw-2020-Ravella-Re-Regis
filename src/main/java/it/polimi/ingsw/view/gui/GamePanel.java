@@ -57,22 +57,17 @@ public class GamePanel extends JPanel{
 		}
 	}
 
-	public GamePanel(Socket socket, BoardProxy firstBoard) {
+	public GamePanel(Socket socket, BoardProxy firstBoard, BoardListener listener, ObjectOutputStream outputStream) {
 		workersAdded = 0;
+		this.listener = listener;
 		this.actualBoard = firstBoard;
 		this.socket = socket;
 		reader = new ReadProxyBoard(this);
-
-		try {
-			listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
-			outputStream = new ObjectOutputStream((socket.getOutputStream()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.outputStream = outputStream;
 
 		listener.addObserver(reader);
-		new Thread(listener).start();
-		setUpUI();
+		//new Thread(listener).start();
+		//setUpUI();
 		appendMouseClickMapper();
 		this.refreshView();
 		StaticFrame.refresh();
@@ -135,7 +130,6 @@ public class GamePanel extends JPanel{
 				);
 				workersAdded++;
 
-				// TODO: checking why outputStream is null here
 				try {
 					outputStream.writeObject(toSend);
 					outputStream.flush();
