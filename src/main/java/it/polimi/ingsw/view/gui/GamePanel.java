@@ -62,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.actualBoard = firstBoard;
 		this.socket = socket;
 		reader = new ReadProxyBoard(this);
+		setUpUI();
 		appendMouseClickMapper();
 	}
 
@@ -92,17 +93,17 @@ public class GamePanel extends JPanel implements Runnable {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		BufferedImage boardImg;
-		BufferedImage powerImage;
+		//BufferedImage powerImage;
 		try {
 			boardImg = ImageIO.read(new File(PATH + "_board.png"));
-			powerImage = ImageIO.read(new File(PATH + "_power.png"));
+			//powerImage = ImageIO.read(new File(PATH + "_power.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
 		}
 
 		g.drawImage(boardImg, 0, 0, boardImg.getWidth(), boardImg.getHeight(), this);
-		g.drawImage(powerImage, 405, 815, powerImage.getWidth(), powerImage.getHeight(), this);
+		//g.drawImage(powerImage, 405, 815, powerImage.getWidth(), powerImage.getHeight(), this);
 		this.setSize(boardImg.getWidth(), boardImg.getHeight());
 
 		if (actualBoard != null) {
@@ -186,5 +187,21 @@ public class GamePanel extends JPanel implements Runnable {
 		this.invalidate();
 		this.validate();
 		this.repaint();
+	}
+
+	private void setUpUI() {
+		Image image;
+		JLabel powerLabel;
+		try {
+			image = ImageIO.read(new File(PATH + "_power.png"))
+					.getScaledInstance(300, 201, Image.SCALE_DEFAULT);
+			powerLabel = new JLabel(new ImageIcon(image));
+
+			this.setLayout(new GridBagLayout());
+			GridBagConstraints gridBagConstraints = new GridBagConstraints();
+			gridBagConstraints.anchor = GridBagConstraints.PAGE_END;
+			this.add(powerLabel, gridBagConstraints);
+
+		} catch (IOException e) {}
 	}
 }
