@@ -3,7 +3,6 @@ package it.polimi.ingsw.view.gui;
 import it.polimi.ingsw.utils.GodType;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class StaticFrame {
 
@@ -28,10 +27,6 @@ public class StaticFrame {
 
     public static void setVisible(boolean visible) {
         mainFrame.setVisible(visible);
-    }
-
-    public static JLayeredPane getLayeredPane() {
-        return mainFrame.getLayeredPane();
     }
 
     public static void addPanel(JPanel panel) {
@@ -64,5 +59,15 @@ public class StaticFrame {
         mainFrame.validate();
         mainFrame.repaint();
         mainFrame.setVisible(true);
+    }
+
+    /**
+     * Check if the God can force another worker
+     * @return true if he can, false otherwise
+     *
+     * @author Gianluca Regis
+     */
+    public static boolean godCanForce() {
+        return god == GodType.CHARON;
     }
 }
