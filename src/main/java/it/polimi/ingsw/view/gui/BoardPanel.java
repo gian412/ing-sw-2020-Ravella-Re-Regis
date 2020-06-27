@@ -336,10 +336,10 @@ public class BoardPanel extends JPanel{
 						refreshView();
 						break;
 					case TERMINATOR:
-						if (message.getWinner().equals("")) {
+						if (message.getWinner().equals("Unexpected Game Over")) {
 							JOptionPane.showMessageDialog(
 									StaticFrame.mainFrame,
-									"Game over because another client closed",
+									"Game over because another client closed the game",
 									"Client disconnected",
 									JOptionPane.ERROR_MESSAGE
 							);
