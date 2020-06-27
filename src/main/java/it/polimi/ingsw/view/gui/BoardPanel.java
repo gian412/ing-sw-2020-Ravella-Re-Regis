@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Map;
 
 public class BoardPanel extends JPanel{
 	
@@ -104,7 +105,7 @@ public class BoardPanel extends JPanel{
 			actualBoard = message;
 			switch (actualBoard.getStatus()) {
 				case ADDING_WORKER:
-					if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+					if (message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && !message.getWorkers().containsKey(StaticFrame.getPlayerName() + "0")) {
 						JOptionPane.showMessageDialog(parentComponent, "Add your workers!");
 					}
 					refreshView();
@@ -117,7 +118,9 @@ public class BoardPanel extends JPanel{
 					break;
 			}
 		}
-	}
+
+
+    }
 
 	public BoardPanel(Socket socket, BoardProxy firstBoard, BoardListener listener, ObjectOutputStream outputStream) {
 		workersAdded = 0;
