@@ -57,9 +57,9 @@ public class CLIGame {
                 out.boardMaker(localProxy);
             if(localProxy.getStatus().equals(GameState.PLAYING)){
                 out.boardMaker(localProxy);
-                System.out.println("ilvshbkshfbveuhfvhn");
             }
-
+            if(localProxy.getStatus().equals(GameState.TERMINATOR))
+                out.terminateGame(localProxy);
         }
     }
 
@@ -81,6 +81,7 @@ public class CLIGame {
 
         while (true) {
             System.in.read();
+
             if (displayer.localProxy != null){
                 if (displayer.getLocalProxy().getTurnPlayer().equals(playerName)){
                     switch (displayer.getLocalProxy().getStatus()){
@@ -125,7 +126,10 @@ public class CLIGame {
                                 }
 
                                 submitCommand(playerName, new Pair(0,0), CommandType.CHOOSE_GOD, 0, toGod(input));
+
+
                                 remoteChangeTurn();
+                                System.out.println(displayer.getLocalProxy().getStatus().toString());
                                 break;
                             }
 
@@ -162,9 +166,6 @@ public class CLIGame {
                             }while(checkWorker(column, row));
 
                             submitCommand(playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
-
-                            System.out.print("Number of workers: " + displayer.getLocalProxy().getWorkers().size());
-
                             remoteChangeTurn();
                             break;
 
@@ -180,11 +181,10 @@ public class CLIGame {
                                     "ntreanaetbfztr" +
                                     "nrtnrnarngtrntg");
                             break;
-
-
-                        case TERMINATOR:
-                            break;
                     }
+                }
+                if(displayer.getLocalProxy().getStatus().toString().equals("TERMINATOR")){
+                    return;
                 }
             }
 
@@ -378,7 +378,7 @@ public class CLIGame {
 
             for (String x : GODS) {
                 if (input.equals(x.toUpperCase()) && !selectedGods.toString().contains(x.toUpperCase())) {
-                    return x;
+                    return x + " ";
                 }
             }
 
