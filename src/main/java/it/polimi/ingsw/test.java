@@ -22,7 +22,7 @@ import java.util.Random;
 public class test {
     public static void main(String[] args) {
 
-        /*
+
         // setting up the GUI
         JFrame mainFrame = new JFrame("My Frame");
         JPanel panel = new JPanel(){
@@ -63,8 +63,9 @@ public class test {
 
     public static BoardProxy genBoard(){
         // generating a random board
+
         BoardProxy bp = new BoardProxy();
-        Random gen = new Random();
+        /*Random gen = new Random();
 
         for(int row = 0; row < 5; row++)
             for(int col = 0; col < 5; col++)
@@ -78,6 +79,13 @@ public class test {
                     bp.addHeight(row, col, Height.THIRD_FLOOR);
                 else
                     bp.addHeight(row, col, Height.DOME);
+        */
+        for(int row = 0; row < 5; row++)
+            for(int col = 0; col < 5; col++)
+                if(row == 3 && col == 4)
+                    bp.addHeight(row, col, Height.THIRD_FLOOR);
+                else
+                    bp.addHeight(row, col, Height.GROUND);
 
         HashMap<String, String> godsMap = new HashMap();
         godsMap.put("Player1", "Athena");
@@ -87,7 +95,7 @@ public class test {
         bp.addWorker("Player10", new Pair(0, 1));
         bp.addWorker("Player11", new Pair(0, 0));
 
-        return bp;*/
+        return bp;
 
 
     }
