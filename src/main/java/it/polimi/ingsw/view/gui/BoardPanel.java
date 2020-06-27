@@ -102,9 +102,16 @@ public class BoardPanel extends JPanel{
 		@Override
 		public void update(BoardProxy message) {
 			actualBoard = message;
-			if(message.getStatus().equals(GameState.ADDING_WORKER) && message.getTurnPlayer().equals(StaticFrame.getPlayerName()))
-				JOptionPane.showConfirmDialog(parentComponent, "Add your workers!");
-			refreshView();
+			switch (actualBoard.getStatus()) {
+				case ADDING_WORKER:
+					if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+						JOptionPane.showConfirmDialog(parentComponent, "Add your workers!");
+					}
+					refreshView();
+					break;
+				case PLAYING:
+					break;
+			}
 		}
 	}
 
