@@ -68,13 +68,6 @@ public class StaticFrame {
      * @author Gianluca Regis
      */
     public static boolean godCanForce() {
-        switch (god) {
-            case APOLLO:
-            case MINOTAUR:
-            case CHARON:
-                return true;
-            default:
-                return false;
-        }
+        return god == GodType.CHARON;
     }
 }
