@@ -182,9 +182,11 @@ public class BoardPanel extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
+				Pair cell;
+
 				switch (actualBoard.getStatus()) {
 					case ADDING_WORKER:
-						Pair cell = BoardMaker.map(e.getX(), e.getY());
+						cell = BoardMaker.map(e.getX(), e.getY());
 
 						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
 							// TODO remove this dialog
@@ -230,13 +232,25 @@ public class BoardPanel extends JPanel{
 								}
 							}
 
-						} else {
+						} else { // TODO: remove after test in order to simulate inactivity
 							JOptionPane.showMessageDialog( StaticFrame.mainFrame, "it is not your turn!");
 						}
 						break;
 					case PLAYING:
-						// for debugging
-						optionPanel.setVisible(true);
+						cell = BoardMaker.map(e.getX(), e.getY());
+
+						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
+							// TODO remove this dialog
+							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "searching worker at " + cell.x + " " + cell.y);
+
+							// Check if there is a worker in the selected cell
+							if (checkWorkerPresence(cell)) {
+								optionPanel.setVisible(true);
+							}
+						} else { // TODO: remove after test in order to simulate inactivity
+							JOptionPane.showMessageDialog( StaticFrame.mainFrame, "it is not your turn!");
+						}
+
 						break;
 				}
 			}
@@ -252,6 +266,12 @@ public class BoardPanel extends JPanel{
 		this.invalidate();
 		this.validate();
 		this.repaint();
+	}
+
+	private boolean checkWorkerPresence(Pair cell) {
+		// TODO: implement
+		BoardProxy board = actualBoard;
+		return true;
 	}
 
 }
