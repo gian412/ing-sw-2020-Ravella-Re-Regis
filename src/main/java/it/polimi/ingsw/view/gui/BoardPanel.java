@@ -33,7 +33,7 @@ public class BoardPanel extends JPanel{
 	private DirectionsPanel directionsPanel;
 
 	private final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
-	private final int firstOffset = 11; // px
+	private final int firstOffset = 19; // px
 	private final int cellLength = 137; // px
 	private final int interstitialWidth = 22; //px
 	private int workersAdded;

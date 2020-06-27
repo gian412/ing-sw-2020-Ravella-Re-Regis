@@ -58,14 +58,14 @@ public class test {
     }
 
     public static void paintTowers(Graphics g, Component obs){
-        BoardMaker.drawElements(g, genBoard(), 34, 134, 24, obs);
+        BoardMaker.drawElements(g, genBoard(), 19, 137, 22, obs);
     }
 
     public static BoardProxy genBoard(){
         // generating a random board
 
         BoardProxy bp = new BoardProxy();
-        /*Random gen = new Random();
+        Random gen = new Random();
 
         for(int row = 0; row < 5; row++)
             for(int col = 0; col < 5; col++)
@@ -79,13 +79,7 @@ public class test {
                     bp.addHeight(row, col, Height.THIRD_FLOOR);
                 else
                     bp.addHeight(row, col, Height.DOME);
-        */
-        for(int row = 0; row < 5; row++)
-            for(int col = 0; col < 5; col++)
-                if(row == 3 && col == 4)
-                    bp.addHeight(row, col, Height.THIRD_FLOOR);
-                else
-                    bp.addHeight(row, col, Height.GROUND);
+
 
         HashMap<String, String> godsMap = new HashMap();
         godsMap.put("Player1", "Athena");
