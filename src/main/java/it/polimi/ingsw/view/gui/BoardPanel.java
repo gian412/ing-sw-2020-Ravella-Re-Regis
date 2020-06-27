@@ -105,11 +105,15 @@ public class BoardPanel extends JPanel{
 			switch (actualBoard.getStatus()) {
 				case ADDING_WORKER:
 					if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
-						JOptionPane.showConfirmDialog(parentComponent, "Add your workers!");
+						JOptionPane.showMessageDialog(parentComponent, "Add your workers!");
 					}
 					refreshView();
 					break;
 				case PLAYING:
+					if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+						JOptionPane.showMessageDialog(parentComponent, "Select the worker that you want to play with in this turn");
+					}
+					refreshView();
 					break;
 			}
 		}
@@ -172,7 +176,7 @@ public class BoardPanel extends JPanel{
 	private void appendMouseClickMapper() {
 		// for the first player:
 		if(actualBoard.getStatus().equals(GameState.ADDING_WORKER) && actualBoard.getTurnPlayer().equals(StaticFrame.getPlayerName()))
-			JOptionPane.showConfirmDialog(this, "Add your workers!");
+			JOptionPane.showMessageDialog(this, "Add your workers!");
 
 		this.addMouseListener(new MouseAdapter() {
 			@Override
@@ -184,7 +188,7 @@ public class BoardPanel extends JPanel{
 
 						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
 							// TODO remove this dialog
-							JOptionPane.showInputDialog("adding worker at " + cell.x + " " + cell.y);
+							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "adding worker at " + cell.x + " " + cell.y);
 
 							PlayerCommand toSend = new PlayerCommand(
 									StaticFrame.getPlayerName(),
@@ -227,7 +231,7 @@ public class BoardPanel extends JPanel{
 							}
 
 						} else {
-							JOptionPane.showInputDialog("it is not your turn!");
+							JOptionPane.showMessageDialog( StaticFrame.mainFrame, "it is not your turn!");
 						}
 						break;
 					case PLAYING:
