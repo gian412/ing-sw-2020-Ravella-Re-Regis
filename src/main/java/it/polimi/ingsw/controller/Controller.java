@@ -24,7 +24,7 @@ public class Controller implements Observer<PlayerCommand> {
 
     /**actually modifies the mode
      *
-     * this function passes the "command" from the user to the divinity, that then modifie the Board accordingly
+     * this function passes the "command" from the user to the divinity, that then modifies the Board accordingly
      *
      *
      * @author Elia Ravella
