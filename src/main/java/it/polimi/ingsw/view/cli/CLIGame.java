@@ -81,6 +81,7 @@ public class CLIGame {
 
         while (true) {
             System.in.read();
+
             if (displayer.localProxy != null){
                 if (displayer.getLocalProxy().getTurnPlayer().equals(playerName)){
                     switch (displayer.getLocalProxy().getStatus()){
@@ -128,7 +129,6 @@ public class CLIGame {
 
 
                                 remoteChangeTurn();
-                                System.out.println("ijdidpfjpiajds");
                                 System.out.println(displayer.getLocalProxy().getStatus().toString());
                                 break;
                             }
@@ -181,11 +181,10 @@ public class CLIGame {
                                     "ntreanaetbfztr" +
                                     "nrtnrnarngtrntg");
                             break;
-
-
-                        case TERMINATOR:
-                            return;
                     }
+                }
+                if(displayer.getLocalProxy().getStatus().toString().equals("TERMINATOR")){
+                    return;
                 }
             }
 

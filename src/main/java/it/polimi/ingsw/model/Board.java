@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.IllegalAddException;
 import it.polimi.ingsw.exceptions.IllegalCellException;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
+import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.RemoteView;
 
@@ -242,6 +243,7 @@ public class Board {
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
                     hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner().getNAME());
+                    proxy.setStatus(GameState.TERMINATOR);
                     proxy.updateProxy();
                     return true;
                 } else{
@@ -252,6 +254,7 @@ public class Board {
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || countCompleteTower()){
                     hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner().getNAME());
+                    proxy.setStatus(GameState.TERMINATOR);
                     proxy.updateProxy();
                     return true;
                 } else {
@@ -261,6 +264,7 @@ public class Board {
                 if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
                     hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner().getNAME());
+                    proxy.setStatus(GameState.TERMINATOR);
                     proxy.updateProxy();
                     return true;
                 } else{
@@ -272,6 +276,7 @@ public class Board {
                 if (countCompleteTower()){
                     hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner().getNAME());
+                    proxy.setStatus(GameState.TERMINATOR);
                     proxy.updateProxy();
                     return true;
                 } else {
@@ -312,10 +317,11 @@ public class Board {
 
     /**ends the game
      *
-     * @authors Ravella Elia
+     * @author Ravella Elia
      */
     public void endGame(){
         proxy.setWinner("Unexpected Game Over");
+        proxy.setStatus(GameState.TERMINATOR);
         this.updateProxyBoard();
     }
 
