@@ -12,8 +12,6 @@ import it.polimi.ingsw.view.Observer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -21,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Map;
 
 public class BoardPanel extends JPanel{
 	
@@ -338,6 +335,30 @@ public class BoardPanel extends JPanel{
 						}
 						refreshView();
 						break;
+					case TERMINATOR:
+						if (message.getWinner().equals("")) {
+							JOptionPane.showMessageDialog(
+									StaticFrame.mainFrame,
+									"Game over because another client closed",
+									"Client disconnected",
+									JOptionPane.ERROR_MESSAGE
+							);
+						} else if (message.getWinner().equals(StaticFrame.getPlayerName())){
+							JOptionPane.showMessageDialog(
+									StaticFrame.mainFrame,
+									"Congrats! You win!",
+									"You win",
+									JOptionPane.INFORMATION_MESSAGE
+							);
+						} else {
+							JOptionPane.showMessageDialog(
+									StaticFrame.mainFrame,
+									"You lose! " + "The winner is " + message.getWinner() + "!",
+									"You lose",
+									JOptionPane.INFORMATION_MESSAGE
+							);
+						}
+						showLogin();
 				}
 			}else{
 				JOptionPane.showMessageDialog(StaticFrame.mainFrame, message.getIllegalMoveString());
@@ -510,6 +531,27 @@ public class BoardPanel extends JPanel{
 			return true;
 		}
 		else return  false;
+	}
+
+	private void showLogin() {
+
+		listener.removeObserver(reader);
+
+		//load next panel
+		LoginPanel loginPanel = new LoginPanel();
+
+		try {
+
+			outputStream.close();
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		StaticFrame.removePanel(this);
+		StaticFrame.addPanel(loginPanel);
+		StaticFrame.refresh();
+
 	}
 
 }
