@@ -350,6 +350,13 @@ public class BoardPanel extends JPanel{
 									"You win",
 									JOptionPane.INFORMATION_MESSAGE
 							);
+						} else if (message.getWinner().equals("Server down")) {
+							JOptionPane.showMessageDialog(
+									StaticFrame.mainFrame,
+									"Game over because the server went down",
+									"Server down",
+									JOptionPane.ERROR_MESSAGE
+							);
 						} else {
 							JOptionPane.showMessageDialog(
 									StaticFrame.mainFrame,
