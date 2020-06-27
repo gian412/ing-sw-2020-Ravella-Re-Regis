@@ -19,7 +19,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -28,6 +27,7 @@ public class BoardPanel extends JPanel{
 	private final Socket socket;
 	private final ReadProxyBoard reader;
 	private OptionPanel optionPanel;
+	private DirectionsPanel directionsPanel;
 	private BoardListener listener;
 	private ObjectOutputStream outputStream;
 	private BoardProxy actualBoard;
@@ -38,22 +38,53 @@ public class BoardPanel extends JPanel{
 	private final int interstitialWidth = 22; //px
 	private int workersAdded;
 
+	/**
+	 * Inner class that represents the pop-up panel with the available actions
+	 *
+	 * @author Elia Ravella, Gianluca Regis
+	 */
 	class OptionPanel extends JPanel {
-		public OptionPanel(){
+		public OptionPanel(boolean canForce){
 			super();
-			JButton button = new JButton("move");
-			button.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					optionPanel.setVisible(false);
-				}
+
+			// Initialize and add move button
+			JButton moveButton = new JButton("Move");
+			moveButton.addActionListener(e -> {
+				optionPanel.setVisible(false);
+				directionsPanel.setVisible(true);
 			});
-			this.add(button);
-			this.add(new JButton("build"));
-			this.add(new JButton("force"));
+			this.add(moveButton);
+
+			// Initialize and add build panel
+			JButton buildButton = new JButton("Build");
+			buildButton.addActionListener(e -> {
+				optionPanel.setVisible(false);
+				directionsPanel.setVisible(true);
+			});
+			this.add(buildButton);
+
+			if (canForce) { // If player's God have the power to force...
+				// ... initialize and add force panel
+				JButton forceButton = new JButton("Force");
+				forceButton.addActionListener(e -> {
+					optionPanel.setVisible(false);
+					directionsPanel.setVisible(true);
+				});
+				this.add(forceButton);
+			}
 		}
 	}
 
+	/**
+	 * Inner class that represents the pop-up panel with the available directions for the chosen action
+	 *
+	 * @author Elia Ravella, Gianluca Regis
+	 */
+	class DirectionsPanel extends JPanel {
+		public DirectionsPanel() {
+			super();
+		}
+	}
 
 	/**
 	 * Inner class to observe the BoardListener object
@@ -85,9 +116,15 @@ public class BoardPanel extends JPanel{
 		reader = new ReadProxyBoard(this);
 		this.outputStream = outputStream;
 
-		optionPanel = new OptionPanel();
+		// Initialize option panel and add it to the board panel
+		optionPanel = new OptionPanel(StaticFrame.godCanForce());
 		optionPanel.setVisible(false);
 		this.add(optionPanel);
+
+		// Initialize directions panel and add it to the board panel
+		directionsPanel = new DirectionsPanel();
+		directionsPanel.setVisible(false);
+		this.add(directionsPanel);
 
 		listener.addObserver(reader);
 		appendMouseClickMapper();
