@@ -27,11 +27,13 @@ public class BoardPanel extends JPanel{
 	
 	private final Socket socket;
 	private final ReadProxyBoard reader;
-	private OptionPanel optionPanel;
-	private DirectionsPanel directionsPanel;
 	private BoardListener listener;
 	private ObjectOutputStream outputStream;
+
 	private BoardProxy actualBoard;
+
+	private OptionPanel optionPanel;
+	private DirectionsPanel directionsPanel;
 
 	private final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
 	private final int firstOffset = 11; // px
@@ -48,26 +50,53 @@ public class BoardPanel extends JPanel{
 		public OptionPanel(boolean canForce){
 			super();
 
+			// Initialize and add a "end turn" button
+			JButton endTurnButton = new JButton("End Turn");
+			endTurnButton.addActionListener(e -> {
+				PlayerCommand toSend = new PlayerCommand(
+					StaticFrame.getPlayerName(),
+					new Command(new Pair(0, 0), CommandType.CHANGE_TURN),
+					0
+				);
+
+				try {
+					outputStream.reset();
+					outputStream.writeObject(toSend);
+					outputStream.flush();
+				}catch (IOException x){
+					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+				}
+
+				optionPanel.setVisible(false);
+
+			});
+			this.add(endTurnButton);
+
+
 			// Initialize and add move button
 			JButton moveButton = new JButton("Move");
 			moveButton.addActionListener(e -> {
+				directionsPanel.setCmd(CommandType.MOVE);
 				optionPanel.setVisible(false);
 				directionsPanel.setVisible(true);
 			});
 			this.add(moveButton);
 
-			// Initialize and add build panel
+			// Initialize and add build button
 			JButton buildButton = new JButton("Build");
 			buildButton.addActionListener(e -> {
+				directionsPanel.setCmd(CommandType.BUILD);
 				optionPanel.setVisible(false);
 				directionsPanel.setVisible(true);
 			});
 			this.add(buildButton);
 
-			if (canForce) { // If player's God have the power to force...
-				// ... initialize and add force panel
+			if (canForce) {
+				// If player's God have the power to force...
+				// ... initialize and add force button
 				JButton forceButton = new JButton("Force");
 				forceButton.addActionListener(e -> {
+					directionsPanel.setCmd(CommandType.FORCE);
 					optionPanel.setVisible(false);
 					directionsPanel.setVisible(true);
 				});
@@ -82,8 +111,116 @@ public class BoardPanel extends JPanel{
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	class DirectionsPanel extends JPanel {
+		private int workerIndex;
+		private Pair workerCell;
+		private CommandType cmd;
+
+		/**
+		 * builds the panel that shows the possible directions for the selected move
+		 * all the buttons have a dedicated actionListener that "puts together" the command
+		 * and pushes it through the outputstream
+		 */
 		public DirectionsPanel() {
 			super();
+			workerCell = new Pair(0, 0);
+
+			JButton btnUp = new JButton("UP"),
+					btnRight = new JButton("RIGHT"),
+					btnDown = new JButton("DOWN"),
+					btnLeft = new JButton("LEFT");
+
+			btnUp.addActionListener(e -> {
+				Pair destination = new Pair(workerCell.x, workerCell.y + 1);
+				PlayerCommand toSend = new PlayerCommand(
+					StaticFrame.getPlayerName(),
+					new Command(destination, cmd),
+					workerIndex
+				);
+
+				try {
+					outputStream.reset();
+					outputStream.writeObject(toSend);
+					outputStream.flush();
+				}catch (IOException x){
+					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+				}
+
+				directionsPanel.setVisible(false);
+			});
+
+			btnRight.addActionListener(e -> {
+				Pair destination = new Pair(workerCell.x + 1, workerCell.y);
+				PlayerCommand toSend = new PlayerCommand(
+						StaticFrame.getPlayerName(),
+						new Command(destination, cmd),
+						workerIndex
+				);
+
+				try {
+					outputStream.reset();
+					outputStream.writeObject(toSend);
+					outputStream.flush();
+				}catch (IOException x){
+					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+				}
+
+				directionsPanel.setVisible(false);
+			});
+
+			btnDown.addActionListener(e -> {
+				Pair destination = new Pair(workerCell.x, workerCell.y - 1);
+				PlayerCommand toSend = new PlayerCommand(
+						StaticFrame.getPlayerName(),
+						new Command(destination, cmd),
+						workerIndex
+				);
+
+				try {
+					outputStream.reset();
+					outputStream.writeObject(toSend);
+					outputStream.flush();
+				}catch (IOException x){
+					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+				}
+
+				directionsPanel.setVisible(false);
+			});
+
+			btnLeft.addActionListener(e -> {
+				Pair destination = new Pair(workerCell.x - 1, workerCell.y);
+				PlayerCommand toSend = new PlayerCommand(
+						StaticFrame.getPlayerName(),
+						new Command(destination, cmd),
+						workerIndex
+				);
+
+				try {
+					outputStream.reset();
+					outputStream.writeObject(toSend);
+					outputStream.flush();
+				}catch (IOException x){
+					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+				}
+
+				directionsPanel.setVisible(false);
+			});
+
+			this.add(btnUp);
+			this.add(btnRight);
+			this.add(btnDown);
+			this.add(btnLeft);
+		}
+
+		public void setWorkerIndex(int workerIndex) {
+			this.workerIndex = workerIndex;
+		}
+
+		public void setWorkerCell(Pair workerCell) {
+			this.workerCell = workerCell;
+		}
+
+		public void setCmd(CommandType cmd) {
+			this.cmd = cmd;
 		}
 	}
 
@@ -103,23 +240,26 @@ public class BoardPanel extends JPanel{
 		@Override
 		public void update(BoardProxy message) {
 			actualBoard = message;
-			switch (actualBoard.getStatus()) {
-				case ADDING_WORKER:
-					if (message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && !message.getWorkers().containsKey(StaticFrame.getPlayerName() + "0")) {
-						JOptionPane.showMessageDialog(parentComponent, "Add your workers!");
-					}
-					refreshView();
-					break;
-				case PLAYING:
-					if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
-						JOptionPane.showMessageDialog(parentComponent, "Select the worker that you want to play with in this turn");
-					}
-					refreshView();
-					break;
+			if(message.getIllegalMoveString().equals("")) {
+				switch (actualBoard.getStatus()) {
+					case ADDING_WORKER:
+						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && !message.getWorkers().containsKey(StaticFrame.getPlayerName() + "0")) {
+							JOptionPane.showMessageDialog(parentComponent, "Add your workers!");
+						}
+						refreshView();
+						break;
+					case PLAYING:
+						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+							JOptionPane.showMessageDialog(parentComponent, "Select the worker that you want to play with in this turn");
+						}
+						refreshView();
+						break;
+				}
+			}else{
+				JOptionPane.showMessageDialog(StaticFrame.mainFrame, message.getIllegalMoveString());
+				refreshView();
 			}
 		}
-
-
     }
 
 	public BoardPanel(Socket socket, BoardProxy firstBoard, BoardListener listener, ObjectOutputStream outputStream) {
@@ -177,16 +317,15 @@ public class BoardPanel extends JPanel{
 	 * the click on the image to a click on the actualboard's grid of cells
 	 */
 	private void appendMouseClickMapper() {
-		// for the first player:
+		// the first board is not received directly from the model
+		// it's passed from the previous panel, so "it's already there"
 		if(actualBoard.getStatus().equals(GameState.ADDING_WORKER) && actualBoard.getTurnPlayer().equals(StaticFrame.getPlayerName()))
 			JOptionPane.showMessageDialog(this, "Add your workers!");
 
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				Pair cell;
-
 				switch (actualBoard.getStatus()) {
 					case ADDING_WORKER:
 						cell = BoardMaker.map(e.getX(), e.getY());
@@ -235,7 +374,8 @@ public class BoardPanel extends JPanel{
 								}
 							}
 
-						} else { // TODO: remove after test in order to simulate inactivity
+						} else {
+							// TODO: remove after test in order to simulate inactivity
 							JOptionPane.showMessageDialog( StaticFrame.mainFrame, "it is not your turn!");
 						}
 						break;
@@ -243,9 +383,6 @@ public class BoardPanel extends JPanel{
 						cell = BoardMaker.map(e.getX(), e.getY());
 
 						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
-							// TODO remove this dialog
-							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "searching worker at " + cell.x + " " + cell.y);
-
 							// Check if there is a worker in the selected cell
 							if (checkWorkerPresence(cell)) {
 								optionPanel.setVisible(true);
@@ -271,10 +408,24 @@ public class BoardPanel extends JPanel{
 		this.repaint();
 	}
 
+	/**
+	 * given a cell to check, verify if there's a worker on it and sets the optionPanel accordingly
+	 * @param cell the cell to be checked
+	 * @return true/false
+	 * @author Elia Ravella, Gianluca Regis
+	 */
 	private boolean checkWorkerPresence(Pair cell) {
-		// TODO: implement
-		BoardProxy board = actualBoard;
-		return true;
+		if(actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0").equals(cell)){
+			directionsPanel.setWorkerIndex(0);
+			directionsPanel.setWorkerCell(cell);
+			return true;
+		}
+		else if(actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1").equals(cell)){
+			directionsPanel.setWorkerIndex(1);
+			directionsPanel.setWorkerCell(cell);
+			return true;
+		}
+		else return  false;
 	}
 
 }
