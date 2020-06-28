@@ -111,6 +111,8 @@ public class BoardPanel extends JPanel{
 		private int workerIndex;
 		private Pair workerCell;
 		private CommandType cmd;
+		private static final int IMAGE_BASE_WIDTH = 150;
+		private static final int IMAGE_BASE_HEIGHT = 50;
 
 		/**
 		 * builds the panel that shows the possible directions for the selected move
@@ -121,15 +123,36 @@ public class BoardPanel extends JPanel{
 			super();
 			workerCell = new Pair(0, 0);
 
-			JButton btnNorth = new JButton("NORTH"),
-					btnEast = new JButton("EAST"),
-					btnSouth = new JButton("SOUTH"),
-					btnWest = new JButton("WEST"),
+			// Initialize components
+			JButton btnNorthWest = new JButton("NORTH-WEST"),
+					btnNorth = new JButton("NORTH"),
 					btnNorthEast = new JButton("NORTH-EAST"),
-					btnSouthEast = new JButton("SOUTH-EAST"),
+					btnWest = new JButton("WEST"),
+					btnPower,
+					btnEast = new JButton("EAST"),
 					btnSouthWest = new JButton("SOUTH-WEST"),
-					btnNorthWest = new JButton("NORTH-WEST");
+					btnSouth = new JButton("SOUTH"),
+					btnSouthEast = new JButton("SOUTH-EAST");
 
+			// Add action listeners
+			btnNorthWest.addActionListener(e -> {
+				Pair destination = new Pair(workerCell.x - 1, workerCell.y - 1);
+				PlayerCommand toSend = new PlayerCommand(
+						StaticFrame.getPlayerName(),
+						new Command(destination, cmd),
+						workerIndex
+				);
+
+				try {
+					outputStream.reset();
+					outputStream.writeObject(toSend);
+					outputStream.flush();
+				}catch (IOException x){
+					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+				}
+
+				directionsPanel.setVisible(false);
+			});
 			btnNorth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y - 1);
 				PlayerCommand toSend = new PlayerCommand(
@@ -148,64 +171,6 @@ public class BoardPanel extends JPanel{
 
 				directionsPanel.setVisible(false);
 			});
-
-			btnEast.addActionListener(e -> {
-				Pair destination = new Pair(workerCell.x + 1, workerCell.y);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
-				directionsPanel.setVisible(false);
-			});
-
-			btnSouth.addActionListener(e -> {
-				Pair destination = new Pair(workerCell.x, workerCell.y + 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
-				directionsPanel.setVisible(false);
-			});
-
-			btnWest.addActionListener(e -> {
-				Pair destination = new Pair(workerCell.x - 1, workerCell.y);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
-				directionsPanel.setVisible(false);
-			});
-
 			btnNorthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y - 1);
 				PlayerCommand toSend = new PlayerCommand(
@@ -224,7 +189,78 @@ public class BoardPanel extends JPanel{
 
 				directionsPanel.setVisible(false);
 			});
+			btnWest.addActionListener(e -> {
+				Pair destination = new Pair(workerCell.x - 1, workerCell.y);
+				PlayerCommand toSend = new PlayerCommand(
+						StaticFrame.getPlayerName(),
+						new Command(destination, cmd),
+						workerIndex
+				);
 
+				try {
+					outputStream.reset();
+					outputStream.writeObject(toSend);
+					outputStream.flush();
+				}catch (IOException x){
+					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+				}
+
+				directionsPanel.setVisible(false);
+			});
+			btnEast.addActionListener(e -> {
+				Pair destination = new Pair(workerCell.x + 1, workerCell.y);
+				PlayerCommand toSend = new PlayerCommand(
+						StaticFrame.getPlayerName(),
+						new Command(destination, cmd),
+						workerIndex
+				);
+
+				try {
+					outputStream.reset();
+					outputStream.writeObject(toSend);
+					outputStream.flush();
+				}catch (IOException x){
+					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+				}
+
+				directionsPanel.setVisible(false);
+			});
+			btnSouthWest.addActionListener(e -> {
+				Pair destination = new Pair(workerCell.x - 1, workerCell.y + 1);
+				PlayerCommand toSend = new PlayerCommand(
+						StaticFrame.getPlayerName(),
+						new Command(destination, cmd),
+						workerIndex
+				);
+
+				try {
+					outputStream.reset();
+					outputStream.writeObject(toSend);
+					outputStream.flush();
+				}catch (IOException x){
+					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+				}
+
+				directionsPanel.setVisible(false);
+			});
+			btnSouth.addActionListener(e -> {
+				Pair destination = new Pair(workerCell.x, workerCell.y + 1);
+				PlayerCommand toSend = new PlayerCommand(
+						StaticFrame.getPlayerName(),
+						new Command(destination, cmd),
+						workerIndex
+				);
+
+				try {
+					outputStream.reset();
+					outputStream.writeObject(toSend);
+					outputStream.flush();
+				}catch (IOException x){
+					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+				}
+
+				directionsPanel.setVisible(false);
+			});
 			btnSouthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y + 1);
 				PlayerCommand toSend = new PlayerCommand(
@@ -244,52 +280,28 @@ public class BoardPanel extends JPanel{
 				directionsPanel.setVisible(false);
 			});
 
-			btnSouthWest.addActionListener(e -> {
-				Pair destination = new Pair(workerCell.x - 1, workerCell.y + 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
+			// Add power to the central button
+			Image image;
+			try {
+				image = (ImageIO.read(new File(PATH + StaticFrame.getGod().getCapitalizedName() + "_power.png")))
+						.getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
+				btnPower = new JButton(new ImageIcon(image));
+			}catch(IOException e){
+				btnPower = new JButton();
+			}
 
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
-				directionsPanel.setVisible(false);
-			});
-
-			btnNorthWest.addActionListener(e -> {
-				Pair destination = new Pair(workerCell.x - 1, workerCell.y - 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
-				directionsPanel.setVisible(false);
-			});
-
-			this.add(btnNorth);
-			this.add(btnEast);
-			this.add(btnSouth);
-			this.add(btnWest);
-			this.add(btnNorthEast);
-			this.add(btnSouthEast);
-			this.add(btnSouthWest);
+			// Add components to the panel
 			this.add(btnNorthWest);
+			this.add(btnNorth);
+			this.add(btnNorthEast);
+			this.add(btnWest);
+			this.add(btnPower);
+			this.add(btnEast);
+			this.add(btnSouthWest);
+			this.add(btnSouth);
+			this.add(btnSouthEast);
+
+			this.setLayout( new GridLayout(3, 3));
 		}
 
 		public void setWorkerIndex(int workerIndex) {
