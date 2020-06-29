@@ -14,10 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class ChooseGodsPanel extends JPanel {
@@ -148,10 +145,10 @@ public class ChooseGodsPanel extends JPanel {
             Image image;
             JButton imageButton;
             try {
-                image = ImageIO.read(new File(PATH + actualGod + ".png"))
-                        .getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
+                // image = ImageIO.read(new File(PATH + actualGod + ".png")).getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
+                image = GetImages.getGodImage(actualGod);
                 imageButton = new JButton(new ImageIcon(image));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 imageButton = new JButton(actualGod);
             }
 
@@ -213,10 +210,9 @@ public class ChooseGodsPanel extends JPanel {
             Image image;
             JButton imageButton;
             try {
-                 image = (ImageIO.read(new File(PATH + actualGod + ".png")))
-                         .getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
+                image = GetImages.getGodImage(actualGod);
                  imageButton = new JButton(new ImageIcon(image));
-            }catch(IOException e){
+            }catch(Exception e){
                 imageButton = new JButton(actualGod);
             }
 
