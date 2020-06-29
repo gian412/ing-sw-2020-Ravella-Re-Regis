@@ -32,28 +32,48 @@ public class Minotaur extends God {
      * @throws IllegalMoveException in case the move isn't legal
      */
     @Override
-    public void move(Worker worker, Pair pair) throws IllegalMoveException {
+    protected void move(Worker worker, Pair pair) throws IllegalMoveException {
         Cell cell = board.getCell(pair); // Get the reference to the cell
         if( cell.getWorker() == null ){
-            try {
-                super.move(worker, pair);
-            } catch (IllegalMoveException e) {
-                throw new IllegalMoveException(e.getMessage());
+
+            if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't a dome and it isn't more then 1 floor far
+                if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
+                    try {
+                        super.move(worker, pair);
+                    } catch (IllegalMoveException e) {
+                        throw new IllegalMoveException(e.getMessage());
+                    }
+                } else {
+                    throw new IllegalMoveException("CanMoveUp parameter error");
+                }
+            }else{
+                throw new IllegalMoveException("Invalid MOVE parameters");
             }
         } else {
-            Pair direction = worker.getCurrentCell().getDirection( cell );
-            Cell nextCell =  board.getCell( new Pair( cell.X + direction.x, cell.Y + direction.y ) );
-            if( nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME){
-                Worker otherWorker = cell.getWorker();
-                try {
-                    board.moveWorker(worker, pair);
-                    board.moveWorker(otherWorker, new Pair(nextCell.X, nextCell.Y));
-                } catch (IllegalMoveException e){
-                    throw new IllegalMoveException(e.getMessage());
-                }
 
-            } else{
-                throw new IllegalMoveException("Invalid MOVE parameters: the cell in which other worker would be move is occupied");
+
+
+            if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't a dome and it isn't more then 1 floor far
+                if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
+                    Pair direction = worker.getCurrentCell().getDirection( cell );
+                    Cell nextCell =  board.getCell( new Pair( cell.X + direction.x, cell.Y + direction.y ) );
+                    if( nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME){
+                        Worker otherWorker = cell.getWorker();
+                        try {
+                            board.moveWorker(otherWorker, new Pair(nextCell.X, nextCell.Y));
+                            board.moveWorker(worker, pair);
+                        } catch (IllegalMoveException e){
+                            throw new IllegalMoveException(e.getMessage());
+                        }
+
+                    } else{
+                        throw new IllegalMoveException("Invalid MOVE parameters: the cell in which other worker would be move is occupied");
+                    }
+                } else {
+                    throw new IllegalMoveException("CanMoveUp parameter error");
+                }
+            }else{
+                throw new IllegalMoveException("Invalid MOVE parameters");
             }
         }
     }
@@ -76,6 +96,10 @@ public class Minotaur extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command!=null){
+
+            if (checkCell(command.coordinates) == null) {
+                throw new IllegalMoveException("Invalid cell");
+            }
 
             switch (command.commandType){
                 case MOVE:

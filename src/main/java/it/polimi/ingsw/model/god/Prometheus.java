@@ -38,9 +38,13 @@ public class Prometheus extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
         if (command!=null){
 
+            if (checkCell(command.coordinates) == null) {
+                throw new IllegalMoveException("Invalid cell");
+            }
+
             switch (command.commandType){
                 case MOVE:
-                    if (!hasMoved && !hasBuild && !hasWon && (!hasBuildBefore || worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())<1)){
+                    if (!hasBuildBefore && !hasMoved && !hasBuild && !hasWon){
 
                         try {
                             super.move(worker, command.coordinates);
@@ -51,7 +55,31 @@ public class Prometheus extends God {
                             throw new IllegalMoveException(e.getMessage());
                         }
 
-                    } else{
+                    } else if (hasBuildBefore && !hasMoved && !hasBuild && !hasWon) {
+                        if (!worker.isCanMoveUp()) {
+                            try {
+                                super.move(worker, command.coordinates);
+                                hasMoved = true;
+                                hasWon = board.checkWin(worker);
+                                break;
+                            } catch (IllegalMoveException e) {
+                                throw new IllegalMoveException(e.getMessage());
+                            }
+                        } else {
+                                worker.setCanMoveUp(false);
+                            try {
+                                super.move(worker, command.coordinates);
+                                hasMoved = true;
+                                hasWon = board.checkWin(worker);
+                                break;
+                            } catch (IllegalMoveException e) {
+                                throw new IllegalMoveException(e.getMessage());
+                            } finally {
+                                worker.setCanMoveUp(true); // reset canMoveUp parameter
+                            }
+                        }
+
+                    }else{
                         throw new IllegalMoveException("Invalid command sequence");
                     }
 
@@ -118,5 +146,14 @@ public class Prometheus extends God {
     protected void resetLocalVariables() {
         super.resetLocalVariables();
         this.hasBuildBefore = false;
+    }
+
+    private boolean hasMovedUp(Worker worker) {
+
+        if (worker.getPreviousCell()!=null) {
+            return worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())>=1;
+        }
+        return false;
+
     }
 }

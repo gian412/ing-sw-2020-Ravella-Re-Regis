@@ -51,7 +51,7 @@ public class Apollo extends God{
         }else{ // worker has to force the otherWorker to exchange position with him
             if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't a dome and it isn't more then 1 floor far
                 if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
-                    try {
+                    /* try {
                         Worker otherWorker = cell.getWorker(); // Get the reference to the worker to force
                         Cell actualCell = worker.getCurrentCell(); // Get the reference to the cell where I'm now
                         board.moveWorker(worker, pair); // Call board's move method
@@ -59,7 +59,10 @@ public class Apollo extends God{
                         hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                     } catch (IllegalMoveException e){
                         throw new IllegalMoveException(e.getMessage());
-                    }
+                    } */
+                    Worker otherWorker = cell.getWorker(); // Get the reference to the worker to force
+                    board.switchWorkers(worker, otherWorker);
+                    hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                 } else{
                     throw new IllegalMoveException("CanMoveUp parameter error");
                 }
@@ -89,6 +92,10 @@ public class Apollo extends God{
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null){ // If the passed command isn't empty
+
+            if (checkCell(command.coordinates) == null) {
+                throw new IllegalMoveException("Invalid cell");
+            }
 
             switch (command.commandType){
                 case MOVE:

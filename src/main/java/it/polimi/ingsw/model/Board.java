@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.IllegalAddException;
 import it.polimi.ingsw.exceptions.IllegalCellException;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
+import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.RemoteView;
 
@@ -52,11 +53,9 @@ public class Board {
         }
     }
 
-
     public BoardProxy getProxy() {
         return proxy;
     }
-
 
     // turnPlayer's getter
     public Player getTurnPlayer() {
@@ -154,6 +153,33 @@ public class Board {
     }
 
     /**
+     * Switch two workers
+     *
+     * @author Gianluca Regis
+     * @param worker first worker (the one who execute the switch)
+     * @param otherWorker second worker (the one who suffer the switch)
+     */
+    public void switchWorkers(Worker worker, Worker otherWorker) {
+
+        // Reset cells' worker
+        this.getCell(new Pair(worker.getCurrentCell().X, worker.getCurrentCell().Y)).setWorker(otherWorker);
+        this.getCell(new Pair(otherWorker.getCurrentCell().X, otherWorker.getCurrentCell().Y)).setWorker(worker);
+
+        // Update previousCells' infos
+        worker.setPreviousCell(otherWorker.getCurrentCell());
+        otherWorker.setPreviousCell(worker.getCurrentCell());
+
+        // Update currentCells' infos using a tmp cell variable
+        Cell tmp = otherWorker.getCurrentCell();
+        otherWorker.setCurrentCell(worker.getCurrentCell());
+        worker.setCurrentCell(tmp);
+
+        //update the proxyBoard
+        this.updateProxyBoard();
+
+    }
+
+    /**
      * Force a worker in another cell
      *
      * @author Gianluca Regis
@@ -242,6 +268,7 @@ public class Board {
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || heightDifference <= -2){
                     hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner().getNAME());
+                    proxy.setStatus(GameState.TERMINATOR);
                     proxy.updateProxy();
                     return true;
                 } else{
@@ -252,6 +279,7 @@ public class Board {
                 if ((heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR) || countCompleteTower()){
                     hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner().getNAME());
+                    proxy.setStatus(GameState.TERMINATOR);
                     proxy.updateProxy();
                     return true;
                 } else {
@@ -261,6 +289,7 @@ public class Board {
                 if (heightDifference == 1 && worker.getCurrentCell().getHeight() == Height.THIRD_FLOOR){
                     hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner().getNAME());
+                    proxy.setStatus(GameState.TERMINATOR);
                     proxy.updateProxy();
                     return true;
                 } else{
@@ -272,6 +301,7 @@ public class Board {
                 if (countCompleteTower()){
                     hasWon = worker.getOwner();
                     proxy.setWinner(worker.getOwner().getNAME());
+                    proxy.setStatus(GameState.TERMINATOR);
                     proxy.updateProxy();
                     return true;
                 } else {
@@ -312,10 +342,11 @@ public class Board {
 
     /**ends the game
      *
-     * @authors Ravella Elia
+     * @author Ravella Elia
      */
     public void endGame(){
         proxy.setWinner("Unexpected Game Over");
+        proxy.setStatus(GameState.TERMINATOR);
         this.updateProxyBoard();
     }
 

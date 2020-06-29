@@ -21,6 +21,8 @@ import java.util.Random;
 
 public class test {
     public static void main(String[] args) {
+
+
         // setting up the GUI
         JFrame mainFrame = new JFrame("My Frame");
         JPanel panel = new JPanel(){
@@ -56,11 +58,12 @@ public class test {
     }
 
     public static void paintTowers(Graphics g, Component obs){
-        BoardMaker.drawElements(g, genBoard(), 34, 134, 24, obs);
+        BoardMaker.drawElements(g, genBoard(), 19, 137, 22, obs);
     }
 
     public static BoardProxy genBoard(){
         // generating a random board
+
         BoardProxy bp = new BoardProxy();
         Random gen = new Random();
 
@@ -77,6 +80,7 @@ public class test {
                 else
                     bp.addHeight(row, col, Height.DOME);
 
+
         HashMap<String, String> godsMap = new HashMap();
         godsMap.put("Player1", "Athena");
         godsMap.put("Player2", "Charon");
@@ -86,5 +90,7 @@ public class test {
         bp.addWorker("Player11", new Pair(0, 0));
 
         return bp;
+
+
     }
 }

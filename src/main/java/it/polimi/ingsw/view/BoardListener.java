@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.BoardProxy;
+import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.view.cli.CliComposer;
 
 import java.io.ObjectInputStream;
@@ -19,7 +21,10 @@ public class BoardListener extends Observable<BoardProxy> implements Runnable {
                 BoardProxy message = (BoardProxy)inputStream.readObject();
                 notify(message);
             } catch (Exception e) {
-                break;
+                BoardProxy disconnected = new BoardProxy();
+                disconnected.setStatus(GameState.TERMINATOR);
+                disconnected.setWinner("Server down");
+                notify(disconnected);
             }
         }
     }

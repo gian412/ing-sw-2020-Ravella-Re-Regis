@@ -37,6 +37,10 @@ public class Athena extends God{
 
         if (command != null) { // If the passed command isn't empty
 
+            if (checkCell(command.coordinates) == null) {
+                throw new IllegalMoveException("Invalid cell");
+            }
+
             switch (command.commandType) {
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasWon) { // If the player has not move, build and won

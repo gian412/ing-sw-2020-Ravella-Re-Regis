@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Height;
 import it.polimi.ingsw.model.Pair;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -48,8 +49,8 @@ public class BoardMaker {
                     case GROUND: break;
                     case FIRST_FLOOR:
                         g.drawImage(first,
-                            offset + (width + interstitialWidth) * col,
                             offset + (width + interstitialWidth) * row,
+                            offset + (width + interstitialWidth) * col,
                             width,
                             width,
                             obs
@@ -57,8 +58,8 @@ public class BoardMaker {
                         break;
                     case SECOND_FLOOR:
                         g.drawImage(second,
-                                offset + (width + interstitialWidth) * col,
                                 offset + (width + interstitialWidth) * row,
+                                offset + (width + interstitialWidth) * col,
                                 width,
                                 width,
                                 obs
@@ -66,8 +67,8 @@ public class BoardMaker {
                         break;
                     case THIRD_FLOOR:
                         g.drawImage(third,
-                            offset + (width + interstitialWidth) * col,
                             offset + (width + interstitialWidth) * row,
+                            offset + (width + interstitialWidth) * col,
                             width,
                             width,
                             obs
@@ -75,8 +76,8 @@ public class BoardMaker {
                         break;
                     case DOME:
                         g.drawImage(dome,
-                            offset + (width + interstitialWidth) * col,
                             offset + (width + interstitialWidth) * row,
+                            offset + (width + interstitialWidth) * col,
                             width,
                             width,
                             obs

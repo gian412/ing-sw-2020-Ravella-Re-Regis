@@ -20,7 +20,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ChooseGodsPanel extends JPanel implements Runnable {
+public class ChooseGodsPanel extends JPanel {
 
     private static final int IMAGE_BASE_WIDTH = 84;
     private static final int IMAGE_BASE_HEIGHT = 141;
@@ -84,10 +84,7 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
         this.socket = connSocket;
         reader = new ReadProxyBoard(this);
         this.setUpUI();
-    }
 
-    @Override
-    public void run() {
         try {
             listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
             outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -149,10 +146,9 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
         }
 
         JButton submit = new JButton("Submit your choice");
-        submit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        submit.addActionListener(e -> {
 
+            if (chooseGod!=null && !chooseGod.isEmpty() && chooseGod.split(" ").length==playerNumber ) {
                 try {
                     PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.SET_GODS), 0);
                     commandToSend.setMessage(chooseGod);
@@ -165,6 +161,8 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+            } else {
+                JOptionPane.showMessageDialog(StaticFrame.mainFrame, "You must choose " + playerNumber + " Gods");
             }
         });
         this.add(submit, setConstraint(3,3 ));
@@ -197,22 +195,18 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
 
             imageButton.setName(actualGod);
 
-            imageButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (chooseGod.equals("")) {
-                        ((JButton)e.getSource()).setEnabled(false); // ... get God's name from the button...
-                        chooseGod = ((JButton) e.getSource()).getName(); // ... and save it
-                    }
+            imageButton.addActionListener(e -> {
+                if (chooseGod.equals("")) {
+                    ((JButton)e.getSource()).setEnabled(false); // ... get God's name from the button...
+                    chooseGod = ((JButton) e.getSource()).getName(); // ... and save it
                 }
             });
             this.add(imageButton, setConstraint(i%gods.split(" ").length, 0));
         }
 
         JButton submit = new JButton("Submit your choice");
-        submit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        submit.addActionListener(e -> {
+            if (chooseGod!=null && !chooseGod.isEmpty()) {
                 try {
                     PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHOOSE_GOD), 0);
                     commandToSend.setMessage(chooseGod);
@@ -226,7 +220,10 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+            } else {
+                JOptionPane.showMessageDialog(StaticFrame.mainFrame, "You must choose a God");
             }
+
         });
         this.add(submit, setConstraint(gods.split(" ").length/2,1 ));
     }
@@ -253,13 +250,14 @@ public class ChooseGodsPanel extends JPanel implements Runnable {
      * @author Elia Ravella, Gianluca Regis
      */
     private void showBoard(BoardProxy firstBoard){
-    
-        //load next panel
-        GamePanel gamePanel = new GamePanel(this.socket, firstBoard);
-        StaticFrame.removePanel(this);
-        StaticFrame.addPanel(gamePanel);
-        new Thread(gamePanel).start();
 
+        listener.removeObserver(reader);
+
+        //load next panel
+        BoardPanel boardPanel = new BoardPanel(this.socket, firstBoard, listener, outputStream);
+
+        StaticFrame.removePanel(this);
+        StaticFrame.addPanel(boardPanel);
         StaticFrame.refresh();
     }
     

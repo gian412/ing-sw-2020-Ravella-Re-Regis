@@ -37,6 +37,10 @@ public class Chronus extends God {
             hasWon = board.checkWin(worker);
             if(!hasWon){
 
+                if (checkCell(command.coordinates) == null) {
+                throw new IllegalMoveException("Invalid cell");
+            }
+
                 switch (command.commandType){
                     case MOVE:
                         if (!hasMoved && !hasBuild) {

@@ -46,7 +46,9 @@ public class LoginPanel extends JPanel {
         txtName.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                txtName.setText("");
+                if (txtName.getText().equals("Name")) {
+                    txtName.setText("");
+                }
             }
 
             @Override
@@ -59,7 +61,9 @@ public class LoginPanel extends JPanel {
         txtAge.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                txtAge.setText("");
+                if (txtAge.getText().equals("Age")) {
+                    txtAge.setText("");
+                }
             }
 
             @Override
@@ -76,7 +80,6 @@ public class LoginPanel extends JPanel {
 
         // Initialization of the login button
         btnLogin = new JButton("Login");
-        //btnLogin.addActionListener(e -> login());
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -201,12 +204,12 @@ public class LoginPanel extends JPanel {
             output.println(Integer.parseInt(txtAge.getText()));
             output.flush();
 
-            int playerNumber;
+            int playerNumber = 0;
             String message = input.nextLine(); // server prompt
             if(message.equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) {
-                 playerNumber = Integer.parseInt(
-                        JOptionPane.showInputDialog(this, "How many players in the game?")
-                );
+                while (playerNumber!=2 && playerNumber!=3) {
+                    playerNumber = Integer.parseInt(JOptionPane.showInputDialog(this, "How many players in the game?"));
+                }
                 output.println(playerNumber);
                 output.flush();
             }else{
@@ -219,7 +222,6 @@ public class LoginPanel extends JPanel {
             ChooseGodsPanel chooseGodsPanel = new ChooseGodsPanel(connSocket, playerNumber);
             StaticFrame.removePanel(this);
             StaticFrame.addPanel(chooseGodsPanel);
-            new Thread(chooseGodsPanel).start();
 
             StaticFrame.refresh();
 
