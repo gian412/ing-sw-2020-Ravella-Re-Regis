@@ -68,9 +68,10 @@ public class GamePanel extends JPanel implements Runnable {
 
 	@Override
 	public void run() {
+		JOptionPane.showInputDialog("instancing outputstream");
 		try {
 			listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));
-			outputStream = new ObjectOutputStream((socket.getOutputStream()));
+			outputStream = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -123,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable {
 				Pair cell = BoardMaker.map(e.getX(), e.getY());
 				int workerIndex = (workersAdded == 0) ? 0 : 1;
 
-				// TODO remove this dialog
+				// TODO remove this dialog when finished debugging
 				JOptionPane.showInputDialog("adding worker number " + workerIndex + " at " + cell.x + " " + cell.y);
 
 				PlayerCommand toSend = new PlayerCommand(
