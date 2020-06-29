@@ -355,13 +355,6 @@ public class BoardPanel extends JPanel{
 									"Client disconnected",
 									JOptionPane.ERROR_MESSAGE
 							);
-						} else if (message.getWinner().equals(StaticFrame.getPlayerName())){
-							JOptionPane.showMessageDialog(
-									StaticFrame.mainFrame,
-									"Congrats! You win!",
-									"You win",
-									JOptionPane.INFORMATION_MESSAGE
-							);
 						} else if (message.getWinner().equals("Server down")) {
 							JOptionPane.showMessageDialog(
 									StaticFrame.mainFrame,
@@ -369,7 +362,14 @@ public class BoardPanel extends JPanel{
 									"Server down",
 									JOptionPane.ERROR_MESSAGE
 							);
-						} else {
+						} else if (message.getWinner().equals(StaticFrame.getPlayerName())){
+							JOptionPane.showMessageDialog(
+									StaticFrame.mainFrame,
+									"Congrats! You win!",
+									"You win",
+									JOptionPane.INFORMATION_MESSAGE
+							);
+						}  else {
 							JOptionPane.showMessageDialog(
 									StaticFrame.mainFrame,
 									"You lose! " + "The winner is " + message.getWinner() + "!",
