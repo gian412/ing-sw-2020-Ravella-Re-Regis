@@ -42,8 +42,8 @@ public class Controller implements Observer<PlayerCommand> {
                 );
             } catch (IllegalMoveException exc) {
                 game.getBoard().notifyIllegalMove(exc.getMessage());
-            } catch (NullPointerException exc) {
-                exc.printStackTrace();
+            } catch (Exception exc) {
+                game.getBoard().notifyIllegalMove("Something went wrong");
             }
         }
 
