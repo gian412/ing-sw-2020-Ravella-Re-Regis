@@ -74,6 +74,32 @@ public class ChooseGodsPanel extends JPanel {
                     clearView();
                     showBoard(message);
                     break;
+
+                // in case of disconnection, this client should return to login page
+                case TERMINATOR:
+                    JOptionPane.showMessageDialog(
+                            StaticFrame.mainFrame,
+                            "Game over because another client closed the game",
+                            "Client disconnected",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+
+                    listener.removeObserver(reader);
+
+                    //load next panel
+                    LoginPanel loginPanel = new LoginPanel();
+
+                    try {
+                        outputStream.close();
+                        socket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    StaticFrame.removePanel(displayPanel);
+                    StaticFrame.addPanel(loginPanel);
+                    StaticFrame.refresh();
+                    break;
             }
         }
     }
