@@ -149,7 +149,6 @@ public class ChooseGodsPanel extends JPanel {
                 image = GetImages.getGodImage(actualGod);
                 imageButton = new JButton(new ImageIcon(image));
             } catch (Exception e) {
-                e.printStackTrace();
                 imageButton = new JButton(actualGod);
             }
 
@@ -211,10 +210,9 @@ public class ChooseGodsPanel extends JPanel {
             Image image;
             JButton imageButton;
             try {
-                 image = (ImageIO.read(new File(PATH + actualGod + ".png")))
-                         .getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
+                image = GetImages.getGodImage(actualGod);
                  imageButton = new JButton(new ImageIcon(image));
-            }catch(IOException e){
+            }catch(Exception e){
                 imageButton = new JButton(actualGod);
             }
 
