@@ -117,4 +117,14 @@ public abstract class God {
         this.hasBuild = false;
     }
 
+    protected Cell checkCell(Pair coordinates) throws IllegalMoveException {
+        try {
+            Cell cell = board.getCell(coordinates); // Get the reference to the cell
+            return cell;
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+
+        }
+    }
+
 }

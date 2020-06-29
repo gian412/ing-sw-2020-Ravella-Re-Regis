@@ -77,6 +77,10 @@ public class Minotaur extends God {
 
         if (command!=null){
 
+            if (checkCell(command.coordinates) == null) {
+                throw new IllegalMoveException("Invalid cell");
+            }
+
             switch (command.commandType){
                 case MOVE:
                     if (!hasMoved && !hasBuild && !hasWon){

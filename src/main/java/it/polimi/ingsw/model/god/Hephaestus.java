@@ -40,10 +40,10 @@ public class Hephaestus extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command!=null){ // If the passed command isn't empty
-            Cell cell;
-            try {
-                cell = board.getCell(command.coordinates); // Get the reference to the cell
-            } catch (IndexOutOfBoundsException e) {
+
+            Cell cell = checkCell(command.coordinates); // Get the reference to the cell
+
+            if (cell == null) {
                 throw new IllegalMoveException("Invalid cell");
             }
 

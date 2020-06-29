@@ -35,6 +35,10 @@ public class Triton extends God {
 
         if (command != null){
 
+            if (checkCell(command.coordinates) == null) {
+                throw new IllegalMoveException("Invalid cell");
+            }
+
             switch (command.commandType){
                 case MOVE:
                     if (board.getCell(command.coordinates).isPerimeter() && !hasBuild && !hasWon){

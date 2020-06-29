@@ -39,7 +39,12 @@ public class Demeter extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command!=null){
-            Cell cell = board.getCell(command.coordinates);
+
+            Cell cell = checkCell(command.coordinates); // Get the reference to the cell
+
+            if (cell == null) {
+                throw new IllegalMoveException("Invalid cell");
+            }
 
             switch (command.commandType){
                 case MOVE:
