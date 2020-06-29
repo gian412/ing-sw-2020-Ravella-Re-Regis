@@ -380,7 +380,8 @@ public class BoardPanel extends JPanel{
 						showLogin();
 				}
 			}else{
-				JOptionPane.showMessageDialog(StaticFrame.mainFrame, message.getIllegalMoveString());
+				if(message.getTurnPlayer().equals(StaticFrame.getPlayerName()))
+					JOptionPane.showMessageDialog(StaticFrame.mainFrame, message.getIllegalMoveString());
 				refreshView();
 			}
 		}
@@ -499,7 +500,6 @@ public class BoardPanel extends JPanel{
 							}
 
 						} else {
-							// TODO: remove after test in order to simulate inactivity
 							JOptionPane.showMessageDialog( StaticFrame.mainFrame, "it is not your turn!");
 						}
 						break;
@@ -511,7 +511,7 @@ public class BoardPanel extends JPanel{
 							if (checkWorkerPresence(cell)) {
 								optionPanel.setVisible(true);
 							}
-						} else { // TODO: remove after test in order to simulate inactivity
+						} else {
 							JOptionPane.showMessageDialog( StaticFrame.mainFrame, "it is not your turn!");
 						}
 

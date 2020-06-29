@@ -77,16 +77,17 @@ public class ChooseGodsPanel extends JPanel {
 
                 // in case of disconnection, this client should return to login page
                 case TERMINATOR:
+                    // show error message
                     JOptionPane.showMessageDialog(
                             StaticFrame.mainFrame,
-                            "Game over because another client closed the game",
-                            "Client disconnected",
+                            message.getWinner(),
+                            "Unexpected disconnection",
                             JOptionPane.ERROR_MESSAGE
                     );
 
                     listener.removeObserver(reader);
 
-                    //load next panel
+                    //load login panel
                     LoginPanel loginPanel = new LoginPanel();
 
                     try {
