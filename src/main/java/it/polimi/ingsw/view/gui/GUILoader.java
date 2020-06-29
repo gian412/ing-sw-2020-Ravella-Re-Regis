@@ -2,13 +2,15 @@ package it.polimi.ingsw.view.gui;
 
 import javax.swing.*;
 
-public class GUILoader extends JFrame{
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
+public class GUILoader{
 
     /**
+     * loads the GUI
      * @author Elia Ravella
-     * @param args cli arguments
      */
-    public static void main(String[] args) {
+    public static void loadGUI() {
         StaticFrame.initFrame("Santorini");
         StaticFrame.addPanel(new LoginPanel());
 
@@ -16,5 +18,4 @@ public class GUILoader extends JFrame{
         StaticFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         StaticFrame.setVisible(true);
     }
-
 }
