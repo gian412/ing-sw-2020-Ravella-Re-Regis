@@ -421,16 +421,17 @@ public class BoardPanel extends JPanel{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		BufferedImage boardImg;
+		Image boardImg;
 		try {
-			boardImg = ImageIO.read(new File(PATH + "_board.png"));
-		} catch (IOException e) {
+			boardImg = GetImages.getBoard();
+			//boardImg = ImageIO.read(new File(PATH + "_board.png"));
+		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
 
-		g.drawImage(boardImg, 0, 0, boardImg.getWidth(), boardImg.getHeight(), this);
-		this.setSize(boardImg.getWidth(), boardImg.getHeight());
+		g.drawImage(boardImg, 0, 0, boardImg.getWidth(null), boardImg.getHeight(null), this);
+		this.setSize(boardImg.getWidth(null), boardImg.getHeight(null));
 
 		if (actualBoard != null) {
 			BoardMaker.drawElements(g, actualBoard, firstOffset, cellLength, interstitialWidth, this);

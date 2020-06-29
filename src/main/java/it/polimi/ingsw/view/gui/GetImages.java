@@ -12,14 +12,18 @@ import java.util.Map;
 
 public class GetImages {
 
+    private static final int IMAGE_BASE_WIDTH = 84;
+    private static final int IMAGE_BASE_HEIGHT = 141;
+
     public static Image img;
+    public static Image board;
 
     // Load Gods' images and save them in an HashMap
     public static Map<String, Image> godImages = new HashMap<>();
     static {
         for (GodType godType : GodType.values()) {
             try {
-                img = ImageIO.read(GetImages.class.getClassLoader().getResource(godType.getCapitalizedName() + ".png"));
+                img = (ImageIO.read(GetImages.class.getClassLoader().getResource(godType.getCapitalizedName() + ".png"))).getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);;
                 godImages.put(godType.getName(), img);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -56,7 +60,7 @@ public class GetImages {
     // Load board image and save it in an Image
     static {
         try {
-            img = ImageIO.read(GetImages.class.getClassLoader().getResource("_BOARD.png"));
+            board = ImageIO.read(GetImages.class.getClassLoader().getResource("_BOARD.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,7 +106,7 @@ public class GetImages {
      * @return The Image of the board
      */
     public static Image getBoard() {
-        return img;
+        return board;
     }
 
     /*public static void main (String[] args) {
