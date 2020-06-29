@@ -51,7 +51,7 @@ public class test {
             }
         });
 
-        mainFrame.setSize(835, 831);
+        mainFrame.setSize(835, 835);
         mainFrame.add(panel);
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);
@@ -84,10 +84,15 @@ public class test {
         HashMap<String, String> godsMap = new HashMap();
         godsMap.put("Player1", "Athena");
         godsMap.put("Player2", "Charon");
+        godsMap.put("Player3", "Prometheus");
         bp.setGods(godsMap);
 
         bp.addWorker("Player10", new Pair(0, 1));
-        bp.addWorker("Player11", new Pair(0, 0));
+        bp.addWorker("Player11", new Pair(3, 3));
+        bp.addWorker("Player20", new Pair(1, 1));
+        bp.addWorker("Player21", new Pair(3, 4));
+        bp.addWorker("Player30", new Pair(0, 3));
+        bp.addWorker("Player31", new Pair(4, 4));
 
         return bp;
 

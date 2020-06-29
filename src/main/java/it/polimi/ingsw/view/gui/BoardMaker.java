@@ -43,6 +43,7 @@ public class BoardMaker {
             return;
         }
 
+        // draw towers
         for(int row = 0; row < board.getBoardScheme().length; row++)
             for(int col = 0; col < board.getBoardScheme()[row].length; col++){
                 switch(board.getBoardScheme()[row][col]){
@@ -86,6 +87,7 @@ public class BoardMaker {
                 }
             }
 
+        // draw the workers
         for(int i = 0; i < board.getWorkers().keySet().size(); i++){
             String player = board.getWorkers().keySet().toArray()[i].toString().substring(
                     0,
@@ -104,8 +106,8 @@ public class BoardMaker {
             g.drawImage(godImage,
                     actualCoordinates.x,
                     actualCoordinates.y,
-                    CELL_LENGTH,
-                    CELL_LENGTH,
+                    width,
+                    width,
                     obs
             );
         }
