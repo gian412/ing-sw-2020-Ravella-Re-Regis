@@ -53,11 +53,9 @@ public class Board {
         }
     }
 
-
     public BoardProxy getProxy() {
         return proxy;
     }
-
 
     // turnPlayer's getter
     public Player getTurnPlayer() {
@@ -152,6 +150,33 @@ public class Board {
         else{
             throw new IllegalMoveException();
         }
+    }
+
+    /**
+     * Switch two workers
+     *
+     * @author Gianluca Regis
+     * @param worker first worker (the one who execute the switch)
+     * @param otherWorker second worker (the one who suffer the switch)
+     */
+    public void switchWorkers(Worker worker, Worker otherWorker) {
+
+        // Reset cells' worker
+        this.getCell(new Pair(worker.getCurrentCell().X, worker.getCurrentCell().Y)).setWorker(otherWorker);
+        this.getCell(new Pair(otherWorker.getCurrentCell().X, otherWorker.getCurrentCell().Y)).setWorker(worker);
+
+        // Update previousCells' infos
+        worker.setPreviousCell(otherWorker.getCurrentCell());
+        otherWorker.setPreviousCell(worker.getCurrentCell());
+
+        // Update currentCells' infos using a tmp cell variable
+        Cell tmp = otherWorker.getCurrentCell();
+        otherWorker.setCurrentCell(worker.getCurrentCell());
+        worker.setCurrentCell(tmp);
+
+        //update the proxyBoard
+        this.updateProxyBoard();
+
     }
 
     /**
