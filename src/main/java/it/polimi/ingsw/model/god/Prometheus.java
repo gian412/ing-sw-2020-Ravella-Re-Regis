@@ -44,7 +44,7 @@ public class Prometheus extends God {
 
             switch (command.commandType){
                 case MOVE:
-                    if (!hasMoved && !hasBuild && !hasWon && (!hasBuildBefore || !hasMovedUp(worker))){
+                    if (!hasBuildBefore && !hasMoved && !hasBuild && !hasWon){
 
                         try {
                             super.move(worker, command.coordinates);
@@ -55,7 +55,31 @@ public class Prometheus extends God {
                             throw new IllegalMoveException(e.getMessage());
                         }
 
-                    } else{
+                    } else if (hasBuildBefore && !hasMoved && !hasBuild && !hasWon) {
+                        if (!worker.isCanMoveUp()) {
+                            try {
+                                super.move(worker, command.coordinates);
+                                hasMoved = true;
+                                hasWon = board.checkWin(worker);
+                                break;
+                            } catch (IllegalMoveException e) {
+                                throw new IllegalMoveException(e.getMessage());
+                            }
+                        } else {
+                                worker.setCanMoveUp(false);
+                            try {
+                                super.move(worker, command.coordinates);
+                                hasMoved = true;
+                                hasWon = board.checkWin(worker);
+                                break;
+                            } catch (IllegalMoveException e) {
+                                throw new IllegalMoveException(e.getMessage());
+                            } finally {
+                                worker.setCanMoveUp(true); // reset canMoveUp parameter
+                            }
+                        }
+
+                    }else{
                         throw new IllegalMoveException("Invalid command sequence");
                     }
 
