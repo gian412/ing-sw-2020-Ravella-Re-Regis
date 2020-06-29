@@ -31,3 +31,4 @@ hs_err_pid*
 *.iws
 .idea/
 out/
+/src/main/java/META-INF/
