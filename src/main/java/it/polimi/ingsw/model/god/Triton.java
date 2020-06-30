@@ -19,6 +19,28 @@ public class Triton extends God {
     }
 
     /**
+     * Check if the given worker can move
+     *
+     * Override of the method of the super-class. This method check if there is a free neighbor perimeter cell
+     *
+     * @author Gianluca Regis
+     * @param worker The worker to check
+     * @return true if it can move, false otherwise
+     */
+    @Override
+    protected boolean canMove(Worker worker) {
+        Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());
+        for (Cell[] row : neighbors) {
+            for (Cell cell : row) {
+                if (cell!=null && cell.getWorker()==null && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<=1 && cell.getHeight()!=Height.DOME && cell.isPerimeter()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Actions made every turn
      *
      * Action made by the worker received by parameter. the possible moves are:
@@ -47,6 +69,11 @@ public class Triton extends God {
                             super.move(worker, command.coordinates);
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
+                            if (!hasWon && !this.canMove(worker) && !canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setPreviousCell(null);
+                                worker.setCurrentCell(null);
+                            }
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -97,7 +124,12 @@ public class Triton extends God {
                     break;
 
                 case CHECK_WORKERS:
-                    return;
+                    if (!super.canMove(worker)) {
+                        board.removeWorker(worker);
+                        worker.setPreviousCell(null);
+                        worker.setCurrentCell(null);
+                    }
+                    break;
 
                 default:
                     throw new IllegalMoveException("Command type not valid for the current god");
