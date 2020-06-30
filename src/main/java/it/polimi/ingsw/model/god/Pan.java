@@ -84,6 +84,9 @@ public class Pan extends  God {
                     super.resetLocalVariables();
                     break;
 
+                case CHECK_WORKERS:
+                    return;
+
                 default:
                     throw new IllegalMoveException("Command type not valid for the current god");
             }

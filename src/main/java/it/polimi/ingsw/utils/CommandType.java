@@ -10,5 +10,6 @@ public enum CommandType {
     ADD_WORKER,
     DISCONNECTED,
     SET_GODS,
-    CHOOSE_GOD
+    CHOOSE_GOD,
+    CHECK_WORKERS
 }

@@ -100,6 +100,9 @@ public class Artemis extends God {
                     this.resetLocalVariables(); // Call Artemis' reset method
                     break;
 
+                case CHECK_WORKERS:
+                    return;
+
                 default:
                     throw new IllegalMoveException("Command type not valid for the current god");
             }
