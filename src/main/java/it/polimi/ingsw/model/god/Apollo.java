@@ -127,12 +127,10 @@ public class Apollo extends God{
                             this.move(worker, command.coordinates); // Call Apollo's move method
                             hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
-                            if (!hasWon) {
-                                if (!canBuild(worker)) {
-                                    board.removeWorker(worker);
-                                    worker.setPreviousCell(null);
-                                    worker.setCurrentCell(null);
-                                }
+                            if (!hasWon && !canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setPreviousCell(null);
+                                worker.setCurrentCell(null);
                             }
                             break;
                         } catch (IllegalMoveException e){

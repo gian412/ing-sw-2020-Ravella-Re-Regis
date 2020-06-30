@@ -54,12 +54,10 @@ public class Athena extends God{
                             }
                             hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
-                            if (!hasWon) {
-                                if (!canBuild(worker)) {
-                                    board.removeWorker(worker);
-                                    worker.setPreviousCell(null);
-                                    worker.setCurrentCell(null);
-                                }
+                            if (!hasWon && !canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setPreviousCell(null);
+                                worker.setCurrentCell(null);
                             }
                             break;
                         } catch (IllegalMoveException e) {
