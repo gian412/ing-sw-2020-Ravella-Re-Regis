@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.utils.GodType;
+import it.polimi.ingsw.view.gui.StaticFrame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,13 +78,18 @@ public class CliComposer {
         numberOfPlayer = number;
     }
 
+    /**
+     * CLiComposer constructor
+     *
+     * Author Marco Re
+     */
     public CliComposer(){
     }
 
     /**
      * create a formatted string for the title of the game 
      *
-     * @authors Marco Re
+     * @author Marco Re
      *
      * @return the title
      */
@@ -174,7 +180,7 @@ public class CliComposer {
     /**
      *create a formatted string to put at the beginning of the terminal
      *
-     * @authors Marco Re
+     * @author Marco Re
      *
      * @return the banner to put at the beginning of the terminal
      */
@@ -213,9 +219,15 @@ public class CliComposer {
         return write.toString();
     }
 
+
+    /**
+     * print the list of all the possible gods
+     *
+     * @author Marco Re
+     *
+     * @param proxy is the proxyboard which arrive from the net
+     */
     public void godList(BoardProxy proxy){
-
-
 
         GodType[] gods = {GodType.APOLLO, GodType.ARTEMIS, GodType.ATHENA, GodType.ATLAS, GodType.CHARON, GodType.CHRONUS,
             GodType.DEMETER, GodType.HEPHAESTUS, GodType.HESTIA, GodType.MINOTAUR, GodType.PAN, GodType.PROMETHEUS,
@@ -246,6 +258,15 @@ public class CliComposer {
                 System.out.println("Now is your turn. Please push ENTER to continue......");
     }
 
+    /**
+     * return the description of a specific god
+     *
+     * @author Marco Re
+     *
+     * @param god il the god which i want the description
+     *
+     * @return a formatted string with the description of the god
+     */
     private String getDescription(GodType god) {
         Ansi maker = new Ansi();
         String font = maker.font(Ansi.BLUE_B);
@@ -314,7 +335,13 @@ public class CliComposer {
         }
     }
 
-
+    /**
+     * print the board
+     *
+     * @author Marco Re
+     *
+     * @param board is the proxyboard which arrive from the net
+     */
     public void boardMaker(BoardProxy board){
 
         StringBuilder out = new StringBuilder("");
@@ -487,11 +514,17 @@ public class CliComposer {
         System.out.println(out.toString());
 
         //print the message for the current player
-        if(board.getStatus().equals(GameState.ADDING_WORKER) && board.getTurnPlayer().equals(playerName))
+        if(board.getTurnPlayer().equals(playerName))
             System.out.println("Now is your turn. Please press ENTER to continue ........");
     }
 
-
+    /**
+     * print the message of finish game
+     *
+     * @author Marco Re
+     *
+     * @param board is the proxyboard which arrive from the net
+     */
     public void terminateGame(BoardProxy board){
 
         Ansi maker = new Ansi();
@@ -501,12 +534,19 @@ public class CliComposer {
         System.out.println(bannerMaker() + "\n");
 
         if(board.getWinner().equals("Unexpected Game Over")){
-            System.out.println("   Unexpected connection ERROR\n\n");
+
+            System.out.println("   Unexpected connection ERROR. Other Client Down\n\n");
             System.out.println("   Press ENTER to exit from the game......");
             return;
         }
 
-        else {
+        else if(board.getWinner().equals("Server down")){
+            System.out.println("   Unexpected connection ERROR. Serve Down\n\n");
+            System.out.println("   Press ENTER to exit from the game......");
+            return;
+        }
+
+        else{
             //set font and background
             String change = maker.bgAndFont(Ansi.BACKGROUND_WHITE_B, Ansi.BLUE_B);
             write.append(change);
@@ -544,8 +584,7 @@ public class CliComposer {
             write.append(Ansi.RESET);
             write.append('\n');
 
-            if (board.getWinner().equals(playerName)) {
-
+            if(board.getWinner().equals(playerName)){
                 //insert the title (WIN)
                 for (int i = 0; i < 7; i++) {
                     write.append(change);
@@ -572,8 +611,9 @@ public class CliComposer {
                     write.append(' ');
                 write.append(Ansi.RESET);
                 write.append('\n');
+            }
 
-            } else {
+            else {
                 //insert the title (LOSE)
                 for (int i = 0; i < 7; i++) {
                     write.append(change);
@@ -581,7 +621,7 @@ public class CliComposer {
                         write.append(' ');
                     }
 
-                    for (int j = 0; j < 23; j++) {
+                    for (int j = 0; j < 17; j++) {
                         if (YOU[i][j] == 0)
                             write.append(' ');
                         else
