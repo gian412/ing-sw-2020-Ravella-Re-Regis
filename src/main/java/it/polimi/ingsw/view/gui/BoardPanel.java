@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class BoardPanel extends JPanel{
 	
@@ -37,7 +38,7 @@ public class BoardPanel extends JPanel{
 	private final int firstOffset = 19; // px
 	private final int cellLength = 137; // px
 	private final int interstitialWidth = 22; //px
-	private int workersAdded;
+	private ArrayList<Pair> workersAdded;
 
 	/**
 	 * Inner class that represents the pop-up panel with the available actions
@@ -421,7 +422,7 @@ public class BoardPanel extends JPanel{
     }
 
 	public BoardPanel(Socket socket, BoardProxy firstBoard, BoardListener listener, ObjectOutputStream outputStream) {
-		workersAdded = 0;
+		workersAdded = new ArrayList<>();
 		this.listener = listener;
 		this.actualBoard = firstBoard;
 		this.socket = socket;
@@ -490,31 +491,35 @@ public class BoardPanel extends JPanel{
 						cell = BoardMaker.map(e.getX(), e.getY());
 
 						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
-							// TODO remove this dialog
-							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "adding worker at " + cell.x + " " + cell.y);
+							if(!actualBoard.getWorkers().containsValue(cell) && !workersAdded.contains(cell)){
+								// TODO remove this dialog
+								JOptionPane.showMessageDialog(StaticFrame.mainFrame, "adding worker at " + cell.x + " " + cell.y);
 
-							PlayerCommand toSend = new PlayerCommand(
-									StaticFrame.getPlayerName(),
-									new Command(
-											cell,
-											CommandType.ADD_WORKER
-									),
-									0
-							);
-							workersAdded++;
+								PlayerCommand toSend = new PlayerCommand(
+										StaticFrame.getPlayerName(),
+										new Command(
+												cell,
+												CommandType.ADD_WORKER
+										),
+										0
+								);
+								workersAdded.add(cell);
 
-							try {
-								outputStream.reset();
-								outputStream.writeObject(toSend);
-								outputStream.flush();
-							} catch (IOException x) {
-								x.printStackTrace();
+								try {
+									outputStream.reset();
+									outputStream.writeObject(toSend);
+									outputStream.flush();
+								} catch (IOException x) {
+									x.printStackTrace();
+								}
+							} else {
+								JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Worker already present here!");
 							}
 
 							/**
 							 *  procedure to verify if the player already added his 2 workers
 							 */
-							if (workersAdded == 2) {
+							if (workersAdded.size() == 2) {
 								PlayerCommand changeTurn = new PlayerCommand(
 										StaticFrame.getPlayerName(),
 										new Command(
