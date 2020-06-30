@@ -45,7 +45,7 @@ public class BoardPanel extends JPanel{
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	class OptionPanel extends JPanel {
-		public OptionPanel(boolean canForce){
+		public OptionPanel(boolean canForce, boolean canBuildDome){
 			super();
 
 			// Initialize and add a "end turn" button
@@ -99,6 +99,16 @@ public class BoardPanel extends JPanel{
 					directionsPanel.setVisible(true);
 				});
 				this.add(forceButton);
+			}
+
+			if (canBuildDome) {
+				JButton buildDomeButton = new JButton("Build dome");
+				buildDomeButton.addActionListener(e -> {
+					directionsPanel.setCmd(CommandType.BUILD_DOME);
+					optionPanel.setVisible(false);
+					directionsPanel.setVisible(true);
+				});
+				this.add(buildDomeButton);
 			}
 		}
 	}
@@ -420,7 +430,7 @@ public class BoardPanel extends JPanel{
 		this.outputStream = outputStream;
 
 		// Initialize option panel and add it to the board panel
-		optionPanel = new OptionPanel(StaticFrame.godCanForce());
+		optionPanel = new OptionPanel(StaticFrame.godCanForce(), StaticFrame.godCanBuildDome());
 		optionPanel.setVisible(false);
 		this.add(optionPanel);
 
