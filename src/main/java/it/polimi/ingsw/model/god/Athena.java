@@ -93,6 +93,9 @@ public class Athena extends God{
                     super.resetLocalVariables(); // Call super-class' reset method
                     break;
 
+                case CHECK_WORKERS:
+                    return;
+
                 default:
                     throw new IllegalMoveException("Command type not valid for the current god");
             }

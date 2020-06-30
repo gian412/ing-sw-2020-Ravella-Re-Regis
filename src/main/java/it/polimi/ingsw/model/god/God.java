@@ -142,7 +142,15 @@ public abstract class God {
      * @return true if it can move, false otherwise
      */
     protected boolean canMove(Worker worker) {
-        return true;
+        Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());
+        for (Cell[] row : neighbors) {
+            for (Cell cell : row) {
+                if (cell!=null && ((cell.getWorker()==null || cell.getHeight().getDifference(worker.getCurrentCell().getHeight())<=1) && cell.getHeight()!=Height.DOME)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -153,7 +161,15 @@ public abstract class God {
      * @return true if it can move, false otherwise
      */
     protected boolean canBuild(Worker worker) {
-        return true;
+        Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());
+        for (Cell[] row : neighbors) {
+            for (Cell cell : row) {
+                if (cell!=null && (cell.getWorker()==null || cell.getHeight()!=Height.DOME)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
