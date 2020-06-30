@@ -6,13 +6,7 @@ public final class GodMoves {
 
     private static final HashMap<GodType, CommandType[]> allPossibleMoves = new HashMap<>();
 
-    public PossibleMove setPlayersPossibleMove(String God) throws IllegalArgumentException {
-
-        return new PossibleMove();
-
-    }
-
-    private static void PossibleMove() {
+    public static void PossibleMoveInit() {
 
         // Apollo
         allPossibleMoves.put(GodType.APOLLO,
@@ -73,8 +67,24 @@ public final class GodMoves {
     }
 
     public static CommandType[] getPossibleMove(GodType godType) {
-        PossibleMove();
         return allPossibleMoves.get(godType);
     }
+
+
+    public PossibleMove setPlayersPossibleMove(String God) throws IllegalArgumentException {
+        return new PossibleMove();
+    }
+
+    public static boolean isTurnEnded(GodType playerGod, Object[] playerMoves){
+        CommandType[] neededMoves = allPossibleMoves.get(playerGod);
+
+        if(neededMoves.length != playerMoves.length) return false;
+
+        for(int i = 0; i < neededMoves.length; i++)
+            if(!neededMoves[i].equals(playerMoves[i])) return false;
+
+        return true;
+    }
+
 
 }

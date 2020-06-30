@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.utils.GameState;
+import it.polimi.ingsw.utils.GodMoves;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BoardPanel extends JPanel{
 	
@@ -30,6 +32,8 @@ public class BoardPanel extends JPanel{
 	private ObjectOutputStream outputStream;
 
 	private BoardProxy actualBoard;
+	private ArrayList<Pair> workersAdded;
+	private ArrayList<CommandType> turnMoves;
 
 	private OptionPanel optionPanel;
 	private DirectionsPanel directionsPanel;
@@ -38,7 +42,6 @@ public class BoardPanel extends JPanel{
 	private final int firstOffset = 19; // px
 	private final int cellLength = 137; // px
 	private final int interstitialWidth = 22; //px
-	private ArrayList<Pair> workersAdded;
 
 	/**
 	 * Inner class that represents the pop-up panel with the available actions
@@ -52,22 +55,8 @@ public class BoardPanel extends JPanel{
 			// Initialize and add a "end turn" button
 			JButton endTurnButton = new JButton("End Turn");
 			endTurnButton.addActionListener(e -> {
-				PlayerCommand toSend = new PlayerCommand(
-					StaticFrame.getPlayerName(),
-					new Command(new Pair(0, 0), CommandType.CHANGE_TURN),
-					0
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				remoteChangeturn();
 				optionPanel.setVisible(false);
-
 			});
 			this.add(endTurnButton);
 
@@ -164,6 +153,14 @@ public class BoardPanel extends JPanel{
 				}
 
 				directionsPanel.setVisible(false);
+
+				// check if the turn should end
+				turnMoves.add(cmd);
+				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
+					remoteChangeturn();
+					turnMoves.clear();
+				}
 			});
 			btnNorth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y - 1);
@@ -182,6 +179,14 @@ public class BoardPanel extends JPanel{
 				}
 
 				directionsPanel.setVisible(false);
+
+				// check if the turn should end
+				turnMoves.add(cmd);
+				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
+					remoteChangeturn();
+					turnMoves.clear();
+				}
 			});
 			btnNorthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y - 1);
@@ -200,6 +205,14 @@ public class BoardPanel extends JPanel{
 				}
 
 				directionsPanel.setVisible(false);
+
+				// check if the turn should end
+				turnMoves.add(cmd);
+				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
+					remoteChangeturn();
+					turnMoves.clear();
+				}
 			});
 			btnWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y);
@@ -218,6 +231,14 @@ public class BoardPanel extends JPanel{
 				}
 
 				directionsPanel.setVisible(false);
+
+				// check if the turn should end
+				turnMoves.add(cmd);
+				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
+					remoteChangeturn();
+					turnMoves.clear();
+				}
 			});
 			btnEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y);
@@ -236,6 +257,14 @@ public class BoardPanel extends JPanel{
 				}
 
 				directionsPanel.setVisible(false);
+
+				// check if the turn should end
+				turnMoves.add(cmd);
+				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
+					remoteChangeturn();
+					turnMoves.clear();
+				}
 			});
 			btnSouthWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y + 1);
@@ -254,6 +283,14 @@ public class BoardPanel extends JPanel{
 				}
 
 				directionsPanel.setVisible(false);
+
+				// check if the turn should end
+				turnMoves.add(cmd);
+				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
+					remoteChangeturn();
+					turnMoves.clear();
+				}
 			});
 			btnSouth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y + 1);
@@ -272,6 +309,14 @@ public class BoardPanel extends JPanel{
 				}
 
 				directionsPanel.setVisible(false);
+
+				// check if the turn should end
+				turnMoves.add(cmd);
+				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
+					remoteChangeturn();
+					turnMoves.clear();
+				}
 			});
 			btnSouthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y + 1);
@@ -290,6 +335,14 @@ public class BoardPanel extends JPanel{
 				}
 
 				directionsPanel.setVisible(false);
+
+				// check if the turn should end
+				turnMoves.add(cmd);
+				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
+					remoteChangeturn();
+					turnMoves.clear();
+				}
 			});
 
 			if (particularGod == GodType.ZEUS) {
@@ -311,6 +364,14 @@ public class BoardPanel extends JPanel{
 					}
 
 					directionsPanel.setVisible(false);
+
+					// check if the turn should end
+					turnMoves.add(cmd);
+					if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+						JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
+						remoteChangeturn();
+						turnMoves.clear();
+					}
 				});
 			} else {
 				// Add power to the central button
@@ -429,6 +490,10 @@ public class BoardPanel extends JPanel{
 		reader = new ReadProxyBoard(this);
 		this.outputStream = outputStream;
 
+		// load dataset for god moves
+		GodMoves.PossibleMoveInit();
+		turnMoves = new ArrayList<>();
+
 		// Initialize option panel and add it to the board panel
 		optionPanel = new OptionPanel(StaticFrame.godCanForce(), StaticFrame.godCanBuildDome());
 		optionPanel.setVisible(false);
@@ -458,7 +523,6 @@ public class BoardPanel extends JPanel{
 		Image boardImg;
 		try {
 			boardImg = GetImages.getBoard();
-			//boardImg = ImageIO.read(new File(PATH + "_board.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
@@ -599,7 +663,6 @@ public class BoardPanel extends JPanel{
 		LoginPanel loginPanel = new LoginPanel();
 
 		try {
-
 			outputStream.close();
 			socket.close();
 		} catch (IOException e) {
@@ -610,6 +673,22 @@ public class BoardPanel extends JPanel{
 		StaticFrame.addPanel(loginPanel);
 		StaticFrame.refresh();
 
+	}
+
+	private void remoteChangeturn(){
+		PlayerCommand endTurn = new PlayerCommand(
+				StaticFrame.getPlayerName(),
+				new Command(new Pair(0, 0), CommandType.CHANGE_TURN),
+				0
+		);
+
+		try {
+			outputStream.reset();
+			outputStream.writeObject(endTurn);
+			outputStream.flush();
+		}catch (IOException x){
+			JOptionPane.showMessageDialog(null, "Unknown problem with the network communications!");
+		}
 	}
 
 }
