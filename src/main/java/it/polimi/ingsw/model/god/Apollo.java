@@ -76,6 +76,19 @@ public class Apollo extends God{
 
     }
 
+    @Override
+    protected boolean canMove(Worker worker) {
+        Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());
+        for (Cell[] row : neighbors) {
+            for (Cell cell : row) {
+                if (cell!=null && cell.getHeight().getDifference(worker.getCurrentCell().getHeight())<=1 && cell.getHeight()!=Height.DOME) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * Actions made every turn
      *
@@ -143,7 +156,11 @@ public class Apollo extends God{
                     break;
 
                 case CHECK_WORKERS:
-                    return;
+                    if (!this.canMove(worker)) {
+                        board.removeWorker(worker);
+                        worker.setPreviousCell(null);
+                        worker.setCurrentCell(null);
+                    }
 
                 default:
                     throw new IllegalMoveException("Command type not valid for the current god");

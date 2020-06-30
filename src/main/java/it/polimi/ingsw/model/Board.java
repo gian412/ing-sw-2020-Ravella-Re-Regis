@@ -257,7 +257,7 @@ public class Board {
      * @param worker the worker to remove
      */
     public void removeWorker(Worker worker) {
-        // TODO: to implement
+        worker.getCurrentCell().setWorker(null);
     }
 
     public Cell[][] getNeighbors(Cell currentCell) {
@@ -357,6 +357,12 @@ public class Board {
             } else{
                 return false;
             }
+        }
+    }
+
+    public void checkChronusWin() {
+        if (this.proxy.getGods().containsValue(GodType.CHRONUS.getCapitalizedName())) {
+            // TODO: implement
         }
     }
 
