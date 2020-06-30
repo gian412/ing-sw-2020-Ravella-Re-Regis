@@ -16,16 +16,18 @@ public class BoardListener extends Observable<BoardProxy> implements Runnable {
 
     @Override
     public void run() {
+        BoardProxy message;
         while(true){
             try {
-                BoardProxy message = (BoardProxy)inputStream.readObject();
-                notify(message);
+                 message = (BoardProxy)inputStream.readObject();
             } catch (Exception e) {
                 BoardProxy disconnected = new BoardProxy();
                 disconnected.setStatus(GameState.TERMINATOR);
                 disconnected.setWinner("Server down");
                 notify(disconnected);
+                return;
             }
+            notify(message);
         }
     }
 }
