@@ -147,6 +147,17 @@ public class Controller implements Observer<PlayerCommand> {
 
             case CHANGE_TURN:
                 changeTurnPlayer();
+
+                for(Worker worker : getTurnPlayer().getWorkers())
+                    commitCommand(
+                            getTurnPlayer().getNAME(),
+                            new Command(
+                                    new Pair(0, 0),
+                                    CommandType.CHECK_WORKERS
+                            ),
+                            worker.getWORKER_ID().charAt(worker.getWORKER_ID().length() - 1)
+                    );
+
                 game.getBoard().updateProxyBoard();
                 break;
 
