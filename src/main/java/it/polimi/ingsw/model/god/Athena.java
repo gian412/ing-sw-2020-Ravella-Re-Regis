@@ -54,6 +54,13 @@ public class Athena extends God{
                             }
                             hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
+                            if (!hasWon) {
+                                if (!canBuild(worker)) {
+                                    board.removeWorker(worker);
+                                    worker.setPreviousCell(null);
+                                    worker.setCurrentCell(null);
+                                }
+                            }
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -94,7 +101,12 @@ public class Athena extends God{
                     break;
 
                 case CHECK_WORKERS:
-                    return;
+                    if (!canMove(worker)) {
+                        board.removeWorker(worker);
+                        worker.setPreviousCell(null);
+                        worker.setCurrentCell(null);
+                    }
+                    break;
 
                 default:
                     throw new IllegalMoveException("Command type not valid for the current god");
