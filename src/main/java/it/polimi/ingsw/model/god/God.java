@@ -154,7 +154,7 @@ public abstract class God {
     }
 
     /**
-     * CHeck if the given worker can build
+     * Check if the given worker can build
      *
      * @author Gianluca Regis
      * @param worker The worker to check

@@ -34,15 +34,30 @@ public class Zeus extends God {
         // build
         if( buildCell.getHeight() != Height.THIRD_FLOOR && buildCell.getHeight() != Height.DOME && !isDome ){
             board.build(originCell, pair, false );
-            /* Unreachable exception
-            try {
-                board.build(originCell, pair, false );
-            } catch (IllegalMoveException e){
-                throw new IllegalMoveException(e.getMessage());
-            }*/
         } else{
             throw new IllegalMoveException("Invalid BUILD parameters");
         }
+    }
+
+    /**
+     * Check if the given worker can build
+     *
+     * @author Gianluca Regis
+     * @param worker The worker to check
+     * @return true if it can move, false otherwise
+     */
+    @Override
+    protected boolean canBuild(Worker worker) {
+        Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());
+        for (Cell[] row : neighbors) {
+            for (Cell cell : row) {
+                if (cell!=null && cell.getWorker()==null && cell.getHeight()!=Height.DOME ||
+                        (cell!=null && cell==worker.getCurrentCell() && cell.getHeight()!=Height.THIRD_FLOOR && cell.getHeight()!=Height.DOME)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -76,6 +91,11 @@ public class Zeus extends God {
                             super.move(worker, command.coordinates);
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
+                            if (!hasWon && !this.canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setPreviousCell(null);
+                                worker.setCurrentCell(null);
+                            }
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -129,7 +149,12 @@ public class Zeus extends God {
                     break;
 
                 case CHECK_WORKERS:
-                    return;
+                    if (!canMove(worker)) {
+                        board.removeWorker(worker);
+                        worker.setPreviousCell(null);
+                        worker.setCurrentCell(null);
+                    }
+                    break;
 
                 default:
                     throw new IllegalMoveException("Command type not valid for the current god");
