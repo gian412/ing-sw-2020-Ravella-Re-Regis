@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.utils.GameState;
+import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
 
@@ -44,7 +45,7 @@ public class BoardPanel extends JPanel{
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	class OptionPanel extends JPanel {
-		public OptionPanel(boolean canForce){
+		public OptionPanel(boolean canForce, boolean canBuildDome){
 			super();
 
 			// Initialize and add a "end turn" button
@@ -99,6 +100,16 @@ public class BoardPanel extends JPanel{
 				});
 				this.add(forceButton);
 			}
+
+			if (canBuildDome) {
+				JButton buildDomeButton = new JButton("Build dome");
+				buildDomeButton.addActionListener(e -> {
+					directionsPanel.setCmd(CommandType.BUILD_DOME);
+					optionPanel.setVisible(false);
+					directionsPanel.setVisible(true);
+				});
+				this.add(buildDomeButton);
+			}
 		}
 	}
 
@@ -119,7 +130,7 @@ public class BoardPanel extends JPanel{
 		 * all the buttons have a dedicated actionListener that "puts together" the command
 		 * and pushes it through the outputstream
 		 */
-		public DirectionsPanel() {
+		public DirectionsPanel(GodType particularGod) {
 			super();
 			workerCell = new Pair(0, 0);
 
@@ -280,14 +291,37 @@ public class BoardPanel extends JPanel{
 				directionsPanel.setVisible(false);
 			});
 
-			// Add power to the central button
-			Image image;
-			try {
-				image = (ImageIO.read(new File(PATH + StaticFrame.getGod().getCapitalizedName() + "_power.png")))
-						.getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
-				btnPower = new JButton(new ImageIcon(image));
-			}catch(IOException e){
-				btnPower = new JButton();
+			if (particularGod!=null && particularGod == GodType.ZEUS) {
+				btnPower = new JButton("Under");
+				btnPower.addActionListener(e -> {
+					Pair destination = new Pair(workerCell.x, workerCell.y);
+					PlayerCommand toSend = new PlayerCommand(
+							StaticFrame.getPlayerName(),
+							new Command(destination, cmd),
+							workerIndex
+					);
+
+					try {
+						outputStream.reset();
+						outputStream.writeObject(toSend);
+						outputStream.flush();
+					}catch (IOException x){
+						JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+					}
+
+					directionsPanel.setVisible(false);
+
+				});
+			} else {
+				// Add power to the central button
+				Image image;
+				try {
+					image = (ImageIO.read(new File(PATH + StaticFrame.getGod().getCapitalizedName() + "_power.png")))
+							.getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
+					btnPower = new JButton(new ImageIcon(image));
+				}catch(IOException e){
+					btnPower = new JButton();
+				}
 			}
 
 			// Add components to the panel
@@ -396,12 +430,16 @@ public class BoardPanel extends JPanel{
 		this.outputStream = outputStream;
 
 		// Initialize option panel and add it to the board panel
-		optionPanel = new OptionPanel(StaticFrame.godCanForce());
+		optionPanel = new OptionPanel(StaticFrame.godCanForce(), StaticFrame.godCanBuildDome());
 		optionPanel.setVisible(false);
 		this.add(optionPanel);
 
 		// Initialize directions panel and add it to the board panel
-		directionsPanel = new DirectionsPanel();
+		if (StaticFrame.getGod() == GodType.ZEUS) {
+			directionsPanel = new DirectionsPanel(GodType.ZEUS);
+		} else {
+			directionsPanel = new DirectionsPanel(null);
+		}
 		directionsPanel.setVisible(false);
 		this.add(directionsPanel);
 
@@ -421,16 +459,17 @@ public class BoardPanel extends JPanel{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		BufferedImage boardImg;
+		Image boardImg;
 		try {
-			boardImg = ImageIO.read(new File(PATH + "_board.png"));
-		} catch (IOException e) {
+			boardImg = GetImages.getBoard();
+			//boardImg = ImageIO.read(new File(PATH + "_board.png"));
+		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
 
-		g.drawImage(boardImg, 0, 0, boardImg.getWidth(), boardImg.getHeight(), this);
-		this.setSize(boardImg.getWidth(), boardImg.getHeight());
+		g.drawImage(boardImg, 0, 0, boardImg.getWidth(null), boardImg.getHeight(null), this);
+		this.setSize(boardImg.getWidth(null), boardImg.getHeight(null));
 
 		if (actualBoard != null) {
 			BoardMaker.drawElements(g, actualBoard, firstOffset, cellLength, interstitialWidth, this);

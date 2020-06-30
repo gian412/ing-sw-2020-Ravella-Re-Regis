@@ -53,14 +53,14 @@ public class CliComposer {
             };
 
     final static int[][] LOSE =
-            {   {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0 ,1, 0, 0 ,1, 1, 1, 0, 0, 1, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0 ,0, 1, 0, 1, 0, 0, 0, 1},
-                {1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0}
-            };
+            {   {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0 ,1, 0, 0 ,1, 1, 1, 0, 0, 1, 1, 1, 0, 0},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0 ,0, 1, 0, 1, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0}
+            }; 
 
 
 
@@ -81,7 +81,7 @@ public class CliComposer {
     }
 
     /**
-     * create a formatted string for the title of the game
+     * create a formatted string for the title of the game 
      *
      * @authors Marco Re
      *
@@ -323,9 +323,10 @@ public class CliComposer {
         //create an array with the name of the players and remove the name of the turnplayer
         Object[] players3 = board.getGods().keySet().toArray();
         List<String> players2 = new ArrayList<>();
-        for( int i = 0; i < 3; i ++)
-            if(!players3[i].toString().equals(playerName))
-                players2.add(players3[i].toString());
+        if(numberOfPlayer ==3)
+            for( int i = 0; i < 3; i ++)
+                if(!players3[i].toString().equals(playerName))
+                    players2.add(players3[i].toString());
 
         //reset the screen and print the banner
         System.out.println(Ansi.RESET_SCREEN);

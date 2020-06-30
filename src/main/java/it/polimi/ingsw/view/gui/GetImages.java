@@ -12,15 +12,18 @@ import java.util.Map;
 
 public class GetImages {
 
-    public static Image img;
+    private static final int IMAGE_BASE_WIDTH = 84;
+    private static final int IMAGE_BASE_HEIGHT = 141;
+
+    private static Image board;
 
     // Load Gods' images and save them in an HashMap
-    public static Map<String, Image> godImages = new HashMap<>();
-    static {
+    private static Map<String, Image> godImages = new HashMap<>();
+    private static void loadGods() {
         for (GodType godType : GodType.values()) {
             try {
-                img = ImageIO.read(GetImages.class.getClassLoader().getResource(godType.getCapitalizedName() + ".png"));
-                godImages.put(godType.getName(), img);
+                Image imgGod = (ImageIO.read(GetImages.class.getClassLoader().getResource(godType.getCapitalizedName() + ".png"))).getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
+                godImages.put(godType.getName(), imgGod);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -28,12 +31,25 @@ public class GetImages {
     }
 
     // Load Workers' images and save them in an HashMap
-    public static Map<String, Image> workerImages = new HashMap<>();
-    static {
+    private static Map<String, Image> workerImages = new HashMap<>();
+    private static void loadWorkers() {
         for (GodType godType : GodType.values()) {
             try {
-                img = ImageIO.read(GetImages.class.getClassLoader().getResource(godType.getCapitalizedName() + "_Worker.png"));
-                godImages.put(godType.getName(), img);
+                Image imgWorker = ImageIO.read(GetImages.class.getClassLoader().getResource(godType.getCapitalizedName() + "_Worker.png"));
+                workerImages.put(godType.getName(), imgWorker);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    // Load Powers' images and save them in an HashMap
+    private static Map<String, Image> powerImages = new HashMap<>();
+    private static void loadPowers() {
+        for (GodType godType : GodType.values()) {
+            try {
+                Image imgPower = ImageIO.read(GetImages.class.getClassLoader().getResource(godType.getCapitalizedName() + "_power.png"));
+                powerImages.put(godType.getName(), imgPower);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -41,22 +57,24 @@ public class GetImages {
     }
 
     // Load board pieces and save them in an HashMap
-    public static Map<String, Image> piecesImages = new HashMap<>();
-    static {
+    private static Map<String, Image> piecesImages = new HashMap<>();
+    private static void loadPieces() {
         for (Height height : Height.values()) {
-            try {
-                img = ImageIO.read(GetImages.class.getClassLoader().getResource("_" + height.toString() + ".png"));
-                piecesImages.put(height.toString(), img);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (height!=Height.GROUND) {
+                try {
+                    Image imgPiece = ImageIO.read(GetImages.class.getClassLoader().getResource("_" + height.toString() + ".png"));
+                    piecesImages.put(height.toString(), imgPiece);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     // Load board image and save it in an Image
-    static {
+    private static void loadBoard() {
         try {
-            img = ImageIO.read(GetImages.class.getClassLoader().getResource("_BOARD.png"));
+            board = ImageIO.read(GetImages.class.getClassLoader().getResource("_BOARD.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,6 +113,10 @@ public class GetImages {
         return piecesImages.get(height.toUpperCase());
     }
 
+    public static Image getPower(String actualGod) {
+        return powerImages.get(actualGod.toUpperCase());
+    }
+
     /**
      * Method used to get the image of the board
      *
@@ -102,10 +124,18 @@ public class GetImages {
      * @return The Image of the board
      */
     public static Image getBoard() {
-        return img;
+        return board;
     }
 
-    /*public static void main (String[] args) {
+    public static void loadAll() {
+        loadGods();
+        loadWorkers();
+        loadPowers();
+        loadPieces();
+        loadBoard();
+    }
+
+    /*private static void main (String[] args) {
 
         for (Height height : Height.values()) {
             System.out.println(height.toString());

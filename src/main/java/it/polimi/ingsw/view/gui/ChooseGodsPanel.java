@@ -23,8 +23,7 @@ public class ChooseGodsPanel extends JPanel {
     private static final int IMAGE_BASE_HEIGHT = 141;
     private final int playerNumber;
     private String chooseGod = "";
-    private static final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
-    
+
     private final Socket socket;
     private final ReadProxyBoard reader;
     private BoardListener listener;

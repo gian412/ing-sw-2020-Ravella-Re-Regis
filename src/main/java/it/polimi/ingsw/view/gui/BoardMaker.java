@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.BoardProxy;
+import it.polimi.ingsw.model.Height;
 import it.polimi.ingsw.model.Pair;
 
 import javax.imageio.ImageIO;
@@ -30,13 +31,17 @@ public class BoardMaker {
      * @author Elia Ravella
      */
     public static void drawElements(Graphics g, BoardProxy board, int offset, int width, int interstitialWidth, Component obs){
-        BufferedImage first, second, third, dome, godImage;
+        Image first, second, third, dome, godImage;
         try {
-            first = ImageIO.read(new File(PATH + "_FIRST_FLOOR.png"));
+            first = GetImages.getPiece(Height.FIRST_FLOOR.toString());
+            second = GetImages.getPiece(Height.SECOND_FLOOR.toString());
+            third = GetImages.getPiece(Height.THIRD_FLOOR.toString());
+            dome = GetImages.getPiece(Height.DOME.toString());
+            /*first = ImageIO.read(new File(PATH + "_FIRST_FLOOR.png"));
             second = ImageIO.read(new File(PATH + "_SECOND_FLOOR.png"));
             third = ImageIO.read(new File(PATH + "_THIRD_FLOOR.png"));
-            dome = ImageIO.read(new File(PATH + "_DOME.png"));
-        }catch(IOException x){
+            dome = ImageIO.read(new File(PATH + "_DOME.png"));*/
+        }catch(Exception x){
             x.printStackTrace();
             return;
         }
@@ -93,8 +98,9 @@ public class BoardMaker {
             Pair actualCoordinates = deMap(board.getWorkers().get(board.getWorkers().keySet().toArray()[i]));
 
             try {
-                godImage = ImageIO.read(new File(PATH + god + "_Worker.png"));
-            }catch(IOException x){
+                godImage = GetImages.getWorkerImage(god);
+                //godImage = ImageIO.read(new File(PATH + god + "_Worker.png"));
+            }catch(Exception x){
                 x.printStackTrace();
                 return;
             }
