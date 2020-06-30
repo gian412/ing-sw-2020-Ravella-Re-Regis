@@ -117,7 +117,14 @@ public abstract class God {
         this.hasBuild = false;
     }
 
-    protected Cell checkCell(Pair coordinates) throws IllegalMoveException {
+    /**
+     * Check if the given cell is a valid cell or if it is out of bound
+     *
+     * @author Gianluca Regis
+     * @param coordinates The coordinates of the cell
+     * @return The cell if the coordinates are valid, null otherwise
+     */
+    protected Cell checkCell(Pair coordinates) {
         try {
             Cell cell = board.getCell(coordinates); // Get the reference to the cell
             return cell;
@@ -125,6 +132,28 @@ public abstract class God {
             return null;
 
         }
+    }
+
+    /**
+     * Check if the given worker can move
+     *
+     * @author Gianluca Regis
+     * @param worker The worker to check
+     * @return true if it can move, false otherwise
+     */
+    protected boolean canMove(Worker worker) {
+        return true;
+    }
+
+    /**
+     * CHeck if the given worker can build
+     *
+     * @author Gianluca Regis
+     * @param worker The worker to check
+     * @return true if it can move, false otherwise
+     */
+    protected boolean canBuild(Worker worker) {
+        return true;
     }
 
 }

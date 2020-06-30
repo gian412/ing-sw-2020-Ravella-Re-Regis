@@ -251,6 +251,53 @@ public class Board {
     }
 
     /**
+     * Remove a worker from the board
+     *
+     * @author Gianluca Regis
+     * @param worker the worker to remove
+     */
+    public void removeWorker(Worker worker) {
+        // TODO: to implement
+    }
+
+    public Cell[][] getNeighbors(Cell currentCell) {
+
+        Cell[][] neighbors = new Cell[3][3];
+        Pair[][] coordinates = {
+                {
+                    new Pair(currentCell.X-1, currentCell.Y-1),
+                    new Pair(currentCell.X, currentCell.Y-1),
+                    new Pair(currentCell.X+1, currentCell.Y-1)
+                },
+                {
+                    new Pair(currentCell.X-1, currentCell.Y),
+                    new Pair(currentCell.X, currentCell.Y),
+                    new Pair(currentCell.X+1, currentCell.Y)
+                },
+                {
+                    new Pair(currentCell.X-1, currentCell.Y+1),
+                    new Pair(currentCell.X, currentCell.Y+1),
+                    new Pair(currentCell.X+1, currentCell.Y+1)
+                }
+        };
+
+        for (int i=0; i<3; i++) {
+            for (int j=0; j<3; j++) {
+                try {
+                    Cell cell = this.getCell(coordinates[i][j]); // Get the reference to the cell
+                    neighbors[i][j] = cell;
+                } catch (IndexOutOfBoundsException e) {
+                    neighbors[i][j] = null;
+
+                }
+            }
+        }
+
+        return neighbors;
+
+    }
+
+    /**
      * check the winning condition
      *
      * @author Gianluca regis
