@@ -156,11 +156,6 @@ public class BoardPanel extends JPanel{
 
 				// check if the turn should end
 				turnMoves.add(cmd);
-				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
-					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
-					remoteChangeturn();
-					turnMoves.clear();
-				}
 			});
 			btnNorth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y - 1);
@@ -182,11 +177,6 @@ public class BoardPanel extends JPanel{
 
 				// check if the turn should end
 				turnMoves.add(cmd);
-				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
-					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
-					remoteChangeturn();
-					turnMoves.clear();
-				}
 			});
 			btnNorthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y - 1);
@@ -208,11 +198,6 @@ public class BoardPanel extends JPanel{
 
 				// check if the turn should end
 				turnMoves.add(cmd);
-				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
-					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
-					remoteChangeturn();
-					turnMoves.clear();
-				}
 			});
 			btnWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y);
@@ -234,11 +219,6 @@ public class BoardPanel extends JPanel{
 
 				// check if the turn should end
 				turnMoves.add(cmd);
-				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
-					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
-					remoteChangeturn();
-					turnMoves.clear();
-				}
 			});
 			btnEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y);
@@ -260,11 +240,6 @@ public class BoardPanel extends JPanel{
 
 				// check if the turn should end
 				turnMoves.add(cmd);
-				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
-					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
-					remoteChangeturn();
-					turnMoves.clear();
-				}
 			});
 			btnSouthWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y + 1);
@@ -286,11 +261,6 @@ public class BoardPanel extends JPanel{
 
 				// check if the turn should end
 				turnMoves.add(cmd);
-				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
-					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
-					remoteChangeturn();
-					turnMoves.clear();
-				}
 			});
 			btnSouth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y + 1);
@@ -312,11 +282,6 @@ public class BoardPanel extends JPanel{
 
 				// check if the turn should end
 				turnMoves.add(cmd);
-				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
-					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
-					remoteChangeturn();
-					turnMoves.clear();
-				}
 			});
 			btnSouthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y + 1);
@@ -338,11 +303,6 @@ public class BoardPanel extends JPanel{
 
 				// check if the turn should end
 				turnMoves.add(cmd);
-				if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
-					JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
-					remoteChangeturn();
-					turnMoves.clear();
-				}
 			});
 
 			if (particularGod == GodType.ZEUS) {
@@ -367,11 +327,6 @@ public class BoardPanel extends JPanel{
 
 					// check if the turn should end
 					turnMoves.add(cmd);
-					if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
-						JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
-						remoteChangeturn();
-						turnMoves.clear();
-					}
 				});
 			} else {
 				// Add power to the central button
@@ -437,7 +392,12 @@ public class BoardPanel extends JPanel{
 						refreshView();
 						break;
 					case PLAYING:
-						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+						if(message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
+							remoteChangeturn();
+							turnMoves.clear();
+						}
+						else if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
 							JOptionPane.showMessageDialog(parentComponent, "Select the worker that you want to play with in this turn");
 						}
 						refreshView();
@@ -477,6 +437,9 @@ public class BoardPanel extends JPanel{
 			}else{
 				if(message.getTurnPlayer().equals(StaticFrame.getPlayerName()))
 					JOptionPane.showMessageDialog(StaticFrame.mainFrame, message.getIllegalMoveString());
+
+				turnMoves.remove(turnMoves.get(turnMoves.size() - 1));
+
 				refreshView();
 			}
 		}
