@@ -291,8 +291,8 @@ public class BoardPanel extends JPanel{
 				directionsPanel.setVisible(false);
 			});
 
-			if (particularGod!=null && particularGod == GodType.ZEUS) {
-				btnPower = new JButton("Under");
+			if (particularGod == GodType.ZEUS) {
+				btnPower = new JButton("UNDER");
 				btnPower.addActionListener(e -> {
 					Pair destination = new Pair(workerCell.x, workerCell.y);
 					PlayerCommand toSend = new PlayerCommand(
@@ -310,7 +310,6 @@ public class BoardPanel extends JPanel{
 					}
 
 					directionsPanel.setVisible(false);
-
 				});
 			} else {
 				// Add power to the central button
@@ -435,11 +434,7 @@ public class BoardPanel extends JPanel{
 		this.add(optionPanel);
 
 		// Initialize directions panel and add it to the board panel
-		if (StaticFrame.getGod() == GodType.ZEUS) {
-			directionsPanel = new DirectionsPanel(GodType.ZEUS);
-		} else {
-			directionsPanel = new DirectionsPanel(null);
-		}
+		directionsPanel = new DirectionsPanel(StaticFrame.getGod());
 		directionsPanel.setVisible(false);
 		this.add(directionsPanel);
 
