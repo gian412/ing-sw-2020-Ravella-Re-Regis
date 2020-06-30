@@ -392,6 +392,7 @@ public class BoardPanel extends JPanel{
 						refreshView();
 						break;
 					case PLAYING:
+						// todo WATCH OUT FOR "ISTURNENDED" CALL ON NULL LISTS
 						if(message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
 							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
 							remoteChangeturn();
