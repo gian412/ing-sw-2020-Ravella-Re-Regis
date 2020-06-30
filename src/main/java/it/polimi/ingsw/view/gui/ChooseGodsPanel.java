@@ -23,8 +23,7 @@ public class ChooseGodsPanel extends JPanel {
     private static final int IMAGE_BASE_HEIGHT = 141;
     private final int playerNumber;
     private String chooseGod = "";
-    private static final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
-    
+
     private final Socket socket;
     private final ReadProxyBoard reader;
     private BoardListener listener;
@@ -145,7 +144,6 @@ public class ChooseGodsPanel extends JPanel {
             Image image;
             JButton imageButton;
             try {
-                // image = ImageIO.read(new File(PATH + actualGod + ".png")).getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
                 image = GetImages.getGodImage(actualGod);
                 imageButton = new JButton(new ImageIcon(image));
             } catch (Exception e) {
@@ -172,7 +170,7 @@ public class ChooseGodsPanel extends JPanel {
         JButton submit = new JButton("Submit your choice");
         submit.addActionListener(e -> {
 
-            if (chooseGod!=null && !chooseGod.isEmpty() && chooseGod.split(" ").length==playerNumber ) {
+            if (chooseGod != null && !chooseGod.isEmpty() && chooseGod.split(" ").length==playerNumber ) {
                 try {
                     PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.SET_GODS), 0);
                     commandToSend.setMessage(chooseGod);

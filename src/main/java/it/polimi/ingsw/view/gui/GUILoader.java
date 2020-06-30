@@ -13,6 +13,7 @@ public class GUILoader{
     public static void loadGUI() {
         StaticFrame.initFrame("Santorini");
         StaticFrame.addPanel(new LoginPanel());
+        GetImages.loadAll();
 
         StaticFrame.setSize(835, 831);
         StaticFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);

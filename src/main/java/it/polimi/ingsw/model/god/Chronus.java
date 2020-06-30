@@ -15,7 +15,7 @@ public class Chronus extends God {
      */
     // class constructor with the initialization of board using the super constructor
     public Chronus(Board board) {
-        super(board, GodType.CHARON);
+        super(board, GodType.CHRONUS);
     }
 
     /**
