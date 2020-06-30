@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.utils.GameState;
+import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
 
@@ -119,7 +120,7 @@ public class BoardPanel extends JPanel{
 		 * all the buttons have a dedicated actionListener that "puts together" the command
 		 * and pushes it through the outputstream
 		 */
-		public DirectionsPanel() {
+		public DirectionsPanel(GodType particularGod) {
 			super();
 			workerCell = new Pair(0, 0);
 
@@ -280,14 +281,37 @@ public class BoardPanel extends JPanel{
 				directionsPanel.setVisible(false);
 			});
 
-			// Add power to the central button
-			Image image;
-			try {
-				image = (ImageIO.read(new File(PATH + StaticFrame.getGod().getCapitalizedName() + "_power.png")))
-						.getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
-				btnPower = new JButton(new ImageIcon(image));
-			}catch(IOException e){
-				btnPower = new JButton();
+			if (particularGod!=null && particularGod == GodType.ZEUS) {
+				btnPower = new JButton("Under");
+				btnPower.addActionListener(e -> {
+					Pair destination = new Pair(workerCell.x, workerCell.y);
+					PlayerCommand toSend = new PlayerCommand(
+							StaticFrame.getPlayerName(),
+							new Command(destination, cmd),
+							workerIndex
+					);
+
+					try {
+						outputStream.reset();
+						outputStream.writeObject(toSend);
+						outputStream.flush();
+					}catch (IOException x){
+						JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+					}
+
+					directionsPanel.setVisible(false);
+
+				});
+			} else {
+				// Add power to the central button
+				Image image;
+				try {
+					image = (ImageIO.read(new File(PATH + StaticFrame.getGod().getCapitalizedName() + "_power.png")))
+							.getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
+					btnPower = new JButton(new ImageIcon(image));
+				}catch(IOException e){
+					btnPower = new JButton();
+				}
 			}
 
 			// Add components to the panel
@@ -401,7 +425,11 @@ public class BoardPanel extends JPanel{
 		this.add(optionPanel);
 
 		// Initialize directions panel and add it to the board panel
-		directionsPanel = new DirectionsPanel();
+		if (StaticFrame.getGod() == GodType.ZEUS) {
+			directionsPanel = new DirectionsPanel(GodType.ZEUS);
+		} else {
+			directionsPanel = new DirectionsPanel(null);
+		}
 		directionsPanel.setVisible(false);
 		this.add(directionsPanel);
 
