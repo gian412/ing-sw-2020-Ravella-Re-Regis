@@ -49,9 +49,13 @@ public class BoardPanel extends JPanel{
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	class OptionPanel extends JPanel {
+
+		private boolean isPlaying;
+
 		public OptionPanel(boolean canForce, boolean canBuildDome){
 			super();
 
+			isPlaying = false;
 			// Initialize and add a "end turn" button
 			JButton endTurnButton = new JButton("End Turn");
 			endTurnButton.addActionListener(e -> {
@@ -101,6 +105,14 @@ public class BoardPanel extends JPanel{
 				this.add(buildDomeButton);
 			}
 		}
+
+		public boolean isPlaying() {
+			return isPlaying;
+		}
+
+		public void setPlaying(boolean playing) {
+			isPlaying = playing;
+		}
 	}
 
 	/**
@@ -140,58 +152,90 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
 
+				// if the player performed a "move" the worker position must be updated
+				if(cmd.equals(CommandType.MOVE))
+					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
+				optionPanel.setVisible(true);
 			});
 
 			btnNorth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
 
+				// if the player performed a "move" the worker position must be updated
+				if(cmd.equals(CommandType.MOVE))
+					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
+				optionPanel.setVisible(true);
 			});
 			btnNorthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
 
+				// if the player performed a "move" the worker position must be updated
+				if(cmd.equals(CommandType.MOVE))
+					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
+				optionPanel.setVisible(true);
 			});
 			btnWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y);
 				sendCommand(destination, cmd, workerIndex);
 
+				// if the player performed a "move" the worker position must be updated
+				if(cmd.equals(CommandType.MOVE))
+					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
+				optionPanel.setVisible(true);
 			});
 			btnEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y);
 				sendCommand(destination, cmd, workerIndex);
 
+				// if the player performed a "move" the worker position must be updated
+				if(cmd.equals(CommandType.MOVE))
+					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
+				optionPanel.setVisible(true);
 			});
 			btnSouthWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
 
+				// if the player performed a "move" the worker position must be updated
+				if(cmd.equals(CommandType.MOVE))
+					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
+				optionPanel.setVisible(true);
 			});
 			btnSouth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
 
+				// if the player performed a "move" the worker position must be updated
+				if(cmd.equals(CommandType.MOVE))
+					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
+				optionPanel.setVisible(true);
 			});
 			btnSouthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
 
+				// if the player performed a "move" the worker position must be updated
+				if(cmd.equals(CommandType.MOVE))
+					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
+				optionPanel.setVisible(true);
 			});
 
 			if (particularGod == GodType.ZEUS) {
@@ -200,8 +244,12 @@ public class BoardPanel extends JPanel{
 					Pair destination = new Pair(workerCell.x, workerCell.y);
 					sendCommand(destination, cmd, workerIndex);
 
+					// if the player performed a "move" the worker position must be updated
+					if(cmd.equals(CommandType.MOVE))
+						workerCell = destination;
 					registerMove(StaticFrame.getGod(), cmd, destination);
 					directionsPanel.setVisible(false);
+					optionPanel.setVisible(true);
 				});
 			} else {
 				// Add power to the central button
@@ -454,9 +502,10 @@ public class BoardPanel extends JPanel{
 						cell = BoardMaker.map(e.getX(), e.getY());
 
 						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
-							// Check if there is a worker in the selected cell
-							if (checkWorkerPresence(cell)) {
+							// Check if there is a worker in the selected cell, and if is'nt already selected another one
+							if (checkWorkerPresence(cell) && !optionPanel.isPlaying()) {
 								optionPanel.setVisible(true);
+								optionPanel.setPlaying(true);
 							}
 						} else {
 							JOptionPane.showMessageDialog( StaticFrame.mainFrame, "it is not your turn!");
@@ -519,6 +568,9 @@ public class BoardPanel extends JPanel{
 	}
 
 	private void remoteChangeTurn(){
+		optionPanel.setPlaying(false);
+		optionPanel.setVisible(false);
+
 		PlayerCommand endTurn = new PlayerCommand(
 				StaticFrame.getPlayerName(),
 				new Command(new Pair(0, 0), CommandType.CHANGE_TURN),
@@ -553,7 +605,7 @@ public class BoardPanel extends JPanel{
 
 
 	private void registerMove(GodType god, CommandType cmd, Pair destination) {
-		if(god.getCapitalizedName() == "Triton"){
+		if(god.getCapitalizedName().equals("Triton")){
 			if(!(cmd.equals(CommandType.MOVE) || (destination.x == 4 || destination.y == 4 || destination.x == 0 || destination.y == 0)))
 				turnMoves.add(cmd);
 		} else {
