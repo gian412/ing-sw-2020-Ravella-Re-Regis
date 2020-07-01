@@ -517,7 +517,7 @@ public class BoardPanel extends JPanel{
 			directionsPanel.setWorkerCell(cell);
 			return true;
 		}
-		if (actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0") != null && actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1").equals(cell)) {
+		if (actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1") != null && actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1").equals(cell)) {
 			directionsPanel.setWorkerIndex(1);
 			directionsPanel.setWorkerCell(cell);
 			return true;
