@@ -4,11 +4,7 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Height;
 import it.polimi.ingsw.model.Pair;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class BoardMaker {
 
@@ -33,10 +29,10 @@ public class BoardMaker {
     public static void drawElements(Graphics g, BoardProxy board, int offset, int width, int interstitialWidth, Component obs){
         Image first, second, third, dome, godImage;
         try {
-            first = GetImages.getPiece(Height.FIRST_FLOOR.toString());
-            second = GetImages.getPiece(Height.SECOND_FLOOR.toString());
-            third = GetImages.getPiece(Height.THIRD_FLOOR.toString());
-            dome = GetImages.getPiece(Height.DOME.toString());
+            first = GetImages.getPieceImage(Height.FIRST_FLOOR.toString());
+            second = GetImages.getPieceImage(Height.SECOND_FLOOR.toString());
+            third = GetImages.getPieceImage(Height.THIRD_FLOOR.toString());
+            dome = GetImages.getPieceImage(Height.DOME.toString());
         }catch(Exception x){
             x.printStackTrace();
             return;

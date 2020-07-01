@@ -11,18 +11,14 @@ import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BoardPanel extends JPanel{
 	
@@ -228,10 +224,9 @@ public class BoardPanel extends JPanel{
 				// Add power to the central button
 				Image image;
 				try {
-					image = (ImageIO.read(new File(PATH + StaticFrame.getGod().getCapitalizedName() + "_power.png")))
-							.getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
+					image = (GetImages.getPowerImage(StaticFrame.getGod().toString())).getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
 					btnPower = new JButton(new ImageIcon(image));
-				}catch(IOException e){
+				}catch(Exception e){
 					btnPower = new JButton();
 				}
 			}
@@ -302,7 +297,7 @@ public class BoardPanel extends JPanel{
 									directionsPanel.setWorkerCell(message.getWorkers().get(StaticFrame.getPlayerName() + directionsPanel.getWorkerIndex()));
 								}
 							} else {
-								JOptionPane.showMessageDialog(StaticFrame.mainFrame, "select your fucking worker");
+								JOptionPane.showMessageDialog(StaticFrame.mainFrame, "select the worker for this turn");
 							}
 						}
 						actualBoard = message;
