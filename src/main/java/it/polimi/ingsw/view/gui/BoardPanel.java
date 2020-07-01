@@ -571,6 +571,8 @@ public class BoardPanel extends JPanel{
 		optionPanel.setPlaying(false);
 		optionPanel.setVisible(false);
 
+		turnMoves.clear();
+
 		PlayerCommand endTurn = new PlayerCommand(
 				StaticFrame.getPlayerName(),
 				new Command(new Pair(0, 0), CommandType.CHANGE_TURN),
