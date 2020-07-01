@@ -71,7 +71,7 @@ public class Board {
 
     /**
      *
-     * @param message
+     * @param message the list of gods
      */
     public void setChoosingGods(String message){
         proxy.setChoosingGods(message);
@@ -366,8 +366,11 @@ public class Board {
 
         Map<String, String> gods = this.proxy.getGods();
         if (gods!=null && gods.containsValue(GodType.CHRONUS.getCapitalizedName()) && countCompleteTower()) {
-            hasWon = getTurnPlayer(); // TODO: get Chronus' player
-            proxy.setWinner(getTurnPlayer().getNAME()); // TODO: get Chronus' player name
+            String winPlayer = "";
+            for(String x : gods.keySet())
+                if(gods.get(x).equals("Chronus")) winPlayer = x;
+
+            proxy.setWinner(winPlayer);
             proxy.setStatus(GameState.TERMINATOR);
             proxy.updateProxy();
         }
