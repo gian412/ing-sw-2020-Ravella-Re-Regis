@@ -34,77 +34,75 @@ public class Chronus extends God {
     public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
 
         if (command != null){
-            hasWon = board.checkWin(worker);
-            if(!hasWon){
 
-                if (checkCell(command.coordinates) == null) {
+            if (checkCell(command.coordinates) == null) {
                 throw new IllegalMoveException("Invalid cell");
             }
 
-                switch (command.commandType){
-                    case MOVE:
-                        if (!hasMoved && !hasBuild) {
-                            try {
-                                super.move(worker, command.coordinates);
-                                hasMoved = true;
-                                hasWon = board.checkWin(worker);
-                                if (!hasWon && !canBuild(worker)) {
-                                    board.removeWorker(worker);
-                                    worker.setPreviousCell(null);
-                                    worker.setCurrentCell(null);
-                                }
-                                break;
-                            } catch (IllegalMoveException e) {
-                                throw new IllegalMoveException(e.getMessage());
+            switch (command.commandType){
+                case MOVE:
+                    if (!hasMoved && !hasBuild && !hasWon) {
+                        try {
+                            super.move(worker, command.coordinates);
+                            hasMoved = true;
+                            hasWon = board.checkWin(worker);
+                            if (!hasWon && !canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setPreviousCell(null);
+                                worker.setCurrentCell(null);
                             }
-                        } else {
-                            throw new IllegalMoveException("Invalid command sequence");
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException(e.getMessage());
                         }
+                    } else {
+                        throw new IllegalMoveException("Invalid command sequence");
+                    }
 
-                    case BUILD:
-                        if (hasMoved && !hasBuild){
-                            try {
-                                super.build(worker.getCurrentCell(), command.coordinates, false);
-                                hasBuild = true;
-                                hasWon = board.checkWin(worker);
-                                break;
-                            } catch (IllegalMoveException e) {
-                                throw new IllegalMoveException(e.getMessage());
-                            }
-                        } else{
-                            throw new IllegalMoveException("Invalid command sequence");
+                case BUILD:
+                    if (hasMoved && !hasBuild && !hasWon){
+                        try {
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
+                            hasBuild = true;
+                            hasWon = board.checkWin(worker);
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException(e.getMessage());
                         }
+                    } else{
+                        throw new IllegalMoveException("Invalid command sequence");
+                    }
 
-                    case BUILD_DOME:
-                        if (hasMoved && !hasBuild && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){
-                            try {
-                                super.build(worker.getCurrentCell(), command.coordinates, false);
-                                hasBuild = true;
-                                hasWon = board.checkWin(worker);
-                                break;
-                            } catch (IllegalMoveException e) {
-                                throw new IllegalMoveException(e.getMessage());
-                            }
-                        } else {
-                            throw new IllegalMoveException("Invalid command sequence");
+                case BUILD_DOME:
+                    if (hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){
+                        try {
+                            super.build(worker.getCurrentCell(), command.coordinates, false);
+                            hasBuild = true;
+                            hasWon = board.checkWin(worker);
+                            break;
+                        } catch (IllegalMoveException e) {
+                            throw new IllegalMoveException(e.getMessage());
                         }
+                    } else {
+                        throw new IllegalMoveException("Invalid command sequence");
+                    }
 
-                    case RESET:
-                        super.resetLocalVariables();
-                        break;
+                case RESET:
+                    super.resetLocalVariables();
+                    break;
 
-                    case CHECK_WORKERS:
-                        if (worker.getCurrentCell()!=null && !canMove(worker)) {
-                            board.removeWorker(worker);
-                            worker.setPreviousCell(null);
-                            worker.setCurrentCell(null);
-                        }
-                        break;
+                case CHECK_WORKERS:
+                    if (worker.getCurrentCell()!=null && !canMove(worker)) {
+                        board.removeWorker(worker);
+                        worker.setPreviousCell(null);
+                        worker.setCurrentCell(null);
+                    }
+                    break;
 
-                    default:
-                        throw new IllegalMoveException("Command type not valid for the current god");
-                }
+                default:
+                    throw new IllegalMoveException("Command type not valid for the current god");
             }
+
         } else{
             throw new NullPointerException("The passed command is null");
         }
