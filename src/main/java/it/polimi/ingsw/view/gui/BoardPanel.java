@@ -512,17 +512,16 @@ public class BoardPanel extends JPanel{
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	private boolean checkWorkerPresence(Pair cell) {
-		if(actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0").equals(cell)){
+		if (actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0") != null && actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0").equals(cell)) {
 			directionsPanel.setWorkerIndex(0);
 			directionsPanel.setWorkerCell(cell);
 			return true;
 		}
-		else if(actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1").equals(cell)){
+		if (actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0") != null && actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1").equals(cell)) {
 			directionsPanel.setWorkerIndex(1);
 			directionsPanel.setWorkerCell(cell);
 			return true;
-		}
-		else return  false;
+		} else return false;
 	}
 
 	private void showLogin() {
