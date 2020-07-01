@@ -42,7 +42,12 @@ public class Charon extends God {
         for (Cell[] row : neighbors) {
             for (Cell cell : row) {
                 if (cell!=null && cell!=worker.getCurrentCell() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<=1 && cell.getHeight()!=Height.DOME) {
-                    return true;
+                    if (cell.getWorker()==null) {
+                        return true;
+                    }
+                    Pair direction = worker.getCurrentCell().getDirection( cell );
+                    Cell nextCell = checkCell( new Pair( cell.X - direction.x, cell.Y - direction.y ) );
+                    return (nextCell != null && nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME);
                 }
             }
         }
