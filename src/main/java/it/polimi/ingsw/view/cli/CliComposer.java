@@ -760,7 +760,7 @@ public class CliComposer {
                     }
 
                     for (int j = 0; j < 15; j++) {
-                        if (YOU[i][j] == 0)
+                        if (WIN[i][j] == 0)
                             write.append(' ');
                         else
                             write.append(Unicode.SQUARE);
@@ -788,8 +788,8 @@ public class CliComposer {
                         write.append(' ');
                     }
 
-                    for (int j = 0; j < 17; j++) {
-                        if (YOU[i][j] == 0)
+                    for (int j = 0; j < 23; j++) {
+                        if (LOSE[i][j] == 0)
                             write.append(' ');
                         else
                             write.append(Unicode.SQUARE);
