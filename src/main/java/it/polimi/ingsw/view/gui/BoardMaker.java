@@ -37,10 +37,6 @@ public class BoardMaker {
             second = GetImages.getPiece(Height.SECOND_FLOOR.toString());
             third = GetImages.getPiece(Height.THIRD_FLOOR.toString());
             dome = GetImages.getPiece(Height.DOME.toString());
-            /*first = ImageIO.read(new File(PATH + "_FIRST_FLOOR.png"));
-            second = ImageIO.read(new File(PATH + "_SECOND_FLOOR.png"));
-            third = ImageIO.read(new File(PATH + "_THIRD_FLOOR.png"));
-            dome = ImageIO.read(new File(PATH + "_DOME.png"));*/
         }catch(Exception x){
             x.printStackTrace();
             return;

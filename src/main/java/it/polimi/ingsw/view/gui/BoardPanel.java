@@ -138,195 +138,52 @@ public class BoardPanel extends JPanel{
 			// Add action listeners
 			btnNorthWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y - 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				sendCommand(destination, cmd, workerIndex);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
 			});
+
 			btnNorth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y - 1);
-				PlayerCommand toSend = new PlayerCommand(
-					StaticFrame.getPlayerName(),
-					new Command(destination, cmd),
-					workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				sendCommand(destination, cmd, workerIndex);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
 			});
 			btnNorthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y - 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				sendCommand(destination, cmd, workerIndex);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
 			});
 			btnWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				sendCommand(destination, cmd, workerIndex);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
 			});
 			btnEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				sendCommand(destination, cmd, workerIndex);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
 			});
 			btnSouthWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y + 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				sendCommand(destination, cmd, workerIndex);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
 			});
 			btnSouth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y + 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				sendCommand(destination, cmd, workerIndex);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
 			});
 			btnSouthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y + 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
-
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				sendCommand(destination, cmd, workerIndex);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
 			});
 
 			if (particularGod == GodType.ZEUS) {
 				btnPower = new JButton("UNDER");
 				btnPower.addActionListener(e -> {
 					Pair destination = new Pair(workerCell.x, workerCell.y);
-					PlayerCommand toSend = new PlayerCommand(
-							StaticFrame.getPlayerName(),
-							new Command(destination, cmd),
-							workerIndex
-					);
-
-					try {
-						outputStream.reset();
-						outputStream.writeObject(toSend);
-						outputStream.flush();
-					}catch (IOException x){
-						JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-					}
-
+					sendCommand(destination, cmd, workerIndex);
 					directionsPanel.setVisible(false);
-
-					// check if the turn should end
-					turnMoves.add(cmd);
 				});
 			} else {
 				// Add power to the central button
@@ -392,13 +249,7 @@ public class BoardPanel extends JPanel{
 						refreshView();
 						break;
 					case PLAYING:
-						// todo WATCH OUT FOR "ISTURNENDED" CALL ON NULL LISTS
-						if(message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
-							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
-							remoteChangeturn();
-							turnMoves.clear();
-						}
-						else if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
 							JOptionPane.showMessageDialog(parentComponent, "Select the worker that you want to play with in this turn");
 						}
 						refreshView();
@@ -439,8 +290,6 @@ public class BoardPanel extends JPanel{
 				if(message.getTurnPlayer().equals(StaticFrame.getPlayerName()))
 					JOptionPane.showMessageDialog(StaticFrame.mainFrame, message.getIllegalMoveString());
 
-				turnMoves.remove(turnMoves.get(turnMoves.size() - 1));
-
 				refreshView();
 			}
 		}
@@ -454,7 +303,7 @@ public class BoardPanel extends JPanel{
 		reader = new ReadProxyBoard(this);
 		this.outputStream = outputStream;
 
-		// load dataset for god moves
+		// Loads gods possible move, turn moves dataset
 		GodMoves.PossibleMoveInit();
 		turnMoves = new ArrayList<>();
 
@@ -653,6 +502,23 @@ public class BoardPanel extends JPanel{
 		}catch (IOException x){
 			JOptionPane.showMessageDialog(null, "Unknown problem with the network communications!");
 		}
+	}
+
+	private void sendCommand(Pair cell, CommandType command, int workerIndex){
+		PlayerCommand toSend = new PlayerCommand(
+				StaticFrame.getPlayerName(),
+				new Command(cell, command),
+				workerIndex
+		);
+
+		try {
+			outputStream.reset();
+			outputStream.writeObject(toSend);
+			outputStream.flush();
+		}catch (IOException x){
+			JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+		}
+
 	}
 
 }
