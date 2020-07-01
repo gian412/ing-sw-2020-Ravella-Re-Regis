@@ -18,6 +18,14 @@ public class LoginPanel extends JPanel {
     JTextField txtName, txtAge;
     JLabel labelName, labelAge, labelError;
     JButton btnLogin;
+    JPanel waitingPanel;
+
+    class WaitingPanel extends JPanel {
+        public WaitingPanel() {
+            JLabel waitingLabel = new JLabel("Waiting for other users connection");
+            this.add(waitingLabel);
+        }
+    }
 
     /**
      *
@@ -27,6 +35,9 @@ public class LoginPanel extends JPanel {
      *
      */
     public LoginPanel() {
+
+        // Initialize waitingPanel
+        waitingPanel = new WaitingPanel();
 
         // Set panel layout
         GridBagLayout layout = new GridBagLayout();
