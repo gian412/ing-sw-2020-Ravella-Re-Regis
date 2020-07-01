@@ -11,18 +11,14 @@ import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BoardPanel extends JPanel{
 	
@@ -49,13 +45,17 @@ public class BoardPanel extends JPanel{
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	class OptionPanel extends JPanel {
+
+		private boolean isPlaying;
+
 		public OptionPanel(boolean canForce, boolean canBuildDome){
 			super();
 
+			isPlaying = false;
 			// Initialize and add a "end turn" button
 			JButton endTurnButton = new JButton("End Turn");
 			endTurnButton.addActionListener(e -> {
-				remoteChangeturn();
+				remoteChangeTurn();
 				optionPanel.setVisible(false);
 			});
 			this.add(endTurnButton);
@@ -101,6 +101,14 @@ public class BoardPanel extends JPanel{
 				this.add(buildDomeButton);
 			}
 		}
+
+		public boolean isPlaying() {
+			return isPlaying;
+		}
+
+		public void setPlaying(boolean playing) {
+			isPlaying = playing;
+		}
 	}
 
 	/**
@@ -138,204 +146,87 @@ public class BoardPanel extends JPanel{
 			// Add action listeners
 			btnNorthWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y - 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
+				sendCommand(destination, cmd, workerIndex);
 
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
+				optionPanel.setVisible(true);
 			});
+
 			btnNorth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y - 1);
-				PlayerCommand toSend = new PlayerCommand(
-					StaticFrame.getPlayerName(),
-					new Command(destination, cmd),
-					workerIndex
-				);
+				sendCommand(destination, cmd, workerIndex);
 
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
+				optionPanel.setVisible(true);
 			});
 			btnNorthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y - 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
+				sendCommand(destination, cmd, workerIndex);
 
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
+				optionPanel.setVisible(true);
 			});
 			btnWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
+				sendCommand(destination, cmd, workerIndex);
 
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
+				optionPanel.setVisible(true);
 			});
 			btnEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
+				sendCommand(destination, cmd, workerIndex);
 
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
+				optionPanel.setVisible(true);
 			});
 			btnSouthWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y + 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
+				sendCommand(destination, cmd, workerIndex);
 
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
+				optionPanel.setVisible(true);
 			});
 			btnSouth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y + 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
+				sendCommand(destination, cmd, workerIndex);
 
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
+				optionPanel.setVisible(true);
 			});
 			btnSouthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y + 1);
-				PlayerCommand toSend = new PlayerCommand(
-						StaticFrame.getPlayerName(),
-						new Command(destination, cmd),
-						workerIndex
-				);
+				sendCommand(destination, cmd, workerIndex);
 
-				try {
-					outputStream.reset();
-					outputStream.writeObject(toSend);
-					outputStream.flush();
-				}catch (IOException x){
-					JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-				}
-
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
-
-				// check if the turn should end
-				turnMoves.add(cmd);
+				optionPanel.setVisible(true);
 			});
 
 			if (particularGod == GodType.ZEUS) {
 				btnPower = new JButton("UNDER");
 				btnPower.addActionListener(e -> {
 					Pair destination = new Pair(workerCell.x, workerCell.y);
-					PlayerCommand toSend = new PlayerCommand(
-							StaticFrame.getPlayerName(),
-							new Command(destination, cmd),
-							workerIndex
-					);
+					sendCommand(destination, cmd, workerIndex);
 
-					try {
-						outputStream.reset();
-						outputStream.writeObject(toSend);
-						outputStream.flush();
-					}catch (IOException x){
-						JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
-					}
-
+					registerMove(StaticFrame.getGod(), cmd, destination);
 					directionsPanel.setVisible(false);
-
-					// check if the turn should end
-					turnMoves.add(cmd);
+					optionPanel.setVisible(true);
 				});
 			} else {
 				// Add power to the central button
 				Image image;
 				try {
-					image = (ImageIO.read(new File(PATH + StaticFrame.getGod().getCapitalizedName() + "_power.png")))
-							.getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
+					image = (GetImages.getPowerImage(StaticFrame.getGod().toString())).getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
 					btnPower = new JButton(new ImageIcon(image));
-				}catch(IOException e){
+				}catch(Exception e){
 					btnPower = new JButton();
 				}
 			}
@@ -365,6 +256,10 @@ public class BoardPanel extends JPanel{
 		public void setCmd(CommandType cmd) {
 			this.cmd = cmd;
 		}
+
+		public int getWorkerIndex(){
+			return workerIndex;
+		}
 	}
 
 	/**
@@ -382,25 +277,30 @@ public class BoardPanel extends JPanel{
 
 		@Override
 		public void update(BoardProxy message) {
-			actualBoard = message;
 			if(message.getIllegalMoveString().equals("")) {
-				switch (actualBoard.getStatus()) {
+				switch (message.getStatus()) {
 					case ADDING_WORKER:
 						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && !message.getWorkers().containsKey(StaticFrame.getPlayerName() + "0")) {
 							JOptionPane.showMessageDialog(parentComponent, "Add your workers!");
 						}
+						actualBoard = message;
 						refreshView();
 						break;
 					case PLAYING:
-						// todo WATCH OUT FOR "ISTURNENDED" CALL ON NULL LISTS
-						if(message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
-							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Turn ended!");
-							remoteChangeturn();
-							turnMoves.clear();
+						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+							if(message.getTurnPlayer().equals(actualBoard.getTurnPlayer())){
+								if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+									JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Your turn is ended!");
+									remoteChangeTurn();
+								} else {
+									JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Go on pal!");
+									directionsPanel.setWorkerCell(message.getWorkers().get(StaticFrame.getPlayerName() + directionsPanel.getWorkerIndex()));
+								}
+							} else {
+								JOptionPane.showMessageDialog(StaticFrame.mainFrame, "select the worker for this turn");
+							}
 						}
-						else if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
-							JOptionPane.showMessageDialog(parentComponent, "Select the worker that you want to play with in this turn");
-						}
+						actualBoard = message;
 						refreshView();
 						break;
 					case TERMINATOR:
@@ -433,14 +333,15 @@ public class BoardPanel extends JPanel{
 									JOptionPane.INFORMATION_MESSAGE
 							);
 						}
+						actualBoard = message;
 						showLogin();
 				}
-			}else{
-				if(message.getTurnPlayer().equals(StaticFrame.getPlayerName()))
+			} else {
+				if(message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
 					JOptionPane.showMessageDialog(StaticFrame.mainFrame, message.getIllegalMoveString());
-
-				turnMoves.remove(turnMoves.get(turnMoves.size() - 1));
-
+					if(turnMoves.size() > 0) turnMoves.remove(turnMoves.size() - 1);
+				}
+				actualBoard = message;
 				refreshView();
 			}
 		}
@@ -454,7 +355,7 @@ public class BoardPanel extends JPanel{
 		reader = new ReadProxyBoard(this);
 		this.outputStream = outputStream;
 
-		// load dataset for god moves
+		// Loads gods possible move, turn moves dataset
 		GodMoves.PossibleMoveInit();
 		turnMoves = new ArrayList<>();
 
@@ -574,14 +475,14 @@ public class BoardPanel extends JPanel{
 						cell = BoardMaker.map(e.getX(), e.getY());
 
 						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
-							// Check if there is a worker in the selected cell
-							if (checkWorkerPresence(cell)) {
+							// Check if there is a worker in the selected cell, and if is'nt already selected another one
+							if (checkWorkerPresence(cell) && !optionPanel.isPlaying()) {
 								optionPanel.setVisible(true);
+								optionPanel.setPlaying(true);
 							}
 						} else {
 							JOptionPane.showMessageDialog( StaticFrame.mainFrame, "it is not your turn!");
 						}
-
 						break;
 				}
 			}
@@ -606,17 +507,16 @@ public class BoardPanel extends JPanel{
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	private boolean checkWorkerPresence(Pair cell) {
-		if(actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0").equals(cell)){
+		if (actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0") != null && actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0").equals(cell)) {
 			directionsPanel.setWorkerIndex(0);
 			directionsPanel.setWorkerCell(cell);
 			return true;
 		}
-		else if(actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1").equals(cell)){
+		if (actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1") != null && actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1").equals(cell)) {
 			directionsPanel.setWorkerIndex(1);
 			directionsPanel.setWorkerCell(cell);
 			return true;
-		}
-		else return  false;
+		} else return false;
 	}
 
 	private void showLogin() {
@@ -639,7 +539,12 @@ public class BoardPanel extends JPanel{
 
 	}
 
-	private void remoteChangeturn(){
+	private void remoteChangeTurn(){
+		optionPanel.setPlaying(false);
+		optionPanel.setVisible(false);
+
+		turnMoves.clear();
+
 		PlayerCommand endTurn = new PlayerCommand(
 				StaticFrame.getPlayerName(),
 				new Command(new Pair(0, 0), CommandType.CHANGE_TURN),
@@ -652,6 +557,33 @@ public class BoardPanel extends JPanel{
 			outputStream.flush();
 		}catch (IOException x){
 			JOptionPane.showMessageDialog(null, "Unknown problem with the network communications!");
+		}
+	}
+
+	private void sendCommand(Pair cell, CommandType command, int workerIndex){
+		PlayerCommand toSend = new PlayerCommand(
+				StaticFrame.getPlayerName(),
+				new Command(cell, command),
+				workerIndex
+		);
+
+		try {
+			outputStream.reset();
+			outputStream.writeObject(toSend);
+			outputStream.flush();
+		}catch (IOException x){
+			JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
+		}
+
+	}
+
+
+	private void registerMove(GodType god, CommandType cmd, Pair destination) {
+		if(god.getCapitalizedName().equals("Triton")){
+			if(!(cmd.equals(CommandType.MOVE) || (destination.x == 4 || destination.y == 4 || destination.x == 0 || destination.y == 0)))
+				turnMoves.add(cmd);
+		} else {
+			turnMoves.add(cmd);
 		}
 	}
 

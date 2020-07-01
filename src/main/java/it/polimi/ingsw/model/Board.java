@@ -7,6 +7,8 @@ import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.RemoteView;
 
+import java.util.Map;
+
 public class Board {
 
     private BoardProxy proxy;
@@ -69,7 +71,7 @@ public class Board {
 
     /**
      *
-     * @param message
+     * @param message the list of gods
      */
     public void setChoosingGods(String message){
         proxy.setChoosingGods(message);
@@ -257,7 +259,7 @@ public class Board {
      * @param worker the worker to remove
      */
     public void removeWorker(Worker worker) {
-        // TODO: to implement
+        worker.getCurrentCell().setWorker(null);
     }
 
     public Cell[][] getNeighbors(Cell currentCell) {
@@ -357,6 +359,20 @@ public class Board {
             } else{
                 return false;
             }
+        }
+    }
+
+    public void checkChronusWin() {
+
+        Map<String, String> gods = this.proxy.getGods();
+        if (gods!=null && gods.containsValue(GodType.CHRONUS.getCapitalizedName()) && countCompleteTower()) {
+            String winPlayer = "";
+            for(String x : gods.keySet())
+                if(gods.get(x).equals("Chronus")) winPlayer = x;
+
+            proxy.setWinner(winPlayer);
+            proxy.setStatus(GameState.TERMINATOR);
+            proxy.updateProxy();
         }
     }
 

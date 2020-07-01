@@ -145,7 +145,7 @@ public abstract class God {
         Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());
         for (Cell[] row : neighbors) {
             for (Cell cell : row) {
-                if (cell!=null && ((cell.getWorker()==null || cell.getHeight().getDifference(worker.getCurrentCell().getHeight())<=1) && cell.getHeight()!=Height.DOME)) {
+                if (cell!=null && cell.getWorker()==null && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<=1 && cell.getHeight()!=Height.DOME) {
                     return true;
                 }
             }
@@ -154,7 +154,7 @@ public abstract class God {
     }
 
     /**
-     * CHeck if the given worker can build
+     * Check if the given worker can build
      *
      * @author Gianluca Regis
      * @param worker The worker to check
@@ -164,7 +164,7 @@ public abstract class God {
         Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());
         for (Cell[] row : neighbors) {
             for (Cell cell : row) {
-                if (cell!=null && (cell.getWorker()==null || cell.getHeight()!=Height.DOME)) {
+                if (cell!=null && cell.getWorker()==null && cell.getHeight()!=Height.DOME) {
                     return true;
                 }
             }

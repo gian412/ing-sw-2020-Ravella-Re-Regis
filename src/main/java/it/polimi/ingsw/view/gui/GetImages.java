@@ -108,11 +108,11 @@ public class GetImages {
      * @param height String whit the name piece
      * @return The Image of the piece
      */
-    public static Image getPiece(String height) {
+    public static Image getPieceImage(String height) {
         return piecesImages.get(height.toUpperCase());
     }
 
-    public static Image getPower(String actualGod) {
+    public static Image getPowerImage(String actualGod) {
         return powerImages.get(actualGod.toUpperCase());
     }
 
