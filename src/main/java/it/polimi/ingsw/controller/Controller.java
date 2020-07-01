@@ -84,11 +84,14 @@ public class Controller implements Observer<PlayerCommand> {
      */
     public void changeTurnPlayer(){
         try{
-            game.getTurnPlayer().getDivinity().executeCommand(
-                    null,
-                    new Command(new Pair(0, 0), CommandType.RESET)
-            );
+            if (game.getTurnPlayer().getDivinity()!=null) {
+                game.getTurnPlayer().getDivinity().executeCommand(
+                        null,
+                        new Command(new Pair(0, 0), CommandType.RESET)
+                );
+            }
         }catch(IllegalMoveException | NullPointerException x){
+            x.printStackTrace();
             System.err.println(x.getMessage() + " controller generated");
         } finally {
             game.getTurnPlayer().setTurnPlayer(false);
