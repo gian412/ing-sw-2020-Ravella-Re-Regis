@@ -12,6 +12,10 @@ import java.util.Map;
 
 public class CliComposer {
 
+    GodType[] gods = {GodType.APOLLO, GodType.ARTEMIS, GodType.ATHENA, GodType.ATLAS, GodType.CHARON, GodType.CHRONUS,
+        GodType.DEMETER, GodType.HEPHAESTUS, GodType.HESTIA, GodType.MINOTAUR, GodType.PAN, GodType.PROMETHEUS,
+        GodType.TRITON, GodType.ZEUS};
+
     //Pattern to write the title SANTORINI in the Cli
     final static int[][] SANTORINI =
                  {  {0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1},
@@ -229,9 +233,7 @@ public class CliComposer {
      */
     public void godList(BoardProxy proxy){
 
-        GodType[] gods = {GodType.APOLLO, GodType.ARTEMIS, GodType.ATHENA, GodType.ATLAS, GodType.CHARON, GodType.CHRONUS,
-            GodType.DEMETER, GodType.HEPHAESTUS, GodType.HESTIA, GodType.MINOTAUR, GodType.PAN, GodType.PROMETHEUS,
-            GodType.TRITON, GodType.ZEUS};
+
         Ansi maker = new Ansi();
         String change;
 
@@ -368,6 +370,157 @@ public class CliComposer {
         }
         out.append("\n");
 
+        //ciclo le righe
+        for(int i = 0; i < 5; i++) {
+            for(int k = 0; k < 3; k++) {
+                out.append("      ");
+
+                //if it is the center of the line indicate the number of the line
+                if(k == 1)
+                    out.append(" " + (i+1) + "   ");
+                else
+                    out.append("     ");
+
+                //scan the cells of the line, every cell is a 3x3 and the function creates a line every time ( ciclo colonna)
+                for (int j = 0; j < 5; j++) {
+
+                    if(k == 0){
+                        boolean found = false;
+                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
+                            if((entry.getValue().y == j) && (entry.getValue().x == i)) {
+                                if(entry.getKey().contains(playerName)){
+                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.BLACK_B) + "     ");
+                                    out.append(Ansi.RESET);
+                                    found = true;
+                                }
+                                else{
+                                    if(numberOfPlayer == 2){
+                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + "     ");
+                                        out.append(Ansi.RESET);
+                                        found = true;
+                                    }
+
+                                    if(numberOfPlayer == 3){
+                                        // the first player is blue
+                                        if(entry.getKey().contains(players2.get(0))){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + "     ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+
+                                        //the second player is yellow
+                                        System.out.println(entry.getKey() + " r" + players2.get(1));
+                                        if(entry.getKey().contains(players2.get(1))){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + "     ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(!found)
+                            out.append("|     ");
+                    }
+
+                    if(k == 1){
+                        boolean found = false;
+                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
+                            if((entry.getValue().y == j) && (entry.getValue().x == i)) {
+                                if(entry.getKey().contains(playerName)){
+                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.GREEN) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                    out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
+                                    out.append(Ansi.RESET);
+                                    found = true;
+                                }
+                                else{
+                                    if(numberOfPlayer == 2){
+                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                        out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
+                                        out.append(Ansi.RESET);
+                                        found = true;
+                                    }
+                                    if(numberOfPlayer == 3){
+                                        if(entry.getKey().contains(players2.get(0))){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                            out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+
+                                        if(entry.getKey().contains(players2.get(1))){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                            out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(!found)
+                            out.append("| " + board.getBoardScheme()[i][j].toInt() + "/  ");
+                    }
+
+                    if(k == 2){
+                        boolean found = false;
+                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
+                            if((entry.getValue().y == j) && (entry.getValue().x == i)) {
+                                if(entry.getKey().contains(playerName)){
+                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.BLACK_B) + "     ");
+                                    out.append(Ansi.RESET);
+                                    found = true;
+                                }
+
+                                else{
+                                    if(numberOfPlayer == 2){
+                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + "     ");
+                                        out.append(Ansi.RESET);
+                                        found = true;
+                                    }
+
+                                    if(numberOfPlayer == 3){
+                                        // the first player is blue
+                                        if(entry.getKey().contains(players2.get(0))){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + "     ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+
+                                        //the second player is yellow
+                                        if(entry.getKey().contains(players2.get(1))){
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + "     ");
+                                            out.append(Ansi.RESET);
+                                            found = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(!found)
+                            out.append("|     ");
+                    }
+                }
+                //put the last | at the end of the line
+                out.append("|\n");
+            }
+
+            //put the last line at the end of every line
+            out.append("           ");
+            for (int k = 0; k < 31; k++) {
+                out.append("-");
+            }
+            out.append("\n");
+        }
+
+        /*
+        //first line of the board
+        out.append("\n           ");
+        for (int k = 0; k < 31; k++) {
+            out.append("-");
+        }
+        out.append("\n");
+
         for(int i = 0; i < 5; i++) {
             for(int k = 0; k < 3; k++) {
                 out.append("      ");
@@ -423,7 +576,7 @@ public class CliComposer {
                     if(k == 1){
                         boolean found = false;
                         for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
-                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
+                            if((entry.getValue().y == j) && (entry.getValue().x == i)) {
                                 if(entry.getKey().contains(playerName)){
                                     out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.GREEN) + " " + board.getBoardScheme()[i][j].toInt() + "/");
                                     out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
@@ -509,9 +662,23 @@ public class CliComposer {
             }
             out.append("\n");
         }
+*/
 
         //print the board
         System.out.println(out.toString());
+        System.out.println("\n");
+
+        // show your god
+        String change;
+        for(Map.Entry<String, String> entry : board.getGods().entrySet()){
+            if(entry.getKey().contains(playerName)) {
+                change = maker.font(Ansi.BLUE_B);
+                System.out.println("     " + change + entry.getValue().toUpperCase());
+
+                System.out.println("  " + getDescription(toGod(entry.getValue().toUpperCase())));
+            }
+        }
+        System.out.println(Ansi.RESET + "\n");
 
         //print the message for the current player
         if(board.getTurnPlayer().equals(playerName))
@@ -644,6 +811,50 @@ public class CliComposer {
             System.out.println(write.toString());
             return;
         }
+    }
+
+    /**
+     * convert a string with the name of the god in its corresponding godType
+     *
+     * @author Marco Re
+     *
+     * @param god is the name of the god
+     *
+     * @return the corresponding godType
+     */
+    private GodType toGod(String god) {
+
+        switch (god.toUpperCase()) {
+            case "APOLLO":
+                return gods[0];
+            case "ARTEMIS":
+                return gods[1];
+            case "ATHENA":
+                return gods[2];
+            case "ATLAS":
+                return gods[3];
+            case "CHARON":
+                return gods[4];
+            case "CHRONUS":
+                return gods[5];
+            case "DEMETER":
+                return gods[6];
+            case "HEPHAESTUS":
+                return gods[7];
+            case "HESTIA":
+                return gods[8];
+            case "MINOTAUR":
+                return gods[9];
+            case "PAN":
+                return gods[10];
+            case "PROMETHEUS":
+                return gods[11];
+            case "TRITON":
+                return gods[12];
+            case "ZEUS":
+                return gods[13];
+        }
+        return null;
     }
 
 }
