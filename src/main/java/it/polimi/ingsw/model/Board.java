@@ -7,6 +7,8 @@ import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.RemoteView;
 
+import java.util.Map;
+
 public class Board {
 
     private BoardProxy proxy;
@@ -361,8 +363,13 @@ public class Board {
     }
 
     public void checkChronusWin() {
-        if (this.proxy.getGods().containsValue(GodType.CHRONUS.getCapitalizedName())) {
-            // TODO: implement
+
+        Map<String, String> gods = this.proxy.getGods();
+        if (gods!=null && gods.containsValue(GodType.CHRONUS.getCapitalizedName()) && countCompleteTower()) {
+            hasWon = getTurnPlayer(); // TODO: get Chronus' player
+            proxy.setWinner(getTurnPlayer().getNAME()); // TODO: get Chronus' player name
+            proxy.setStatus(GameState.TERMINATOR);
+            proxy.updateProxy();
         }
     }
 
