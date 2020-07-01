@@ -43,7 +43,7 @@ public class Controller implements Observer<PlayerCommand> {
             } catch (IllegalMoveException exc) {
                 game.getBoard().notifyIllegalMove(exc.getMessage());
             } catch (Exception exc) {
-                game.getBoard().notifyIllegalMove("Something went wrong");
+                game.getBoard().notifyIllegalMove("Something went wrong: " + exc.getMessage());
             }
         }
 
@@ -155,7 +155,7 @@ public class Controller implements Observer<PlayerCommand> {
                                     new Pair(0, 0),
                                     CommandType.CHECK_WORKERS
                             ),
-                            worker.getWORKER_ID().charAt(worker.getWORKER_ID().length() - 1)
+                            worker.getWORKER_ID().charAt(worker.getWORKER_ID().length() - 1) == '0' ? 0 : 1
                     );
 
                 game.getBoard().updateProxyBoard();
