@@ -18,14 +18,6 @@ public class LoginPanel extends JPanel {
     JTextField txtName, txtAge;
     JLabel labelName, labelAge, labelError;
     JButton btnLogin;
-    JPanel waitingPanel;
-
-    class WaitingPanel extends JPanel {
-        public WaitingPanel() {
-            JLabel waitingLabel = new JLabel("Waiting for other users connection");
-            this.add(waitingLabel);
-        }
-    }
 
     /**
      *
@@ -35,9 +27,6 @@ public class LoginPanel extends JPanel {
      *
      */
     public LoginPanel() {
-
-        // Initialize waitingPanel
-        waitingPanel = new WaitingPanel();
 
         // Set panel layout
         GridBagLayout layout = new GridBagLayout();
@@ -225,6 +214,12 @@ public class LoginPanel extends JPanel {
                 output.flush();
             }else{
                 playerNumber = Integer.parseInt(message.substring(56, 57));
+
+                /* WaitingPanel waitingPanel = new WaitingPanel();
+                StaticFrame.removePanel(this);
+                StaticFrame.addPanel(waitingPanel);
+                StaticFrame.refresh();
+                waitingPanel.execute(connSocket, input, playerNumber);*/
             }
 
             input.nextLine(); // final dialog
@@ -235,6 +230,12 @@ public class LoginPanel extends JPanel {
             StaticFrame.addPanel(chooseGodsPanel);
 
             StaticFrame.refresh();
+
+            /*WaitingPanel waitingPanel = new WaitingPanel();
+            StaticFrame.removePanel(this);
+            StaticFrame.addPanel(waitingPanel);
+            StaticFrame.refresh();
+            waitingPanel.execute(connSocket, input, playerNumber);*/
 
         } catch (IOException e) {
             e.printStackTrace();
