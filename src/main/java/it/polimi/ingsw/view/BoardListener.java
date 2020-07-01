@@ -28,6 +28,8 @@ public class BoardListener extends Observable<BoardProxy> implements Runnable {
                 return;
             }
             notify(message);
+            if(message.getStatus().equals(GameState.TERMINATOR))
+                return;
         }
     }
 }
