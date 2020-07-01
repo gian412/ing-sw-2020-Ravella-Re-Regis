@@ -21,6 +21,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -59,6 +60,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -92,6 +94,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -125,6 +128,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -158,6 +162,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -186,6 +191,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         worker.setCanMoveUp(false);
@@ -220,12 +226,13 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
 
         // Initialization of the first cell
-        Cell firstCell = board.getCell(new Pair(0, 1));
+        Cell firstCell = board.getCell(new Pair(2, 1));
         firstCell.setHeight(Height.FIRST_FLOOR);
         firstCell.setWorker(worker);
 
@@ -254,6 +261,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -288,6 +296,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -322,7 +331,7 @@ public class TritonTest {
         Board board = new Board();
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Triton(board);
-        Player player = new Player("Name", 18);
+        Player player = new Player("Name", 18);board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -356,6 +365,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -389,6 +399,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -426,6 +437,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -464,6 +476,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -498,6 +511,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -534,6 +548,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -568,6 +583,7 @@ public class TritonTest {
         Command command = new Command(new Pair(1, 1), CommandType.RESET);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -589,6 +605,7 @@ public class TritonTest {
         Board board = new Board();
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -607,6 +624,7 @@ public class TritonTest {
         Board board = new Board();
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -621,7 +639,7 @@ public class TritonTest {
 
     // Exclusive tests
     @Test
-    @DisplayName("hasMovedSecond")
+    @DisplayName("hasMovedThreeTimeTest")
     public void hasMovedThreeTimeTest(){
 
         // Initialization of the parameters
@@ -631,6 +649,7 @@ public class TritonTest {
         Command thirdCommand = new Command(new Pair(0, 3), CommandType.MOVE);
         Triton god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -705,6 +724,7 @@ public class TritonTest {
         Command command = new Command(new Pair(0, 1), CommandType.MOVE);
         God god = new Triton(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 

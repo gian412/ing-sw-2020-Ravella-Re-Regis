@@ -21,7 +21,7 @@ public class HestiaTest {
         Board board = new Board();
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hestia(board);
-        Player player = new Player("Name", 18);
+        Player player = new Player("Name", 18);board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -60,6 +60,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -93,6 +94,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -126,6 +128,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -159,6 +162,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -187,6 +191,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         worker.setCanMoveUp(false);
@@ -221,6 +226,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -255,6 +261,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -289,6 +296,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -324,6 +332,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -357,6 +366,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -390,6 +400,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -427,6 +438,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -465,6 +477,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -499,6 +512,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -535,6 +549,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -568,6 +583,7 @@ public class HestiaTest {
         Board board = new Board();
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -586,6 +602,7 @@ public class HestiaTest {
         Board board = new Board();
         God god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -609,6 +626,7 @@ public class HestiaTest {
         Command secondCommand = new Command(new Pair(2, 1), CommandType.BUILD);
         Hestia god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -668,6 +686,7 @@ public class HestiaTest {
         Command secondCommand = new Command(new Pair(2, 1), CommandType.BUILD_DOME);
         Hestia god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -727,6 +746,7 @@ public class HestiaTest {
         Command secondCommand = new Command(new Pair(3, 1), CommandType.BUILD);
         Hestia god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -783,6 +803,7 @@ public class HestiaTest {
         Command secondCommand = new Command(new Pair(3, 1), CommandType.BUILD_DOME);
         Hestia god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -834,6 +855,7 @@ public class HestiaTest {
         Command secondCommand = new Command(new Pair(0, 1), CommandType.BUILD);
         Hestia god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -890,6 +912,7 @@ public class HestiaTest {
         Command secondCommand = new Command(new Pair(0, 1), CommandType.BUILD_DOME);
         Hestia god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -938,6 +961,7 @@ public class HestiaTest {
         Command command = new Command(new Pair(1, 1), CommandType.RESET);
         Hestia god = new Hestia(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 

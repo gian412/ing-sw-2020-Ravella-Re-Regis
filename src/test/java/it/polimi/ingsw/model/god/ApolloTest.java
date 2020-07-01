@@ -21,6 +21,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -59,6 +60,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -92,6 +94,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -125,6 +128,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -158,6 +162,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -186,6 +191,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         worker.setCanMoveUp(false);
@@ -220,6 +226,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -254,6 +261,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -288,6 +296,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -323,6 +332,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(3, 3), CommandType.BUILD);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -356,6 +366,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -389,6 +400,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -426,6 +438,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -464,6 +477,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -498,6 +512,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -534,6 +549,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -568,6 +584,7 @@ public class ApolloTest {
         Command command = new Command(new Pair(1, 1), CommandType.RESET);
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -589,6 +606,7 @@ public class ApolloTest {
         Board board = new Board();
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -607,6 +625,7 @@ public class ApolloTest {
         Board board = new Board();
         God god = new Apollo(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -630,6 +649,7 @@ public class ApolloTest {
         God god = new Apollo(board);
         Player player1 = new Player("Name1", 18);
         Player player2 = new Player("Name2", 18);
+        board.setTurnPlayer(player1);
         player1.setDivinity(god);
         Worker worker1 = new Worker("Id1", player1);
         Worker worker2 = new Worker("Id2", player2);
@@ -674,6 +694,7 @@ public class ApolloTest {
         God god = new Apollo(board);
         Player player1 = new Player("Name1", 18);
         Player player2 = new Player("Name2", 18);
+        board.setTurnPlayer(player1);
         player1.setDivinity(god);
         Worker worker1 = new Worker("Id1", player1);
         Worker worker2 = new Worker("Id2", player2);
@@ -693,7 +714,7 @@ public class ApolloTest {
 
         try {
             god.executeCommand(worker1, command);
-            fail("moveOnADome in class ApolloTest didn't throw an exception");
+            fail("hasMovedAndForcedMoreThanOneCell in class ApolloTest didn't throw an exception");
         } catch (IllegalMoveException e) {
             assertEquals("worker1's position must be firstCell", worker1.getCurrentCell(), firstCell);
             assertEquals("worker2's position must be secondCell", worker2.getCurrentCell(), secondCell);
@@ -712,6 +733,7 @@ public class ApolloTest {
         God god = new Apollo(board);
         Player player1 = new Player("Name1", 18);
         Player player2 = new Player("Name2", 18);
+        board.setTurnPlayer(player1);
         player1.setDivinity(god);
         Worker worker1 = new Worker("Id1", player1);
         Worker worker2 = new Worker("Id2", player2);
@@ -751,6 +773,7 @@ public class ApolloTest {
         God god = new Apollo(board);
         Player player1 = new Player("Name1", 18);
         Player player2 = new Player("Name2", 18);
+        board.setTurnPlayer(player1);
         player1.setDivinity(god);
         Worker worker1 = new Worker("Id1", player1);
         Worker worker2 = new Worker("Id2", player2);

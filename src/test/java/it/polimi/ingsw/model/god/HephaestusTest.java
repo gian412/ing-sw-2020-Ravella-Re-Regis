@@ -22,6 +22,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -60,6 +61,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -93,6 +95,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -126,6 +129,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -159,6 +163,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -187,6 +192,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         worker.setCanMoveUp(false);
@@ -221,6 +227,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -255,6 +262,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -289,6 +297,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -324,6 +333,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -357,6 +367,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -390,6 +401,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -427,6 +439,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -465,6 +478,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -499,6 +513,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -535,6 +550,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -568,6 +584,7 @@ public class HephaestusTest {
         Board board = new Board();
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -586,6 +603,7 @@ public class HephaestusTest {
         Board board = new Board();
         God god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -609,6 +627,7 @@ public class HephaestusTest {
         Command secondCommand = new Command(new Pair(1, 1), CommandType.BUILD);
         Hephaestus god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -657,6 +676,7 @@ public class HephaestusTest {
         Command secondCommand = new Command(new Pair(0, 2), CommandType.BUILD);
         Hephaestus god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -699,6 +719,7 @@ public class HephaestusTest {
         Command command = new Command(new Pair(1, 1), CommandType.RESET);
         Hephaestus god = new Hephaestus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 

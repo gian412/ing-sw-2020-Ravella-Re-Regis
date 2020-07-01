@@ -21,6 +21,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -59,6 +60,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -92,6 +94,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -125,6 +128,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -158,6 +162,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -186,6 +191,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         worker.setCanMoveUp(false);
@@ -220,6 +226,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -254,6 +261,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -289,6 +297,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -322,6 +331,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -355,6 +365,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -392,6 +403,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -430,6 +442,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -464,6 +477,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -500,6 +514,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -533,6 +548,7 @@ public class ArtemisTest {
         Board board = new Board();
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -551,6 +567,7 @@ public class ArtemisTest {
         Board board = new Board();
         God god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -573,6 +590,7 @@ public class ArtemisTest {
         Command secondCommand = new Command(new Pair(2, 1), CommandType.MOVE);
         Artemis god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -630,6 +648,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.RESET);
         Artemis god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -657,6 +676,7 @@ public class ArtemisTest {
         Command secondCommand = new Command(new Pair(3, 3), CommandType.MOVE);
         Artemis god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -700,6 +720,7 @@ public class ArtemisTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         Artemis god = new Artemis(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
