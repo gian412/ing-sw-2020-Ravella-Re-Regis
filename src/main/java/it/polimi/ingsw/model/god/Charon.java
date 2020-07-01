@@ -41,7 +41,7 @@ public class Charon extends God {
         Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());
         for (Cell[] row : neighbors) {
             for (Cell cell : row) {
-                if (cell!=null && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<=1 && cell.getHeight()!=Height.DOME) {
+                if (cell!=null && cell!=worker.getCurrentCell() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<=1 && cell.getHeight()!=Height.DOME) {
                     return true;
                 }
             }
