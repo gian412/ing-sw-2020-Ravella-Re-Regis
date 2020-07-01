@@ -87,6 +87,8 @@ public class LoginPanel extends JPanel {
 
         // Adding action listener to buttons
         btnConfigure.addActionListener(e -> {
+
+            // Checking IP address formatting
             boolean valid = false;
             while (!valid) {
                 String strIp = JOptionPane.showInputDialog(that, "Insert IP address");
@@ -141,18 +143,10 @@ public class LoginPanel extends JPanel {
 
         GridBagConstraints constraints = new GridBagConstraints();
 
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.33;
-        constraints.anchor = GridBagConstraints.FIRST_LINE_END;
-        constraints.gridx = 2;
-        constraints.gridy = 0;
-        constraints.gridwidth = 1;
-        this.add(btnConfigure, constraints);
-
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 1;
+        constraints.gridy = 0;
         constraints.gridwidth = 1;
         constraints.anchor = GridBagConstraints.CENTER;
         this.add(labelName, constraints);
@@ -161,7 +155,7 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 2;
+        constraints.gridy = 1;
         constraints.gridwidth = 1;
         constraints.anchor = GridBagConstraints.CENTER;
         this.add(txtName, constraints);
@@ -180,7 +174,7 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 2;
-        constraints.gridy = 1;
+        constraints.gridy = 0;
         constraints.gridwidth = 1;
         constraints.gridheight = 6;
         constraints.anchor = GridBagConstraints.CENTER;
@@ -190,7 +184,7 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 3;
+        constraints.gridy = 2;
         constraints.gridwidth = 1;
         this.add(labelAge, constraints);
 
@@ -198,7 +192,7 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 4;
+        constraints.gridy = 3;
         constraints.gridwidth = 1;
         this.add(txtAge, constraints);
 
@@ -206,7 +200,7 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 5;
+        constraints.gridy = 4;
         constraints.gridwidth = 1;
         this.add(labelError, constraints);
 
@@ -214,9 +208,18 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 6;
+        constraints.gridy = 5;
         constraints.gridwidth = 1;
         this.add(btnLogin, constraints);
+
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 0.33;
+        constraints.gridx = 1;
+        constraints.gridy = 6;
+        constraints.gridwidth = 1;
+        constraints.anchor = GridBagConstraints.CENTER;
+        this.add(btnConfigure, constraints);
+
     }
 
     /**
