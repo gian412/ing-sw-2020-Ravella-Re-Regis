@@ -152,9 +152,6 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				// if the player performed a "move" the worker position must be updated
-				if(cmd.equals(CommandType.MOVE))
-					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
@@ -164,9 +161,6 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				// if the player performed a "move" the worker position must be updated
-				if(cmd.equals(CommandType.MOVE))
-					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
@@ -175,9 +169,6 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				// if the player performed a "move" the worker position must be updated
-				if(cmd.equals(CommandType.MOVE))
-					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
@@ -186,9 +177,6 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y);
 				sendCommand(destination, cmd, workerIndex);
 
-				// if the player performed a "move" the worker position must be updated
-				if(cmd.equals(CommandType.MOVE))
-					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
@@ -197,9 +185,6 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y);
 				sendCommand(destination, cmd, workerIndex);
 
-				// if the player performed a "move" the worker position must be updated
-				if(cmd.equals(CommandType.MOVE))
-					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
@@ -208,9 +193,6 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				// if the player performed a "move" the worker position must be updated
-				if(cmd.equals(CommandType.MOVE))
-					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
@@ -219,9 +201,6 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				// if the player performed a "move" the worker position must be updated
-				if(cmd.equals(CommandType.MOVE))
-					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
@@ -230,9 +209,6 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				// if the player performed a "move" the worker position must be updated
-				if(cmd.equals(CommandType.MOVE))
-					workerCell = destination;
 				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
@@ -244,9 +220,6 @@ public class BoardPanel extends JPanel{
 					Pair destination = new Pair(workerCell.x, workerCell.y);
 					sendCommand(destination, cmd, workerIndex);
 
-					// if the player performed a "move" the worker position must be updated
-					if(cmd.equals(CommandType.MOVE))
-						workerCell = destination;
 					registerMove(StaticFrame.getGod(), cmd, destination);
 					directionsPanel.setVisible(false);
 					optionPanel.setVisible(true);
@@ -288,6 +261,10 @@ public class BoardPanel extends JPanel{
 		public void setCmd(CommandType cmd) {
 			this.cmd = cmd;
 		}
+
+		public int getWorkerIndex(){
+			return workerIndex;
+		}
 	}
 
 	/**
@@ -322,6 +299,7 @@ public class BoardPanel extends JPanel{
 									remoteChangeTurn();
 								} else {
 									JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Go on pal!");
+									directionsPanel.setWorkerCell(message.getWorkers().get(StaticFrame.getPlayerName() + directionsPanel.getWorkerIndex()));
 								}
 							} else {
 								JOptionPane.showMessageDialog(StaticFrame.mainFrame, "select your fucking worker");
