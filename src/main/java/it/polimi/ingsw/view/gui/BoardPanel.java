@@ -281,7 +281,7 @@ public class BoardPanel extends JPanel{
 				switch (message.getStatus()) {
 					case ADDING_WORKER:
 						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && !message.getWorkers().containsKey(StaticFrame.getPlayerName() + "0")) {
-							JOptionPane.showMessageDialog(parentComponent, "Add your workers!");
+							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Add your workers!");
 						}
 						actualBoard = message;
 						refreshView();

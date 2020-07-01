@@ -17,7 +17,10 @@ public class LoginPanel extends JPanel {
     // login page components
     JTextField txtName, txtAge;
     JLabel labelName, labelAge, labelError;
-    JButton btnLogin;
+    JButton btnConfigure, btnLogin;
+    JPanel that = this;
+    String ip = "127.0.0.1";
+    int port = 13300;
 
     /**
      *
@@ -32,7 +35,7 @@ public class LoginPanel extends JPanel {
         GridBagLayout layout = new GridBagLayout();
         this.setLayout(layout);
         // Set panel size
-        this.setSize(2000, 2000);
+        this.setSize(2000, 2500);
 
         // Initialization of the textFields
         txtName = new JTextField("Name");
@@ -78,8 +81,38 @@ public class LoginPanel extends JPanel {
             }
         });
 
-        // Initialization of the login button
+        // Initialization of buttons
+        btnConfigure = new JButton("Configure");
         btnLogin = new JButton("Login");
+
+        // Adding action listener to buttons
+        btnConfigure.addActionListener(e -> {
+            boolean valid = false;
+            while (!valid) {
+                String strIp = JOptionPane.showInputDialog(that, "Insert IP address");
+                String[] checkIp = strIp.split("[.]");
+                if (checkIp.length==4) {
+                    boolean checked = true;
+                    for (String singleNumber : checkIp) {
+                        try {
+                            int singleNumberInt = Integer.parseInt(singleNumber);
+                            checked = singleNumberInt>=0 && singleNumberInt<255;
+                        } catch (NumberFormatException exception) {
+                            checked = false;
+                        }
+                    }
+                    ip = strIp;
+                    valid = checked;
+                }
+            }
+            valid = false;
+            while (!valid) {
+                try {
+                    port = Integer.parseInt(JOptionPane.showInputDialog(that, "Insert port number"));
+                    valid = true;
+                } catch (NumberFormatException exception) {}
+            }
+        });
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -104,13 +137,22 @@ public class LoginPanel extends JPanel {
             }
         });
 
-
         // Adding elements to Panel
+
         GridBagConstraints constraints = new GridBagConstraints();
+
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 0.33;
+        constraints.anchor = GridBagConstraints.FIRST_LINE_END;
+        constraints.gridx = 2;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        this.add(btnConfigure, constraints);
+
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 0;
+        constraints.gridy = 1;
         constraints.gridwidth = 1;
         constraints.anchor = GridBagConstraints.CENTER;
         this.add(labelName, constraints);
@@ -119,7 +161,7 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         constraints.gridwidth = 1;
         constraints.anchor = GridBagConstraints.CENTER;
         this.add(txtName, constraints);
@@ -130,7 +172,7 @@ public class LoginPanel extends JPanel {
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 1;
-        constraints.gridheight = 6;
+        constraints.gridheight = 7;
         constraints.anchor = GridBagConstraints.CENTER;
         this.add(new JPanel(), constraints);
 
@@ -138,7 +180,7 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 2;
-        constraints.gridy = 0;
+        constraints.gridy = 1;
         constraints.gridwidth = 1;
         constraints.gridheight = 6;
         constraints.anchor = GridBagConstraints.CENTER;
@@ -148,7 +190,7 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         constraints.gridwidth = 1;
         this.add(labelAge, constraints);
 
@@ -156,7 +198,7 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 3;
+        constraints.gridy = 4;
         constraints.gridwidth = 1;
         this.add(txtAge, constraints);
 
@@ -164,7 +206,7 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 4;
+        constraints.gridy = 5;
         constraints.gridwidth = 1;
         this.add(labelError, constraints);
 
@@ -172,7 +214,7 @@ public class LoginPanel extends JPanel {
         constraints.fill= GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
-        constraints.gridy = 5;
+        constraints.gridy = 6;
         constraints.gridwidth = 1;
         this.add(btnLogin, constraints);
     }
@@ -190,9 +232,7 @@ public class LoginPanel extends JPanel {
         Socket connSocket;
         try {
             // Declaration of connection's constants
-            String IP = "127.0.0.1";
-            int PORT = 13300;
-            connSocket = new Socket(IP, PORT);
+            connSocket = new Socket(ip, port);
             Scanner input = new Scanner(connSocket.getInputStream());
             PrintStream output = new PrintStream(connSocket.getOutputStream());
 
