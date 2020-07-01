@@ -182,7 +182,7 @@ public class Minotaur extends God {
                     break;
 
                 case CHECK_WORKERS:
-                    if (!this.canMove(worker)) {
+                    if (worker.getCurrentCell()!=null && !this.canMove(worker)) {
                         board.removeWorker(worker);
                         worker.setPreviousCell(null);
                         worker.setCurrentCell(null);

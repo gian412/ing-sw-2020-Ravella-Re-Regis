@@ -119,7 +119,7 @@ public class Demeter extends God {
                     break;
 
                 case CHECK_WORKERS:
-                    if (!canMove(worker)) {
+                    if (worker.getCurrentCell()!=null && !canMove(worker)) {
                         board.removeWorker(worker);
                         worker.setPreviousCell(null);
                         worker.setCurrentCell(null);

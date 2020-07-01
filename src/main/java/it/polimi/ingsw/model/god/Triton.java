@@ -126,7 +126,7 @@ public class Triton extends God {
                     break;
 
                 case CHECK_WORKERS:
-                    if (!super.canMove(worker)) {
+                    if (worker.getCurrentCell()!=null && !super.canMove(worker)) {
                         board.removeWorker(worker);
                         worker.setPreviousCell(null);
                         worker.setCurrentCell(null);

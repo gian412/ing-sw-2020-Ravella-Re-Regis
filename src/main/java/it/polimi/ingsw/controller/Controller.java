@@ -36,10 +36,12 @@ public class Controller implements Observer<PlayerCommand> {
 
         if(game.getTurnPlayer().getNAME().equals(player)) {
             try {
-                game.getTurnPlayer().getDivinity().executeCommand(
-                        game.getTurnPlayer().getWorkers()[workerID],
-                        command
-                );
+                if (game.getTurnPlayer().getDivinity()!=null) {
+                    game.getTurnPlayer().getDivinity().executeCommand(
+                            game.getTurnPlayer().getWorkers()[workerID],
+                            command
+                    );
+                }
             } catch (IllegalMoveException exc) {
                 game.getBoard().notifyIllegalMove(exc.getMessage());
             } catch (Exception exc) {
