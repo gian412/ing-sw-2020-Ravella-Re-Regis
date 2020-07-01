@@ -110,6 +110,7 @@ public class Zeus extends God {
                             try {
                                 super.build(worker.getCurrentCell(), command.coordinates, false);
                                 hasBuild = true;
+                                board.checkChronusWin();
                                 break;
                             } catch (IllegalMoveException e) {
                                 throw new IllegalMoveException(e.getMessage());
@@ -122,6 +123,7 @@ public class Zeus extends God {
                             try {
                                 this.build(cell, command.coordinates, false);
                                 hasBuild = true;
+                                board.checkChronusWin();
                                 break;
                             } catch (IllegalMoveException e) {
                                 throw new IllegalMoveException(e.getMessage());
@@ -136,6 +138,7 @@ public class Zeus extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());

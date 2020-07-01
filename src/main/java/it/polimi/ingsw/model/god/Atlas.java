@@ -65,6 +65,7 @@ public class Atlas extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -79,6 +80,7 @@ public class Atlas extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, true); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());

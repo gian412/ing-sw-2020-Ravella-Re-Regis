@@ -64,6 +64,7 @@ public class Pan extends  God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -77,6 +78,7 @@ public class Pan extends  God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());

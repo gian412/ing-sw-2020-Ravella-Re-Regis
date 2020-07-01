@@ -99,6 +99,7 @@ public class Prometheus extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuildBefore = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -107,6 +108,7 @@ public class Prometheus extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -120,6 +122,7 @@ public class Prometheus extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuildBefore = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -128,6 +131,7 @@ public class Prometheus extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());

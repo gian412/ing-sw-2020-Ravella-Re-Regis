@@ -70,6 +70,7 @@ public class Hestia extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -78,6 +79,7 @@ public class Hestia extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuildSecond = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e){
                             throw new IllegalMoveException(e.getMessage());
@@ -91,6 +93,7 @@ public class Hestia extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -99,6 +102,7 @@ public class Hestia extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuildSecond = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e){
                             throw new IllegalMoveException(e.getMessage());

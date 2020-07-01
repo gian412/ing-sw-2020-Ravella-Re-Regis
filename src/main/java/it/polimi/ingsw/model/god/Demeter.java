@@ -72,6 +72,7 @@ public class Demeter extends God {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             previousCell = cell;
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -80,6 +81,7 @@ public class Demeter extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuildSecond = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e){
                             throw new IllegalMoveException(e.getMessage());
@@ -94,6 +96,7 @@ public class Demeter extends God {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             previousCell = cell;
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -102,6 +105,7 @@ public class Demeter extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuildSecond = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e){
                             throw new IllegalMoveException(e.getMessage());
@@ -120,6 +124,7 @@ public class Demeter extends God {
                         worker.setPreviousCell(null);
                         worker.setCurrentCell(null);
                     }
+                    break;
 
                 default:
                     throw new IllegalMoveException("Command type not valid for the current god");

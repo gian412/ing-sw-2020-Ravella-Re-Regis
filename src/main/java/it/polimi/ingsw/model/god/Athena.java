@@ -72,6 +72,7 @@ public class Athena extends God{
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -81,11 +82,11 @@ public class Athena extends God{
                     }
 
                 case BUILD_DOME:
-
                     if (hasMoved && !hasBuild && !hasWon && board.getCell(command.coordinates).getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell'height is third floor
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
