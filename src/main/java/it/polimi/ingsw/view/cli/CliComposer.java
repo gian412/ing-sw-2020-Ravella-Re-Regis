@@ -387,7 +387,7 @@ public class CliComposer {
                     if(k == 0){
                         boolean found = false;
                         for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
-                            if((entry.getValue().y == j) && (entry.getValue().x == i)) {
+                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
                                 if(entry.getKey().contains(playerName)){
                                     out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.BLACK_B) + "     ");
                                     out.append(Ansi.RESET);
@@ -426,7 +426,7 @@ public class CliComposer {
                     if(k == 1){
                         boolean found = false;
                         for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
-                            if((entry.getValue().y == j) && (entry.getValue().x == i)) {
+                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
                                 if(entry.getKey().contains(playerName)){
                                     out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.GREEN) + " " + board.getBoardScheme()[i][j].toInt() + "/");
                                     out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
@@ -465,7 +465,7 @@ public class CliComposer {
                     if(k == 2){
                         boolean found = false;
                         for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
-                            if((entry.getValue().y == j) && (entry.getValue().x == i)) {
+                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
                                 if(entry.getKey().contains(playerName)){
                                     out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.BLACK_B) + "     ");
                                     out.append(Ansi.RESET);
