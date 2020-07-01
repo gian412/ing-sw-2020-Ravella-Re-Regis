@@ -91,7 +91,6 @@ public class Controller implements Observer<PlayerCommand> {
                 );
             }
         }catch(IllegalMoveException | NullPointerException x){
-            x.printStackTrace();
             System.err.println(x.getMessage() + " controller generated");
         } finally {
             game.getTurnPlayer().setTurnPlayer(false);
