@@ -74,8 +74,6 @@ public class CLIGame {
 
     public void startPlaying(Socket connection, String name, int number) throws IOException {
 
-
-
         //general data of the player
         numberOfPlayer = number;
         playerName = name;
@@ -83,7 +81,6 @@ public class CLIGame {
         connSocket = connection;
 
         //variables to manage inputs
-        String input;
         int index = 0;
         int choice;
         int[] coord;
@@ -98,7 +95,13 @@ public class CLIGame {
         while (true) {
             System.in.read();
 
+
+
             if (displayer.localProxy != null) {
+                if(displayer.getLocalProxy().getStatus().equals(GameState.TERMINATOR)){
+                    return;
+                }
+
                 if (displayer.getLocalProxy().getTurnPlayer().equals(playerName)) {
                     switch (displayer.getLocalProxy().getStatus()) {
 
@@ -123,57 +126,23 @@ public class CLIGame {
 
                                     // action when you have never moved before in your turn
                                     if (!hasMoved && !hasBuilt) {
-                                        System.out.println("Make your choice : " +
-                                                "\n    1 - Start your turn" +
-                                                "\n    2 - If you can't move GIVE UP\n" +
-                                                "\nIndicate the number of your choice: ");
-                                        choice = chooseOption2();
+                                        System.out.println("Start your turn");
 
-                                        //possible options
-                                        switch (choice) {
-                                            //if you want to move
-                                            case 1:
-                                                //insert the index of the worker
-                                                System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
-                                                index = inputStream.nextInt();
-                                                inputStream.nextLine();
-                                                //input validation
-                                                index = validationIndex(index);
-
-                                                //submit the command and put has move to true
-                                                move(index);
-                                                hasMoved = true;
-                                                break;
-
-                                            // if you can't move and you GIVE UP
-                                            case 2:
-                                                break;
-                                        }
+                                        //submit the command and put has move to true
+                                        index = workerIndex();
+                                        move(index);
+                                        hasMoved = true;
                                     }//CLOSE if(!hasMoved && !hasBuilt)
 
                                     //when you have already tried to move
                                     else if (hasMoved && !hasBuilt) {
                                             // NO illegal move
                                             if (displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                                System.out.println("Make your choice : " +
-                                                        "\n    1 - Build a new level" +
-                                                        "\n    2 - If you can't build GIVE UP\n" +
-                                                        "\nIndicate the number of your choice: ");
-                                                choice = chooseOption2();
+                                                System.out.println("Build a new level");
 
-                                                //possible options
-                                                switch (choice) {
-                                                    //if you want to move
-                                                    case 1:
-                                                        //submit the command and put has move to true
-                                                        build(index);
-                                                        hasBuilt = true;
-                                                        break;
-
-                                                    // if you can't move and you GIVE UP
-                                                    case 2:
-                                                        break;
-                                                }
+                                                //submit the command and put hasBuilt to true
+                                                build(index);
+                                                hasBuilt = true;
                                             }//CLOSE no illegal move
 
                                             //YES illegal move
@@ -182,9 +151,8 @@ public class CLIGame {
                                                         "Make your choice (Your worker is " + index + "):" +
                                                         "\n    1 - Insert a new cell" +
                                                         "\n    2 - Change the worker" +
-                                                        "\n    3 - If you can't move GIVE UP\n" +
                                                         "\nIndicate the number of your choice: ");
-                                                choice = chooseOption3();
+                                                choice = chooseOption2();
 
                                                 //possible options
                                                 switch (choice) {
@@ -196,19 +164,9 @@ public class CLIGame {
 
                                                     // if you want to change worker to move and then move him
                                                     case 2:
-                                                        //insert the index of the worker
-                                                        System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
-                                                        index = inputStream.nextInt();
-                                                        inputStream.nextLine();
-                                                        //input validation
-                                                        index = validationIndex(index);
-
-                                                        //submit the command and put has move to true
+                                                        //submit the command
+                                                        index = workerIndex();
                                                         move(index);
-                                                        break;
-
-                                                    // if you can't move and you GIVE UP
-                                                    case 3:
                                                         break;
                                                 }
                                             }//CLOSE yes illegal move
@@ -216,36 +174,23 @@ public class CLIGame {
 
                                     //if you have moved successfully and you have already tried to built
                                     else if (hasMoved && hasBuilt) {
-                                                //NO illegal build
-                                                if (displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                                    remoteChangeTurn();
-                                                    hasBuilt = false;
-                                                    hasMoved = false;
-                                                    break;
-                                                }//CLOSE NO illegal build
+                                        //NO illegal build
+                                        if (displayer.getLocalProxy().getIllegalMoveString().equals("")) {
+                                            hasBuilt = false;
+                                            hasMoved = false;
+                                            remoteChangeTurn();
+                                            break;
+                                        }//CLOSE NO illegal build
 
-                                                //YES illegal build
-                                                if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                                    System.out.println("ILLEGAL BUILD.\n" +
-                                                            "Make your choice: " +
-                                                            "\n    1 - Insert a new cell" +
-                                                            "\n    2 - If you can't build GIVE UP\n" +
-                                                            "\nIndicate the number of your choice: ");
-                                                    choice = chooseOption2();
+                                        //YES illegal build
+                                        if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
+                                            System.out.println("ILLEGAL BUILD.\n"+
+                                                    "\n    Insert a new cell");
 
-                                                    //possible options
-                                                    switch (choice) {
-                                                        //if you want to build
-                                                        case 1:
-                                                            //submit the command and put has move to true
-                                                            build(index);
-                                                            break;
-
-                                                        // if you can't move and you GIVE UP
-                                                        case 2:
-                                                            break;
-                                                    }
-                                                }//CLOSE YES illegal build
+                                            //submit the command and put has move to true
+                                            build(index);
+                                            break;
+                                        }//CLOSE YES illegal build
                                     }//CLOSE if(hasMoved && hasBuilt)
                                     break;
 
@@ -253,57 +198,24 @@ public class CLIGame {
                                 case HEPHAESTUS:
                                 case HESTIA:
                                     // action when you have never moved before in your turn
-                                    if (!hasMoved && !hasBuilt && !hasReBuild) {
-                                        System.out.println("Make your choice : " +
-                                                "\n    1 - Start your turn" +
-                                                "\n    2 - If you can't move GIVE UP\n" +
-                                                "\nIndicate the number of your choice: ");
-                                        choice = chooseOption2();
+                                    if (!hasMoved && !hasBuilt && !hasReBuild)  {
+                                        System.out.println("Start your turn");
 
-                                        //possible options
-                                        switch (choice) {
-                                            //if you want to move
-                                            case 1:
-                                                //insert the index of the worker
-                                                System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
-                                                index = inputStream.nextInt();
-                                                inputStream.nextLine();
-                                                //input validation
-                                                index = validationIndex(index);
-
-                                                //submit the command and put has move to true
-                                                move(index);
-                                                hasMoved = true;
-                                                break;
-
-                                            // if you can't move and you GIVE UP
-                                            case 2:
-                                                break;
-                                        }// close switch when you don't have moved before
+                                        //submit the command and put has move to true
+                                        index = workerIndex();
+                                        move(index);
+                                        hasMoved = true;
                                     }//CLOSE if(!hasMoved && !hasBuilt)
 
                                     //after first try to move
                                     else if (hasMoved && !hasBuilt && !hasReBuild) {
                                         // NO illegal move
                                         if (displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("Make your choice : " +
-                                                    "\n    1 - Build a new level" +
-                                                    "\n    2 - If you can't build GIVE UP\n" +
-                                                    "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            System.out.println("Build a new level");
 
-                                            //possible options
-                                            switch (choice) {
-                                                //if you want to build
-                                                case 1:
-                                                    //submit the command and put has move to true
-                                                    hasBuilt = true;
-                                                    build(index);
-
-                                                    // if you can't move and you GIVE UP
-                                                case 2:
-                                                    break;
-                                            }
+                                            //submit the command and put has move to true
+                                            hasBuilt = true;
+                                            build(index);
                                         }//CLOSE no illegal move
 
                                         //YES illegal move
@@ -312,9 +224,8 @@ public class CLIGame {
                                                     "Make your choice (Your worker is " + index + ");" +
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Change the worker" +
-                                                    "\n    3 - If you can't move GIVE UP\n" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption3();
+                                            choice = chooseOption2();
 
                                             //possible options
                                             switch (choice) {
@@ -324,21 +235,11 @@ public class CLIGame {
                                                     move(index);
                                                     break;
 
-                                                // if you want to change worker to move and then move him
+                                                // if you want to change worker to move and then move
                                                 case 2:
-                                                    //insert the index of the worker
-                                                    System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
-                                                    index = inputStream.nextInt();
-                                                    inputStream.nextLine();
-                                                    //input validation
-                                                    index = validationIndex(index);
-
                                                     //submit the command and put has move to true
+                                                    index = workerIndex();
                                                     move(index);
-
-                                                    break;
-                                                // if you can't move and you GIVE UP
-                                                case 3:
                                                     break;
                                             }
                                         }//CLOSE yes illegal move
@@ -362,10 +263,10 @@ public class CLIGame {
                                                     break;
 
                                                 case 2:
-                                                    remoteChangeTurn();
                                                     hasBuilt = false;
                                                     hasMoved = false;
                                                     hasReBuild = false;
+                                                    remoteChangeTurn();
                                                     break;
                                             }
                                         }//CLOSE NO illegal build
@@ -373,23 +274,10 @@ public class CLIGame {
                                         //YES illegal build
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             System.out.println("ILLEGAL BUILD.\n" +
-                                                    "Make your choice: " +
-                                                    "\n    1 - Insert a new cell" +
-                                                    "\n    2 - If you can't build GIVE UP\n" +
-                                                    "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                                    "Insert a new cell");
 
-                                            //possible options
-                                            switch (choice) {
-                                                //if you want to move
-                                                case 1:
-                                                    //submit the command and put has move to true
-                                                    build(index);
-
-                                                    // if you can't move and you GIVE UP
-                                                case 2:
-                                                    break;
-                                            }
+                                            //submit the command and put has move to true
+                                            build(index);
                                         }//CLOSE YES illegal build
                                     }//CLOSE if(hasMoved && hasBuilt && hasReBuild)
 
@@ -435,33 +323,13 @@ public class CLIGame {
                                 case ARTEMIS:
                                     // action when you have never moved before in your turn
                                     if (!hasMoved && !hasReMoved && !hasBuilt) {
-                                        System.out.println("Make your choice : " +
-                                                "\n    1 - Start your turn" +
-                                                "\n    2 - If you can't move GIVE UP\n" +
-                                                "\nIndicate the number of your choice: ");
-                                        choice = chooseOption2();
+                                        System.out.println("Start your turn");
 
-                                        //possible options
-                                        switch (choice) {
-                                            //if you want to move
-                                            case 1:
-                                                //insert the index of the worker
-                                                System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
-                                                index = inputStream.nextInt();
-                                                inputStream.nextLine();
-                                                //input validation
-                                                index = validationIndex(index);
-
-                                                //submit the command and put has move to true
-                                                hasMoved = true;
-                                                move(index);
-                                                break;
-
-                                            // if you can't move and you GIVE UP
-                                            case 2:
-                                                break;
-                                        }// close switch when you don't have moved before
-                                    }//CLOSE if(!hasMoved && !hasBuilt)
+                                        //submit the command and put has move to true
+                                        index = workerIndex();
+                                        hasMoved = true;
+                                        move(index);
+                                    }//CLOSE if(!hasMoved && !hasReMoved && !hasBuilt)
 
                                     else if (hasMoved && !hasBuilt && !hasReMoved) {
                                         // NO illegal move
@@ -469,9 +337,8 @@ public class CLIGame {
                                             System.out.println("Make your choice : " +
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
-                                                    "\n    3 - If you can't move or build GIVE UP\n" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption3();
+                                            choice = chooseOption2();
 
                                             //possible options
                                             switch (choice) {
@@ -483,57 +350,56 @@ public class CLIGame {
                                                     break;
 
                                                 case 2:
-                                                    move(index);
                                                     hasReMoved = true;
-                                                    break;
-
-                                                // if you can't move and you GIVE UP
-                                                case 3:
+                                                    move(index);
                                                     break;
                                             }
                                         }//CLOSE no illegal move
+
                                         //YES illegal move
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             System.out.println("ILLEGAL MOVE.\n" +
                                                     "Make your choice (Your worker is " + index + "):" +
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Change the worker" +
-                                                    "\n    3 - If you can't move GIVE UP\n" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption3();
+                                            choice = chooseOption2();
 
                                             //possible options
                                             switch (choice) {
                                                 //if you want to move
                                                 case 1:
-                                                    //submit the command and put has move to true
+                                                    //submit the command
                                                     move(index);
-                                                    break;// if you want to change worker to move and then move him
+                                                    break;
 
+                                                // if you want to change worker to move and then move
                                                 case 2:
-                                                    //insert the index of the worker
-                                                    System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
-                                                    index = inputStream.nextInt();
-                                                    inputStream.nextLine();
-                                                    //input validation
-                                                    index = validationIndex(index);
-
-                                                    //submit the command and put has move to true
+                                                    //submit the command
+                                                    index = workerIndex();
                                                     move(index);
-                                                    break;// if you can't move and you GIVE UP
-
-                                                case 3:
                                                     break;
                                             }
                                         }//CLOSE yes illegal move
-                                    }//CLOSE if(hasMoved && !hasConfirmedMove && !hasBuilt)
+                                    }//CLOSE if(hasMoved && !hasReMoved && !hasBuilt)
 
                                     else if (hasMoved && hasReMoved && !hasBuilt) {
                                         // NO illegal move
                                         if (displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("Make your choice : " +
+                                            System.out.println("Build a new level");
+
+                                            //submit the command and put has move to true
+                                            build(index);
+                                            hasBuilt = true;
+                                        }
+
+                                        //YES illegal move
+                                        if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
+                                            hasReMoved = false;
+                                            System.out.println("ILLEGAL MOVE\n" +
+                                                    "Make your choice : " +
                                                     "\n    1 - Build a new level" +
-                                                    "\n    2 - If you can't build GIVE UP\n" +
+                                                    "\n    2 - Move again" +
                                                     "\nIndicate the number of your choice: ");
                                             choice = chooseOption2();
 
@@ -541,47 +407,22 @@ public class CLIGame {
                                             switch (choice) {
                                                 //if you want to build
                                                 case 1:
-                                                    //submit the command and put has move to true
-                                                    build(index);
+                                                    //submit the command
                                                     hasBuilt = true;
-                                                    break;
-
-                                                // if you can't move and you GIVE UP
-                                                case 2:
-                                                    break;
-                                            }
-                                        }
-                                        //YES illegal move
-                                        if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("ILLEGAL MOVE\n" +
-                                                    "Make your choice : " +
-                                                    "\n    1 - Build a new level" +
-                                                    "\n    2 - Move again" +
-                                                    "\n    3 - If you can't build GIVE UP\n" +
-                                                    "\nIndicate the number of your choice: ");
-                                            choice = chooseOption3();
-                                            //possible options
-                                            switch (choice) {
-                                                //if you want to move
-                                                case 1:
-                                                    //submit the command and put has move to true
                                                     build(index);
                                                     break;
 
-                                                // if you want to change worker to move and then move him
+                                                // move again
                                                 case 2:
-                                                    //submit the command and put has move to true
+                                                    //submit the command
+                                                    hasReMoved = true;
                                                     move(index);
                                                     break;
-
-                                                // if you can't move and you GIVE UP
-                                                case 3:
-                                                    break;
                                             }
                                         }
-                                    }//Close if(hasMoved && hasConfirmedMove && !hasBuilt)
+                                    }//Close if(hasMoved && hasReMoved && !hasBuilt)
 
-                                    else if ((hasMoved && !hasReMoved && hasBuilt) || (hasMoved && hasReMoved && hasBuilt)) {
+                                    else if ((hasMoved && !hasReMoved && hasBuilt)) {
                                         // NO illegal move
                                         if (displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             hasBuilt = false;
@@ -592,18 +433,20 @@ public class CLIGame {
 
                                         //YES illegal move
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("ILLEGAL MOVE\n" +
+                                            hasBuilt = false;
+                                            System.out.println("ILLEGAL BUILD\n" +
                                                     "Make your choice : " +
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
-                                                    "\n    3 - If you can't build GIVE UP\n" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption3();
+                                            choice = chooseOption2();
+
                                             //possible options
                                             switch (choice) {
                                                 //if you want to move
                                                 case 1:
                                                     //submit the command and put has move to true
+                                                    hasBuilt = true;
                                                     build(index);
                                                     break;
 
@@ -613,47 +456,59 @@ public class CLIGame {
                                                     move(index);
                                                     hasReMoved = true;
                                                     break;
-
-                                                // if you can't move and you GIVE UP
-                                                case 3:
-                                                    break;
                                             }
                                         }
-                                    }//Close if(hasMoved && !hasConfirmedMove && hasBuilt) || (hasMoved && hasReMoved && hasBuilt))
+                                    }//Close if(hasMoved && !hasConfirmedMove && hasBuilt)
+
+                                    else if(hasMoved && hasReMoved && hasBuilt){
+                                        // NO illegal move
+                                        if (displayer.getLocalProxy().getIllegalMoveString().equals("")) {
+                                            hasBuilt = false;
+                                            hasConfirmedMove = false;
+                                            hasMoved = false;
+                                            remoteChangeTurn();
+                                        }
+
+                                        //YES illegal move
+                                        if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
+                                            System.out.println("ILLEGAL BUILD\n"+
+                                                    "Build a new level");
+                                            build(index);
+                                        }
+                                    }//CLOSE if(hasMoved && hasReMoved && hasBuilt)
                                     break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                 case ATLAS:
                                     // action when you have never moved before in your turn
                                     if (!hasMoved && !hasBuilt) {
-                                        System.out.println("Make your choice : " +
-                                                "\n    1 - Start your turn" +
-                                                "\n    2 - If you can't move GIVE UP\n" +
-                                                "\nIndicate the number of your choice: ");
-                                        choice = inputStream.nextInt();
+                                        System.out.println("Start your turn");
+
+                                        System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
+                                        index = inputStream.nextInt();
                                         inputStream.nextLine();
                                         //input validation
-                                        choice = validation2(choice);
+                                        index = validationIndex(index);
 
-                                        //possible options
-                                        switch (choice) {
-                                            //if you want to move
-                                            case 1:
-                                                //insert the index of the worker
-                                                System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
-                                                index = inputStream.nextInt();
-                                                inputStream.nextLine();
-                                                //input validation
-                                                index = validationIndex(index);
-
-                                                //submit the command and put has move to true
-                                                hasMoved = true;
-                                                move(index);
-                                                break;
-
-                                            // if you can't move and you GIVE UP
-                                            case 2:
-                                                break;
-                                        }// close switch when you don't have moved before
+                                        //submit the command and put has move to true
+                                        hasMoved = true;
+                                        move(index);
                                     }//CLOSE if(!hasMoved && !hasBuilt)
 
                                     //after first try to move
@@ -663,7 +518,6 @@ public class CLIGame {
                                             System.out.println("Make your choice : " +
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Build a DOME" +
-                                                    "\n    3 - If you can't build GIVE UP\n" +
                                                     "\nIndicate the number of your choice: ");
                                             choice = inputStream.nextInt();
                                             inputStream.nextLine();
@@ -687,10 +541,6 @@ public class CLIGame {
                                                     hasBuilt = true;
                                                     submitCommand(playerName, new Pair(coord[1], coord[0]), CommandType.BUILD_DOME, index, "");
                                                     break;
-
-                                                // if you can't move and you GIVE UP
-                                                case 3:
-                                                    break;
                                             }
                                         }//CLOSE no illegal move
 
@@ -700,7 +550,6 @@ public class CLIGame {
                                                     "Make your choice (Your worker is " + index + "): " +
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Change the worker" +
-                                                    "\n    3 - If you can't move GIVE UP\n" +
                                                     "\nIndicate the number of your choice: ");
                                             choice = inputStream.nextInt();
                                             inputStream.nextLine();
@@ -724,10 +573,6 @@ public class CLIGame {
                                                     index = validationIndex(index);
 
                                                     move(index);
-                                                    break;
-
-                                                // if you can't move and you GIVE UP
-                                                case 3:
                                                     break;
                                             }
                                         }//CLOSE yes illegal move
@@ -1536,9 +1381,6 @@ public class CLIGame {
                                     break;
                             }
                             break;
-
-                        case TERMINATOR:
-                            return;
                     }
                 }
             }
@@ -1553,16 +1395,31 @@ public class CLIGame {
         //insert the cell
         coord = chooseCell();
 
-        submitCommand(playerName, new Pair(coord[0], coord[1]), CommandType.MOVE, index, "");
+        submitCommand(playerName, new Pair(coord[1], coord[0]), CommandType.MOVE, index, "");
         return;
     }
 
     private void build(int index) throws IOException {
         int[] coord;
-        //insert the cell
-        System.out.println("\nInsert the cell where build a new level");
-        //insert the cell
-        coord = chooseCell();
+        boolean underYou;
+        String workerName;
+
+        do {
+            underYou = false;
+            //insert the cell
+            System.out.println("\nInsert the cell where build a new level");
+            //insert the cell
+            coord = chooseCell();
+
+            for(Map.Entry<String, Pair> entry : displayer.getLocalProxy().getWorkers().entrySet()){
+                workerName = playerName.toUpperCase() + index;
+                if(entry.getKey().equals(workerName)){
+                    if(entry.getValue().x == coord[1] && entry.getValue().y == coord[0] && !toGod(divinity).equals(GODS[13])) {
+                        underYou = true;
+                    }
+                }
+            }
+        }while(underYou);
 
         submitCommand(playerName, new Pair(coord[1], coord[0]), CommandType.BUILD, index, "");
         return;
@@ -1614,11 +1471,9 @@ public class CLIGame {
         int choice = x;
 
         while(!(choice == 1) && !(choice == 2) && !(choice == 3)){
-            if(!(choice == 1) && !(choice == 2) && !(choice == 3)) {
-                System.out.println("INVALID INPUT. Reinsert a valid inpput: ");
-                choice = inputStream.nextInt();
-                inputStream.nextLine();
-            }
+            System.out.println("INVALID INPUT. Reinsert a valid inpput: ");
+            choice = inputStream.nextInt();
+            inputStream.nextLine();
         }
 
         return choice;
@@ -1628,11 +1483,9 @@ public class CLIGame {
         int choice = x;
 
         while(!(choice == 1) && !(choice == 2)){
-            if(!(choice == 1) && !(choice == 2)) {
-                System.out.println("INVALID INPUT. Reinsert a valid inpput: ");
-                choice = inputStream.nextInt();
-                inputStream.nextLine();
-            }
+            System.out.println("INVALID INPUT. Reinsert a valid inpput: ");
+            choice = inputStream.nextInt();
+            inputStream.nextLine();
         }
 
         return choice;
@@ -1642,11 +1495,9 @@ public class CLIGame {
         int index = x;
 
         while(!(index == 1) && !(index == 0)){
-            if(!(index == 1) && !(index == 0)) {
-                System.out.println("INVALID INPUT. Reinsert a valid inpput: ");
-                index = inputStream.nextInt();
-                inputStream.nextLine();
-            }
+            System.out.println("INVALID INPUT. Reinsert a valid inpput: ");
+            index = inputStream.nextInt();
+            inputStream.nextLine();
         }
 
         return index;
@@ -1672,7 +1523,8 @@ public class CLIGame {
 
         while (coordinate < 0 || coordinate > 4) {
             System.out.print("INVALID INPUT.\nReinsert a valid valor (from 1 to 5):  ");
-            coordinate = inputStream.nextInt() - 1;
+            coordinate = inputStream.nextInt();
+            coordinate = coordinate -1;
             inputStream.nextLine();
         }
         return coordinate;
@@ -1807,7 +1659,7 @@ public class CLIGame {
             inputStream.nextLine();
         } while (checkWorker(column, row));
 
-        submitCommand(playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
+        submitCommand(playerName, new Pair(row, column), CommandType.ADD_WORKER, 0, "");
 
         do {
             System.out.print("Insert the column of your second worker (from 1 to 5): ");
@@ -1823,13 +1675,22 @@ public class CLIGame {
             row = checkCoordinates(row);
         } while (checkWorker(column, row));
 
-        submitCommand(playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
+        submitCommand(playerName, new Pair(row, column), CommandType.ADD_WORKER, 0, "");
         remoteChangeTurn();
         return;
     }
 
+    private int workerIndex(){
+        int index;
 
+        //you can only move
+        System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
+        index = inputStream.nextInt();
+        inputStream.nextLine();
+        //input validation
+        index = validationIndex(index);
 
-
+        return index;
+    }
 
 }
