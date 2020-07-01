@@ -55,7 +55,7 @@ public class BoardPanel extends JPanel{
 			// Initialize and add a "end turn" button
 			JButton endTurnButton = new JButton("End Turn");
 			endTurnButton.addActionListener(e -> {
-				remoteChangeturn();
+				remoteChangeTurn();
 				optionPanel.setVisible(false);
 			});
 			this.add(endTurnButton);
@@ -139,42 +139,58 @@ public class BoardPanel extends JPanel{
 			btnNorthWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
+
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 			});
 
 			btnNorth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
+
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 			});
 			btnNorthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
+
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 			});
 			btnWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y);
 				sendCommand(destination, cmd, workerIndex);
+
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 			});
 			btnEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y);
 				sendCommand(destination, cmd, workerIndex);
+
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 			});
 			btnSouthWest.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
+
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 			});
 			btnSouth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
+
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 			});
 			btnSouthEast.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
+
+				registerMove(StaticFrame.getGod(), cmd, destination);
 				directionsPanel.setVisible(false);
 			});
 
@@ -183,6 +199,8 @@ public class BoardPanel extends JPanel{
 				btnPower.addActionListener(e -> {
 					Pair destination = new Pair(workerCell.x, workerCell.y);
 					sendCommand(destination, cmd, workerIndex);
+
+					registerMove(StaticFrame.getGod(), cmd, destination);
 					directionsPanel.setVisible(false);
 				});
 			} else {
@@ -239,19 +257,29 @@ public class BoardPanel extends JPanel{
 
 		@Override
 		public void update(BoardProxy message) {
-			actualBoard = message;
 			if(message.getIllegalMoveString().equals("")) {
-				switch (actualBoard.getStatus()) {
+				switch (message.getStatus()) {
 					case ADDING_WORKER:
 						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && !message.getWorkers().containsKey(StaticFrame.getPlayerName() + "0")) {
 							JOptionPane.showMessageDialog(parentComponent, "Add your workers!");
 						}
+						actualBoard = message;
 						refreshView();
 						break;
 					case PLAYING:
 						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
-							JOptionPane.showMessageDialog(parentComponent, "Select the worker that you want to play with in this turn");
+							if(message.getTurnPlayer().equals(actualBoard.getTurnPlayer())){
+								if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+									JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Your turn is ended!");
+									remoteChangeTurn();
+								} else {
+									JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Go on pal!");
+								}
+							} else {
+								JOptionPane.showMessageDialog(StaticFrame.mainFrame, "select your fucking worker");
+							}
 						}
+						actualBoard = message;
 						refreshView();
 						break;
 					case TERMINATOR:
@@ -284,12 +312,15 @@ public class BoardPanel extends JPanel{
 									JOptionPane.INFORMATION_MESSAGE
 							);
 						}
+						actualBoard = message;
 						showLogin();
 				}
-			}else{
-				if(message.getTurnPlayer().equals(StaticFrame.getPlayerName()))
+			} else {
+				if(message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
 					JOptionPane.showMessageDialog(StaticFrame.mainFrame, message.getIllegalMoveString());
-
+					if(turnMoves.size() > 0) turnMoves.remove(turnMoves.size() - 1);
+				}
+				actualBoard = message;
 				refreshView();
 			}
 		}
@@ -430,7 +461,6 @@ public class BoardPanel extends JPanel{
 						} else {
 							JOptionPane.showMessageDialog( StaticFrame.mainFrame, "it is not your turn!");
 						}
-
 						break;
 				}
 			}
@@ -488,7 +518,7 @@ public class BoardPanel extends JPanel{
 
 	}
 
-	private void remoteChangeturn(){
+	private void remoteChangeTurn(){
 		PlayerCommand endTurn = new PlayerCommand(
 				StaticFrame.getPlayerName(),
 				new Command(new Pair(0, 0), CommandType.CHANGE_TURN),
@@ -519,6 +549,16 @@ public class BoardPanel extends JPanel{
 			JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
 		}
 
+	}
+
+
+	private void registerMove(GodType god, CommandType cmd, Pair destination) {
+		if(god.getCapitalizedName() == "Triton"){
+			if(!(cmd.equals(CommandType.MOVE) || (destination.x == 4 || destination.y == 4 || destination.x == 0 || destination.y == 0)))
+				turnMoves.add(cmd);
+		} else {
+			turnMoves.add(cmd);
+		}
 	}
 
 }
