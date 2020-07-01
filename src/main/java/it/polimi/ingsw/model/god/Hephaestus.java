@@ -56,8 +56,8 @@ public class Hephaestus extends God {
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                             if (!hasWon && !canBuild(worker)) {
                                 board.removeWorker(worker);
-                                worker.setPreviousCell(null);
                                 worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                             }
                             break;
                         } catch (IllegalMoveException e) {
@@ -114,8 +114,8 @@ public class Hephaestus extends God {
                 case CHECK_WORKERS:
                     if (worker.getCurrentCell()!=null && !canMove(worker)) {
                         board.removeWorker(worker);
-                        worker.setPreviousCell(null);
                         worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                     }
                     break;
 

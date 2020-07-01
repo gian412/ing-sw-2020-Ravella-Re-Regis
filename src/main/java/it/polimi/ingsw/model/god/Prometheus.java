@@ -52,8 +52,8 @@ public class Prometheus extends God {
                             hasWon = board.checkWin(worker);
                             if (!hasWon && !canBuild(worker)) {
                                 board.removeWorker(worker);
-                                worker.setPreviousCell(null);
                                 worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                             }
                             break;
                         } catch (IllegalMoveException e) {
@@ -68,8 +68,8 @@ public class Prometheus extends God {
                                 hasWon = board.checkWin(worker);
                                 if (!hasWon && !canBuild(worker)) {
                                     board.removeWorker(worker);
-                                    worker.setPreviousCell(null);
                                     worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                                 }
                                 break;
                             } catch (IllegalMoveException e) {
@@ -84,8 +84,8 @@ public class Prometheus extends God {
                                 hasWon = board.checkWin(worker);
                                 if (!hasWon && !canBuild(worker)) {
                                     board.removeWorker(worker);
-                                    worker.setPreviousCell(null);
                                     worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                                 }
                                 break;
                             } catch (IllegalMoveException e) {
@@ -105,8 +105,8 @@ public class Prometheus extends God {
                             hasBuildBefore = true;
                             if (!canMove(worker)) {
                                 board.removeWorker(worker);
-                                worker.setPreviousCell(null);
                                 worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                             }
                             board.checkChronusWin();
                             break;
@@ -133,8 +133,8 @@ public class Prometheus extends God {
                             hasBuildBefore = true;
                             if (!canMove(worker)) {
                                 board.removeWorker(worker);
-                                worker.setPreviousCell(null);
                                 worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                             }
                             board.checkChronusWin();
                             break;
@@ -161,8 +161,8 @@ public class Prometheus extends God {
                 case CHECK_WORKERS:
                     if (worker.getCurrentCell()!=null && !canMove(worker) && !canBuild(worker)) {
                         board.removeWorker(worker);
-                        worker.setPreviousCell(null);
                         worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                     }
                     break;
 

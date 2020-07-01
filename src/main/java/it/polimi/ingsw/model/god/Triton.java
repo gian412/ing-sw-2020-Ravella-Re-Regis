@@ -71,8 +71,8 @@ public class Triton extends God {
                             hasWon = board.checkWin(worker);
                             if (!hasWon && !this.canMove(worker) && !canBuild(worker)) {
                                 board.removeWorker(worker);
-                                worker.setPreviousCell(null);
                                 worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                             }
                             break;
                         } catch (IllegalMoveException e) {
@@ -128,8 +128,8 @@ public class Triton extends God {
                 case CHECK_WORKERS:
                     if (worker.getCurrentCell()!=null && !super.canMove(worker)) {
                         board.removeWorker(worker);
-                        worker.setPreviousCell(null);
                         worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                     }
                     break;
 

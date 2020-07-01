@@ -92,8 +92,8 @@ public class Charon extends God {
                                 hasForced = true;
                                 if (!super.canMove(worker)) {
                                     board.removeWorker(worker);
-                                    worker.setPreviousCell(null);
                                     worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                                 }
                                 break;
                             } else {
@@ -116,8 +116,8 @@ public class Charon extends God {
                             hasWon = board.checkWin(worker);
                             if (!hasWon && !canBuild(worker)) {
                                 board.removeWorker(worker);
-                                worker.setPreviousCell(null);
                                 worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                             }
                             break;
                         } catch (IllegalMoveException e) {
@@ -162,8 +162,8 @@ public class Charon extends God {
                 case CHECK_WORKERS:
                     if (worker.getCurrentCell()!=null && !this.canMove(worker)) {
                         board.removeWorker(worker);
-                        worker.setPreviousCell(null);
                         worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                     }
                     break;
 

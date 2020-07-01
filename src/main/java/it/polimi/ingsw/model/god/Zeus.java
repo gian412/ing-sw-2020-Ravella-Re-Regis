@@ -93,8 +93,8 @@ public class Zeus extends God {
                             hasWon = board.checkWin(worker);
                             if (!hasWon && !this.canBuild(worker)) {
                                 board.removeWorker(worker);
-                                worker.setPreviousCell(null);
                                 worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                             }
                             break;
                         } catch (IllegalMoveException e) {
@@ -154,8 +154,8 @@ public class Zeus extends God {
                 case CHECK_WORKERS:
                     if (worker.getCurrentCell()!=null && !canMove(worker)) {
                         board.removeWorker(worker);
-                        worker.setPreviousCell(null);
                         worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                     }
                     break;
 
