@@ -30,7 +30,7 @@
 
 ### Complete Tests Coverage
 
-![Complete Coverage](readmeResources//Complete%20Coverage.png)
+![Complete Coverage](readmeResources/Complete%20Coverage.png)
 
 As requested, we deeply tested our Model with particular attention to God's package. Where it was necessary and in edge cases we also tested the other packages, focusing on the network interaction.
 
@@ -82,49 +82,33 @@ Run the Server with default port number
 
 ![ServerDefault](readmeResources/ServerDefaultPort.png)
 
-
-
 Run the Server with custom port number
 
 ![ServerCustom](readmeResources/ServerCustomPort.png)
-
-
 
 Run the Client with CLI and default IP address and port number
 
 ![CLIDefault](readmeResources/ClientCliDefault.png)
 
-
-
 Run the Client with CLI, custom IP address and default port number
 
 ![CLIip](readmeResources/ClientCliIp.png)
-
-
 
 Run the Client with CLI and custom IP address and port number
 
 ![CliipPort](readmeResources/ClientCliIpPort.png)
 
-
-
 Run the Client with GUI
 
 ![GUI](readmeResources/ClientGui.png)
-
-
 
 Configure the Client - step 1: Click "Configure" button
 
 ![GUIConfigure1](readmeResources/GUIconfigure1.png)
 
-
-
 Configure the Client - step 2: Insert a valid IP address and click "OK"
 
 ![GUIConfigure2](readmeResources/GUIconfigure2.png)
-
-
 
 Configure the Client - step 3: Insert a valid port number and click "OK"
 
