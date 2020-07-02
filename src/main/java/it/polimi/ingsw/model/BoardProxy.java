@@ -1,11 +1,10 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.utils.GameState;
-import it.polimi.ingsw.view.Observable;
+import it.polimi.ingsw.utils.Observable;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

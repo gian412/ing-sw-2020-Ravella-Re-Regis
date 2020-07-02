@@ -8,7 +8,7 @@ import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
-import it.polimi.ingsw.view.Observer;
+import it.polimi.ingsw.utils.Observer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

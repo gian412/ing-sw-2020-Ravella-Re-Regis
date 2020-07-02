@@ -7,7 +7,6 @@ import it.polimi.ingsw.model.god.Apollo;
 import it.polimi.ingsw.model.god.Chronus;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.model.god.Pan;
-import it.polimi.ingsw.view.Observer;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 

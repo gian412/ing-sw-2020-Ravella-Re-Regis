@@ -1,9 +1,8 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.utils.GameState;
-import it.polimi.ingsw.view.cli.CliComposer;
+import it.polimi.ingsw.utils.Observable;
 
 import java.io.ObjectInputStream;
 
