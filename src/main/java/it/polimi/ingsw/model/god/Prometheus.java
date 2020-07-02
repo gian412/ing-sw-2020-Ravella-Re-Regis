@@ -85,7 +85,7 @@ public class Prometheus extends God {
                                 if (!hasWon && !canBuild(worker)) {
                                     board.removeWorker(worker);
                                     worker.setCurrentCell(null);
-                        worker.setPreviousCell(null);
+                                    worker.setPreviousCell(null);
                                 }
                                 break;
                             } catch (IllegalMoveException e) {

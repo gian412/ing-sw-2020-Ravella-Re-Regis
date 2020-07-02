@@ -21,7 +21,7 @@ public class RemoteViewTest {
     @DisplayName("Checking the correct behavior at startGame")
     /**
      * in this test I check the correct order of the Players during the startGame procedure
-     * but i make this check as seen by the client. in this test i don't test any of the
+     * but I make this check as seen by the client. In this test I don't test any of the
      * Server class functionality
      *
      * @authors Ravella Elia
@@ -233,8 +233,8 @@ public class RemoteViewTest {
     }
 
     @Test
-    @DisplayName("disconnection of client test, with a retard")
-    public  void disconnectTestWithRetard(){
+    @DisplayName("disconnection of client test, with a delay")
+    public  void disconnectTestWithDelay(){
 
         // same as disconnectTest, only added a sleep
         Thread server = new Thread(() -> {
