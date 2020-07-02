@@ -113,15 +113,14 @@ public class Server implements Runnable{
      * @return a string with the names of the player which are waiting the start of the game
      */
     public String getPlayerName(){
-        StringBuilder ln = new StringBuilder();
-        ln.append(' ');
+        StringBuilder ln = new StringBuilder("");
 
         if( waitingClients.isEmpty()) {
             return ln.toString();
         }
         else {
             for (ClientHandler x : waitingClients) {
-                ln.append(x.getName());
+                ln.append(x.getName() + " ");
             }
 
             return ln.toString();
