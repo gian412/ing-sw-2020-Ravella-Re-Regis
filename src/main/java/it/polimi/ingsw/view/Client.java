@@ -11,7 +11,8 @@ import java.util.Scanner;
 
 public class Client {
 
-
+    private String IP = "127.0.0.1";
+    private int PORT = 13300;
     private String playername;
     private int numberOfPlayers;
 
@@ -25,6 +26,14 @@ public class Client {
 
     public String getPlayername() {
         return playername;
+    }
+
+    public void setIP(String IP){
+        this.IP = IP;
+    }
+
+    public void setPORT(int PORT) {
+        this.PORT = PORT;
     }
 
     public int getNumberOfPlayers() {
@@ -57,9 +66,6 @@ public class Client {
         System.out.println("-------------------------------------------------------------------------------------------\n");
 
         //create the connection
-        //String IP = "192.168.178.108";
-        String IP = "127.0.0.1";
-        int PORT = 13300;
         Socket socket = new Socket(IP, PORT); // Start the socket connection
         System.out.println("Connection established");
         // Open the input/output streams with the socket
