@@ -97,7 +97,9 @@ public class Minotaur extends God {
                     }
                     Pair direction = worker.getCurrentCell().getDirection( cell );
                     Cell nextCell = checkCell( new Pair( cell.X + direction.x, cell.Y + direction.y ) );
-                    return (nextCell != null && nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME);
+                    if (nextCell != null && nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME) {
+                        return true;
+                    }
 
                 }
             }
@@ -137,8 +139,8 @@ public class Minotaur extends God {
                             hasWon = board.checkWin(worker);
                             if (!hasWon && !canBuild(worker)) {
                                 board.removeWorker(worker);
-                                worker.setPreviousCell(null);
                                 worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                             }
                             break;
                         } catch (IllegalMoveException e) {
@@ -184,8 +186,8 @@ public class Minotaur extends God {
                 case CHECK_WORKERS:
                     if (worker.getCurrentCell()!=null && !this.canMove(worker)) {
                         board.removeWorker(worker);
-                        worker.setPreviousCell(null);
                         worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                     }
                     break;
 

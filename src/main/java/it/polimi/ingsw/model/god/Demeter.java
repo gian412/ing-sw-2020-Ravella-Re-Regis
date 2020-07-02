@@ -55,8 +55,8 @@ public class Demeter extends God {
                             hasWon = board.checkWin(worker);
                             if (!hasWon && !canBuild(worker)) {
                                 board.removeWorker(worker);
-                                worker.setPreviousCell(null);
                                 worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                             }
                             break;
                         } catch (IllegalMoveException e) {
@@ -121,8 +121,8 @@ public class Demeter extends God {
                 case CHECK_WORKERS:
                     if (worker.getCurrentCell()!=null && !canMove(worker)) {
                         board.removeWorker(worker);
-                        worker.setPreviousCell(null);
                         worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                     }
                     break;
 

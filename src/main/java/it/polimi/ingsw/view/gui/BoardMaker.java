@@ -91,7 +91,6 @@ public class BoardMaker {
 
             try {
                 godImage = GetImages.getWorkerImage(god);
-                //godImage = ImageIO.read(new File(PATH + god + "_Worker.png"));
             }catch(Exception x){
                 x.printStackTrace();
                 return;

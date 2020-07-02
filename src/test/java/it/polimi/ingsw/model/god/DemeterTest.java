@@ -22,6 +22,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -60,6 +61,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -93,6 +95,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -126,6 +129,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -159,6 +163,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -187,6 +192,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         worker.setCanMoveUp(false);
@@ -221,6 +227,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -255,6 +262,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -289,6 +297,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = false;
@@ -324,6 +333,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -357,6 +367,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -390,6 +401,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -427,6 +439,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -465,6 +478,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -499,6 +513,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -535,6 +550,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -568,6 +584,7 @@ public class DemeterTest {
         Board board = new Board();
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -586,6 +603,7 @@ public class DemeterTest {
         Board board = new Board();
         God god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -595,6 +613,58 @@ public class DemeterTest {
         } catch (IllegalMoveException e) {
             assertNull(null);
         }
+    }
+
+    @Test
+    @DisplayName("cannotMove")
+    public void cannotMove(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(0, 0), CommandType.CHECK_WORKERS);
+        God god = new Demeter(board);
+        Player player1 = new Player("Name1", 18);
+        Player player2 = new Player("Name2", 18);
+        board.setTurnPlayer(player1);
+        player1.setDivinity(god);
+        Worker worker = new Worker("Name10", player1);
+        Worker otherWorker = new Worker("Name20", player2);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 0));
+        firstCell.setHeight(Height.GROUND);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(0, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setWorker(null);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(1, 1));
+        thirdCell.setHeight(Height.DOME);
+        thirdCell.setWorker(null);
+
+        // Initialization of the fourth cell
+        Cell fourthCell = board.getCell(new Pair(1, 0));
+        fourthCell.setHeight(Height.FIRST_FLOOR);
+        fourthCell.setWorker(otherWorker);
+
+        worker.setCurrentCell(firstCell);
+        otherWorker.setCurrentCell(fourthCell);
+
+        try {
+            god.executeCommand(worker, command);
+
+            assertNull("worker.previousCell must be null", worker.getPreviousCell());
+            assertNull("worker.currentCell must be null", worker.getCurrentCell());
+            assertNull("firstCell.worker must be null", firstCell.getWorker());
+
+        } catch (IllegalMoveException e) {
+            System.err.println("Error e in method hasMovedTest in class ApolloTest: " + e.toString());
+            fail("Exception in hasMovedTest in class ApolloTest");
+        }
+
     }
 
     
@@ -609,6 +679,7 @@ public class DemeterTest {
         Command secondCommand = new Command(new Pair(0, 1), CommandType.BUILD);
         Demeter god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -663,6 +734,7 @@ public class DemeterTest {
         Command secondCommand = new Command(new Pair(0, 1), CommandType.BUILD_DOME);
         Demeter god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -722,6 +794,7 @@ public class DemeterTest {
         Command secondCommand = new Command(new Pair(0, 2), CommandType.BUILD);
         Demeter god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -773,6 +846,7 @@ public class DemeterTest {
         Command secondCommand = new Command(new Pair(0, 2), CommandType.BUILD_DOME);
         Demeter god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -821,6 +895,7 @@ public class DemeterTest {
         Command command = new Command(new Pair(1, 1), CommandType.RESET);
         Demeter god = new Demeter(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 

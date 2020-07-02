@@ -42,7 +42,14 @@ public class Charon extends God {
         for (Cell[] row : neighbors) {
             for (Cell cell : row) {
                 if (cell!=null && cell!=worker.getCurrentCell() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<=1 && cell.getHeight()!=Height.DOME) {
-                    return true;
+                    if (cell.getWorker()==null) {
+                        return true;
+                    }
+                    Pair direction = worker.getCurrentCell().getDirection( cell );
+                    Cell nextCell = checkCell( new Pair( worker.getCurrentCell().X - direction.x, worker.getCurrentCell().Y - direction.y ) );
+                    if (nextCell != null && nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME) {
+                        return true;
+                    }
                 }
             }
         }
@@ -87,8 +94,8 @@ public class Charon extends God {
                                 hasForced = true;
                                 if (!super.canMove(worker)) {
                                     board.removeWorker(worker);
-                                    worker.setPreviousCell(null);
                                     worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                                 }
                                 break;
                             } else {
@@ -111,8 +118,8 @@ public class Charon extends God {
                             hasWon = board.checkWin(worker);
                             if (!hasWon && !canBuild(worker)) {
                                 board.removeWorker(worker);
-                                worker.setPreviousCell(null);
                                 worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                             }
                             break;
                         } catch (IllegalMoveException e) {
@@ -157,8 +164,8 @@ public class Charon extends God {
                 case CHECK_WORKERS:
                     if (worker.getCurrentCell()!=null && !this.canMove(worker)) {
                         board.removeWorker(worker);
-                        worker.setPreviousCell(null);
                         worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
                     }
                     break;
 

@@ -22,6 +22,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -60,6 +61,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -93,6 +95,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -126,6 +129,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -159,6 +163,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -187,6 +192,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         worker.setCanMoveUp(false);
@@ -221,6 +227,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -255,6 +262,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -288,6 +296,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -320,6 +329,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -357,6 +367,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -395,6 +406,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -429,6 +441,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -465,6 +478,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.MOVE);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -497,7 +511,7 @@ public class PrometheusTest {
     public void nullCommand() {
         Board board = new Board();
         God god = new Prometheus(board);
-        Player player = new Player("Name", 18);
+        Player player = new Player("Name", 18);board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -515,7 +529,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.SET_GODS);
         Board board = new Board();
         God god = new Prometheus(board);
-        Player player = new Player("Name", 18);
+        Player player = new Player("Name", 18);board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -530,6 +544,49 @@ public class PrometheusTest {
 
     // Exclusive tests
     @Test
+    @DisplayName("hasMovedAfterFirstBuild")
+    public void hasMovedAfterFirstBuild(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command firstCommand = new Command(new Pair(1, 1), CommandType.BUILD);
+        Command secondCommand = new Command(new Pair(1, 1), CommandType.MOVE);
+        God god = new Prometheus(board);
+        Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
+        player.setDivinity(god);
+        Worker worker = new Worker("Id", player);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 1));
+        firstCell.setHeight(Height.FIRST_FLOOR);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(1, 1));
+        secondCell.setHeight(Height.GROUND);
+        secondCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+
+        try {
+            god.executeCommand(worker, firstCommand);
+            god.executeCommand(worker, secondCommand);
+
+            assertTrue("hasBuildBefore mustBe true", ((Prometheus)god).hasBuildBefore);
+            assertTrue("hasMoved must be true", god.hasMoved);
+            assertEquals("worker's previous position must be firstCell", worker.getPreviousCell(), firstCell);
+            assertEquals("worker's position must be secondCell", worker.getCurrentCell(), secondCell);
+            assertEquals("secondCell's height must be first floor", Height.FIRST_FLOOR, secondCell.getHeight());
+
+        } catch (IllegalMoveException e) {
+            System.err.println("Error e in method hasMovedTest in class PrometheusTest: " + e.toString());
+            fail("Exception in hasMovedTest in class PrometheusTest");
+        }
+
+    }
+
+    @Test
     @DisplayName("hasBuildSecond not a dome")
     public void hasBuildSecondNotDomeTest(){
 
@@ -539,6 +596,7 @@ public class PrometheusTest {
         Command secondCommand = new Command(new Pair(1, 1), CommandType.BUILD);
         Prometheus god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -594,6 +652,7 @@ public class PrometheusTest {
         Command secondCommand = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         Prometheus god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -653,6 +712,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD_DOME);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -686,6 +746,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         Prometheus god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
         god.hasMoved = true;
@@ -722,6 +783,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.BUILD);
         God god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -752,6 +814,7 @@ public class PrometheusTest {
         Command command = new Command(new Pair(1, 1), CommandType.RESET);
         Prometheus god = new Prometheus(board);
         Player player = new Player("Name", 18);
+        board.setTurnPlayer(player);
         player.setDivinity(god);
         Worker worker = new Worker("Id", player);
 
@@ -767,6 +830,58 @@ public class PrometheusTest {
         } catch (IllegalMoveException e) {
             fail("Exception in resetAllGodVariable in class DemeterTest");
         }
+    }
+
+    @Test
+    @DisplayName("cannotMove")
+    public void cannotMove(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(0, 0), CommandType.CHECK_WORKERS);
+        God god = new Prometheus(board);
+        Player player1 = new Player("Name1", 18);
+        Player player2 = new Player("Name2", 18);
+        board.setTurnPlayer(player1);
+        player1.setDivinity(god);
+        Worker worker = new Worker("Name10", player1);
+        Worker otherWorker = new Worker("Name20", player2);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 0));
+        firstCell.setHeight(Height.GROUND);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(0, 1));
+        secondCell.setHeight(Height.FIRST_FLOOR);
+        secondCell.setWorker(otherWorker);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(1, 1));
+        thirdCell.setHeight(Height.DOME);
+        thirdCell.setWorker(null);
+
+        // Initialization of the fourth cell
+        Cell fourthCell = board.getCell(new Pair(1, 0));
+        fourthCell.setHeight(Height.DOME);
+        fourthCell.setWorker(null);
+
+        worker.setCurrentCell(firstCell);
+        otherWorker.setCurrentCell(secondCell);
+
+        try {
+            god.executeCommand(worker, command);
+
+            assertNull("worker.previousCell must be null", worker.getPreviousCell());
+            assertNull("worker.currentCell must be null", worker.getCurrentCell());
+            assertNull("firstCell.worker must be null", firstCell.getWorker());
+
+        } catch (IllegalMoveException e) {
+            System.err.println("Error e in method hasMovedTest in class ApolloTest: " + e.toString());
+            fail("Exception in hasMovedTest in class ApolloTest");
+        }
+
     }
     
 }

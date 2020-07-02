@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.god.Apollo;
 import it.polimi.ingsw.model.god.God;
+import it.polimi.ingsw.utils.GodType;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
@@ -35,7 +36,7 @@ public class PlayerTest {
         Player player = new Player("name", 5);
         player.setDivinity(new Apollo(new Board()));
 
-        assertTrue("getandsetDivinity is ok", player.getDivinity().NAME.equals("APOLLO"));
+        assertTrue("getandsetDivinity is ok", player.getDivinity().NAME == GodType.APOLLO);
     }
 
     @Test
