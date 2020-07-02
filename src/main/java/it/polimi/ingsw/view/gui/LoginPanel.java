@@ -243,9 +243,13 @@ public class LoginPanel extends JPanel {
             Scanner input = new Scanner(connSocket.getInputStream());
             PrintStream output = new PrintStream(connSocket.getOutputStream());
 
-            input.nextLine(); // connected players
+            String connectedPlayers = input.nextLine(); // connected players
+            String clientName = txtName.getText();
 
-            StaticFrame.setPlayerName(txtName.getText());
+            while(connectedPlayers.contains(clientName))
+                clientName = JOptionPane.showInputDialog("Player with name \"" + clientName + "\" already connected! change your name!");
+
+            StaticFrame.setPlayerName(clientName);
             output.println(StaticFrame.getPlayerName());
             output.flush();
             output.println(Integer.parseInt(txtAge.getText()));

@@ -153,16 +153,15 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				registerMove(StaticFrame.getGod(), cmd, destination);
+				registerMove(cmd);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
 			});
-
 			btnNorth.addActionListener(e -> {
 				Pair destination = new Pair(workerCell.x, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				registerMove(StaticFrame.getGod(), cmd, destination);
+				registerMove(cmd);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
 			});
@@ -170,7 +169,7 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y - 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				registerMove(StaticFrame.getGod(), cmd, destination);
+				registerMove(cmd);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
 			});
@@ -178,7 +177,7 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y);
 				sendCommand(destination, cmd, workerIndex);
 
-				registerMove(StaticFrame.getGod(), cmd, destination);
+				registerMove(cmd);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
 			});
@@ -186,7 +185,7 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y);
 				sendCommand(destination, cmd, workerIndex);
 
-				registerMove(StaticFrame.getGod(), cmd, destination);
+				registerMove(cmd);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
 			});
@@ -194,7 +193,7 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x - 1, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				registerMove(StaticFrame.getGod(), cmd, destination);
+				registerMove(cmd);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
 			});
@@ -202,7 +201,7 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				registerMove(StaticFrame.getGod(), cmd, destination);
+				registerMove(cmd);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
 			});
@@ -210,7 +209,7 @@ public class BoardPanel extends JPanel{
 				Pair destination = new Pair(workerCell.x + 1, workerCell.y + 1);
 				sendCommand(destination, cmd, workerIndex);
 
-				registerMove(StaticFrame.getGod(), cmd, destination);
+				registerMove(cmd);
 				directionsPanel.setVisible(false);
 				optionPanel.setVisible(true);
 			});
@@ -221,7 +220,7 @@ public class BoardPanel extends JPanel{
 					Pair destination = new Pair(workerCell.x, workerCell.y);
 					sendCommand(destination, cmd, workerIndex);
 
-					registerMove(StaticFrame.getGod(), cmd, destination);
+					registerMove(cmd);
 					directionsPanel.setVisible(false);
 					optionPanel.setVisible(true);
 				});
@@ -361,7 +360,7 @@ public class BoardPanel extends JPanel{
 		this.outputStream = outputStream;
 
 		// Loads gods possible move, turn moves dataset
-		GodMoves.PossibleMoveInit();
+		GodMoves.possibleMoveInit();
 		turnMoves = new ArrayList<>();
 
 		// Initialize option panel and add it to the board panel
@@ -599,18 +598,12 @@ public class BoardPanel extends JPanel{
 	 * this functions stores the moves that the player has done in a dedicated data structure
 	 *
 	 * @see GodMoves
-	 * @param god the Player's god
 	 * @param cmd the type of command that the player has done
-	 * @param destination the target cell for the command
 	 * @author Elia Ravella
 	 */
-	private void registerMove(GodType god, CommandType cmd, Pair destination) {
-		if(god.getCapitalizedName().equals("Triton")){
-			if(!(cmd.equals(CommandType.MOVE) || (destination.x == 4 || destination.y == 4 || destination.x == 0 || destination.y == 0)))
-				turnMoves.add(cmd);
-		} else {
-			turnMoves.add(cmd);
-		}
+	private void registerMove(CommandType cmd) {
+		turnMoves.add(cmd);
 	}
+
 
 }
