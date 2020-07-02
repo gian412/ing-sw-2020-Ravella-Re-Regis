@@ -1,5 +1,7 @@
 package it.polimi.ingsw.utils;
 
+import it.polimi.ingsw.controller.Command;
+
 import java.util.HashMap;
 
 /**
@@ -12,7 +14,7 @@ public final class GodMoves {
 
     private static final HashMap<GodType, CommandType[]> allPossibleMoves = new HashMap<>();
 
-    public static void PossibleMoveInit() {
+    public static void possibleMoveInit() {
 
         // Apollo
         allPossibleMoves.put(GodType.APOLLO,
@@ -72,15 +74,6 @@ public final class GodMoves {
 
     }
 
-    public static CommandType[] getPossibleMove(GodType godType) {
-        return allPossibleMoves.get(godType);
-    }
-
-
-    public PossibleMove setPlayersPossibleMove(String God) throws IllegalArgumentException {
-        return new PossibleMove();
-    }
-
     /**
      * this function performs a control on a set of moves given and the one available for that god
      *
@@ -90,14 +83,53 @@ public final class GodMoves {
      * @author Gianluca Regis, Ravella Elia
      */
     public static boolean isTurnEnded(GodType playerGod, Object[] playerMoves){
+
         CommandType[] neededMoves = allPossibleMoves.get(playerGod);
 
-        if(neededMoves.length != playerMoves.length) return false;
+        // If the worker has not at least moved and build return false
+        if (playerMoves.length <=1 )
+            return false;
+
+        // If the worker made all the action, check their validity
+        if(neededMoves.length == playerMoves.length)
+            return analyzeCompleteActions(neededMoves, playerMoves);
+
+        switch (playerGod) {
+            case ARTEMIS:
+            case CHARON:
+            case PROMETHEUS:
+                return canPassActionBefore(playerMoves);
+            case TRITON:
+                return canPassTriton(playerMoves);
+            default:
+                return false;
+        }
+
+
+    }
+
+    private static boolean analyzeCompleteActions(CommandType[] neededMoves, Object[] playerMoves) {
 
         for(int i = 0; i < neededMoves.length; i++)
-            if(!neededMoves[i].equals(playerMoves[i])) return false;
+            if(!neededMoves[i].equals(playerMoves[i]))
+                return false;
 
         return true;
+
+    }
+
+    private static boolean canPassActionBefore(Object[] playerMoves){
+
+        return  (playerMoves.length == 2 && playerMoves[0].equals(CommandType.MOVE) && (playerMoves[1].equals(CommandType.BUILD) || playerMoves[1].equals(CommandType.BUILD_DOME)));
+
+    }
+
+    private static boolean canPassTriton(Object[] playerMoves) {
+
+        int len = playerMoves.length;
+
+        return  (len>=2 && playerMoves[0].equals(CommandType.MOVE) && (playerMoves[len-1].equals(CommandType.BUILD) || playerMoves[len-1].equals(CommandType.BUILD_DOME)));
+
     }
 
 
