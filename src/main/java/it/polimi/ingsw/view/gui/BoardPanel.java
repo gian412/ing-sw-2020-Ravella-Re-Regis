@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.utils.GameState;
-import it.polimi.ingsw.utils.GodMoves;
+import it.polimi.ingsw.utils.GodActions;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
 import it.polimi.ingsw.view.Observer;
@@ -293,7 +293,7 @@ public class BoardPanel extends JPanel{
 					case PLAYING:
 						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
 							if(message.getTurnPlayer().equals(actualBoard.getTurnPlayer())){
-								if(GodMoves.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+								if(GodActions.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
 									JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Your turn is ended!");
 									remoteChangeTurn();
 								} else {
@@ -360,7 +360,7 @@ public class BoardPanel extends JPanel{
 		this.outputStream = outputStream;
 
 		// Loads gods possible move, turn moves dataset
-		GodMoves.possibleMoveInit();
+		GodActions.possibleActionsInit();
 		turnMoves = new ArrayList<>();
 
 		// Initialize option panel and add it to the board panel
@@ -597,7 +597,7 @@ public class BoardPanel extends JPanel{
 	/**
 	 * this functions stores the moves that the player has done in a dedicated data structure
 	 *
-	 * @see GodMoves
+	 * @see GodActions
 	 * @param cmd the type of command that the player has done
 	 * @author Elia Ravella
 	 */

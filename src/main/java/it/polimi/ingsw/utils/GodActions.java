@@ -2,6 +2,7 @@ package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.controller.Command;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 
 /**
@@ -10,11 +11,16 @@ import java.util.HashMap;
  *
  * @author Gianluca Regis, Elia Ravella
  */
-public final class GodMoves {
+public final class GodActions {
 
-    private static final HashMap<GodType, CommandType[]> allPossibleMoves = new HashMap<>();
+    private static final EnumMap<GodType, CommandType[]> allPossibleMoves = new EnumMap<>(GodType.class);
 
-    public static void possibleMoveInit() {
+    /**
+     * Initialize the private EnumMap with all possible actions for each God
+     *
+     * @author Gianluca Regis
+     */
+    public static void possibleActionsInit() {
 
         // Apollo
         allPossibleMoves.put(GodType.APOLLO,
@@ -34,13 +40,13 @@ public final class GodMoves {
 
         // Charon
         allPossibleMoves.put(GodType.CHARON,
-                new CommandType[]{CommandType.MOVE, CommandType.BUILD, CommandType.FORCE});
+                new CommandType[]{CommandType.FORCE, CommandType.MOVE, CommandType.BUILD});
 
         // Chronus
         allPossibleMoves.put(GodType.CHRONUS,
                 new CommandType[]{CommandType.MOVE, CommandType.BUILD});
 
-        // Demeterpo
+        // Demeter
         allPossibleMoves.put(GodType.DEMETER,
                 new CommandType[]{CommandType.MOVE, CommandType.BUILD, CommandType.BUILD});
 
