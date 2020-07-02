@@ -53,6 +53,11 @@ public class Artemis extends God {
                             startingCell = worker.getPreviousCell(); // Save the starting position of the worker
                             hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
+                            if (!hasWon && !canMove(worker) && !canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                            }
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -62,6 +67,11 @@ public class Artemis extends God {
                             super.move(worker, command.coordinates); // Call super-class' move method
                             hasMovedSecond = true; // Store the information that the worker has moved second
                             hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon
+                            if (!hasWon && !canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                            }
                             break;
                         } catch (IllegalMoveException e){
                             throw new IllegalMoveException(e.getMessage());
@@ -75,6 +85,7 @@ public class Artemis extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -88,6 +99,7 @@ public class Artemis extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -98,6 +110,14 @@ public class Artemis extends God {
 
                 case RESET:
                     this.resetLocalVariables(); // Call Artemis' reset method
+                    break;
+
+                case CHECK_WORKERS:
+                    if (worker.getCurrentCell()!=null && !canMove(worker)) {
+                        board.removeWorker(worker);
+                        worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                    }
                     break;
 
                 default:

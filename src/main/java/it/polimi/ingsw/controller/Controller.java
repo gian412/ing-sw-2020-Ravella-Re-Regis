@@ -36,14 +36,16 @@ public class Controller implements Observer<PlayerCommand> {
 
         if(game.getTurnPlayer().getNAME().equals(player)) {
             try {
-                game.getTurnPlayer().getDivinity().executeCommand(
-                        game.getTurnPlayer().getWorkers()[workerID],
-                        command
-                );
+                if (game.getTurnPlayer().getDivinity()!=null) {
+                    game.getTurnPlayer().getDivinity().executeCommand(
+                            game.getTurnPlayer().getWorkers()[workerID],
+                            command
+                    );
+                }
             } catch (IllegalMoveException exc) {
                 game.getBoard().notifyIllegalMove(exc.getMessage());
-            } catch (NullPointerException exc) {
-                exc.printStackTrace();
+            } catch (Exception exc) {
+                game.getBoard().notifyIllegalMove("Something went wrong: " + exc.getMessage());
             }
         }
 
@@ -82,10 +84,12 @@ public class Controller implements Observer<PlayerCommand> {
      */
     public void changeTurnPlayer(){
         try{
-            game.getTurnPlayer().getDivinity().executeCommand(
-                    null,
-                    new Command(new Pair(0, 0), CommandType.RESET)
-            );
+            if (game.getTurnPlayer().getDivinity()!=null) {
+                game.getTurnPlayer().getDivinity().executeCommand(
+                        null,
+                        new Command(new Pair(0, 0), CommandType.RESET)
+                );
+            }
         }catch(IllegalMoveException | NullPointerException x){
             System.err.println(x.getMessage() + " controller generated");
         } finally {
@@ -147,6 +151,17 @@ public class Controller implements Observer<PlayerCommand> {
 
             case CHANGE_TURN:
                 changeTurnPlayer();
+
+                for(Worker worker : getTurnPlayer().getWorkers())
+                    commitCommand(
+                            getTurnPlayer().getNAME(),
+                            new Command(
+                                    new Pair(0, 0),
+                                    CommandType.CHECK_WORKERS
+                            ),
+                            worker.getWORKER_ID().charAt(worker.getWORKER_ID().length() - 1) == '0' ? 0 : 1
+                    );
+
                 game.getBoard().updateProxyBoard();
                 break;
 

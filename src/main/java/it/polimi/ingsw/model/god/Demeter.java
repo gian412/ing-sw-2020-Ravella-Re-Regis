@@ -53,6 +53,11 @@ public class Demeter extends God {
                             super.move(worker, command.coordinates);
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
+                            if (!hasWon && !canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                            }
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -67,6 +72,7 @@ public class Demeter extends God {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             previousCell = cell;
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -75,6 +81,7 @@ public class Demeter extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuildSecond = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e){
                             throw new IllegalMoveException(e.getMessage());
@@ -89,6 +96,7 @@ public class Demeter extends God {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             previousCell = cell;
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -97,6 +105,7 @@ public class Demeter extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuildSecond = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e){
                             throw new IllegalMoveException(e.getMessage());
@@ -107,6 +116,14 @@ public class Demeter extends God {
 
                 case RESET:
                     this.resetLocalVariables();
+                    break;
+
+                case CHECK_WORKERS:
+                    if (worker.getCurrentCell()!=null && !canMove(worker)) {
+                        board.removeWorker(worker);
+                        worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                    }
                     break;
 
                 default:

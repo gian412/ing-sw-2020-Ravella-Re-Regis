@@ -4,12 +4,17 @@ import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.utils.GodType;
+import it.polimi.ingsw.view.gui.StaticFrame;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class CliComposer {
+
+    GodType[] gods = {GodType.APOLLO, GodType.ARTEMIS, GodType.ATHENA, GodType.ATLAS, GodType.CHARON, GodType.CHRONUS,
+        GodType.DEMETER, GodType.HEPHAESTUS, GodType.HESTIA, GodType.MINOTAUR, GodType.PAN, GodType.PROMETHEUS,
+        GodType.TRITON, GodType.ZEUS};
 
     //Pattern to write the title SANTORINI in the Cli
     final static int[][] SANTORINI =
@@ -53,14 +58,14 @@ public class CliComposer {
             };
 
     final static int[][] LOSE =
-            {   {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0 ,1, 0, 0 ,1, 1, 1, 0, 0, 1, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0 ,0, 1, 0, 1, 0, 0, 0, 1},
-                {1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0}
-            };
+            {   {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0 ,1, 0, 0 ,1, 1, 1, 0, 0, 1, 1, 1, 0, 0},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0 ,0, 1, 0, 1, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0}
+            }; 
 
 
 
@@ -77,13 +82,18 @@ public class CliComposer {
         numberOfPlayer = number;
     }
 
+    /**
+     * CLiComposer constructor
+     *
+     * Author Marco Re
+     */
     public CliComposer(){
     }
 
     /**
-     * create a formatted string for the title of the game
+     * create a formatted string for the title of the game 
      *
-     * @authors Marco Re
+     * @author Marco Re
      *
      * @return the title
      */
@@ -174,7 +184,7 @@ public class CliComposer {
     /**
      *create a formatted string to put at the beginning of the terminal
      *
-     * @authors Marco Re
+     * @author Marco Re
      *
      * @return the banner to put at the beginning of the terminal
      */
@@ -213,13 +223,17 @@ public class CliComposer {
         return write.toString();
     }
 
+
+    /**
+     * print the list of all the possible gods
+     *
+     * @author Marco Re
+     *
+     * @param proxy is the proxyboard which arrive from the net
+     */
     public void godList(BoardProxy proxy){
 
 
-
-        GodType[] gods = {GodType.APOLLO, GodType.ARTEMIS, GodType.ATHENA, GodType.ATLAS, GodType.CHARON, GodType.CHRONUS,
-            GodType.DEMETER, GodType.HEPHAESTUS, GodType.HESTIA, GodType.MINOTAUR, GodType.PAN, GodType.PROMETHEUS,
-            GodType.TRITON, GodType.ZEUS};
         Ansi maker = new Ansi();
         String change;
 
@@ -246,6 +260,15 @@ public class CliComposer {
                 System.out.println("Now is your turn. Please push ENTER to continue......");
     }
 
+    /**
+     * return the description of a specific god
+     *
+     * @author Marco Re
+     *
+     * @param god il the god which i want the description
+     *
+     * @return a formatted string with the description of the god
+     */
     private String getDescription(GodType god) {
         Ansi maker = new Ansi();
         String font = maker.font(Ansi.BLUE_B);
@@ -314,7 +337,13 @@ public class CliComposer {
         }
     }
 
-
+    /**
+     * print the board
+     *
+     * @author Marco Re
+     *
+     * @param board is the proxyboard which arrive from the net
+     */
     public void boardMaker(BoardProxy board){
 
         StringBuilder out = new StringBuilder("");
@@ -323,9 +352,10 @@ public class CliComposer {
         //create an array with the name of the players and remove the name of the turnplayer
         Object[] players3 = board.getGods().keySet().toArray();
         List<String> players2 = new ArrayList<>();
-        for( int i = 0; i < 3; i ++)
-            if(!players3[i].toString().equals(playerName))
-                players2.add(players3[i].toString());
+        if(numberOfPlayer ==3)
+            for( int i = 0; i < 3; i ++)
+                if(!players3[i].toString().equals(playerName))
+                    players2.add(players3[i].toString());
 
         //reset the screen and print the banner
         System.out.println(Ansi.RESET_SCREEN);
@@ -340,6 +370,7 @@ public class CliComposer {
         }
         out.append("\n");
 
+        //ciclo le righe
         for(int i = 0; i < 5; i++) {
             for(int k = 0; k < 3; k++) {
                 out.append("      ");
@@ -350,7 +381,7 @@ public class CliComposer {
                 else
                     out.append("     ");
 
-                //scan the cells of the line, every cell is a 3x3 and the function creates a line every time
+                //scan the cells of the line, every cell is a 3x3 and the function creates a line every time ( ciclo colonna)
                 for (int j = 0; j < 5; j++) {
 
                     if(k == 0){
@@ -370,7 +401,7 @@ public class CliComposer {
                                     }
 
                                     if(numberOfPlayer == 3){
-                                         // the first player is blue
+                                        // the first player is blue
                                         if(entry.getKey().contains(players2.get(0))){
                                             out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + "     ");
                                             out.append(Ansi.RESET);
@@ -397,28 +428,28 @@ public class CliComposer {
                         for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
                             if((entry.getValue().y == i) && (entry.getValue().x == j)) {
                                 if(entry.getKey().contains(playerName)){
-                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.GREEN) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.GREEN) + " " + board.getBoardScheme()[j][i].toInt() + "/");
                                     out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
                                     out.append(Ansi.RESET);
                                     found = true;
                                 }
                                 else{
                                     if(numberOfPlayer == 2){
-                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + " " + board.getBoardScheme()[j][i].toInt() + "/");
                                         out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
                                         out.append(Ansi.RESET);
                                         found = true;
                                     }
                                     if(numberOfPlayer == 3){
                                         if(entry.getKey().contains(players2.get(0))){
-                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + " " + board.getBoardScheme()[j][i].toInt() + "/");
                                             out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
                                             out.append(Ansi.RESET);
                                             found = true;
                                         }
 
                                         if(entry.getKey().contains(players2.get(1))){
-                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + " " + board.getBoardScheme()[j][i].toInt() + "/");
                                             out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
                                             out.append(Ansi.RESET);
                                             found = true;
@@ -428,7 +459,7 @@ public class CliComposer {
                             }
                         }
                         if(!found)
-                            out.append("| " + board.getBoardScheme()[i][j].toInt() + "/  ");
+                            out.append("| " + board.getBoardScheme()[j][i].toInt() + "/  ");
                     }
 
                     if(k == 2){
@@ -484,13 +515,65 @@ public class CliComposer {
 
         //print the board
         System.out.println(out.toString());
+        System.out.println("\n");
+
+        // show your god
+        String change;
+        for(Map.Entry<String, String> entry : board.getGods().entrySet()){
+            if(entry.getKey().contains(playerName)) {
+                change = maker.font(Ansi.GREEN_B);
+                System.out.println("     " + change + entry.getValue().toUpperCase());
+
+                System.out.println("  " + getDescription(toGod(entry.getValue().toUpperCase())));
+            }
+        }
+        System.out.println(Ansi.RESET + "\n");
+
+        //show the god of the others players
+        if(numberOfPlayer == 2){
+            for(Map.Entry<String, String> entry : board.getGods().entrySet()){
+                if(!entry.getKey().contains(playerName)) {
+                    change = maker.font(Ansi.RED_B);
+                    System.out.println("     " + change + entry.getValue().toUpperCase());
+
+                    System.out.println("  " + getDescription(toGod(entry.getValue().toUpperCase())));
+                }
+            }
+            System.out.println(Ansi.RESET + "\n");
+        }
+        else{
+            for(Map.Entry<String, String> entry : board.getGods().entrySet()){
+                if(entry.getKey().contains(players2.get(0))) {
+                    change = maker.font(Ansi.BLUE_B);
+                    System.out.println("     " + change + entry.getValue().toUpperCase());
+
+                    System.out.println("  " + getDescription(toGod(entry.getValue().toUpperCase())));
+                }
+                if(entry.getKey().contains(players2.get(1))) {
+                    change = maker.font(Ansi.YELLOW_B);
+                    System.out.println("     " + change + entry.getValue().toUpperCase());
+
+                    System.out.println("  " + getDescription(toGod(entry.getValue().toUpperCase())));
+                }
+
+            }
+            System.out.println(Ansi.RESET + "\n");
+        }
+
+
 
         //print the message for the current player
-        if(board.getStatus().equals(GameState.ADDING_WORKER) && board.getTurnPlayer().equals(playerName))
+        if(board.getTurnPlayer().equals(playerName))
             System.out.println("Now is your turn. Please press ENTER to continue ........");
     }
 
-
+    /**
+     * print the message of finish game
+     *
+     * @author Marco Re
+     *
+     * @param board is the proxyboard which arrive from the net
+     */
     public void terminateGame(BoardProxy board){
 
         Ansi maker = new Ansi();
@@ -500,12 +583,19 @@ public class CliComposer {
         System.out.println(bannerMaker() + "\n");
 
         if(board.getWinner().equals("Unexpected Game Over")){
-            System.out.println("   Unexpected connection ERROR\n\n");
+
+            System.out.println("   Unexpected connection ERROR. Other Client Down\n\n");
             System.out.println("   Press ENTER to exit from the game......");
             return;
         }
 
-        else {
+        else if(board.getWinner().equals("Server down")){
+            System.out.println("   Unexpected connection ERROR. Serve Down\n\n");
+            System.out.println("   Press ENTER to exit from the game......");
+            return;
+        }
+
+        else{
             //set font and background
             String change = maker.bgAndFont(Ansi.BACKGROUND_WHITE_B, Ansi.BLUE_B);
             write.append(change);
@@ -538,13 +628,13 @@ public class CliComposer {
                 write.append(" \n");
             }
 
+            write.append(change);
             for (int i = 0; i < 130; i++)
                 write.append(' ');
             write.append(Ansi.RESET);
             write.append('\n');
 
-            if (board.getWinner().equals(playerName)) {
-
+            if(board.getWinner().equals(playerName)){
                 //insert the title (WIN)
                 for (int i = 0; i < 7; i++) {
                     write.append(change);
@@ -553,7 +643,7 @@ public class CliComposer {
                     }
 
                     for (int j = 0; j < 15; j++) {
-                        if (YOU[i][j] == 0)
+                        if (WIN[i][j] == 0)
                             write.append(' ');
                         else
                             write.append(Unicode.SQUARE);
@@ -571,8 +661,9 @@ public class CliComposer {
                     write.append(' ');
                 write.append(Ansi.RESET);
                 write.append('\n');
+            }
 
-            } else {
+            else {
                 //insert the title (LOSE)
                 for (int i = 0; i < 7; i++) {
                     write.append(change);
@@ -581,7 +672,7 @@ public class CliComposer {
                     }
 
                     for (int j = 0; j < 23; j++) {
-                        if (YOU[i][j] == 0)
+                        if (LOSE[i][j] == 0)
                             write.append(' ');
                         else
                             write.append(Unicode.SQUARE);
@@ -603,6 +694,50 @@ public class CliComposer {
             System.out.println(write.toString());
             return;
         }
+    }
+
+    /**
+     * convert a string with the name of the god in its corresponding godType
+     *
+     * @author Marco Re
+     *
+     * @param god is the name of the god
+     *
+     * @return the corresponding godType
+     */
+    private GodType toGod(String god) {
+
+        switch (god.toUpperCase()) {
+            case "APOLLO":
+                return gods[0];
+            case "ARTEMIS":
+                return gods[1];
+            case "ATHENA":
+                return gods[2];
+            case "ATLAS":
+                return gods[3];
+            case "CHARON":
+                return gods[4];
+            case "CHRONUS":
+                return gods[5];
+            case "DEMETER":
+                return gods[6];
+            case "HEPHAESTUS":
+                return gods[7];
+            case "HESTIA":
+                return gods[8];
+            case "MINOTAUR":
+                return gods[9];
+            case "PAN":
+                return gods[10];
+            case "PROMETHEUS":
+                return gods[11];
+            case "TRITON":
+                return gods[12];
+            case "ZEUS":
+                return gods[13];
+        }
+        return null;
     }
 
 }

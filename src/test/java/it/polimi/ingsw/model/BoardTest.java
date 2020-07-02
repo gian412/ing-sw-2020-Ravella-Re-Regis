@@ -21,12 +21,14 @@ public class BoardTest {
 
         Board board = new Board();
         Player player = new Player("player1", 10);
+        board.setTurnPlayer(player);
         Worker worker = new Worker("worker1", player);
 
         board.getCell(new Pair(0,0)).setWorker(worker);
         worker.setCurrentCell(board.getCell(new Pair (0,0)));
 
-        try {
+        try
+        {
             board.moveWorker(worker, new Pair(1, 1));
         } catch (IllegalMoveException e) {
             System.err.println("Error e in method moveWorkerTest in class BoardTest " + e.toString());
@@ -96,6 +98,7 @@ public class BoardTest {
 
         Board board = new Board();
         Player player = new Player("player1", 10);
+        board.setTurnPlayer(player);
         Worker worker = new Worker("worker1", player);
 
         board.getCell(new Pair (0,0)).setWorker(worker);
@@ -250,6 +253,7 @@ public class BoardTest {
     public void build1Test() {
 
         Board board = new Board();
+        board.setTurnPlayer(new Player("Name", 18));
         Pair pair = new Pair(1, 1);
         Cell cellWorker = new Cell(0, 0);
         board.getCell(new Pair (1,1)).setHeight(Height.THIRD_FLOOR);
@@ -271,6 +275,7 @@ public class BoardTest {
     public void build2Test() {
 
         Board board = new Board();
+        board.setTurnPlayer(new Player("Name", 18));
         Pair pair = new Pair(1, 1);
         Cell cellWorker = new Cell(0, 0);
 
@@ -292,6 +297,7 @@ public class BoardTest {
     public void build3Test() {
 
         Board board = new Board();
+        board.setTurnPlayer(new Player("Name", 18));
         Pair pair = new Pair(1, 1);
         Cell cellWorker = new Cell(0, 0);
 
@@ -519,6 +525,7 @@ public class BoardTest {
     public void setChoosingGodsTest() {
 
         Board board = new Board();
+        board.setTurnPlayer(new Player("Name", 18));
 
         board.setChoosingGods("message");
 

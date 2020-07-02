@@ -54,6 +54,11 @@ public class Hephaestus extends God {
                             super.move(worker, command.coordinates); // Call super-class' move method
                             hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
+                            if (!hasWon && !canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                            }
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -68,6 +73,7 @@ public class Hephaestus extends God {
                             super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             previousCell = cell; // Save the position in which the player has build the first time
                             hasBuild = true; // Store the information that the worker has build
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -77,6 +83,7 @@ public class Hephaestus extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuildSecond = true; // Store the information that the worker has build second
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -91,6 +98,7 @@ public class Hephaestus extends God {
                             super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             previousCell = cell; // Save the position in which the player has build the first time
                             hasBuild = true; // Store the information that the worker has build
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -101,6 +109,14 @@ public class Hephaestus extends God {
 
                 case RESET:
                     this.resetLocalVariables();
+                    break;
+
+                case CHECK_WORKERS:
+                    if (worker.getCurrentCell()!=null && !canMove(worker)) {
+                        board.removeWorker(worker);
+                        worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                    }
                     break;
 
                 default:

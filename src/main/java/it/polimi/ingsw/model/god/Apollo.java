@@ -51,18 +51,14 @@ public class Apollo extends God{
         }else{ // worker has to force the otherWorker to exchange position with him
             if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't a dome and it isn't more then 1 floor far
                 if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
-                    /* try {
+                    try {
                         Worker otherWorker = cell.getWorker(); // Get the reference to the worker to force
-                        Cell actualCell = worker.getCurrentCell(); // Get the reference to the cell where I'm now
-                        board.moveWorker(worker, pair); // Call board's move method
-                        board.moveWorker(otherWorker, new Pair(actualCell.X, actualCell.Y)); // Call board's move method on otherWorker
+                        board.switchWorkers(worker, otherWorker);
                         hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
                     } catch (IllegalMoveException e){
                         throw new IllegalMoveException(e.getMessage());
-                    } */
-                    Worker otherWorker = cell.getWorker(); // Get the reference to the worker to force
-                    board.switchWorkers(worker, otherWorker);
-                    hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
+                    }
+
                 } else{
                     throw new IllegalMoveException("CanMoveUp parameter error");
                 }
@@ -74,6 +70,29 @@ public class Apollo extends God{
 
 
 
+    }
+
+    /**
+     * Check if the given worker can move
+     *
+     * Override of the method of the super-class. This method don't check the presence of workers in the neighbors
+     * because Apollo can force them.
+     *
+     * @author Gianluca Regis
+     * @param worker The worker to check
+     * @return true if it can move, false otherwise
+     */
+    @Override
+    protected boolean canMove(Worker worker) {
+        Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());
+        for (Cell[] row : neighbors) {
+            for (Cell cell : row) {
+                if (cell!=null && cell!=worker.getCurrentCell() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<=1 && cell.getHeight()!=Height.DOME) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -104,6 +123,11 @@ public class Apollo extends God{
                             this.move(worker, command.coordinates); // Call Apollo's move method
                             hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon
+                            if (!hasWon && !canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                            }
                             break;
                         } catch (IllegalMoveException e){
                             throw new IllegalMoveException(e.getMessage());
@@ -117,6 +141,7 @@ public class Apollo extends God{
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -130,6 +155,7 @@ public class Apollo extends God{
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class' build method
                             hasBuild = true; // Store the information that the worker has build
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -140,6 +166,14 @@ public class Apollo extends God{
 
                 case RESET:
                     super.resetLocalVariables(); // Call super-class' reset method
+                    break;
+
+                case CHECK_WORKERS:
+                    if (worker.getCurrentCell()!=null && !this.canMove(worker)) {
+                        board.removeWorker(worker);
+                        worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                    }
                     break;
 
                 default:

@@ -50,13 +50,14 @@ public class Minotaur extends God {
                 throw new IllegalMoveException("Invalid MOVE parameters");
             }
         } else {
-
-
-
             if ( cell.getHeight() != Height.DOME && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 1 ) { // If the cell isn't a dome and it isn't more then 1 floor far
                 if( worker.isCanMoveUp() || (!worker.isCanMoveUp() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <= 0) ){ // If worker can move up or worker can't move up but the destination isn't up
                     Pair direction = worker.getCurrentCell().getDirection( cell );
-                    Cell nextCell =  board.getCell( new Pair( cell.X + direction.x, cell.Y + direction.y ) );
+                    // Cell nextCell =  board.getCell( new Pair( cell.X + direction.x, cell.Y + direction.y ) );
+                    Cell nextCell = checkCell( new Pair( cell.X + direction.x, cell.Y + direction.y ) );
+                    if (nextCell == null) {
+                        throw new IllegalMoveException("invalidCell");
+                    }
                     if( nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME){
                         Worker otherWorker = cell.getWorker();
                         try {
@@ -76,6 +77,34 @@ public class Minotaur extends God {
                 throw new IllegalMoveException("Invalid MOVE parameters");
             }
         }
+    }
+
+    /**
+     * Check if the given worker can move
+     *
+     * @author Gianluca Regis
+     * @param worker The worker to check
+     * @return true if it can move, false otherwise
+     */
+    @Override
+    protected boolean canMove(Worker worker) {
+        Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());
+        for (Cell[] row : neighbors) {
+            for (Cell cell : row) {
+                if (cell!=null && cell!= worker.getCurrentCell() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<=1 && cell.getHeight()!=Height.DOME) {
+                    if (cell.getWorker()==null) {
+                        return true;
+                    }
+                    Pair direction = worker.getCurrentCell().getDirection( cell );
+                    Cell nextCell = checkCell( new Pair( cell.X + direction.x, cell.Y + direction.y ) );
+                    if (nextCell != null && nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME) {
+                        return true;
+                    }
+
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -108,6 +137,11 @@ public class Minotaur extends God {
                             this.move(worker, command.coordinates);
                             hasMoved = true;
                             hasWon = board.checkWin(worker);
+                            if (!hasWon && !canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                            }
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -121,6 +155,7 @@ public class Minotaur extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -135,6 +170,7 @@ public class Minotaur extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -145,6 +181,14 @@ public class Minotaur extends God {
 
                 case RESET:
                     super.resetLocalVariables();
+                    break;
+
+                case CHECK_WORKERS:
+                    if (worker.getCurrentCell()!=null && !this.canMove(worker)) {
+                        board.removeWorker(worker);
+                        worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                    }
                     break;
 
                 default:

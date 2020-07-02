@@ -7,6 +7,8 @@ import it.polimi.ingsw.utils.GameState;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.RemoteView;
 
+import java.util.Map;
+
 public class Board {
 
     private BoardProxy proxy;
@@ -69,7 +71,7 @@ public class Board {
 
     /**
      *
-     * @param message
+     * @param message the list of gods
      */
     public void setChoosingGods(String message){
         proxy.setChoosingGods(message);
@@ -159,23 +161,27 @@ public class Board {
      * @param worker first worker (the one who execute the switch)
      * @param otherWorker second worker (the one who suffer the switch)
      */
-    public void switchWorkers(Worker worker, Worker otherWorker) {
+    public void switchWorkers(Worker worker, Worker otherWorker) throws IllegalMoveException {
 
-        // Reset cells' worker
-        this.getCell(new Pair(worker.getCurrentCell().X, worker.getCurrentCell().Y)).setWorker(otherWorker);
-        this.getCell(new Pair(otherWorker.getCurrentCell().X, otherWorker.getCurrentCell().Y)).setWorker(worker);
+        if (worker.getCurrentCell().cellDistance(new Pair(otherWorker.getCurrentCell().X, otherWorker.getCurrentCell().Y))) {
+            // Reset cells' worker
+            this.getCell(new Pair(worker.getCurrentCell().X, worker.getCurrentCell().Y)).setWorker(otherWorker);
+            this.getCell(new Pair(otherWorker.getCurrentCell().X, otherWorker.getCurrentCell().Y)).setWorker(worker);
 
-        // Update previousCells' infos
-        worker.setPreviousCell(otherWorker.getCurrentCell());
-        otherWorker.setPreviousCell(worker.getCurrentCell());
+            // Update previousCells' infos
+            worker.setPreviousCell(otherWorker.getCurrentCell());
+            otherWorker.setPreviousCell(worker.getCurrentCell());
 
-        // Update currentCells' infos using a tmp cell variable
-        Cell tmp = otherWorker.getCurrentCell();
-        otherWorker.setCurrentCell(worker.getCurrentCell());
-        worker.setCurrentCell(tmp);
+            // Update currentCells' infos using a tmp cell variable
+            Cell tmp = otherWorker.getCurrentCell();
+            otherWorker.setCurrentCell(worker.getCurrentCell());
+            worker.setCurrentCell(tmp);
 
-        //update the proxyBoard
-        this.updateProxyBoard();
+            //update the proxyBoard
+            this.updateProxyBoard();
+        } else {
+            throw new IllegalMoveException("Invalid ditance");
+        }
 
     }
 
@@ -251,6 +257,53 @@ public class Board {
     }
 
     /**
+     * Remove a worker from the board
+     *
+     * @author Gianluca Regis
+     * @param worker the worker to remove
+     */
+    public void removeWorker(Worker worker) {
+        worker.getCurrentCell().setWorker(null);
+    }
+
+    public Cell[][] getNeighbors(Cell currentCell) {
+
+        Cell[][] neighbors = new Cell[3][3];
+        Pair[][] coordinates = {
+                {
+                    new Pair(currentCell.X-1, currentCell.Y-1),
+                    new Pair(currentCell.X, currentCell.Y-1),
+                    new Pair(currentCell.X+1, currentCell.Y-1)
+                },
+                {
+                    new Pair(currentCell.X-1, currentCell.Y),
+                    new Pair(currentCell.X, currentCell.Y),
+                    new Pair(currentCell.X+1, currentCell.Y)
+                },
+                {
+                    new Pair(currentCell.X-1, currentCell.Y+1),
+                    new Pair(currentCell.X, currentCell.Y+1),
+                    new Pair(currentCell.X+1, currentCell.Y+1)
+                }
+        };
+
+        for (int i=0; i<3; i++) {
+            for (int j=0; j<3; j++) {
+                try {
+                    Cell cell = this.getCell(coordinates[i][j]); // Get the reference to the cell
+                    neighbors[i][j] = cell;
+                } catch (IndexOutOfBoundsException e) {
+                    neighbors[i][j] = null;
+
+                }
+            }
+        }
+
+        return neighbors;
+
+    }
+
+    /**
      * check the winning condition
      *
      * @author Gianluca regis
@@ -310,6 +363,20 @@ public class Board {
             } else{
                 return false;
             }
+        }
+    }
+
+    public void checkChronusWin() {
+
+        Map<String, String> gods = this.proxy.getGods();
+        if (gods!=null && gods.containsValue(GodType.CHRONUS.getCapitalizedName()) && countCompleteTower()) {
+            String winPlayer = "";
+            for(String x : gods.keySet())
+                if(gods.get(x).equals("Chronus")) winPlayer = x;
+
+            proxy.setWinner(winPlayer);
+            proxy.setStatus(GameState.TERMINATOR);
+            proxy.updateProxy();
         }
     }
 

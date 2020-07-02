@@ -70,4 +70,14 @@ public class StaticFrame {
     public static boolean godCanForce() {
         return god == GodType.CHARON;
     }
+
+    /**
+     * Check if the God can build a dome in any position
+     * @return true if he can, false otherwise
+     *
+     * @author Gianluca Regis
+     */
+    public static boolean godCanBuildDome() {
+        return god == GodType.ATLAS;
+    }
 }

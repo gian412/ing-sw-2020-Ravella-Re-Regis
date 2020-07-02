@@ -27,6 +27,36 @@ public class Charon extends God {
     }
 
     /**
+     * Check if the given worker can move
+     *
+     * Override of the method of the super-class. This method don't check the presence of workers in the neighbors
+     * because Apollo can force them.
+     *
+     * @author Gianluca Regis
+     * @param worker The worker to check
+     * @return true if it can move, false otherwise
+     */
+    @Override
+    protected boolean canMove(Worker worker) {
+        Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());
+        for (Cell[] row : neighbors) {
+            for (Cell cell : row) {
+                if (cell!=null && cell!=worker.getCurrentCell() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<=1 && cell.getHeight()!=Height.DOME) {
+                    if (cell.getWorker()==null) {
+                        return true;
+                    }
+                    Pair direction = worker.getCurrentCell().getDirection( cell );
+                    Cell nextCell = checkCell( new Pair( worker.getCurrentCell().X - direction.x, worker.getCurrentCell().Y - direction.y ) );
+                    if (nextCell != null && nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Actions made every turn
      *
      * Action made by the worker received by parameter. the possible moves are:
@@ -62,6 +92,11 @@ public class Charon extends God {
                             if ( forcedCell.getWorker()==null && forcedCell.getHeight()!=Height.DOME ){
                                 board.forceWorker(cell.getWorker(),new Pair(forcedCell.X, forcedCell.Y));
                                 hasForced = true;
+                                if (!super.canMove(worker)) {
+                                    board.removeWorker(worker);
+                                    worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                                }
                                 break;
                             } else {
                                 throw new IllegalMoveException("Invalid FORCE parameters");
@@ -81,6 +116,11 @@ public class Charon extends God {
                             super.move(worker, command.coordinates);
                             hasMoved = true; // Store the information that the worker has moved
                             hasWon = board.checkWin(worker);
+                            if (!hasWon && !canBuild(worker)) {
+                                board.removeWorker(worker);
+                                worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                            }
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -94,6 +134,7 @@ public class Charon extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -107,6 +148,7 @@ public class Charon extends God {
                         try {
                             super.build(worker.getCurrentCell(), command.coordinates, false);
                             hasBuild = true;
+                            board.checkChronusWin();
                             break;
                         } catch (IllegalMoveException e) {
                             throw new IllegalMoveException(e.getMessage());
@@ -117,6 +159,14 @@ public class Charon extends God {
 
                 case RESET:
                     this.resetLocalVariables();
+                    break;
+
+                case CHECK_WORKERS:
+                    if (worker.getCurrentCell()!=null && !this.canMove(worker)) {
+                        board.removeWorker(worker);
+                        worker.setCurrentCell(null);
+                        worker.setPreviousCell(null);
+                    }
                     break;
 
                 default:
