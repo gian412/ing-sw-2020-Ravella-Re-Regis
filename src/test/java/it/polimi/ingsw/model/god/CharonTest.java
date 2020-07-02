@@ -842,4 +842,210 @@ public class CharonTest {
             fail("Exception in resetAllGodVariable in class ArtemisTest");
         }
     }
+
+    @Test
+    @DisplayName("cannotMove")
+    public void cannotMove(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(0, 0), CommandType.CHECK_WORKERS);
+        God god = new Charon(board);
+        Player player1 = new Player("Name1", 18);
+        Player player2 = new Player("Name2", 18);
+        board.setTurnPlayer(player1);
+        player1.setDivinity(god);
+        Worker worker = new Worker("Name10", player1);
+        Worker otherWorker = new Worker("Name20", player2);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 0));
+        firstCell.setHeight(Height.GROUND);
+        firstCell.setWorker(worker);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(0, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setWorker(null);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(1, 1));
+        thirdCell.setHeight(Height.DOME);
+        thirdCell.setWorker(null);
+
+        // Initialization of the fourth cell
+        Cell fourthCell = board.getCell(new Pair(1, 0));
+        fourthCell.setHeight(Height.FIRST_FLOOR);
+        fourthCell.setWorker(otherWorker);
+
+        worker.setCurrentCell(firstCell);
+        otherWorker.setCurrentCell(fourthCell);
+
+        try {
+            god.executeCommand(worker, command);
+
+            assertNull("worker.previousCell must be null", worker.getPreviousCell());
+            assertNull("worker.currentCell must be null", worker.getCurrentCell());
+            assertNull("firstCell.worker must be null", firstCell.getWorker());
+
+        } catch (IllegalMoveException e) {
+            System.err.println("Error e in method hasMovedTest in class ApolloTest: " + e.toString());
+            fail("Exception in hasMovedTest in class ApolloTest");
+        }
+
+    }
+
+    @Test
+    @DisplayName("cannotMoveEvenForcing")
+    public void cannotMoveEvenForcing(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(0, 0), CommandType.CHECK_WORKERS);
+        God god = new Charon(board);
+        Player player1 = new Player("Name1", 18);
+        Player player2 = new Player("Name2", 18);
+        board.setTurnPlayer(player1);
+        player1.setDivinity(god);
+        Worker worker = new Worker("Name10", player1);
+        Worker otherWorker = new Worker("Name20", player2);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 0));
+        firstCell.setHeight(Height.DOME);
+        firstCell.setWorker(null);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(0, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setWorker(null);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(0, 2));
+        thirdCell.setHeight(Height.SECOND_FLOOR);
+        thirdCell.setWorker(null);
+
+        // Initialization of the fourth cell
+        Cell fourthCell = board.getCell(new Pair(1, 0));
+        fourthCell.setHeight(Height.DOME);
+        fourthCell.setWorker(null);
+
+        // Initialization of the fifth cell
+        Cell fifthCell = board.getCell(new Pair(1, 1));
+        fifthCell.setHeight(Height.GROUND);
+        fifthCell.setWorker(worker);
+
+        // Initialization of the sixth cell
+        Cell sixthCell = board.getCell(new Pair(1, 2));
+        sixthCell.setHeight(Height.FIRST_FLOOR);
+        sixthCell.setWorker(otherWorker);
+
+        // Initialization of the seventh cell
+        Cell seventhCell = board.getCell(new Pair(2, 0));
+        seventhCell.setHeight(Height.SECOND_FLOOR);
+        seventhCell.setWorker(null);
+
+        // Initialization of the eighth cell
+        Cell eighthCell = board.getCell(new Pair(2, 1));
+        eighthCell.setHeight(Height.THIRD_FLOOR);
+        eighthCell.setWorker(null);
+
+        // Initialization of the ninth cell
+        Cell ninthCell = board.getCell(new Pair(2, 2));
+        ninthCell.setHeight(Height.DOME);
+        ninthCell.setWorker(null);
+
+        worker.setCurrentCell(fifthCell);
+        otherWorker.setCurrentCell(sixthCell);
+
+        try {
+            god.executeCommand(worker, command);
+
+            assertNull("worker.previousCell must be null", worker.getPreviousCell());
+            assertNull("worker.currentCell must be null", worker.getCurrentCell());
+            assertNull("firstCell.worker must be null", firstCell.getWorker());
+
+        } catch (IllegalMoveException e) {
+            System.err.println("Error e in method hasMovedTest in class ApolloTest: " + e.toString());
+            fail("Exception in hasMovedTest in class ApolloTest");
+        }
+
+    }
+
+    @Test
+    @DisplayName("canMoveForcing")
+    public void canMoveForcing(){
+
+        // Initialization of the parameters
+        Board board = new Board();
+        Command command = new Command(new Pair(0, 0), CommandType.CHECK_WORKERS);
+        God god = new Charon(board);
+        Player player1 = new Player("Name1", 18);
+        Player player2 = new Player("Name2", 18);
+        board.setTurnPlayer(player1);
+        player1.setDivinity(god);
+        Worker worker = new Worker("Name10", player1);
+        Worker otherWorker = new Worker("Name20", player2);
+
+        // Initialization of the first cell
+        Cell firstCell = board.getCell(new Pair(0, 0));
+        firstCell.setHeight(Height.DOME);
+        firstCell.setWorker(null);
+
+        // Initialization of the second cell
+        Cell secondCell = board.getCell(new Pair(0, 1));
+        secondCell.setHeight(Height.THIRD_FLOOR);
+        secondCell.setWorker(null);
+
+        // Initialization of the third cell
+        Cell thirdCell = board.getCell(new Pair(0, 2));
+        thirdCell.setHeight(Height.SECOND_FLOOR);
+        thirdCell.setWorker(null);
+
+        // Initialization of the fourth cell
+        Cell fourthCell = board.getCell(new Pair(1, 0));
+        fourthCell.setHeight(Height.GROUND);
+        fourthCell.setWorker(null);
+
+        // Initialization of the fifth cell
+        Cell fifthCell = board.getCell(new Pair(1, 1));
+        fifthCell.setHeight(Height.GROUND);
+        fifthCell.setWorker(worker);
+
+        // Initialization of the sixth cell
+        Cell sixthCell = board.getCell(new Pair(1, 2));
+        sixthCell.setHeight(Height.FIRST_FLOOR);
+        sixthCell.setWorker(otherWorker);
+
+        // Initialization of the seventh cell
+        Cell seventhCell = board.getCell(new Pair(2, 0));
+        seventhCell.setHeight(Height.SECOND_FLOOR);
+        seventhCell.setWorker(null);
+
+        // Initialization of the eighth cell
+        Cell eighthCell = board.getCell(new Pair(2, 1));
+        eighthCell.setHeight(Height.THIRD_FLOOR);
+        eighthCell.setWorker(null);
+
+        // Initialization of the ninth cell
+        Cell ninthCell = board.getCell(new Pair(2, 2));
+        ninthCell.setHeight(Height.DOME);
+        ninthCell.setWorker(null);
+
+        worker.setCurrentCell(fifthCell);
+        otherWorker.setCurrentCell(sixthCell);
+
+        try {
+            god.executeCommand(worker, command);
+
+            assertEquals("worker.currentCell must be null", fifthCell, worker.getCurrentCell());
+            assertEquals("firstCell.worker must be null", worker, fifthCell.getWorker());
+
+        } catch (IllegalMoveException e) {
+            System.err.println("Error e in method hasMovedTest in class ApolloTest: " + e.toString());
+            fail("Exception in hasMovedTest in class ApolloTest");
+        }
+
+    }
+
 }
