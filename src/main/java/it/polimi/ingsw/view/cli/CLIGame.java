@@ -29,6 +29,7 @@ public class CLIGame {
     private String playerName;
     private int numberOfPlayer;
     private String divinity;
+    int index = 0;
 
 
     //internal class that allow to access to the BoardProxy and print the board when receive a notify
@@ -81,7 +82,6 @@ public class CLIGame {
         connSocket = connection;
 
         //variables to manage inputs
-        int index = 0;
         int choice;
         int[] coord;
 
@@ -94,8 +94,6 @@ public class CLIGame {
 
         while (true) {
             System.in.read();
-
-
 
             if (displayer.localProxy != null) {
                 if(displayer.getLocalProxy().getStatus().equals(GameState.TERMINATOR)){
@@ -152,7 +150,7 @@ public class CLIGame {
                                                         "\n    1 - Insert a new cell" +
                                                         "\n    2 - Change the worker" +
                                                         "\nIndicate the number of your choice: ");
-                                                choice = chooseOption2();
+                                                choice = chooseOption();
 
                                                 //possible options
                                                 switch (choice) {
@@ -225,7 +223,7 @@ public class CLIGame {
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Change the worker" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -253,7 +251,7 @@ public class CLIGame {
                                                     "\n    1 - Build again" +
                                                     "\n    2 - Pass your turn" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             switch (choice) {
                                                 case 1:
@@ -299,7 +297,7 @@ public class CLIGame {
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Pass your turn" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -338,7 +336,7 @@ public class CLIGame {
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -363,7 +361,7 @@ public class CLIGame {
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Change the worker" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -401,7 +399,7 @@ public class CLIGame {
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -439,7 +437,7 @@ public class CLIGame {
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -497,7 +495,7 @@ public class CLIGame {
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Build a DOME" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -544,7 +542,7 @@ public class CLIGame {
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Change the worker" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -579,7 +577,7 @@ public class CLIGame {
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Build a new DOME" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -623,7 +621,7 @@ public class CLIGame {
                                                 "\n    1 - Start your turn and MOVE" +
                                                 "\n    2 - Start your turn and FORCE" +
                                                 "\nIndicate the number of your choice: ");
-                                        choice = chooseOption2();
+                                        choice = chooseOption();
 
                                         //possible options
                                         switch (choice) {
@@ -665,7 +663,7 @@ public class CLIGame {
                                                     "\n    1 - MOVE" +
                                                     "\n    2 - FORCE" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -708,7 +706,7 @@ public class CLIGame {
                                                     "\n    1 - MOVE" +
                                                     "\n    2 - FORCE" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -785,7 +783,7 @@ public class CLIGame {
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -809,7 +807,7 @@ public class CLIGame {
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Change the worker" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption3();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -835,7 +833,7 @@ public class CLIGame {
                                                 "\n    1 - Build a new level" +
                                                 "\n    2 - Move again" +
                                                 "\nIndicate the number of your choice: ");
-                                        choice = chooseOption2();
+                                        choice = chooseOption();
 
                                         //possible options
                                         switch (choice) {
@@ -870,7 +868,7 @@ public class CLIGame {
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -898,7 +896,7 @@ public class CLIGame {
                                                 "\n    1 - Start your turn and MOVE" +
                                                 "\n    2 - Start your turn and BUILD" +
                                                 "\nIndicate the number of your choice: ");
-                                        choice = chooseOption2();
+                                        choice = chooseOption();
 
                                         //possible options
                                         switch (choice) {
@@ -934,7 +932,7 @@ public class CLIGame {
                                                     "\n    1 - MOVE" +
                                                     "\n    2 - BUILD" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -969,7 +967,7 @@ public class CLIGame {
                                                     "\n    1 - MOVE" +
                                                     "\n    2 - BUILD" +
                                                     "\nIndicate the number of your choice: ");
-                                            choice = chooseOption2();
+                                            choice = chooseOption();
 
                                             //possible options
                                             switch (choice) {
@@ -1039,7 +1037,7 @@ public class CLIGame {
         //insert the cell
         coord = chooseCell();
 
-        submitCommand(playerName, new Pair(coord[1], coord[0]), CommandType.MOVE, index, "");
+        submitCommand(playerName, new Pair(coord[0], coord[1]), CommandType.MOVE, index, "");
         return;
     }
 
@@ -1055,6 +1053,7 @@ public class CLIGame {
             //insert the cell
             coord = chooseCell();
 
+            //control that you are not building under yourself
             for(Map.Entry<String, Pair> entry : displayer.getLocalProxy().getWorkers().entrySet()){
                 workerName = playerName.toUpperCase() + index;
                 if(entry.getKey().equals(workerName)){
@@ -1065,69 +1064,118 @@ public class CLIGame {
             }
         }while(underYou);
 
-        submitCommand(playerName, new Pair(coord[1], coord[0]), CommandType.BUILD, index, "");
+        submitCommand(playerName, new Pair(coord[0], coord[1]), CommandType.BUILD, index, "");
         return;
     }
 
-    private int chooseOption2(){
+    private int chooseOption(){
         int choice;
 
         choice = inputStream.nextInt();
         inputStream.nextLine();
         //input validation
-        choice = validation2(choice);
-
-        return choice;
-    }
-
-    private int chooseOption3(){
-        int choice;
-
-        choice = inputStream.nextInt();
-        inputStream.nextLine();
-        //input validation
-        choice = validation3(choice);
+        choice = validation(choice);
 
         return choice;
     }
 
     private int[] chooseCell() {
-        int column, row;
 
-        System.out.println("Insert the COLUMN: ");
-        column = inputStream.nextInt() - 1;
-        inputStream.nextLine();
-        column = checkCoordinates(column);
+        int[] coord = new int[2];
+        int input;
+        int x = 0,y = 1;
+        String workerName;
 
-        System.out.println("Insert the ROW: ");
-        row = inputStream.nextInt() - 1;
-        inputStream.nextLine();
-        row = checkCoordinates(row);
+        do {
+            workerName = playerName + index;
+            for(Map.Entry<String, Pair> entry : displayer.getLocalProxy().getWorkers().entrySet()){
+                if(entry.getKey().equals(workerName)) {
+                    x = entry.getValue().x;
+                    y = entry.getValue().y;
+                    break;
+                }
+            }
+
+            do {
+                System.out.print("Choose the direction:" +
+                        " \n  1 - North-West" +
+                        " \n  2 - North" +
+                        " \n  3 - North-East" +
+                        " \n  4 - West" +
+                        " \n  5 - Your cell (if your god permit it to you)" +
+                        " \n  6 - West" +
+                        " \n  7 - South-West" +
+                        " \n  8 - South" +
+                        " \n  9 - South-East" +
+                        "\nMake your choice:  ");
+
+                input = inputStream.nextInt();
+                inputStream.nextLine();
+            } while (input <= 0 || input > 9);
+
+            if (input == 1) {
+                x = x - 1;
+                y = y - 1;
+            } else if (input == 2) {
+                x = x;
+                y = y - 1;
+            } else if (input == 3) {
+                x = x + 1;
+                y = y - 1;
+            } else if (input == 4) {
+                x = x - 1;
+                y = y;
+            } else if (input == 5) {
+                x = x;
+                y = y;
+            } else if (input == 6) {
+                x = x + 1;
+                y = y;
+            } else if (input == 7) {
+                x = x - 1;
+                y = y + 1;
+            } else if (input == 8) {
+                x = x
+                ;
+                y = y + 1;
+            } else if (input == 9) {
+                x = x + 1;
+                y = y + 1;
+            }
+        }while(!checkCoordinates(x) && !checkCoordinates(y));
+
+        coord[0] = x;
+        coord[1] = y;
+        return coord;
+
+        /*int column, row;
+
+        do{
+            System.out.println("Insert the COLUMN: ");
+            column = inputStream.nextInt() - 1;
+            inputStream.nextLine();
+        }while (checkCoordinates(column));
+
+        do {
+            System.out.println("Insert the ROW: ");
+            row = inputStream.nextInt() - 1;
+            inputStream.nextLine();
+        }while (checkCoordinates(row));
+
 
         int[] coord = new int[2];
         coord[0] = column;
         coord[1] = row;
 
-        return coord;
+        return coord;*/
     }
 
-    private int validation3(int x){
-        int choice = x;
 
-        while(!(choice == 1) && !(choice == 2) && !(choice == 3)){
-            System.out.println("INVALID INPUT. Reinsert a valid inpput: ");
-            choice = inputStream.nextInt();
-            inputStream.nextLine();
-        }
-
-        return choice;
-    }
-
-    private int validation2(int x) {
+    private int validation(int x) {
         int choice = x;
 
         while(!(choice == 1) && !(choice == 2)){
-            System.out.println("INVALID INPUT. Reinsert a valid inpput: ");
+            System.out.println("INVALID INPUT. Reinsert a valid input: ");
             choice = inputStream.nextInt();
             inputStream.nextLine();
         }
@@ -1163,7 +1211,7 @@ public class CLIGame {
         }
     }
 
-    private int checkCoordinates(int coordinate) {
+    private int checkCoordinatesWorker(int coordinate) {
 
         while (coordinate < 0 || coordinate > 4) {
             System.out.print("INVALID INPUT.\nReinsert a valid valor (from 1 to 5):  ");
@@ -1174,9 +1222,16 @@ public class CLIGame {
         return coordinate;
     }
 
+    private boolean checkCoordinates(int coordinate) {
+
+        if(coordinate >= 0 && coordinate <= 4)
+            return true;
+        return false;
+    }
+
     private boolean checkWorker(int column, int row) {
         for (Map.Entry<String, Pair> entry : displayer.getLocalProxy().getWorkers().entrySet()) {
-            if ((entry.getValue().y == column) && (entry.getValue().x == row)) {
+            if ((entry.getValue().y == row) && (entry.getValue().x == column)) {
                 return true;
             }
         }
@@ -1296,30 +1351,33 @@ public class CLIGame {
             column = inputStream.nextInt() - 1;
             inputStream.nextLine();
 
-            column = checkCoordinates(column);
+            column = checkCoordinatesWorker(column);
 
             System.out.print("Now insert the row of your first worker (from 1 to 5): ");
             row = inputStream.nextInt() - 1;
             inputStream.nextLine();
+
+            row = checkCoordinatesWorker(row);
+
         } while (checkWorker(column, row));
 
-        submitCommand(playerName, new Pair(row, column), CommandType.ADD_WORKER, 0, "");
+        submitCommand(playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
 
         do {
             System.out.print("Insert the column of your second worker (from 1 to 5): ");
             column = inputStream.nextInt() - 1;
             inputStream.nextLine();
 
-            column = checkCoordinates(column);
+            column = checkCoordinatesWorker(column);
 
             System.out.print("Now insert the row of your second worker (from 1 to 5): ");
             row = inputStream.nextInt() - 1;
             inputStream.nextLine();
 
-            row = checkCoordinates(row);
+            row = checkCoordinatesWorker(row);
         } while (checkWorker(column, row));
 
-        submitCommand(playerName, new Pair(row, column), CommandType.ADD_WORKER, 0, "");
+        submitCommand(playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
         remoteChangeTurn();
         return;
     }
