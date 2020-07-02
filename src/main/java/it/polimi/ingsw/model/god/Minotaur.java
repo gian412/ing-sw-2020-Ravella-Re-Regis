@@ -97,7 +97,9 @@ public class Minotaur extends God {
                     }
                     Pair direction = worker.getCurrentCell().getDirection( cell );
                     Cell nextCell = checkCell( new Pair( cell.X + direction.x, cell.Y + direction.y ) );
-                    return (nextCell != null && nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME);
+                    if (nextCell != null && nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME) {
+                        return true;
+                    }
 
                 }
             }

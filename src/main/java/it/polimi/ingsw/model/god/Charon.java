@@ -46,8 +46,10 @@ public class Charon extends God {
                         return true;
                     }
                     Pair direction = worker.getCurrentCell().getDirection( cell );
-                    Cell nextCell = checkCell( new Pair( cell.X - direction.x, cell.Y - direction.y ) );
-                    return (nextCell != null && nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME);
+                    Cell nextCell = checkCell( new Pair( worker.getCurrentCell().X - direction.x, worker.getCurrentCell().Y - direction.y ) );
+                    if (nextCell != null && nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME) {
+                        return true;
+                    }
                 }
             }
         }

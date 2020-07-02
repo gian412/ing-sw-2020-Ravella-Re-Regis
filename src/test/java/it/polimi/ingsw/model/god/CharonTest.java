@@ -1004,7 +1004,7 @@ public class CharonTest {
 
         // Initialization of the fourth cell
         Cell fourthCell = board.getCell(new Pair(1, 0));
-        fourthCell.setHeight(Height.GROUND);
+        fourthCell.setHeight(Height.THIRD_FLOOR);
         fourthCell.setWorker(null);
 
         // Initialization of the fifth cell
