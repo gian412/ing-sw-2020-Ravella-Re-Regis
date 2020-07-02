@@ -21,7 +21,7 @@ public class RemoteViewTest {
     @DisplayName("Checking the correct behavior at startGame")
     /**
      * in this test I check the correct order of the Players during the startGame procedure
-     * but i make this check as seen by the client. in this test i don't test any of the
+     * but I make this check as seen by the client. In this test I don't test any of the
      * Server class functionality
      *
      * @authors Ravella Elia
@@ -43,13 +43,14 @@ public class RemoteViewTest {
 
                 // adding player: the youngest should receive the "modified" board at startup
                 controller.addPlayer("Marco", 20);
-                controller.addPlayer("Gianluca", 15);
+                controller.addPlayer("Gianluca", 12);
 
                 // Instancing the remoteView
                 RemoteView rv = new RemoteView(myClient, controller, "Gianluca");
                 myGame.getBoard().addView(rv);
 
                 // starting the game
+                rv.addObserver(controller);
                 Thread.sleep(1500); // little delay to "wait for the client"
                 controller.startGame();
 
@@ -73,8 +74,7 @@ public class RemoteViewTest {
 
             BoardProxy proxy = (BoardProxy) inputStream.readObject();
 
-            assertEquals(proxy.getChoosingGods(), "Gianluca");
-            assertNull(proxy.getWinner());
+            assertEquals(proxy.getTurnPlayer(), "Gianluca");
 
             System.out.println("[CLIENT]\n" + proxy.toString());
 
@@ -233,8 +233,8 @@ public class RemoteViewTest {
     }
 
     @Test
-    @DisplayName("disconnection of client test, with a retard")
-    public  void disconnectTestWithRetard(){
+    @DisplayName("disconnection of client test, with a delay")
+    public  void disconnectTestWithDelay(){
 
         // same as disconnectTest, only added a sleep
         Thread server = new Thread(() -> {

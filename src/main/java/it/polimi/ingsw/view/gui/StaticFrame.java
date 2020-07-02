@@ -51,12 +51,6 @@ public class StaticFrame {
         StaticFrame.playerName = playerName;
     }
 
-
-            /*WaitingPanel waitingPanel = new WaitingPanel();
-            StaticFrame.removePanel(this);
-            StaticFrame.addPanel(waitingPanel);
-            StaticFrame.refresh();
-            waitingPanel.execute(connSocket, input, playerNumber);*/
     public static GodType getGod() {
         return god;
     }
@@ -90,5 +84,9 @@ public class StaticFrame {
      */
     public static boolean godCanBuildDome() {
         return god == GodType.ATLAS;
+    }
+
+    public static boolean godCanEndBefore() {
+        return (god==GodType.DEMETER || god==GodType.HEPHAESTUS || god==GodType.HESTIA);
     }
 }

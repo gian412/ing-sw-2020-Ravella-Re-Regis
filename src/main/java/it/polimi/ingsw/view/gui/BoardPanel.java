@@ -53,17 +53,24 @@ public class BoardPanel extends JPanel{
 
 		private boolean isPlaying;
 
-		public OptionPanel(boolean canForce, boolean canBuildDome){
+		public OptionPanel(boolean canForce, boolean canBuildDome, boolean canEndBefore){
 			super();
 
 			isPlaying = false;
-			// Initialize and add a "end turn" button
-			JButton endTurnButton = new JButton("End Turn");
-			endTurnButton.addActionListener(e -> {
-				remoteChangeTurn();
-				optionPanel.setVisible(false);
-			});
-			this.add(endTurnButton);
+			if (canEndBefore) {
+				// Initialize and add a "end turn" button
+				JButton endTurnButton = new JButton("End Turn");
+				endTurnButton.addActionListener(e -> {
+					if (turnMoves.size()==2 && turnMoves.get(0).equals(CommandType.MOVE) &&
+							(turnMoves.get(1).equals(CommandType.BUILD) || turnMoves.get(1).equals(CommandType.BUILD_DOME))) {
+						remoteChangeTurn();
+						optionPanel.setVisible(false);
+					} else {
+						JOptionPane.showMessageDialog(StaticFrame.mainFrame, "You cannot change turn before a move and a build");
+					}
+				});
+				this.add(endTurnButton);
+			}
 
 
 			// Initialize and add move button
@@ -364,7 +371,7 @@ public class BoardPanel extends JPanel{
 		turnMoves = new ArrayList<>();
 
 		// Initialize option panel and add it to the board panel
-		optionPanel = new OptionPanel(StaticFrame.godCanForce(), StaticFrame.godCanBuildDome());
+		optionPanel = new OptionPanel(StaticFrame.godCanForce(), StaticFrame.godCanBuildDome(), StaticFrame.godCanEndBefore());
 		optionPanel.setVisible(false);
 		this.add(optionPanel);
 
