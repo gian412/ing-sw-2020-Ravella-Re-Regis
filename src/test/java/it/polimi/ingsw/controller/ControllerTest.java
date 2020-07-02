@@ -47,6 +47,23 @@ public class ControllerTest {
 
         assertNotEquals("After a change of turn, player should change", p1, p2);
 
+        //same check but with PlayerCommand
+        //have to add workers to avoid a nullpointer
+        controller.addWorker(0, 0);
+        controller.addWorker(1, 0);
+        controller.changeTurnPlayer();
+        controller.addWorker(2, 0);
+        controller.addWorker(3, 0);
+
+        p1 = g.getTurnPlayer();
+        controller.update(new PlayerCommand(
+                p1.getNAME(),
+                new Command(new Pair(0, 0), CommandType.CHANGE_TURN),
+                0
+        ));
+        p2 = g.getTurnPlayer();
+
+        assertNotEquals("After a change of turn, player should change", p1, p2);
     }
 
     @Test
