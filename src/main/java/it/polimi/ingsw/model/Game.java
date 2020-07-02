@@ -11,7 +11,6 @@ public class Game {
 
     private List<Player> playerList;
     private Board board;
-    private God[] gods;
 
     /**
      * class' constructor
