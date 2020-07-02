@@ -180,7 +180,7 @@ public class Board {
             //update the proxyBoard
             this.updateProxyBoard();
         } else {
-            throw new IllegalMoveException("Invalid ditance");
+            throw new IllegalMoveException("Invalid distance");
         }
 
     }
