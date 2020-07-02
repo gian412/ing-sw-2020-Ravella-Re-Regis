@@ -86,11 +86,12 @@ public class Client {
 
         // Name request and control
         String lobbyNames =  socketIn.nextLine(); // Receive the name of the other players in the lobby
+        String[] names = lobbyNames.split(" ");
 
         do {
             System.out.println("Insert your name, buddy!\n"); // Print name request
             line = stdIn.nextLine().toUpperCase();
-        }while(lobbyNames.contains(line));
+        }while(checkNames(names, line));
 
         System.out.println("Name accepted!\n");
         socketOut.println(line);
@@ -149,4 +150,15 @@ public class Client {
         CLIGame game = new CLIGame();
         game.startPlaying(socket, playername, numberOfPlayers);
     }
+
+    private boolean checkNames(String[]names,String line){
+
+        for(String x : names){
+            if(x.equals(line)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
