@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.god.God;
 
 /**
@@ -11,7 +10,6 @@ import it.polimi.ingsw.model.god.God;
  */
 public class Player implements Comparable<Player> {
 
-    private Game actualGame;
     private final String NAME;
     private God divinity;
     private final int age;
@@ -38,11 +36,6 @@ public class Player implements Comparable<Player> {
 
     public void setTurnPlayer(boolean flag){
         isTurnPlayer = flag;
-    }
-
-    // actualGame's setter
-    public void setActualGame(Game actualGame) {
-        this.actualGame = actualGame;
     }
 
     // divinity's getter and setter
@@ -74,9 +67,6 @@ public class Player implements Comparable<Player> {
     public boolean equals(Player p) {
         return (this.NAME.equals(p.NAME));
     }
-
-    //permit to the player to decide his divinity
-    public void selectGod(God[] listDivinity){}
 
     @Override
     public int compareTo(Player other) {

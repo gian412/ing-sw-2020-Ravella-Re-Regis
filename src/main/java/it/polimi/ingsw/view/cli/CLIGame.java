@@ -1103,7 +1103,7 @@ public class CLIGame {
                         " \n  3 - North-East" +
                         " \n  4 - West" +
                         " \n  5 - Your cell (if your god permit it to you)" +
-                        " \n  6 - West" +
+                        " \n  6 - East" +
                         " \n  7 - South-West" +
                         " \n  8 - South" +
                         " \n  9 - South-East" +
