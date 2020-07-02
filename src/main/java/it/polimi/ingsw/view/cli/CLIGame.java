@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -72,7 +73,19 @@ public class CLIGame {
     boolean hasForced = false;
     boolean hasReBuild = false;
 
-
+    /**
+     * Manage all the possible game phase
+     *
+     * it contains a swich that manages the output to the users
+     * there are also different controls for the inputs
+     *
+     * @author Marco Re
+     *
+     * @param connection is the connection to eh server
+     * @param name is the name of the client
+     * @param number is the number of players in the game
+     * @throws IOException
+     */
     public void startPlaying(Socket connection, String name, int number) throws IOException {
 
         //general data of the player
@@ -529,7 +542,7 @@ public class CLIGame {
 
                                                     //submit the command and put has move to true
                                                     hasBuilt = true;
-                                                    submitCommand(playerName, new Pair(coord[1], coord[0]), CommandType.BUILD_DOME, index, "");
+                                                    submitCommand(playerName, new Pair(coord[0], coord[1]), CommandType.BUILD_DOME, index, "");
 
                                                     break;
                                             }
@@ -1057,7 +1070,7 @@ public class CLIGame {
             for(Map.Entry<String, Pair> entry : displayer.getLocalProxy().getWorkers().entrySet()){
                 workerName = playerName.toUpperCase() + index;
                 if(entry.getKey().equals(workerName)){
-                    if(entry.getValue().x == coord[1] && entry.getValue().y == coord[0] && !toGod(divinity).equals(GODS[13])) {
+                    if(entry.getValue().x == coord[0] && entry.getValue().y == coord[1] && !toGod(divinity).equals(GODS[13])) {
                         underYou = true;
                     }
                 }
@@ -1109,6 +1122,7 @@ public class CLIGame {
                         " \n  9 - South-East" +
                         "\nMake your choice:  ");
 
+                System.out.print("column: " + x + "row: " + y);
                 input = inputStream.nextInt();
                 inputStream.nextLine();
             } while (input <= 0 || input > 9);
@@ -1147,27 +1161,6 @@ public class CLIGame {
         coord[0] = x;
         coord[1] = y;
         return coord;
-
-        /*int column, row;
-
-        do{
-            System.out.println("Insert the COLUMN: ");
-            column = inputStream.nextInt() - 1;
-            inputStream.nextLine();
-        }while (checkCoordinates(column));
-
-        do {
-            System.out.println("Insert the ROW: ");
-            row = inputStream.nextInt() - 1;
-            inputStream.nextLine();
-        }while (checkCoordinates(row));
-
-
-        int[] coord = new int[2];
-        coord[0] = column;
-        coord[1] = row;
-
-        return coord;*/
     }
 
 
@@ -1185,11 +1178,12 @@ public class CLIGame {
 
     private int validationIndex(int x){
         int index = x;
+        String input;
 
         while(!(index == 1) && !(index == 0)){
-            System.out.println("INVALID INPUT. Reinsert a valid inpput: ");
-            index = inputStream.nextInt();
-            inputStream.nextLine();
+            System.out.println("INVALID INPUT. Reinsert a valid input: ");
+            input = inputStream.nextLine();
+            index = Integer.parseInt(input);
         }
 
         return index;
@@ -1382,24 +1376,18 @@ public class CLIGame {
         return;
     }
 
-    private int workerIndex(){
+    private int workerIndex() {
         int index = 0;
-        boolean pass = true;
-
-        //you can only move
-        System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
-
+        boolean check = false;
         do {
-            try{
-                index = inputStream.nextInt();
-                inputStream.nextLine();
-                //input validation
-                index = validationIndex(index);
-                pass = false;
-            }catch(Exception x) {
-                pass = true;
-            }
-        }while(pass);
+            //you can only move
+            System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
+            index = inputStream.nextInt();
+            inputStream.nextLine();
+
+            index = validationIndex(index);
+
+        }while(!(index == 0) && !(index == 1));
 
         return index;
     }
