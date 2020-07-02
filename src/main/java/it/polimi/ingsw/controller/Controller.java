@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.god.God;
 import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.utils.GameState;
-import it.polimi.ingsw.view.Observer;
+import it.polimi.ingsw.utils.Observer;
 
 import java.lang.reflect.InvocationTargetException;
 

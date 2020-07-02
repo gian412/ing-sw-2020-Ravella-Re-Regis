@@ -7,6 +7,8 @@ import it.polimi.ingsw.controller.PlayerCommand;
 import it.polimi.ingsw.model.BoardProxy;
 import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.utils.Observable;
+import it.polimi.ingsw.utils.Observer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
