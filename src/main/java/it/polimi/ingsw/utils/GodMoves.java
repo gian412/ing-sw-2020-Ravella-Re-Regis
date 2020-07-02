@@ -32,7 +32,7 @@ public final class GodMoves {
         allPossibleMoves.put(GodType.CHRONUS,
                 new CommandType[]{CommandType.MOVE, CommandType.BUILD});
 
-        // Demeter
+        // Demeterpo
         allPossibleMoves.put(GodType.DEMETER,
                 new CommandType[]{CommandType.MOVE, CommandType.BUILD, CommandType.BUILD});
 

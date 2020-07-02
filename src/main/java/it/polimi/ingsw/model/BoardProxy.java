@@ -18,6 +18,13 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     private GameState status;
     private String choosingGods, illegalMoveString;
 
+    public BoardProxy(){
+        boardScheme = new Height[5][5];
+        workers = new HashMap<>();
+        choosingGods = "";
+        illegalMoveString = "";
+        winPlayer = "";
+    }
 
     public Map<String, String> getGods() {
         return gods;
@@ -45,14 +52,6 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
 
     public void setIllegalMoveString(String illegalMoveString) {
         this.illegalMoveString = illegalMoveString;
-    }
-
-    public BoardProxy(){
-        boardScheme = new Height[5][5];
-        workers = new HashMap<>();
-        choosingGods = "";
-        illegalMoveString = "";
-        winPlayer = "";
     }
 
     public Height[][] getBoardScheme() {
