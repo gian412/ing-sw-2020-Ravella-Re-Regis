@@ -12,6 +12,10 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * first panel to be displayed when the application boots up, must have all login and connection configure options
+ * @author Gianluca Regis
+ */
 public class LoginPanel extends JPanel {
 
     // login page components
@@ -273,13 +277,6 @@ public class LoginPanel extends JPanel {
             StaticFrame.addPanel(chooseGodsPanel);
 
             StaticFrame.refresh();
-
-            /*WaitingPanel waitingPanel = new WaitingPanel();
-            StaticFrame.removePanel(this);
-            StaticFrame.addPanel(waitingPanel);
-            StaticFrame.refresh();
-            waitingPanel.execute(connSocket, input, playerNumber);*/
-
         } catch (IOException e) {
             e.printStackTrace();
         }

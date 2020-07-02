@@ -8,6 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class acts as a proxy of the model's Board: it contains all the Board's information to display it properly and
+ * some other infos about the match in general. As the PlayerCommand, the BoardProxy is the only type of object that
+ * the server sends to the client
+ *
+ * @see it.polimi.ingsw.controller.PlayerCommand
+ * @see Board
+ * @author Marco Re, Elia Ravella
+ */
 public class BoardProxy extends Observable<BoardProxy> implements Serializable {
 
     private Height[][] boardScheme;
@@ -18,6 +27,16 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     private GameState status;
     private String choosingGods, illegalMoveString;
 
+    /**
+     * class constructor, instantiates all the variables and data structures
+     */
+    public BoardProxy(){
+        boardScheme = new Height[5][5];
+        workers = new HashMap<>();
+        choosingGods = "";
+        illegalMoveString = "";
+        winPlayer = "";
+    }
 
     public Map<String, String> getGods() {
         return gods;
@@ -45,14 +64,6 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
 
     public void setIllegalMoveString(String illegalMoveString) {
         this.illegalMoveString = illegalMoveString;
-    }
-
-    public BoardProxy(){
-        boardScheme = new Height[5][5];
-        workers = new HashMap<>();
-        choosingGods = "";
-        illegalMoveString = "";
-        winPlayer = "";
     }
 
     public Height[][] getBoardScheme() {
@@ -101,9 +112,9 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     }
 
     /**
-     * returns a string that represents the board. not very useful but can be used in console repr
+     * returns a string that represents the board. it's used in console representation
      *
-     * @return the string
+     * @return the string representing the Board
      */
 
     @Override

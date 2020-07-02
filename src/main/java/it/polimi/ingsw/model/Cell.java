@@ -1,5 +1,10 @@
 package it.polimi.ingsw.model;
 
+/**
+ * This class represents the single grid element of the board
+ *
+ * @author Marco Re
+ */
 public class Cell {
 
     private Height height;
