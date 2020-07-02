@@ -6,6 +6,12 @@ import it.polimi.ingsw.model.Pair;
 
 import java.awt.*;
 
+/**
+ * this class offers static methods to the panels of the GUI to draw the Boardproxy on the window of the
+ * application.
+ *
+ * @author Elia Ravella
+ */
 public class BoardMaker {
 
     private static final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";

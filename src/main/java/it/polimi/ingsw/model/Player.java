@@ -2,6 +2,12 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.god.God;
 
+/**
+ * this class represents the Player in the game.
+ * it manages the workers on the Board and stores all the fundamental information about a player of Santorini
+ *
+ * @author Marco Re
+ */
 public class Player implements Comparable<Player> {
 
     private final String NAME;
@@ -63,7 +69,7 @@ public class Player implements Comparable<Player> {
     }
 
     @Override
-    public int compareTo(/*@NotNull*/ Player other) {
+    public int compareTo(Player other) {
         return this.getAge() - other.getAge();
     }
 }

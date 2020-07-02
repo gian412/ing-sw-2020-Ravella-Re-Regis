@@ -40,6 +40,11 @@ public class Client {
         return numberOfPlayers;
     }
 
+    /**
+     * implementation of the Runnable.run() method, runs in a different thread than the caller. Guides the user through
+     * the login procedure in a CLI environment
+     * @throws IOException when dealing with socket
+     */
     public void run() throws IOException{
 
         //reset the terminal

@@ -7,6 +7,13 @@ import it.polimi.ingsw.view.cli.CliComposer;
 
 import java.io.ObjectInputStream;
 
+/**
+ * this class reads all the information coming from the server via the stream passed in the constructor.
+ * this class was made Observable to make possible to other components to act as Observer of it and ease the
+ * communication with the server
+ *
+ * @author Elia Ravella, Marco Re, Gianluca Regis
+ */
 public class BoardListener extends Observable<BoardProxy> implements Runnable {
     ObjectInputStream inputStream;
 

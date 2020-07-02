@@ -13,11 +13,23 @@ import it.polimi.ingsw.view.Observer;
 
 import java.lang.reflect.InvocationTargetException;
 
-
+/**
+ * Implements the controller of the application
+ * Manages the model, links the remote views with the model, manages exceptions/errors
+ * generated in the model
+ *
+ * @author Elia Ravella
+ */
 public class Controller implements Observer<PlayerCommand> {
 
     private Game game;
 
+    /**
+     * class constructor
+     *
+     * @param g the instance of the class Game that encapsulates the whole match
+     * @@author Elia Ravella
+     */
     public Controller(Game g){
         this.game = g;
     }
@@ -51,7 +63,9 @@ public class Controller implements Observer<PlayerCommand> {
 
     }
 
-    /**adds a worker to the board
+    /**adds a worker to the board. the worker added is owned by the turn player
+     * as the "adding worker" procedure is turn-based. if the operation is "illegal"
+     * a notify is sent to the clients
      *
      * @author Elia Ravella
      * @param row the x axis coordinate to be added
@@ -79,6 +93,10 @@ public class Controller implements Observer<PlayerCommand> {
     }
 
     /**Changes the player controlling the board
+     *
+     * this function removes the actual turn player and replaces it with the next on the list
+     * it also sends a command to the gods of the former turn player to resets some variables
+     * this method triggers an update of the client
      *
      * @author Elia Ravella
      */
@@ -108,14 +126,19 @@ public class Controller implements Observer<PlayerCommand> {
         game.startGame();
     }
 
+    /**
+     * @return the turn player memorised in Board
+     * @author Elia Ravella
+     */
     public Player getTurnPlayer(){
         return this.game.getTurnPlayer();
     }
 
     /**
-     * the method update is triggered by a remoteview change. it decodes the message from the client
-     * and executes accordingly
+     * the method update is triggered by a remoteview change: it's the standard notify-update interaction of the Observer pattern
+     * it decodes the message from the client and manages the action to do on the model
      * @param message the update content
+     * @author Elia Ravella
      */
     @Override
     public void update(PlayerCommand message){

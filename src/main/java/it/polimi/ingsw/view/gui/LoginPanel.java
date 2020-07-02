@@ -12,6 +12,10 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * first panel to be displayed when the application boots up, must have all login and connection configure options
+ * @author Gianluca Regis
+ */
 public class LoginPanel extends JPanel {
 
     // login page components
@@ -239,9 +243,13 @@ public class LoginPanel extends JPanel {
             Scanner input = new Scanner(connSocket.getInputStream());
             PrintStream output = new PrintStream(connSocket.getOutputStream());
 
-            input.nextLine(); // connected players
+            String connectedPlayers = input.nextLine(); // connected players
+            String clientName = txtName.getText();
 
-            StaticFrame.setPlayerName(txtName.getText());
+            while(connectedPlayers.contains(clientName))
+                clientName = JOptionPane.showInputDialog("Player with name \"" + clientName + "\" already connected! change your name!");
+
+            StaticFrame.setPlayerName(clientName);
             output.println(StaticFrame.getPlayerName());
             output.flush();
             output.println(Integer.parseInt(txtAge.getText()));
@@ -273,13 +281,6 @@ public class LoginPanel extends JPanel {
             StaticFrame.addPanel(chooseGodsPanel);
 
             StaticFrame.refresh();
-
-            /*WaitingPanel waitingPanel = new WaitingPanel();
-            StaticFrame.removePanel(this);
-            StaticFrame.addPanel(waitingPanel);
-            StaticFrame.refresh();
-            waitingPanel.execute(connSocket, input, playerNumber);*/
-
         } catch (IOException e) {
             e.printStackTrace();
         }

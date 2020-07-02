@@ -4,6 +4,12 @@ import it.polimi.ingsw.controller.Command;
 
 import java.util.HashMap;
 
+/**
+ * this class is used Client-side to perform a check on the possible moves a player can do in is turn, and to verify
+ * if he must end this turn
+ *
+ * @author Gianluca Regis, Elia Ravella
+ */
 public final class GodMoves {
 
     private static final HashMap<GodType, CommandType[]> allPossibleMoves = new HashMap<>();
@@ -77,6 +83,14 @@ public final class GodMoves {
         return new PossibleMove();
     }
 
+    /**
+     * this function performs a control on a set of moves given and the one available for that god
+     *
+     * @param playerGod the player's god
+     * @param playerMoves the player's moves so far
+     * @return true if the player has no more moves to do. false otherwise
+     * @author Gianluca Regis, Ravella Elia
+     */
     public static boolean isTurnEnded(GodType playerGod, Object[] playerMoves){
 
         CommandType[] neededMoves = allPossibleMoves.get(playerGod);

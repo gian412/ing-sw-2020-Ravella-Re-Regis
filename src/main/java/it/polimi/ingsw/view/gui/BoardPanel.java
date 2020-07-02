@@ -20,6 +20,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * this class represents the actual game board that the user interacts with.
+ *
+ * @author Ravella Elia, Gianluca Regis
+ */
 public class BoardPanel extends JPanel{
 	
 	private final Socket socket;
@@ -538,6 +543,11 @@ public class BoardPanel extends JPanel{
 
 	}
 
+	/**
+	 * this function is used to send the "change turn" command to the server
+	 *
+	 * @author Elia Ravella
+	 */
 	private void remoteChangeTurn(){
 		optionPanel.setPlaying(false);
 		optionPanel.setVisible(false);
@@ -559,6 +569,14 @@ public class BoardPanel extends JPanel{
 		}
 	}
 
+	/**
+	 * this function initializes a new PlayerCommand object using the parameters and send it to the server
+	 *
+	 * @param cell target cell of the command
+	 * @param command the command to be issued
+	 * @param workerIndex indentifier for the piece on the board
+	 * @author Elia Ravella
+	 */
 	private void sendCommand(Pair cell, CommandType command, int workerIndex){
 		PlayerCommand toSend = new PlayerCommand(
 				StaticFrame.getPlayerName(),
@@ -579,6 +597,22 @@ public class BoardPanel extends JPanel{
 
 	private void registerMove(CommandType cmd) {
 		turnMoves.add(cmd);
+	/**
+	 * this functions stores the moves that the player has done in a dedicated data structure
+	 *
+	 * @see GodMoves
+	 * @param god the Player's god
+	 * @param cmd the type of command that the player has done
+	 * @param destination the target cell for the command
+	 * @author Elia Ravella
+	 */
+	private void registerMove(GodType god, CommandType cmd, Pair destination) {
+		if(god.getCapitalizedName().equals("Triton")){
+			if(!(cmd.equals(CommandType.MOVE) || (destination.x == 4 || destination.y == 4 || destination.x == 0 || destination.y == 0)))
+				turnMoves.add(cmd);
+		} else {
+			turnMoves.add(cmd);
+		}
 	}
 
 }
