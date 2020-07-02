@@ -43,13 +43,14 @@ public class RemoteViewTest {
 
                 // adding player: the youngest should receive the "modified" board at startup
                 controller.addPlayer("Marco", 20);
-                controller.addPlayer("Gianluca", 15);
+                controller.addPlayer("Gianluca", 12);
 
                 // Instancing the remoteView
                 RemoteView rv = new RemoteView(myClient, controller, "Gianluca");
                 myGame.getBoard().addView(rv);
 
                 // starting the game
+                rv.addObserver(controller);
                 Thread.sleep(1500); // little delay to "wait for the client"
                 controller.startGame();
 
@@ -73,8 +74,7 @@ public class RemoteViewTest {
 
             BoardProxy proxy = (BoardProxy) inputStream.readObject();
 
-            assertEquals(proxy.getChoosingGods(), "Gianluca");
-            assertNull(proxy.getWinner());
+            assertEquals(proxy.getTurnPlayer(), "Gianluca");
 
             System.out.println("[CLIENT]\n" + proxy.toString());
 
