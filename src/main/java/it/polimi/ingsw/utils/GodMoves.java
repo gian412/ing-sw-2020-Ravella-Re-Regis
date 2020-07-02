@@ -14,7 +14,7 @@ public final class GodMoves {
 
     private static final HashMap<GodType, CommandType[]> allPossibleMoves = new HashMap<>();
 
-    public static void PossibleMoveInit() {
+    public static void possibleMoveInit() {
 
         // Apollo
         allPossibleMoves.put(GodType.APOLLO,
@@ -72,15 +72,6 @@ public final class GodMoves {
         allPossibleMoves.put(GodType.ZEUS,
                 new CommandType[]{CommandType.MOVE, CommandType.BUILD});
 
-    }
-
-    public static CommandType[] getPossibleMove(GodType godType) {
-        return allPossibleMoves.get(godType);
-    }
-
-
-    public PossibleMove setPlayersPossibleMove(String God) throws IllegalArgumentException {
-        return new PossibleMove();
     }
 
     /**
