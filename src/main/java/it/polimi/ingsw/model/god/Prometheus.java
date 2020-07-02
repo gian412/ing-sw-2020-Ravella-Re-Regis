@@ -185,12 +185,4 @@ public class Prometheus extends God {
         this.hasBuildBefore = false;
     }
 
-    private boolean hasMovedUp(Worker worker) {
-
-        if (worker.getPreviousCell()!=null) {
-            return worker.getPreviousCell().getHeight().getDifference(worker.getCurrentCell().getHeight())>=1;
-        }
-        return false;
-
-    }
 }
