@@ -428,28 +428,28 @@ public class CliComposer {
                         for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
                             if((entry.getValue().y == i) && (entry.getValue().x == j)) {
                                 if(entry.getKey().contains(playerName)){
-                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.GREEN) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.GREEN) + " " + board.getBoardScheme()[j][i].toInt() + "/");
                                     out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
                                     out.append(Ansi.RESET);
                                     found = true;
                                 }
                                 else{
                                     if(numberOfPlayer == 2){
-                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + " " + board.getBoardScheme()[j][i].toInt() + "/");
                                         out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
                                         out.append(Ansi.RESET);
                                         found = true;
                                     }
                                     if(numberOfPlayer == 3){
                                         if(entry.getKey().contains(players2.get(0))){
-                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + " " + board.getBoardScheme()[j][i].toInt() + "/");
                                             out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
                                             out.append(Ansi.RESET);
                                             found = true;
                                         }
 
                                         if(entry.getKey().contains(players2.get(1))){
-                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + " " + board.getBoardScheme()[i][j].toInt() + "/");
+                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + " " + board.getBoardScheme()[j][i].toInt() + "/");
                                             out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
                                             out.append(Ansi.RESET);
                                             found = true;
@@ -459,7 +459,7 @@ public class CliComposer {
                             }
                         }
                         if(!found)
-                            out.append("| " + board.getBoardScheme()[i][j].toInt() + "/  ");
+                            out.append("| " + board.getBoardScheme()[j][i].toInt() + "/  ");
                     }
 
                     if(k == 2){
@@ -512,157 +512,6 @@ public class CliComposer {
             }
             out.append("\n");
         }
-
-        /*
-        //first line of the board
-        out.append("\n           ");
-        for (int k = 0; k < 31; k++) {
-            out.append("-");
-        }
-        out.append("\n");
-
-        for(int i = 0; i < 5; i++) {
-            for(int k = 0; k < 3; k++) {
-                out.append("      ");
-
-                //if it is the center of the line indicate the number of the line
-                if(k == 1)
-                    out.append(" " + (i+1) + "   ");
-                else
-                    out.append("     ");
-
-                //scan the cells of the line, every cell is a 3x3 and the function creates a line every time
-                for (int j = 0; j < 5; j++) {
-
-                    if(k == 0){
-                        boolean found = false;
-                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
-                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
-                                if(entry.getKey().contains(playerName)){
-                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.BLACK_B) + "     ");
-                                    out.append(Ansi.RESET);
-                                    found = true;
-                                }
-                                else{
-                                    if(numberOfPlayer == 2){
-                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + "     ");
-                                        out.append(Ansi.RESET);
-                                        found = true;
-                                    }
-
-                                    if(numberOfPlayer == 3){
-                                         // the first player is blue
-                                        if(entry.getKey().contains(players2.get(0))){
-                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + "     ");
-                                            out.append(Ansi.RESET);
-                                            found = true;
-                                        }
-
-                                        //the second player is yellow
-                                        System.out.println(entry.getKey() + " r" + players2.get(1));
-                                        if(entry.getKey().contains(players2.get(1))){
-                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + "     ");
-                                            out.append(Ansi.RESET);
-                                            found = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if(!found)
-                            out.append("|     ");
-                    }
-
-                    if(k == 1){
-                        boolean found = false;
-                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
-                            if((entry.getValue().y == j) && (entry.getValue().x == i)) {
-                                if(entry.getKey().contains(playerName)){
-                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.GREEN) + " " + board.getBoardScheme()[i][j].toInt() + "/");
-                                    out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
-                                    out.append(Ansi.RESET);
-                                    found = true;
-                                }
-                                else{
-                                    if(numberOfPlayer == 2){
-                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + " " + board.getBoardScheme()[i][j].toInt() + "/");
-                                        out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
-                                        out.append(Ansi.RESET);
-                                        found = true;
-                                    }
-                                    if(numberOfPlayer == 3){
-                                        if(entry.getKey().contains(players2.get(0))){
-                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + " " + board.getBoardScheme()[i][j].toInt() + "/");
-                                            out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
-                                            out.append(Ansi.RESET);
-                                            found = true;
-                                        }
-
-                                        if(entry.getKey().contains(players2.get(1))){
-                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + " " + board.getBoardScheme()[i][j].toInt() + "/");
-                                            out.append(entry.getKey().charAt(entry.getKey().length() - 1) + " ");
-                                            out.append(Ansi.RESET);
-                                            found = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if(!found)
-                            out.append("| " + board.getBoardScheme()[i][j].toInt() + "/  ");
-                    }
-
-                    if(k == 2){
-                        boolean found = false;
-                        for(Map.Entry<String, Pair> entry : board.getWorkers().entrySet()){
-                            if((entry.getValue().y == i) && (entry.getValue().x == j)) {
-                                if(entry.getKey().contains(playerName)){
-                                    out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_GREEN_B, Ansi.BLACK_B) + "     ");
-                                    out.append(Ansi.RESET);
-                                    found = true;
-                                }
-
-                                else{
-                                    if(numberOfPlayer == 2){
-                                        out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_RED_B, Ansi.RED) + "     ");
-                                        out.append(Ansi.RESET);
-                                        found = true;
-                                    }
-
-                                    if(numberOfPlayer == 3){
-                                        // the first player is blue
-                                        if(entry.getKey().contains(players2.get(0))){
-                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_BLUE_B, Ansi.BLUE) + "     ");
-                                            out.append(Ansi.RESET);
-                                            found = true;
-                                        }
-
-                                        //the second player is yellow
-                                        if(entry.getKey().contains(players2.get(1))){
-                                            out.append("|" + maker.bgAndFont(Ansi.BACKGROUND_YELLOW_B, Ansi.YELLOW) + "     ");
-                                            out.append(Ansi.RESET);
-                                            found = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if(!found)
-                            out.append("|     ");
-                    }
-                }
-                //put the last | at the end of the line
-                out.append("|\n");
-            }
-
-            //put the last line at the end of every line
-            out.append("           ");
-            for (int k = 0; k < 31; k++) {
-                out.append("-");
-            }
-            out.append("\n");
-        }
-*/
 
         //print the board
         System.out.println(out.toString());
@@ -672,13 +521,46 @@ public class CliComposer {
         String change;
         for(Map.Entry<String, String> entry : board.getGods().entrySet()){
             if(entry.getKey().contains(playerName)) {
-                change = maker.font(Ansi.BLUE_B);
+                change = maker.font(Ansi.GREEN_B);
                 System.out.println("     " + change + entry.getValue().toUpperCase());
 
                 System.out.println("  " + getDescription(toGod(entry.getValue().toUpperCase())));
             }
         }
         System.out.println(Ansi.RESET + "\n");
+
+        //show the god of the others players
+        if(numberOfPlayer == 2){
+            for(Map.Entry<String, String> entry : board.getGods().entrySet()){
+                if(!entry.getKey().contains(playerName)) {
+                    change = maker.font(Ansi.RED_B);
+                    System.out.println("     " + change + entry.getValue().toUpperCase());
+
+                    System.out.println("  " + getDescription(toGod(entry.getValue().toUpperCase())));
+                }
+            }
+            System.out.println(Ansi.RESET + "\n");
+        }
+        else{
+            for(Map.Entry<String, String> entry : board.getGods().entrySet()){
+                if(entry.getKey().contains(players2.get(0))) {
+                    change = maker.font(Ansi.BLUE_B);
+                    System.out.println("     " + change + entry.getValue().toUpperCase());
+
+                    System.out.println("  " + getDescription(toGod(entry.getValue().toUpperCase())));
+                }
+                if(entry.getKey().contains(players2.get(1))) {
+                    change = maker.font(Ansi.YELLOW_B);
+                    System.out.println("     " + change + entry.getValue().toUpperCase());
+
+                    System.out.println("  " + getDescription(toGod(entry.getValue().toUpperCase())));
+                }
+
+            }
+            System.out.println(Ansi.RESET + "\n");
+        }
+
+
 
         //print the message for the current player
         if(board.getTurnPlayer().equals(playerName))
@@ -746,6 +628,7 @@ public class CliComposer {
                 write.append(" \n");
             }
 
+            write.append(change);
             for (int i = 0; i < 130; i++)
                 write.append(' ');
             write.append(Ansi.RESET);
