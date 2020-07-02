@@ -7,9 +7,8 @@ import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.utils.CommandType;
 import it.polimi.ingsw.utils.GodType;
 import it.polimi.ingsw.view.BoardListener;
-import it.polimi.ingsw.view.Observer;
+import it.polimi.ingsw.utils.Observer;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
