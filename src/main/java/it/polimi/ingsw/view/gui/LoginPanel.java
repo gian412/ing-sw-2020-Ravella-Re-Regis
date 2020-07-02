@@ -269,12 +269,6 @@ public class LoginPanel extends JPanel {
                 output.flush();
             }else{
                 playerNumber = Integer.parseInt(message.substring(56, 57));
-
-                /* WaitingPanel waitingPanel = new WaitingPanel();
-                StaticFrame.removePanel(this);
-                StaticFrame.addPanel(waitingPanel);
-                StaticFrame.refresh();
-                waitingPanel.execute(connSocket, input, playerNumber);*/
             }
 
             input.nextLine(); // final dialog

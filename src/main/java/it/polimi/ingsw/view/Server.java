@@ -18,21 +18,28 @@ public class Server implements Runnable{
     private List<ClientHandler> waitingClients;
     private List<ClientHandler> playingClients;
     private int clientsNumber;
-    private final int PORT = 13300;
+    private int port;
+
+    public Server() {
+        this(13300);
+    }
 
     /**
      * Class constructor whit the initialization of the serverSocket
      * @author Gianluca Regis
      */
-    public Server() {
+    public Server(int port) {
+        this.port = port;
         try {
-            this.serverSocket = new ServerSocket(PORT);
+            this.serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();
         }
         waitingClients = new ArrayList<>();
         playingClients = new ArrayList<>();
     }
+
+
 
     /**
      * Getter for clientNumber
@@ -136,7 +143,7 @@ public class Server implements Runnable{
     @Override
     public void run() {
 
-        System.out.println("Server ready on port " + PORT);
+        System.out.println("Server ready on port " + port);
         while (true) {
             try {
                 Socket socket = serverSocket.accept();
