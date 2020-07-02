@@ -1,5 +1,11 @@
 package it.polimi.ingsw.model;
 
+/**
+ * the Worker class represents the piece on the board: it's owned by a player and can move around the Board and
+ * build stories.
+ *
+ * @author Marco Re
+ */
 public class Worker {
 
     public final String WORKER_ID;

@@ -4,6 +4,11 @@ import it.polimi.ingsw.utils.GodType;
 
 import javax.swing.*;
 
+/**
+ * this class is in charge of the management of the main frame of the application. being static, thus accessible
+ * from "everywhere in the client", it also contains some crucial pieces of information about the client, like the
+ * God and the Name.
+ */
 public class StaticFrame {
 
     private static String playerName;
@@ -46,6 +51,12 @@ public class StaticFrame {
         StaticFrame.playerName = playerName;
     }
 
+
+            /*WaitingPanel waitingPanel = new WaitingPanel();
+            StaticFrame.removePanel(this);
+            StaticFrame.addPanel(waitingPanel);
+            StaticFrame.refresh();
+            waitingPanel.execute(connSocket, input, playerNumber);*/
     public static GodType getGod() {
         return god;
     }

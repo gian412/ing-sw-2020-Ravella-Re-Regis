@@ -6,8 +6,15 @@ import it.polimi.ingsw.utils.GameState;
 
 import java.util.*;
 
+/**
+ * this class encapsulates the whole match. it reunites the players with the Board and takes care
+ * of the correct management of the game's startup and closing
+ *
+ * @see Board
+ * @see Player
+ * @auhor Marco Re
+ */
 public class Game {
-
 
     private List<Player> playerList;
     private Board board;
@@ -49,13 +56,25 @@ public class Game {
     }
 
     /**
+     * triggers the "end-game" procedure to inform the clients that the match is ended
      * @authors Ravella Elia
      */
     public void endGame(){
         board.endGame();
     }
 
-    // this methods needs to set all the nextPlayer's attributes
+    /**
+     * this methods starts the game
+     *
+     * in detail: sorts the player's list by the age (the youngest is the "Challenger", the first player)
+     * and concatenates all the other players in a circular dataset. This method also sets the status of the board to
+     * SELECTING_GOD that is the first part of the game. as last thing, it sets the first player of the list as
+     * the turn player
+     *
+     * @see GameState
+     * @see BoardProxy
+     * @author Ravella Elia, Marco Re
+     */
     public void startGame(){
         Collections.sort(playerList);
 
@@ -68,7 +87,6 @@ public class Game {
         board.setTurnPlayer(playerList.get(0));
     }
 
-    // board's getter
     public Board getBoard() {
         return board;
     }

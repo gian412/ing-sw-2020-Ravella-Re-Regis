@@ -1,5 +1,12 @@
 package it.polimi.ingsw.model;
 
+/**
+ * this enumerations represents the stories of a tower, that is a game element.
+ * it's used as a attribute in Cell class to describe the number of stories the
+ * tower built on that cell has.
+ *
+ * @author Marco Re
+ */
 public enum Height {
     GROUND, FIRST_FLOOR, SECOND_FLOOR, THIRD_FLOOR, DOME;
 

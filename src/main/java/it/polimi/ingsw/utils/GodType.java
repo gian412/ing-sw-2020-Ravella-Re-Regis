@@ -2,6 +2,9 @@ package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.view.cli.Ansi;
 
+/**
+ * this enum eases the client-side management of the strings that involve god's name
+ */
 public enum GodType {
 
     APOLLO("APOLLO"), ARTEMIS("ARTEMIS"), ATHENA("ATHENA"), ATLAS("ATLAS"), CHARON("CHARON"), CHRONUS("CHRONUS"), DEMETER("DEMETER"),

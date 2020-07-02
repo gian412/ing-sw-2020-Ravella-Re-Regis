@@ -9,6 +9,12 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * this class loads the Images to display heroes and tower's stories on the board in a way that is compatible
+ * with JAR packaging.
+ *
+ * @author Gianluca Regis
+ */
 public class GetImages {
 
     private static final int IMAGE_BASE_WIDTH = 84;
@@ -133,13 +139,4 @@ public class GetImages {
         loadPieces();
         loadBoard();
     }
-
-    /*private static void main (String[] args) {
-
-        for (Height height : Height.values()) {
-            System.out.println(height.toString());
-        }
-
-    }*/
-
 }

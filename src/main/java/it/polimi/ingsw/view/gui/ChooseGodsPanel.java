@@ -17,6 +17,10 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * The panel in charge of the "choosing god" phase of the game
+ * @author Elia Ravella, Gianluca Regis
+ */
 public class ChooseGodsPanel extends JPanel {
 
     private static final int IMAGE_BASE_WIDTH = 84;
@@ -34,6 +38,7 @@ public class ChooseGodsPanel extends JPanel {
      * and display the elements that arrive from the socket
      *
      * @author Elia Ravella, Gianluca Regis
+     * @see BoardListener
      */
     class ReadProxyBoard implements Observer<BoardProxy> {
 
@@ -101,7 +106,12 @@ public class ChooseGodsPanel extends JPanel {
         }
     }
 
-
+    /**
+     * class constructor
+     * @param connSocket the socket that connects to the game
+     * @param playerNumber the number of players in the match
+     * @author Elia Ravella, Gianluca Regis
+     */
     public ChooseGodsPanel(Socket connSocket, int playerNumber) {
         this.playerNumber = playerNumber;
         this.socket = connSocket;

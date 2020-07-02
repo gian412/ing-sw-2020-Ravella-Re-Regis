@@ -5,6 +5,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Server-side object that handles the login procedure
+ * @author Gianluca Regis, Elia Ravella
+ */
 public class ClientHandler implements Runnable{
 
     private final Socket socket;
