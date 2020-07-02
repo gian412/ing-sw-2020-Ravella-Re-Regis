@@ -246,10 +246,11 @@ public class LoginPanel extends JPanel {
             String connectedPlayers[] = input.nextLine().split(" "); // connected players
             String clientName = txtName.getText();
 
-            while(true) {
-                if(connectedPlayers[0].equals(clientName) || connectedPlayers[1].equals(clientName))
-                    clientName = JOptionPane.showInputDialog("Player \"" + clientName + "\" already connected! choose another name");
-                else break;
+            for(int i = 0; i < connectedPlayers.length; i++){
+                if(connectedPlayers[i].equals(clientName)) {
+                    clientName = JOptionPane.showInputDialog("Username already taken! insert a new one");
+                    i--;
+                }
             }
 
             StaticFrame.setPlayerName(clientName);
