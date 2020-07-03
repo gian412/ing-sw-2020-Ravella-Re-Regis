@@ -90,9 +90,9 @@ public class Client {
         String[] names = lobbyNames.split(" ");
 
         do {
-            System.out.println("Insert your name, buddy!\n"); // Print name request
+            System.out.print("Insert your name, buddy!   "); // Print name request
             line = stdIn.nextLine().toUpperCase();
-        }while(checkNames(names, line));
+        }while(checkNames(names, line) || line.equals(""));
 
         System.out.println("Name accepted!\n");
         socketOut.println(line);
@@ -103,12 +103,12 @@ public class Client {
         // Age request
         int number = 0;
         do {
-            System.out.println("And now tell me, how old are you?\n"); // Print age request
+            System.out.print("And now tell me, how old are you?    "); // Print age request
             try {
                 number = stdIn.nextInt(); // Read age
             }
             catch (InputMismatchException e){
-                System.out.println("INPUT ERROR\n");
+                System.out.println("INPUT ERROR. Insert an Integer\n");
                 stdIn.nextLine();
             }
         }while (number < 1 || number > 99);
@@ -121,39 +121,39 @@ public class Client {
 
         // Number of player request or confirm of the insertion in lobby
         line = socketIn.nextLine(); // Receive message
+        number = 99;
         if (line.equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) { // If message is number of player request
-            System.out.println(line); // Print number of player request
+            System.out.print(line + ":   "); // Print number of player request
 
             try {
                 number = stdIn.nextInt(); // Read number of player
             }
             catch (InputMismatchException e){
-                System.out.println("INPUT ERROR\n");
+                System.out.println("INPUT ERROR. Insert an Integer");
                 stdIn.nextLine();
             }
 
-            stdIn.nextLine();
             while (true) {
-                if (number==2 || number==3) {
+                if (number == 2 || number == 3) {
                     socketOut.println(number); // Write number of player on socket stream
                     socketOut.flush(); // Send number of player
                     setNumberOfPlayers(number);
                     break;
                 } else {
-                    System.out.println("INVALID INPUT\n\n" +
-                            "How many player do you want to play with? (2 or 3 player allowed)"); // Print number of player request
-
+                    System.out.print("INVALID INPUT\n\n" +
+                            "How many player do you want to play with? (2 or 3 player allowed):   "); // Print number of player request
                     try {
                         number = stdIn.nextInt(); // Read number of player
                     }
                     catch (InputMismatchException e){
-                        System.out.println("INPUT ERROR\n");
+                        System.out.println("INPUT ERROR");
                         stdIn.nextLine();
                     }
                 }
             }
 
-        } else {
+        }
+        else {
             System.out.println(line); // Print message
 
             if(line.contains("2"))
