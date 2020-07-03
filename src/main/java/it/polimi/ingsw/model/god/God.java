@@ -5,6 +5,17 @@ import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.GodType;
 
+/**
+ * Abstract super-class God that is the father-class of each specific God.
+ * This Class have three variables representing the state of the worker in a specific turn,
+ * a link with the board on which the worker is and the type of God.
+ * It has an abstract method, which is implemented by the sub-classes that extends this, that
+ * is used to let the worker execute the command (move, build, ecc).
+ * This class implements some basic method used from the sub-classes in order to execute the given
+ * command.
+ *
+ * @author Gianluca Regis
+ */
 public abstract class God {
 
     protected Board board;

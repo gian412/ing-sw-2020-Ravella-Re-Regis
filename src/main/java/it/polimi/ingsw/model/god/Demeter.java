@@ -5,6 +5,13 @@ import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.GodType;
 
+/**
+ * Class Demeter, sub-class of the abstract class {@link it.polimi.ingsw.model.god.God}.
+ * This class have the ability to build twice after moving, but in different cell.
+ *
+ * @see it.polimi.ingsw.model.god.God
+ * @author Gianluca Regis
+ */
 public class Demeter extends God {
 
     protected boolean hasBuildSecond;

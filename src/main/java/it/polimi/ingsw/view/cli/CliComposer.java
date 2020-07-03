@@ -657,6 +657,7 @@ public class CliComposer {
                     write.append(" \n");
                 }
 
+                write.append(change);
                 for (int i = 0; i < 130; i++)
                     write.append(' ');
                 write.append(Ansi.RESET);
@@ -685,7 +686,7 @@ public class CliComposer {
                     write.append(Ansi.RESET);
                     write.append(" \n");
                 }
-
+                write.append(change);
                 for (int i = 0; i < 130; i++)
                     write.append(' ');
                 write.append(Ansi.RESET);
