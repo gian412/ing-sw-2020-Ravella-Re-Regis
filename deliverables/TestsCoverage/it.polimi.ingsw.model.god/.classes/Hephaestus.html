@@ -1,0 +1,250 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Hephaestus</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model.god</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Hephaestus (it.polimi.ingsw.model.god)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Hephaestus</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.3%
+  </span>
+  <span class="absValue">
+    (56/ 60)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Hephaestus$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.4%
+  </span>
+  <span class="absValue">
+    (57/ 61)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model.god;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.controller.Command;
+<i>4</i>&nbsp;import it.polimi.ingsw.model.*;
+<i>5</i>&nbsp;import it.polimi.ingsw.exceptions.IllegalMoveException;
+<i>6</i>&nbsp;import it.polimi.ingsw.utils.GodType;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;public class Hephaestus extends God {
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    protected boolean hasBuildSecond;
+<i>11</i>&nbsp;    protected   Cell previousCell;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    /**
+<i>14</i>&nbsp;     * Class&#39; constructor that use the super class&#39; constructor
+<i>15</i>&nbsp;     *
+<i>16</i>&nbsp;     * @author Gianluca Regis
+<i>17</i>&nbsp;     * @param board indicates the board of the game
+<i>18</i>&nbsp;     */
+<i>19</i>&nbsp;    // class constructor with the initialization of board using the super constructor
+<i>20</i>&nbsp;    public Hephaestus(Board board) {
+<b class="fc"><i>21</i>&nbsp;        super(board, GodType.HEPHAESTUS);</b>
+<b class="fc"><i>22</i>&nbsp;        this.hasBuildSecond = false;</b>
+<b class="fc"><i>23</i>&nbsp;        this.previousCell = null;</b>
+<b class="fc"><i>24</i>&nbsp;    }</b>
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    /**
+<i>27</i>&nbsp;     * Actions made every turn
+<i>28</i>&nbsp;     *
+<i>29</i>&nbsp;     * Action made by the worker received by parameter. the possible moves are:
+<i>30</i>&nbsp;     *      1- Move using super.move(Worker worker, Cell cell)
+<i>31</i>&nbsp;     *      2- Build using super.build(Cell cell, boolean false)
+<i>32</i>&nbsp;     * In this method, the worker can build twice in the same cell but not a dome
+<i>33</i>&nbsp;     *
+<i>34</i>&nbsp;     * @author Gianluca Regis
+<i>35</i>&nbsp;     * @param worker is the worker who is doing the actions
+<i>36</i>&nbsp;     * @param command is the command which need to be interpreted
+<i>37</i>&nbsp;     * @throws IllegalMoveException in case the action isn&#39;t legal
+<i>38</i>&nbsp;     */
+<i>39</i>&nbsp;    @Override
+<i>40</i>&nbsp;    public void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException {
+<i>41</i>&nbsp;
+<b class="fc"><i>42</i>&nbsp;        if (command!=null){ // If the passed command isn&#39;t empty</b>
+<i>43</i>&nbsp;
+<b class="fc"><i>44</i>&nbsp;            Cell cell = checkCell(command.coordinates); // Get the reference to the cell</b>
+<i>45</i>&nbsp;
+<b class="fc"><i>46</i>&nbsp;            if (cell == null) {</b>
+<b class="nc"><i>47</i>&nbsp;                throw new IllegalMoveException(&quot;Invalid cell&quot;);</b>
+<i>48</i>&nbsp;            }
+<i>49</i>&nbsp;
+<b class="fc"><i>50</i>&nbsp;            switch (command.commandType){</b>
+<i>51</i>&nbsp;                case MOVE:
+<b class="fc"><i>52</i>&nbsp;                    if (!hasMoved &amp;&amp; !hasBuild &amp;&amp; !hasBuildSecond &amp;&amp; !hasWon){ // If the player has not move, build, build second and won</b>
+<i>53</i>&nbsp;                        try {
+<b class="fc"><i>54</i>&nbsp;                            super.move(worker, command.coordinates); // Call super-class&#39; move method</b>
+<b class="fc"><i>55</i>&nbsp;                            hasMoved = true; // Store the information that the worker has moved</b>
+<b class="fc"><i>56</i>&nbsp;                            hasWon = board.checkWin(worker); // Check if the worker has won and store the result in hasWon</b>
+<b class="fc"><i>57</i>&nbsp;                            if (!hasWon &amp;&amp; !canBuild(worker)) {</b>
+<b class="nc"><i>58</i>&nbsp;                                board.removeWorker(worker);</b>
+<b class="nc"><i>59</i>&nbsp;                                worker.setCurrentCell(null);</b>
+<b class="nc"><i>60</i>&nbsp;                        worker.setPreviousCell(null);</b>
+<i>61</i>&nbsp;                            }
+<b class="fc"><i>62</i>&nbsp;                            break;</b>
+<b class="fc"><i>63</i>&nbsp;                        } catch (IllegalMoveException e) {</b>
+<b class="fc"><i>64</i>&nbsp;                            throw new IllegalMoveException(e.getMessage());</b>
+<i>65</i>&nbsp;                        }
+<i>66</i>&nbsp;                    } else{
+<b class="fc"><i>67</i>&nbsp;                        throw new IllegalMoveException(&quot;Invalid command sequence&quot;);</b>
+<i>68</i>&nbsp;                    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;                case BUILD:
+<b class="fc"><i>71</i>&nbsp;                    if (hasMoved &amp;&amp; !hasBuild &amp;&amp; !hasBuildSecond &amp;&amp; !hasWon){ // If the player has moved but has not build, build second and won</b>
+<i>72</i>&nbsp;                        try {
+<b class="fc"><i>73</i>&nbsp;                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class&#39; build method</b>
+<b class="fc"><i>74</i>&nbsp;                            previousCell = cell; // Save the position in which the player has build the first time</b>
+<b class="fc"><i>75</i>&nbsp;                            hasBuild = true; // Store the information that the worker has build</b>
+<b class="fc"><i>76</i>&nbsp;                            board.checkChronusWin();</b>
+<b class="fc"><i>77</i>&nbsp;                            break;</b>
+<b class="fc"><i>78</i>&nbsp;                        } catch (IllegalMoveException e) {</b>
+<b class="fc"><i>79</i>&nbsp;                            throw new IllegalMoveException(e.getMessage());</b>
+<i>80</i>&nbsp;                        }
+<b class="fc"><i>81</i>&nbsp;                    } else if (hasMoved &amp;&amp; hasBuild &amp;&amp; !hasBuildSecond &amp;&amp; !hasWon &amp;&amp; previousCell!=null &amp;&amp; (previousCell.equals(cell)) &amp;&amp; cell.getHeight()!=Height.THIRD_FLOOR &amp;&amp; cell.getHeight()!=Height.DOME){</b>
+<i>82</i>&nbsp;                        // If the player has moved and build but has not build second and won and previousCell is equal to cell and cell in not THIRD_FLOOR or DOME
+<i>83</i>&nbsp;                        try {
+<b class="fc"><i>84</i>&nbsp;                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class&#39; build method</b>
+<b class="fc"><i>85</i>&nbsp;                            hasBuildSecond = true; // Store the information that the worker has build second</b>
+<b class="fc"><i>86</i>&nbsp;                            board.checkChronusWin();</b>
+<b class="fc"><i>87</i>&nbsp;                            break;</b>
+<b class="fc"><i>88</i>&nbsp;                        } catch (IllegalMoveException e) {</b>
+<b class="fc"><i>89</i>&nbsp;                            throw new IllegalMoveException(e.getMessage());</b>
+<i>90</i>&nbsp;                        }
+<i>91</i>&nbsp;                    } else{
+<b class="fc"><i>92</i>&nbsp;                        throw new IllegalMoveException(&quot;Invalid command sequence&quot;);</b>
+<i>93</i>&nbsp;                    }
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;                case BUILD_DOME:
+<b class="fc"><i>96</i>&nbsp;                    if (hasMoved &amp;&amp; !hasBuild &amp;&amp; !hasBuildSecond &amp;&amp; !hasWon &amp;&amp; cell.getHeight() == Height.THIRD_FLOOR){ // If the player has moved but has not build and won and cell&#39;s height is third floor</b>
+<i>97</i>&nbsp;                        try {
+<b class="fc"><i>98</i>&nbsp;                            super.build(worker.getCurrentCell(), command.coordinates, false); // Call super-class&#39; build method</b>
+<b class="fc"><i>99</i>&nbsp;                            previousCell = cell; // Save the position in which the player has build the first time</b>
+<b class="fc"><i>100</i>&nbsp;                            hasBuild = true; // Store the information that the worker has build</b>
+<b class="fc"><i>101</i>&nbsp;                            board.checkChronusWin();</b>
+<b class="fc"><i>102</i>&nbsp;                            break;</b>
+<b class="fc"><i>103</i>&nbsp;                        } catch (IllegalMoveException e) {</b>
+<b class="fc"><i>104</i>&nbsp;                            throw new IllegalMoveException(e.getMessage());</b>
+<i>105</i>&nbsp;                        }
+<i>106</i>&nbsp;                    } else {
+<b class="fc"><i>107</i>&nbsp;                        throw new IllegalMoveException(&quot;Invalid command sequence&quot;);</b>
+<i>108</i>&nbsp;                    }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;                case RESET:
+<b class="fc"><i>111</i>&nbsp;                    this.resetLocalVariables();</b>
+<b class="fc"><i>112</i>&nbsp;                    break;</b>
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;                case CHECK_WORKERS:
+<b class="fc"><i>115</i>&nbsp;                    if (worker.getCurrentCell()!=null &amp;&amp; !canMove(worker)) {</b>
+<b class="fc"><i>116</i>&nbsp;                        board.removeWorker(worker);</b>
+<b class="fc"><i>117</i>&nbsp;                        worker.setCurrentCell(null);</b>
+<b class="fc"><i>118</i>&nbsp;                        worker.setPreviousCell(null);</b>
+<i>119</i>&nbsp;                    }
+<i>120</i>&nbsp;                    break;
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;                default:
+<b class="fc"><i>123</i>&nbsp;                    throw new IllegalMoveException(&quot;Command type not valid for the current god&quot;);</b>
+<i>124</i>&nbsp;            }
+<b class="fc"><i>125</i>&nbsp;        } else {</b>
+<b class="fc"><i>126</i>&nbsp;            throw new NullPointerException(&quot;The passed command is null&quot;);</b>
+<i>127</i>&nbsp;        }
+<b class="fc"><i>128</i>&nbsp;    }</b>
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;    /**
+<i>131</i>&nbsp;     * Reset local variable for class Hephaestus using the super method and adding local variables
+<i>132</i>&nbsp;     *
+<i>133</i>&nbsp;     * @author Gianluca Regis
+<i>134</i>&nbsp;     */
+<i>135</i>&nbsp;    @Override
+<i>136</i>&nbsp;    protected void resetLocalVariables() {
+<b class="fc"><i>137</i>&nbsp;        super.resetLocalVariables();</b>
+<b class="fc"><i>138</i>&nbsp;        this.hasBuildSecond = false;</b>
+<b class="fc"><i>139</i>&nbsp;        this.previousCell = null;</b>
+<b class="fc"><i>140</i>&nbsp;    }</b>
+<i>141</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 02:46</div>
+</div>
+</body>
+</html>

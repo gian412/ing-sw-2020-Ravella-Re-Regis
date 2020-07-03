@@ -1,0 +1,460 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ChooseGodsPanel</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.view.gui</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ChooseGodsPanel (it.polimi.ingsw.view.gui)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChooseGodsPanel</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 90)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ChooseGodsPanel$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ChooseGodsPanel$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ChooseGodsPanel$ReadProxyBoard</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 25)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 121)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.view.gui;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.controller.Command;
+<i>4</i>&nbsp;import it.polimi.ingsw.controller.PlayerCommand;
+<i>5</i>&nbsp;import it.polimi.ingsw.model.BoardProxy;
+<i>6</i>&nbsp;import it.polimi.ingsw.model.Pair;
+<i>7</i>&nbsp;import it.polimi.ingsw.utils.CommandType;
+<i>8</i>&nbsp;import it.polimi.ingsw.utils.GodType;
+<i>9</i>&nbsp;import it.polimi.ingsw.view.BoardListener;
+<i>10</i>&nbsp;import it.polimi.ingsw.utils.Observer;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import javax.swing.*;
+<i>13</i>&nbsp;import java.awt.*;
+<i>14</i>&nbsp;import java.awt.event.ActionEvent;
+<i>15</i>&nbsp;import java.awt.event.ActionListener;
+<i>16</i>&nbsp;import java.io.*;
+<i>17</i>&nbsp;import java.net.Socket;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;/**
+<i>20</i>&nbsp; * The panel in charge of the &quot;choosing god&quot; phase of the game
+<i>21</i>&nbsp; * @author Elia Ravella, Gianluca Regis
+<i>22</i>&nbsp; */
+<b class="nc"><i>23</i>&nbsp;public class ChooseGodsPanel extends JPanel {</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    private static final int IMAGE_BASE_WIDTH = 84;
+<i>26</i>&nbsp;    private static final int IMAGE_BASE_HEIGHT = 141;
+<i>27</i>&nbsp;    private final int playerNumber;
+<b class="nc"><i>28</i>&nbsp;    private String chooseGod = &quot;&quot;;</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    private final Socket socket;
+<i>31</i>&nbsp;    private final ReadProxyBoard reader;
+<i>32</i>&nbsp;    private BoardListener listener;
+<i>33</i>&nbsp;    private ObjectOutputStream outputStream;
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    /**
+<i>36</i>&nbsp;     * Inner class to observe the BoardListener object
+<i>37</i>&nbsp;     * and display the elements that arrive from the socket
+<i>38</i>&nbsp;     *
+<i>39</i>&nbsp;     * @author Elia Ravella, Gianluca Regis
+<i>40</i>&nbsp;     * @see BoardListener
+<i>41</i>&nbsp;     */
+<i>42</i>&nbsp;    class ReadProxyBoard implements Observer&lt;BoardProxy&gt; {
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;        ChooseGodsPanel displayPanel;
+<i>45</i>&nbsp;
+<b class="nc"><i>46</i>&nbsp;        public ReadProxyBoard(ChooseGodsPanel displayPanel) {</b>
+<b class="nc"><i>47</i>&nbsp;            this.displayPanel = displayPanel;</b>
+<i>48</i>&nbsp;        }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;        /**
+<i>51</i>&nbsp;         * classic update function in the Observer pattern: it receives a BoardProxy object
+<i>52</i>&nbsp;         * and interprets the content
+<i>53</i>&nbsp;         * @param message object of the update
+<i>54</i>&nbsp;         * @author Elia Ravella, Gianluca Regis
+<i>55</i>&nbsp;         */
+<i>56</i>&nbsp;        @Override
+<i>57</i>&nbsp;        public void update(BoardProxy message) {
+<b class="nc"><i>58</i>&nbsp;            switch (message.getStatus()) {</b>
+<i>59</i>&nbsp;                // if the BoardProxy signals a &quot;selecting_god status&quot;, a grid with all available gods must be shown
+<i>60</i>&nbsp;                case SELECTING_GOD:
+<b class="nc"><i>61</i>&nbsp;                    clearView();</b>
+<b class="nc"><i>62</i>&nbsp;                    if(message.getTurnPlayer().equals(StaticFrame.getPlayerName())){</b>
+<b class="nc"><i>63</i>&nbsp;                        if(message.getChoosingGods().equals(&quot;&quot;)){ // this happens when the player is in charge of choosing ALL the gods</b>
+<b class="nc"><i>64</i>&nbsp;                            showGodButtons();</b>
+<i>65</i>&nbsp;                        } else {
+<b class="nc"><i>66</i>&nbsp;                            showGodButtons(message.getChoosingGods());</b>
+<i>67</i>&nbsp;                        }
+<i>68</i>&nbsp;                    }
+<b class="nc"><i>69</i>&nbsp;                    refreshView();</b>
+<b class="nc"><i>70</i>&nbsp;                    break;</b>
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;                // during the &quot;adding_worker&quot; phase the user should see the board
+<i>73</i>&nbsp;                case ADDING_WORKER:
+<b class="nc"><i>74</i>&nbsp;                    clearView();</b>
+<b class="nc"><i>75</i>&nbsp;                    showBoard(message);</b>
+<b class="nc"><i>76</i>&nbsp;                    break;</b>
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;                // in case of disconnection, this client should return to login page
+<i>79</i>&nbsp;                case TERMINATOR:
+<i>80</i>&nbsp;                    // show error message
+<b class="nc"><i>81</i>&nbsp;                    JOptionPane.showMessageDialog(</b>
+<i>82</i>&nbsp;                            StaticFrame.mainFrame,
+<b class="nc"><i>83</i>&nbsp;                            message.getWinner(),</b>
+<i>84</i>&nbsp;                            &quot;Unexpected disconnection&quot;,
+<i>85</i>&nbsp;                            JOptionPane.ERROR_MESSAGE
+<i>86</i>&nbsp;                    );
+<i>87</i>&nbsp;
+<b class="nc"><i>88</i>&nbsp;                    listener.removeObserver(reader);</b>
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;                    //load login panel
+<b class="nc"><i>91</i>&nbsp;                    LoginPanel loginPanel = new LoginPanel();</b>
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;                    try {
+<b class="nc"><i>94</i>&nbsp;                        outputStream.close();</b>
+<b class="nc"><i>95</i>&nbsp;                        socket.close();</b>
+<b class="nc"><i>96</i>&nbsp;                    } catch (IOException e) {</b>
+<b class="nc"><i>97</i>&nbsp;                        e.printStackTrace();</b>
+<b class="nc"><i>98</i>&nbsp;                    }</b>
+<i>99</i>&nbsp;
+<b class="nc"><i>100</i>&nbsp;                    StaticFrame.removePanel(displayPanel);</b>
+<b class="nc"><i>101</i>&nbsp;                    StaticFrame.addPanel(loginPanel);</b>
+<b class="nc"><i>102</i>&nbsp;                    StaticFrame.refresh();</b>
+<i>103</i>&nbsp;                    break;
+<i>104</i>&nbsp;            }
+<i>105</i>&nbsp;        }
+<i>106</i>&nbsp;    }
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;    /**
+<i>109</i>&nbsp;     * class constructor
+<i>110</i>&nbsp;     * @param connSocket the socket that connects to the game
+<i>111</i>&nbsp;     * @param playerNumber the number of players in the match
+<i>112</i>&nbsp;     * @author Elia Ravella, Gianluca Regis
+<i>113</i>&nbsp;     */
+<b class="nc"><i>114</i>&nbsp;    public ChooseGodsPanel(Socket connSocket, int playerNumber) {</b>
+<b class="nc"><i>115</i>&nbsp;        this.playerNumber = playerNumber;</b>
+<b class="nc"><i>116</i>&nbsp;        this.socket = connSocket;</b>
+<b class="nc"><i>117</i>&nbsp;        reader = new ReadProxyBoard(this);</b>
+<b class="nc"><i>118</i>&nbsp;        this.setUpUI();</b>
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;        try {
+<b class="nc"><i>121</i>&nbsp;            listener = new BoardListener(new ObjectInputStream(socket.getInputStream()));</b>
+<b class="nc"><i>122</i>&nbsp;            outputStream = new ObjectOutputStream(socket.getOutputStream());</b>
+<b class="nc"><i>123</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>124</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>125</i>&nbsp;        }</b>
+<i>126</i>&nbsp;
+<b class="nc"><i>127</i>&nbsp;        listener.addObserver(reader);</b>
+<b class="nc"><i>128</i>&nbsp;        new Thread(listener).start();</b>
+<i>129</i>&nbsp;
+<b class="nc"><i>130</i>&nbsp;        StaticFrame.refresh();</b>
+<i>131</i>&nbsp;    }
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;    /**
+<i>134</i>&nbsp;     * loads a basic panel in the staticFrame
+<i>135</i>&nbsp;     *
+<i>136</i>&nbsp;     * @author Elia Ravella, Gianluca Regis
+<i>137</i>&nbsp;     */
+<i>138</i>&nbsp;    private void setUpUI() {
+<b class="nc"><i>139</i>&nbsp;        this.refreshView();</b>
+<b class="nc"><i>140</i>&nbsp;        this.setLayout(new GridBagLayout());</b>
+<i>141</i>&nbsp;    }
+<i>142</i>&nbsp;
+<i>143</i>&nbsp;    /**
+<i>144</i>&nbsp;     * loads and show a grid with ALL the gods available to be chosen
+<i>145</i>&nbsp;     *
+<i>146</i>&nbsp;     * @author Elia Ravella, Gianluca Regis
+<i>147</i>&nbsp;     */
+<i>148</i>&nbsp;    public void showGodButtons(){
+<b class="nc"><i>149</i>&nbsp;        for(int i = 0; i &lt; 14; i++){</b>
+<i>150</i>&nbsp;
+<b class="nc"><i>151</i>&nbsp;            String actualGod = GodType.values()[i].getCapitalizedName();</b>
+<i>152</i>&nbsp;
+<i>153</i>&nbsp;            Image image;
+<i>154</i>&nbsp;            JButton imageButton;
+<i>155</i>&nbsp;            try {
+<b class="nc"><i>156</i>&nbsp;                image = GetImages.getGodImage(actualGod);</b>
+<b class="nc"><i>157</i>&nbsp;                imageButton = new JButton(new ImageIcon(image));</b>
+<b class="nc"><i>158</i>&nbsp;            } catch (Exception e) {</b>
+<b class="nc"><i>159</i>&nbsp;                imageButton = new JButton(actualGod);</b>
+<b class="nc"><i>160</i>&nbsp;            }</b>
+<i>161</i>&nbsp;
+<b class="nc"><i>162</i>&nbsp;            imageButton.setName(actualGod);</b>
+<i>163</i>&nbsp;
+<b class="nc"><i>164</i>&nbsp;            imageButton.addActionListener(new ActionListener() {</b>
+<i>165</i>&nbsp;                @Override
+<i>166</i>&nbsp;                public void actionPerformed(ActionEvent e) {
+<b class="nc"><i>167</i>&nbsp;                    if (chooseGod.split(&quot; &quot;).length &gt;= playerNumber) {</b>
+<i>168</i>&nbsp;                        return;
+<i>169</i>&nbsp;                    }
+<b class="nc"><i>170</i>&nbsp;                    JButton button = (JButton) e.getSource();</b>
+<b class="nc"><i>171</i>&nbsp;                    button.setEnabled(false);</b>
+<b class="nc"><i>172</i>&nbsp;                    chooseGod += (button.getName()) + &quot; &quot;;</b>
+<i>173</i>&nbsp;                }
+<i>174</i>&nbsp;            });
+<i>175</i>&nbsp;
+<b class="nc"><i>176</i>&nbsp;            this.add(imageButton, setConstraint(i%7, i/7));</b>
+<i>177</i>&nbsp;        }
+<i>178</i>&nbsp;
+<b class="nc"><i>179</i>&nbsp;        JButton submit = new JButton(&quot;Submit your choice&quot;);</b>
+<b class="nc"><i>180</i>&nbsp;        submit.addActionListener(e -&gt; {</b>
+<i>181</i>&nbsp;
+<b class="nc"><i>182</i>&nbsp;            if (chooseGod != null &amp;&amp; !chooseGod.isEmpty() &amp;&amp; chooseGod.split(&quot; &quot;).length==playerNumber ) {</b>
+<i>183</i>&nbsp;                try {
+<b class="nc"><i>184</i>&nbsp;                    PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.SET_GODS), 0);</b>
+<b class="nc"><i>185</i>&nbsp;                    commandToSend.setMessage(chooseGod);</b>
+<b class="nc"><i>186</i>&nbsp;                    outputStream.writeObject(commandToSend);</b>
+<b class="nc"><i>187</i>&nbsp;                    outputStream.flush();</b>
+<b class="nc"><i>188</i>&nbsp;                    commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);</b>
+<b class="nc"><i>189</i>&nbsp;                    outputStream.writeObject(commandToSend);</b>
+<b class="nc"><i>190</i>&nbsp;                    outputStream.flush();</b>
+<b class="nc"><i>191</i>&nbsp;                    chooseGod = &quot;&quot;; // Clear the list of chosen Gods</b>
+<b class="nc"><i>192</i>&nbsp;                } catch (IOException e1) {</b>
+<b class="nc"><i>193</i>&nbsp;                    e1.printStackTrace();</b>
+<b class="nc"><i>194</i>&nbsp;                }</b>
+<i>195</i>&nbsp;            } else {
+<b class="nc"><i>196</i>&nbsp;                JOptionPane.showMessageDialog(StaticFrame.mainFrame, &quot;You must choose &quot; + playerNumber + &quot; Gods&quot;);</b>
+<i>197</i>&nbsp;            }
+<i>198</i>&nbsp;        });
+<b class="nc"><i>199</i>&nbsp;        this.add(submit, setConstraint(3,3 ));</b>
+<i>200</i>&nbsp;
+<i>201</i>&nbsp;
+<i>202</i>&nbsp;    }
+<i>203</i>&nbsp;
+<i>204</i>&nbsp;    /**
+<i>205</i>&nbsp;     * overload of the previous method, just with a reduced set of gods
+<i>206</i>&nbsp;     * @param gods the gods to be shown
+<i>207</i>&nbsp;     * @author Elia Ravella, Gianluca Regis
+<i>208</i>&nbsp;     */
+<i>209</i>&nbsp;    public void showGodButtons(String gods) {
+<b class="nc"><i>210</i>&nbsp;        for(int i = 0; i &lt; gods.split(&quot; &quot;).length; i++){</b>
+<i>211</i>&nbsp;
+<b class="nc"><i>212</i>&nbsp;            String actualGod = gods.split(&quot; &quot;)[i];</b>
+<b class="nc"><i>213</i>&nbsp;            actualGod = actualGod.trim();</b>
+<i>214</i>&nbsp;
+<b class="nc"><i>215</i>&nbsp;            if(actualGod.equals(&quot;&quot;)) continue; // in case the string is poorly formatted</b>
+<i>216</i>&nbsp;
+<i>217</i>&nbsp;            Image image;
+<i>218</i>&nbsp;            JButton imageButton;
+<i>219</i>&nbsp;            try {
+<b class="nc"><i>220</i>&nbsp;                image = GetImages.getGodImage(actualGod);</b>
+<b class="nc"><i>221</i>&nbsp;                 imageButton = new JButton(new ImageIcon(image));</b>
+<b class="nc"><i>222</i>&nbsp;            }catch(Exception e){</b>
+<b class="nc"><i>223</i>&nbsp;                imageButton = new JButton(actualGod);</b>
+<b class="nc"><i>224</i>&nbsp;            }</b>
+<i>225</i>&nbsp;
+<b class="nc"><i>226</i>&nbsp;            imageButton.setName(actualGod);</b>
+<i>227</i>&nbsp;
+<b class="nc"><i>228</i>&nbsp;            imageButton.addActionListener(e -&gt; {</b>
+<b class="nc"><i>229</i>&nbsp;                if (chooseGod.equals(&quot;&quot;)) {</b>
+<b class="nc"><i>230</i>&nbsp;                    ((JButton)e.getSource()).setEnabled(false); // ... get God&#39;s name from the button...</b>
+<b class="nc"><i>231</i>&nbsp;                    chooseGod = ((JButton) e.getSource()).getName(); // ... and save it</b>
+<i>232</i>&nbsp;                }
+<i>233</i>&nbsp;            });
+<b class="nc"><i>234</i>&nbsp;            this.add(imageButton, setConstraint(i%gods.split(&quot; &quot;).length, 0));</b>
+<i>235</i>&nbsp;        }
+<i>236</i>&nbsp;
+<b class="nc"><i>237</i>&nbsp;        JButton submit = new JButton(&quot;Submit your choice&quot;);</b>
+<b class="nc"><i>238</i>&nbsp;        submit.addActionListener(e -&gt; {</b>
+<b class="nc"><i>239</i>&nbsp;            if (chooseGod!=null &amp;&amp; !chooseGod.isEmpty()) {</b>
+<i>240</i>&nbsp;                try {
+<b class="nc"><i>241</i>&nbsp;                    PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHOOSE_GOD), 0);</b>
+<b class="nc"><i>242</i>&nbsp;                    commandToSend.setMessage(chooseGod);</b>
+<b class="nc"><i>243</i>&nbsp;                    outputStream.writeObject(commandToSend);</b>
+<b class="nc"><i>244</i>&nbsp;                    outputStream.flush();</b>
+<b class="nc"><i>245</i>&nbsp;                    commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);</b>
+<b class="nc"><i>246</i>&nbsp;                    outputStream.writeObject(commandToSend);</b>
+<b class="nc"><i>247</i>&nbsp;                    outputStream.flush();</b>
+<i>248</i>&nbsp;
+<b class="nc"><i>249</i>&nbsp;                    StaticFrame.setGod(GodType.getTypeFromString(chooseGod));</b>
+<b class="nc"><i>250</i>&nbsp;                } catch (IOException e1) {</b>
+<b class="nc"><i>251</i>&nbsp;                    e1.printStackTrace();</b>
+<b class="nc"><i>252</i>&nbsp;                }</b>
+<i>253</i>&nbsp;            } else {
+<b class="nc"><i>254</i>&nbsp;                JOptionPane.showMessageDialog(StaticFrame.mainFrame, &quot;You must choose a God&quot;);</b>
+<i>255</i>&nbsp;            }
+<i>256</i>&nbsp;
+<i>257</i>&nbsp;        });
+<b class="nc"><i>258</i>&nbsp;        this.add(submit, setConstraint(gods.split(&quot; &quot;).length/2,1 ));</b>
+<i>259</i>&nbsp;    }
+<i>260</i>&nbsp;
+<i>261</i>&nbsp;    /**
+<i>262</i>&nbsp;     * sets up a basic &quot;GridBagConstraint&quot; object. used during the aligning of the objects in the grid
+<i>263</i>&nbsp;     * @param gridX column
+<i>264</i>&nbsp;     * @param gridY row
+<i>265</i>&nbsp;     * @return a GridBagConstraints objects
+<i>266</i>&nbsp;     * @author Elia Ravella, Gianluca Regis
+<i>267</i>&nbsp;     */
+<i>268</i>&nbsp;    private  GridBagConstraints setConstraint(int gridX, int gridY){
+<b class="nc"><i>269</i>&nbsp;        GridBagConstraints cons = new GridBagConstraints();</b>
+<b class="nc"><i>270</i>&nbsp;        cons.gridx = gridX;</b>
+<b class="nc"><i>271</i>&nbsp;        cons.gridy =  gridY;</b>
+<b class="nc"><i>272</i>&nbsp;        cons.weightx = 0.142;</b>
+<b class="nc"><i>273</i>&nbsp;        cons.weighty = 0.5;</b>
+<i>274</i>&nbsp;
+<b class="nc"><i>275</i>&nbsp;        return cons;</b>
+<i>276</i>&nbsp;    }
+<i>277</i>&nbsp;
+<i>278</i>&nbsp;    /**
+<i>279</i>&nbsp;     * loads and shows the game board
+<i>280</i>&nbsp;     * @author Elia Ravella, Gianluca Regis
+<i>281</i>&nbsp;     */
+<i>282</i>&nbsp;    private void showBoard(BoardProxy firstBoard){
+<i>283</i>&nbsp;
+<b class="nc"><i>284</i>&nbsp;        listener.removeObserver(reader);</b>
+<i>285</i>&nbsp;
+<i>286</i>&nbsp;        //load next panel
+<b class="nc"><i>287</i>&nbsp;        BoardPanel boardPanel = new BoardPanel(this.socket, firstBoard, listener, outputStream);</b>
+<i>288</i>&nbsp;
+<b class="nc"><i>289</i>&nbsp;        StaticFrame.removePanel(this);</b>
+<b class="nc"><i>290</i>&nbsp;        StaticFrame.addPanel(boardPanel);</b>
+<b class="nc"><i>291</i>&nbsp;        StaticFrame.refresh();</b>
+<i>292</i>&nbsp;    }
+<i>293</i>&nbsp;    
+<i>294</i>&nbsp;    /**
+<i>295</i>&nbsp;     * removes all component from this panel
+<i>296</i>&nbsp;     * @author Elia Ravella
+<i>297</i>&nbsp;     */
+<i>298</i>&nbsp;    private void clearView() {
+<b class="nc"><i>299</i>&nbsp;        for (Component component : this.getComponents())</b>
+<b class="nc"><i>300</i>&nbsp;            this.remove(component);</b>
+<i>301</i>&nbsp;    }
+<i>302</i>&nbsp;
+<i>303</i>&nbsp;    /**
+<i>304</i>&nbsp;     * reloads the view, loading all new dynamically added components
+<i>305</i>&nbsp;     *
+<i>306</i>&nbsp;     * @author Elia Ravella
+<i>307</i>&nbsp;     */
+<i>308</i>&nbsp;    private void refreshView(){
+<b class="nc"><i>309</i>&nbsp;        this.invalidate();</b>
+<b class="nc"><i>310</i>&nbsp;        this.validate();</b>
+<b class="nc"><i>311</i>&nbsp;        this.repaint();</b>
+<i>312</i>&nbsp;    }
+<i>313</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 02:46</div>
+</div>
+</body>
+</html>

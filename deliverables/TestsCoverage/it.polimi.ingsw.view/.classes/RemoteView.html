@@ -1,0 +1,187 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RemoteView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RemoteView (it.polimi.ingsw.view)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RemoteView</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    72.2%
+  </span>
+  <span class="absValue">
+    (26/ 36)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.view;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.controller.Command;
+<i>4</i>&nbsp;import it.polimi.ingsw.utils.CommandType;
+<i>5</i>&nbsp;import it.polimi.ingsw.controller.Controller;
+<i>6</i>&nbsp;import it.polimi.ingsw.controller.PlayerCommand;
+<i>7</i>&nbsp;import it.polimi.ingsw.model.BoardProxy;
+<i>8</i>&nbsp;import it.polimi.ingsw.model.Pair;
+<i>9</i>&nbsp;import it.polimi.ingsw.model.Player;
+<i>10</i>&nbsp;import it.polimi.ingsw.utils.Observable;
+<i>11</i>&nbsp;import it.polimi.ingsw.utils.Observer;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import java.io.IOException;
+<i>14</i>&nbsp;import java.io.ObjectInputStream;
+<i>15</i>&nbsp;import java.io.ObjectOutputStream;
+<i>16</i>&nbsp;import java.net.Socket;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;public class RemoteView extends Observable&lt;PlayerCommand&gt; implements Observer&lt;BoardProxy&gt;, Runnable {
+<i>20</i>&nbsp;    private Socket connSocket;
+<i>21</i>&nbsp;    private Controller controller;
+<i>22</i>&nbsp;    private Player player;
+<i>23</i>&nbsp;    private boolean disconnected;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    private ObjectOutputStream toClient;
+<i>26</i>&nbsp;    private ObjectInputStream fromClient;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * constructor of the RemoteView class
+<i>30</i>&nbsp;     *
+<i>31</i>&nbsp;     * @param socket the client to communicate with
+<i>32</i>&nbsp;     * @param controller the controller of the match (one for all views)
+<i>33</i>&nbsp;     * @param player a string that represents the player associated to this view.
+<i>34</i>&nbsp;     */
+<b class="fc"><i>35</i>&nbsp;    public RemoteView(Socket socket, Controller controller, String player){</b>
+<b class="fc"><i>36</i>&nbsp;        disconnected = false;</b>
+<b class="fc"><i>37</i>&nbsp;        this.controller = controller;</b>
+<b class="fc"><i>38</i>&nbsp;        this.connSocket = socket;</b>
+<b class="fc"><i>39</i>&nbsp;        this.player = new Player(player, -1);</b>
+<i>40</i>&nbsp;        try {
+<b class="fc"><i>41</i>&nbsp;            this.toClient = new ObjectOutputStream(this.connSocket.getOutputStream());</b>
+<b class="fc"><i>42</i>&nbsp;            this.fromClient = new ObjectInputStream(this.connSocket.getInputStream());</b>
+<b class="nc"><i>43</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>44</i>&nbsp;            e.printStackTrace();</b>
+<b class="fc"><i>45</i>&nbsp;        }</b>
+<b class="fc"><i>46</i>&nbsp;    }</b>
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     * runs the RemoteView
+<i>50</i>&nbsp;     *
+<i>51</i>&nbsp;     * the main method of the RemoteView, it&#39;s in charge of scanning the
+<i>52</i>&nbsp;     * input stream from the client
+<i>53</i>&nbsp;     */
+<i>54</i>&nbsp;    @Override
+<i>55</i>&nbsp;    public void run(){
+<b class="fc"><i>56</i>&nbsp;        if(connSocket.isConnected() &amp;&amp; !connSocket.isClosed()){</b>
+<i>57</i>&nbsp;            while (true){
+<i>58</i>&nbsp;                try {
+<b class="fc"><i>59</i>&nbsp;                    PlayerCommand playerCommand = (PlayerCommand) fromClient.readObject();</b>
+<b class="nc"><i>60</i>&nbsp;                    if(playerCommand != null){</b>
+<b class="nc"><i>61</i>&nbsp;                        notify(playerCommand);</b>
+<i>62</i>&nbsp;                    }
+<b class="nc"><i>63</i>&nbsp;                    else break;</b>
+<b class="fc"><i>64</i>&nbsp;                } catch (IOException e) {</b>
+<b class="fc"><i>65</i>&nbsp;                    System.err.println(&quot;Client disconnected&quot;);</b>
+<b class="fc"><i>66</i>&nbsp;                    disconnected = true;</b>
+<b class="fc"><i>67</i>&nbsp;                    notify(new PlayerCommand(player.getNAME(), new Command(new Pair(-1, -1), CommandType.DISCONNECTED), 0));</b>
+<b class="fc"><i>68</i>&nbsp;                    break;</b>
+<b class="nc"><i>69</i>&nbsp;                } catch (ClassNotFoundException e) {</b>
+<b class="nc"><i>70</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>71</i>&nbsp;                }</b>
+<i>72</i>&nbsp;            }
+<i>73</i>&nbsp;        }else{
+<b class="nc"><i>74</i>&nbsp;            System.err.println(&quot;Socket not connected or closed. Shutting down&quot;);</b>
+<i>75</i>&nbsp;        }
+<b class="fc"><i>76</i>&nbsp;    }</b>
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    /**
+<i>80</i>&nbsp;     * update method (inherited from the Observer interface) called when the observed object is changed
+<i>81</i>&nbsp;     *
+<i>82</i>&nbsp;     * send to the client the object changed, the Board in form of a BoardProxy in this case. Also, handles
+<i>83</i>&nbsp;     * the case in which a client unexpectedly disconnects
+<i>84</i>&nbsp;     *
+<i>85</i>&nbsp;     * @param message the changed object
+<i>86</i>&nbsp;     */
+<i>87</i>&nbsp;    @Override
+<i>88</i>&nbsp;    public void update(BoardProxy message) {
+<b class="fc"><i>89</i>&nbsp;        if(disconnected) return;</b>
+<i>90</i>&nbsp;        try {
+<i>91</i>&nbsp;
+<b class="fc"><i>92</i>&nbsp;            toClient.reset();</b>
+<b class="fc"><i>93</i>&nbsp;            toClient.writeObject(message);</b>
+<b class="fc"><i>94</i>&nbsp;            toClient.flush();</b>
+<i>95</i>&nbsp;
+<b class="fc"><i>96</i>&nbsp;            if(message.getWinner().equals(&quot;Unexpected Game Over&quot;)) {</b>
+<b class="fc"><i>97</i>&nbsp;                System.out.println(&quot;Unexpected game over, shutting down&quot;);</b>
+<b class="fc"><i>98</i>&nbsp;                connSocket.close();</b>
+<i>99</i>&nbsp;            }
+<b class="nc"><i>100</i>&nbsp;        } catch (IOException | NullPointerException e) {</b>
+<i>101</i>&nbsp;            //e.printStackTrace();
+<b class="fc"><i>102</i>&nbsp;        }</b>
+<b class="fc"><i>103</i>&nbsp;    }</b>
+<i>104</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 02:45</div>
+</div>
+</body>
+</html>

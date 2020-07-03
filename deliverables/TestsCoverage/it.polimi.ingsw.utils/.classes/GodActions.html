@@ -1,0 +1,251 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GodActions</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.utils</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GodActions (it.polimi.ingsw.utils)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GodActions</td>
+<td class="coverageStat">
+  <span class="percent">
+    85.7%
+  </span>
+  <span class="absValue">
+    (6/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97%
+  </span>
+  <span class="absValue">
+    (32/ 33)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GodActions$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (7/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.1%
+  </span>
+  <span class="absValue">
+    (33/ 34)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.utils;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.controller.Command;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.EnumMap;
+<i>6</i>&nbsp;import java.util.HashMap;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp; * this class is used Client-side to perform a check on the possible moves a player can do in is turn, and to verify
+<i>10</i>&nbsp; * if he must end this turn
+<i>11</i>&nbsp; *
+<i>12</i>&nbsp; * @author Gianluca Regis, Elia Ravella
+<i>13</i>&nbsp; */
+<b class="nc"><i>14</i>&nbsp;public final class GodActions {</b>
+<i>15</i>&nbsp;
+<b class="fc"><i>16</i>&nbsp;    private static final EnumMap&lt;GodType, CommandType[]&gt; allPossibleMoves = new EnumMap&lt;&gt;(GodType.class);</b>
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    /**
+<i>19</i>&nbsp;     * Initialize the private EnumMap with all possible actions for each God
+<i>20</i>&nbsp;     *
+<i>21</i>&nbsp;     * @author Gianluca Regis
+<i>22</i>&nbsp;     */
+<i>23</i>&nbsp;    public static void possibleActionsInit() {
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;        // Apollo
+<b class="fc"><i>26</i>&nbsp;        allPossibleMoves.put(GodType.APOLLO,</b>
+<i>27</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.BUILD});
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;        // Artemis
+<b class="fc"><i>30</i>&nbsp;        allPossibleMoves.put(GodType.ARTEMIS,</b>
+<i>31</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.MOVE, CommandType.BUILD});
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;        // Athena
+<b class="fc"><i>34</i>&nbsp;        allPossibleMoves.put(GodType.ATHENA,</b>
+<i>35</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.BUILD});
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;        // Atlas
+<b class="fc"><i>38</i>&nbsp;        allPossibleMoves.put(GodType.ATLAS,</b>
+<i>39</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.BUILD});
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;        // Charon
+<b class="fc"><i>42</i>&nbsp;        allPossibleMoves.put(GodType.CHARON,</b>
+<i>43</i>&nbsp;                new CommandType[]{CommandType.FORCE, CommandType.MOVE, CommandType.BUILD});
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;        // Chronus
+<b class="fc"><i>46</i>&nbsp;        allPossibleMoves.put(GodType.CHRONUS,</b>
+<i>47</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.BUILD});
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;        // Demeter
+<b class="fc"><i>50</i>&nbsp;        allPossibleMoves.put(GodType.DEMETER,</b>
+<i>51</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.BUILD, CommandType.BUILD});
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;        // Hephaestus
+<b class="fc"><i>54</i>&nbsp;        allPossibleMoves.put(GodType.HEPHAESTUS,</b>
+<i>55</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.BUILD, CommandType.BUILD});
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;        // Hestia
+<b class="fc"><i>58</i>&nbsp;        allPossibleMoves.put(GodType.HESTIA,</b>
+<i>59</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.BUILD, CommandType.BUILD});
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;        // Minotaur
+<b class="fc"><i>62</i>&nbsp;        allPossibleMoves.put(GodType.MINOTAUR,</b>
+<i>63</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.BUILD});
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;        // Pan
+<b class="fc"><i>66</i>&nbsp;        allPossibleMoves.put(GodType.PAN,</b>
+<i>67</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.BUILD});
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;        // Prometheus
+<b class="fc"><i>70</i>&nbsp;        allPossibleMoves.put(GodType.PROMETHEUS,</b>
+<i>71</i>&nbsp;                new CommandType[]{CommandType.BUILD, CommandType.MOVE, CommandType.BUILD});
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;        // Triton
+<b class="fc"><i>74</i>&nbsp;        allPossibleMoves.put(GodType.TRITON,</b>
+<i>75</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.BUILD});
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;        // Zeus
+<b class="fc"><i>78</i>&nbsp;        allPossibleMoves.put(GodType.ZEUS,</b>
+<i>79</i>&nbsp;                new CommandType[]{CommandType.MOVE, CommandType.BUILD});
+<i>80</i>&nbsp;
+<b class="fc"><i>81</i>&nbsp;    }</b>
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    /**
+<i>84</i>&nbsp;     * this function performs a control on a set of moves given and the one available for that god
+<i>85</i>&nbsp;     *
+<i>86</i>&nbsp;     * @param playerGod the player&#39;s god
+<i>87</i>&nbsp;     * @param playerMoves the player&#39;s moves so far
+<i>88</i>&nbsp;     * @return true if the player has no more moves to do. false otherwise
+<i>89</i>&nbsp;     * @author Gianluca Regis, Ravella Elia
+<i>90</i>&nbsp;     */
+<i>91</i>&nbsp;    public static boolean isTurnEnded(GodType playerGod, Object[] playerMoves){
+<i>92</i>&nbsp;
+<b class="fc"><i>93</i>&nbsp;        CommandType[] neededMoves = allPossibleMoves.get(playerGod);</b>
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;        // If the worker has not at least moved and build return false
+<b class="fc"><i>96</i>&nbsp;        if (playerMoves.length &lt;=1 )</b>
+<b class="fc"><i>97</i>&nbsp;            return false;</b>
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;        // If the worker made all the action, check their validity
+<b class="fc"><i>100</i>&nbsp;        if(neededMoves.length == playerMoves.length)</b>
+<b class="fc"><i>101</i>&nbsp;            return analyzeCompleteActions(neededMoves, playerMoves);</b>
+<i>102</i>&nbsp;
+<b class="fc"><i>103</i>&nbsp;        switch (playerGod) {</b>
+<i>104</i>&nbsp;            case ARTEMIS:
+<i>105</i>&nbsp;            case CHARON:
+<i>106</i>&nbsp;            case PROMETHEUS:
+<b class="fc"><i>107</i>&nbsp;                return canPassActionBefore(playerMoves);</b>
+<i>108</i>&nbsp;            case TRITON:
+<b class="fc"><i>109</i>&nbsp;                return canPassTriton(playerMoves);</b>
+<i>110</i>&nbsp;            default:
+<b class="fc"><i>111</i>&nbsp;                return false;</b>
+<i>112</i>&nbsp;        }
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    }
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;    private static boolean analyzeCompleteActions(CommandType[] neededMoves, Object[] playerMoves) {
+<i>118</i>&nbsp;
+<b class="fc"><i>119</i>&nbsp;        for(int i = 0; i &lt; neededMoves.length; i++)</b>
+<b class="fc"><i>120</i>&nbsp;            if(!neededMoves[i].equals(playerMoves[i]))</b>
+<b class="fc"><i>121</i>&nbsp;                return false;</b>
+<i>122</i>&nbsp;
+<b class="fc"><i>123</i>&nbsp;        return true;</b>
+<i>124</i>&nbsp;
+<i>125</i>&nbsp;    }
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;    private static boolean canPassActionBefore(Object[] playerMoves){
+<i>128</i>&nbsp;
+<b class="fc"><i>129</i>&nbsp;        return  (playerMoves.length == 2 &amp;&amp; playerMoves[0].equals(CommandType.MOVE) &amp;&amp; (playerMoves[1].equals(CommandType.BUILD) || playerMoves[1].equals(CommandType.BUILD_DOME)));</b>
+<i>130</i>&nbsp;
+<i>131</i>&nbsp;    }
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;    private static boolean canPassTriton(Object[] playerMoves) {
+<i>134</i>&nbsp;
+<b class="fc"><i>135</i>&nbsp;        int len = playerMoves.length;</b>
+<i>136</i>&nbsp;
+<b class="fc"><i>137</i>&nbsp;        return  (len&gt;=2 &amp;&amp; playerMoves[0].equals(CommandType.MOVE) &amp;&amp; (playerMoves[len-1].equals(CommandType.BUILD) || playerMoves[len-1].equals(CommandType.BUILD_DOME)));</b>
+<i>138</i>&nbsp;
+<i>139</i>&nbsp;    }
+<i>140</i>&nbsp;
+<i>141</i>&nbsp;
+<i>142</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 02:46</div>
+</div>
+</body>
+</html>
