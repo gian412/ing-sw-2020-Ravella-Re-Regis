@@ -2,7 +2,17 @@
 
 ---
 
-### 
+### Authors
+
+---
+
+- [Ravella Elia](https://github.com/strarave) matricola
+
+- [Marco Re](https://github.com/marcore98) matricola
+
+- [GianlucaRegis](https://github.com/GianlucaRegis) matricola 865692
+
+
 
 ## Satisfied requirements
 
