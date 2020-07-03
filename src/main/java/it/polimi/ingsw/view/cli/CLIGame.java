@@ -533,7 +533,7 @@ public class CLIGame {
                                                         for(Map.Entry<String, Pair> entry : displayer.getLocalProxy().getWorkers().entrySet()){
                                                             workerName = playerName.toUpperCase() + index;
                                                             if(entry.getKey().equals(workerName)){
-                                                                if(entry.getValue().x == coord[1] && entry.getValue().y == coord[0] && !toGod(divinity).equals(GODS[13])) {
+                                                                if(entry.getValue().x == coord[0] && entry.getValue().y == coord[1] && !toGod(divinity).equals(GODS[13])) {
                                                                     underYou = true;
                                                                 }
                                                             }
@@ -613,7 +613,7 @@ public class CLIGame {
                                                         for(Map.Entry<String, Pair> entry : displayer.getLocalProxy().getWorkers().entrySet()){
                                                             workerName = playerName.toUpperCase() + index;
                                                             if(entry.getKey().equals(workerName)){
-                                                                if(entry.getValue().x == coord[1] && entry.getValue().y == coord[0] && !toGod(divinity).equals(GODS[13])) {
+                                                                if(entry.getValue().x == coord[0] && entry.getValue().y == coord[1] && !toGod(divinity).equals(GODS[13])) {
                                                                     underYou = true;
                                                                 }
                                                             }
@@ -876,8 +876,8 @@ public class CLIGame {
                                         //YES illegal move/build
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             hasBuilt = false;
-                                            System.out.println("ILLEGAL MOVE/BUILD.\n");
-                                            System.out.println("Make your choice : " +
+                                            System.out.println("ILLEGAL MOVE/BUILD.");
+                                            System.out.print("Make your choice : " +
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
                                                     "\nIndicate the number of your choice: ");
@@ -905,7 +905,7 @@ public class CLIGame {
 
                                 case PROMETHEUS:
                                     if (!hasMoved && !hasBuilt && !hasReBuild) {
-                                        System.out.println("Make your choice : " +
+                                        System.out.print("Make your choice : " +
                                                 "\n    1 - Start your turn and MOVE" +
                                                 "\n    2 - Start your turn and BUILD" +
                                                 "\nIndicate the number of your choice: ");
@@ -940,7 +940,7 @@ public class CLIGame {
                                         //YES illegal move/build
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             hasBuilt = false;
-                                            System.out.println("BUILD.\n" +
+                                            System.out.print("BUILD.\n" +
                                                     "Make your choice : " +
                                                     "\n    1 - MOVE" +
                                                     "\n    2 - BUILD" +
@@ -975,7 +975,7 @@ public class CLIGame {
                                         //YES illegal move/build
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             hasMoved = false;
-                                            System.out.println("ILLEGAL MOVE.\n" +
+                                            System.out.print("ILLEGAL MOVE.\n" +
                                                     "Make your choice : " +
                                                     "\n    1 - MOVE" +
                                                     "\n    2 - BUILD" +
@@ -1082,9 +1082,15 @@ public class CLIGame {
     }
 
     private int chooseOption(){
-        int choice;
+        int choice = 99;
 
-        choice = inputStream.nextInt();
+        try {
+            choice = inputStream.nextInt();
+        }
+        catch (InputMismatchException e){
+            System.out.println("INPUT ERROR. Insert an Integer\n");
+            inputStream.nextLine();
+        }
         inputStream.nextLine();
         //input validation
         choice = validation(choice);
@@ -1095,7 +1101,7 @@ public class CLIGame {
     private int[] chooseCell() {
 
         int[] coord = new int[2];
-        int input;
+        int input = 99;
         int x = 0,y = 1;
         String workerName;
 
@@ -1122,8 +1128,13 @@ public class CLIGame {
                         " \n  9 - South-East" +
                         "\nMake your choice:  ");
 
-                System.out.print("column: " + x + "row: " + y);
-                input = inputStream.nextInt();
+                try {
+                    input = inputStream.nextInt();
+                }
+                catch (InputMismatchException e){
+                    System.out.println("INPUT ERROR. Insert an Integer\n");
+                    inputStream.nextLine();
+                }
                 inputStream.nextLine();
             } while (input <= 0 || input > 9);
 
@@ -1163,13 +1174,18 @@ public class CLIGame {
         return coord;
     }
 
-
     private int validation(int x) {
         int choice = x;
 
         while(!(choice == 1) && !(choice == 2)){
             System.out.println("INVALID INPUT. Reinsert a valid input: ");
-            choice = inputStream.nextInt();
+            try {
+                choice = inputStream.nextInt();
+            }
+            catch (InputMismatchException e){
+                System.out.println("INPUT ERROR. Insert an Integer\n");
+                inputStream.nextLine();
+            }
             inputStream.nextLine();
         }
 
@@ -1178,12 +1194,17 @@ public class CLIGame {
 
     private int validationIndex(int x){
         int index = x;
-        String input;
 
         while(!(index == 1) && !(index == 0)){
             System.out.println("INVALID INPUT. Reinsert a valid input: ");
-            input = inputStream.nextLine();
-            index = Integer.parseInt(input);
+            try {
+                index = inputStream.nextInt();
+            }
+            catch (InputMismatchException e){
+                System.out.println("INPUT ERROR. Insert an Integer\n");
+                inputStream.nextLine();
+            }
+            inputStream.nextLine();
         }
 
         return index;
@@ -1209,8 +1230,13 @@ public class CLIGame {
 
         while (coordinate < 0 || coordinate > 4) {
             System.out.print("INVALID INPUT.\nReinsert a valid valor (from 1 to 5):  ");
-            coordinate = inputStream.nextInt();
-            coordinate = coordinate -1;
+            try {
+                coordinate = inputStream.nextInt() - 1;
+            }
+            catch (InputMismatchException e){
+                System.out.println("INPUT ERROR. Insert an Integer\n");
+                inputStream.nextLine();
+            }
             inputStream.nextLine();
         }
         return coordinate;
@@ -1336,19 +1362,32 @@ public class CLIGame {
     }
 
     private void addingWorker() throws IOException {
-        int row, column;
+        int row = 99, column = 99;
 
         System.out.println("It's time to insert your workers.");
 
         do {
             System.out.print("Insert the column of your first worker (from 1 to 5): ");
-            column = inputStream.nextInt() - 1;
+
+            try {
+                column = inputStream.nextInt() - 1;
+            }
+            catch (InputMismatchException e){
+                System.out.println("INPUT ERROR. Insert an Integer\n");
+                inputStream.nextLine();
+            }
             inputStream.nextLine();
 
             column = checkCoordinatesWorker(column);
 
             System.out.print("Now insert the row of your first worker (from 1 to 5): ");
-            row = inputStream.nextInt() - 1;
+            try {
+                row = inputStream.nextInt() - 1;
+            }
+            catch (InputMismatchException e){
+                System.out.println("INPUT ERROR. Insert an Integer\n");
+                inputStream.nextLine();
+            }
             inputStream.nextLine();
 
             row = checkCoordinatesWorker(row);
@@ -1377,12 +1416,18 @@ public class CLIGame {
     }
 
     private int workerIndex() {
-        int index = 0;
-        boolean check = false;
+        int index = 2;
         do {
             //you can only move
             System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
-            index = inputStream.nextInt();
+
+            try {
+                index = inputStream.nextInt(); // Read number of player
+            }
+            catch (InputMismatchException e){
+                System.out.println("INPUT ERROR. Insert an integer\n");
+                inputStream.nextLine();
+            }
             inputStream.nextLine();
 
             index = validationIndex(index);

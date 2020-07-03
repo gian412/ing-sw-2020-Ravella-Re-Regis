@@ -7,6 +7,7 @@ import it.polimi.ingsw.view.cli.CliComposer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Client {
@@ -100,13 +101,19 @@ public class Client {
         System.out.println("-------------------------------------------------------------------------------------------\n");
 
         // Age request
-        int number;
+        int number = 0;
         do {
             System.out.println("And now tell me, how old are you?\n"); // Print age request
-            number = stdIn.nextInt(); // Read age
-            stdIn.nextLine();
+            try {
+                number = stdIn.nextInt(); // Read age
+            }
+            catch (InputMismatchException e){
+                System.out.println("INPUT ERROR\n");
+                stdIn.nextLine();
+            }
         }while (number < 1 || number > 99);
 
+        stdIn.nextLine();
         System.out.println("Age valid!\n");
         socketOut.println(number);
         socketOut.flush();
@@ -117,7 +124,14 @@ public class Client {
         if (line.equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) { // If message is number of player request
             System.out.println(line); // Print number of player request
 
-            number = stdIn.nextInt(); // Read number of player
+            try {
+                number = stdIn.nextInt(); // Read number of player
+            }
+            catch (InputMismatchException e){
+                System.out.println("INPUT ERROR\n");
+                stdIn.nextLine();
+            }
+
             stdIn.nextLine();
             while (true) {
                 if (number==2 || number==3) {
@@ -128,7 +142,14 @@ public class Client {
                 } else {
                     System.out.println("INVALID INPUT\n\n" +
                             "How many player do you want to play with? (2 or 3 player allowed)"); // Print number of player request
-                    number = stdIn.nextInt(); // Read number of player
+
+                    try {
+                        number = stdIn.nextInt(); // Read number of player
+                    }
+                    catch (InputMismatchException e){
+                        System.out.println("INPUT ERROR\n");
+                        stdIn.nextLine();
+                    }
                 }
             }
 
