@@ -92,6 +92,7 @@ public abstract class God {
      * The method throw an IllegalMoveException if the piece can't be built in the given cell
      *
      * @author Gianluca Regis
+     * @param originCell stands for the cell from which you are building
      * @param pair stands for the coordinates in which you're building the new piece
      * @param isDome is true if Atlas build a dome in any position
      * @throws IllegalMoveException in case the move isn't legal

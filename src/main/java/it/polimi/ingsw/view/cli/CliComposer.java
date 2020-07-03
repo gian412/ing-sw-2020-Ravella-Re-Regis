@@ -75,7 +75,8 @@ public class CliComposer {
     /**
      * CLiComposer constructor
      *
-     * Author Marco Re
+     * @param name The player name
+     * @param number The number of players
      */
     public CliComposer(String name, int number){
         playerName = name;

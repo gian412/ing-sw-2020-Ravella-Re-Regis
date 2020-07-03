@@ -29,6 +29,7 @@ public class BoardMaker {
      * @param board the board to draw
      * @param offset the initial offset from the border of the board
      * @param width the length of the single cell of the board
+     * @param obs the observer
      * @param interstitialWidth the space between two cells
      * @author Elia Ravella
      */

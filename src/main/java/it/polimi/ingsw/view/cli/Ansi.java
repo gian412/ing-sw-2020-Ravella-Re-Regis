@@ -51,7 +51,7 @@ public class Ansi {
     /**
      * constructor of the class Ansi
      *
-     * @authors Marco Re
+     * @author Marco Re
      */
     public Ansi (){
     }
@@ -61,7 +61,7 @@ public class Ansi {
      *
      * created an Ansi code to change the color of background and font
      *
-     * @authors Marco Re
+     * @author Marco Re
      *
      * @param bg is the code of the color for the background
      * @param font is the code of the color for the font
@@ -76,7 +76,7 @@ public class Ansi {
      *
      * created an Ansi code to change the color of the font
      *
-     * @authors Marco Re
+     * @author Marco Re
      *
      * @param font is the code of the color for the font
      * @return the instruction to change output's aspect (font)
@@ -90,7 +90,7 @@ public class Ansi {
      *
      * created an Ansi code to change the color of the background
      *
-     * @authors Marco Re
+     * @author Marco Re
      *
      * @param bg is the code of the color for the background
      * @return the instruction to change output's aspect (Background)

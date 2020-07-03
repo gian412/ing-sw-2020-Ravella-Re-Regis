@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @see Board
  * @see Player
- * @auhor Marco Re
+ * @author Marco Re
  */
 public class Game {
 
@@ -57,7 +57,7 @@ public class Game {
 
     /**
      * triggers the "end-game" procedure to inform the clients that the match is ended
-     * @authors Ravella Elia
+     * @author Ravella Elia
      */
     public void endGame(){
         board.endGame();

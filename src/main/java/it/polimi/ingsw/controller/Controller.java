@@ -28,7 +28,7 @@ public class Controller implements Observer<PlayerCommand> {
      * class constructor
      *
      * @param g the instance of the class Game that encapsulates the whole match
-     * @@author Elia Ravella
+     * @author Elia Ravella
      */
     public Controller(Game g){
         this.game = g;

@@ -100,6 +100,7 @@ public class Board {
      * @param originCell cell in which the worker is
      * @param coordinates coordinates in which the player wants to build
      * @param isDome is true if a god, who has the ability to build dome not only after the third level, build a dome
+     * @throws IllegalMoveException if the build isn't valid
      */
     public void build(Cell originCell, Pair coordinates, boolean isDome) throws IllegalMoveException {
 
@@ -128,6 +129,7 @@ public class Board {
      * @author Marco Re
      * @param worker the worker that the player moves
      * @param coordinates coordinates in which the player moves the worker
+     * @throws IllegalMoveException if the move isn't valid
      */
     public void moveWorker(Worker worker, Pair coordinates) throws IllegalMoveException{
 
@@ -160,6 +162,7 @@ public class Board {
      * @author Gianluca Regis
      * @param worker first worker (the one who execute the switch)
      * @param otherWorker second worker (the one who suffer the switch)
+     * @throws IllegalMoveException if the switch isn't valid
      */
     public void switchWorkers(Worker worker, Worker otherWorker) throws IllegalMoveException {
 
@@ -191,6 +194,7 @@ public class Board {
      * @author Gianluca Regis
      * @param worker the worker that the player moves
      * @param coordinates the cell in which the player moves the worker
+     * @throws IllegalMoveException if the force isn't valid
      */
     public void forceWorker(Worker worker, Pair coordinates) throws IllegalMoveException{
 
@@ -216,14 +220,12 @@ public class Board {
         }
     }
 
-    /** put a worker on the board
-     *
-     * at the start of the game the player put his workers on the board
+    /**
+     * put a worker on the board at the start of the game the player put his workers on the board
      *
      * @param coordinates in which the player wants to put the worker
-     * @throws IllegalCellException,IllegalAddException
-     * illegalCellException is the cell doesn't exist
-     * illegalAddException if the player has already put his two workers
+     * @throws IllegalCellException if the cell doesn't exist
+     * @throws IllegalAddException if the player has already put his two workers
      */
     public void addWorker(Pair coordinates) throws IllegalCellException, IllegalAddException {
 

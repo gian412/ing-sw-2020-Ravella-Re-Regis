@@ -84,7 +84,7 @@ public class CLIGame {
      * @param connection is the connection to eh server
      * @param name is the name of the client
      * @param number is the number of players in the game
-     * @throws IOException
+     * @throws IOException For input issues
      */
     public void startPlaying(Socket connection, String name, int number) throws IOException {
 

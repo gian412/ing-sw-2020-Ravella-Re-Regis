@@ -26,6 +26,8 @@ public class Server implements Runnable{
 
     /**
      * Class constructor whit the initialization of the serverSocket
+     *
+     * @param port The port to use in the ServerSocket
      * @author Gianluca Regis
      */
     public Server(int port) {
@@ -71,7 +73,7 @@ public class Server implements Runnable{
     /**
      * Method that simulates a lobby for users in which there is the waiting/playing lists' manager
      *
-     * @authors Gianluca Regis, Elia Ravella
+     * @author Gianluca Regis, Elia Ravella
      * @param client the ClientHandler class of the user who enter the lobby
      */
     public synchronized void lobby(ClientHandler client) {
@@ -115,7 +117,7 @@ public class Server implements Runnable{
      * returns a string with the name of the players which are waiting the start of the game
      *
      *
-     * @authors Marco Re
+     * @author Marco Re
      *
      * @return a string with the names of the player which are waiting the start of the game
      */
