@@ -76,11 +76,6 @@ public class Client {
         System.out.println("Connection established");
         // Open the input/output streams with the socket
 
-        /*if (guiInterface) {
-            guiView(Socket socket);
-            return;
-        }*/
-
         Scanner socketIn = new Scanner(socket.getInputStream());
         PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
         System.out.println("-------------------------------------------------------------------------------------------\n");
@@ -146,7 +141,7 @@ public class Client {
                         number = stdIn.nextInt(); // Read number of player
                     }
                     catch (InputMismatchException e){
-                        System.out.println("INPUT ERROR");
+                        System.out.println("INPUT ERROR. Insert an Integer");
                         stdIn.nextLine();
                     }
                 }

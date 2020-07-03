@@ -1116,7 +1116,7 @@ public class CLIGame {
             }
 
             do {
-                System.out.print("Choose the direction:" +
+                System.out.print("\nChoose the direction:" +
                         " \n  1 - North-West" +
                         " \n  2 - North" +
                         " \n  3 - North-East" +
@@ -1132,7 +1132,7 @@ public class CLIGame {
                     input = inputStream.nextInt();
                 }
                 catch (InputMismatchException e){
-                    System.out.println("INPUT ERROR. Insert an Integer\n");
+                    System.out.println("INPUT ERROR. Insert an Integer....... Press enter to continue\n");
                     inputStream.nextLine();
                 }
                 inputStream.nextLine();
@@ -1178,12 +1178,12 @@ public class CLIGame {
         int choice = x;
 
         while(!(choice == 1) && !(choice == 2)){
-            System.out.println("INVALID INPUT. Reinsert a valid input: ");
+            System.out.print("INVALID INPUT. Reinsert a valid input: ");
             try {
                 choice = inputStream.nextInt();
             }
             catch (InputMismatchException e){
-                System.out.println("INPUT ERROR. Insert an Integer\n");
+                System.out.print("INPUT ERROR. Insert an Integer...... Press ENTER to continue");
                 inputStream.nextLine();
             }
             inputStream.nextLine();
@@ -1196,12 +1196,12 @@ public class CLIGame {
         int index = x;
 
         while(!(index == 1) && !(index == 0)){
-            System.out.println("INVALID INPUT. Reinsert a valid input: ");
+            System.out.print("INVALID INPUT. Reinsert a valid input: ");
             try {
                 index = inputStream.nextInt();
             }
             catch (InputMismatchException e){
-                System.out.println("INPUT ERROR. Insert an Integer\n");
+                System.out.print("INPUT ERROR. Insert an Integer: ");
                 inputStream.nextLine();
             }
             inputStream.nextLine();
@@ -1229,15 +1229,14 @@ public class CLIGame {
     private int checkCoordinatesWorker(int coordinate) {
 
         while (coordinate < 0 || coordinate > 4) {
-            System.out.print("INVALID INPUT.\nReinsert a valid valor (from 1 to 5):  ");
+            System.out.print("INVALID INPUT.\n\nReinsert a valid valor (from 1 to 5):  ");
             try {
                 coordinate = inputStream.nextInt() - 1;
             }
             catch (InputMismatchException e){
-                System.out.println("INPUT ERROR. Insert an Integer\n");
+                System.out.println("INPUT ERROR. Insert an Integer: ");
                 inputStream.nextLine();
             }
-            inputStream.nextLine();
         }
         return coordinate;
     }
@@ -1373,10 +1372,9 @@ public class CLIGame {
                 column = inputStream.nextInt() - 1;
             }
             catch (InputMismatchException e){
-                System.out.println("INPUT ERROR. Insert an Integer\n");
+                System.out.println("INPUT ERROR. Insert an Integer");
                 inputStream.nextLine();
             }
-            inputStream.nextLine();
 
             column = checkCoordinatesWorker(column);
 
@@ -1385,10 +1383,9 @@ public class CLIGame {
                 row = inputStream.nextInt() - 1;
             }
             catch (InputMismatchException e){
-                System.out.println("INPUT ERROR. Insert an Integer\n");
+                System.out.println("INPUT ERROR. Insert an Integer");
                 inputStream.nextLine();
             }
-            inputStream.nextLine();
 
             row = checkCoordinatesWorker(row);
 
@@ -1396,16 +1393,29 @@ public class CLIGame {
 
         submitCommand(playerName, new Pair(column, row), CommandType.ADD_WORKER, 0, "");
 
+        column = 99;
+        row = 99;
+
         do {
-            System.out.print("Insert the column of your second worker (from 1 to 5): ");
-            column = inputStream.nextInt() - 1;
-            inputStream.nextLine();
+            System.out.print("\nInsert the column of your second worker (from 1 to 5): ");
+            try {
+                column = inputStream.nextInt() - 1;
+            }
+            catch (InputMismatchException e){
+                System.out.println("INPUT ERROR. Insert an Integer");
+                inputStream.nextLine();
+            }
 
             column = checkCoordinatesWorker(column);
 
             System.out.print("Now insert the row of your second worker (from 1 to 5): ");
-            row = inputStream.nextInt() - 1;
-            inputStream.nextLine();
+            try {
+                row = inputStream.nextInt() - 1;
+            }
+            catch (InputMismatchException e){
+                System.out.println("INPUT ERROR. Insert an Integer");
+                inputStream.nextLine();
+            }
 
             row = checkCoordinatesWorker(row);
         } while (checkWorker(column, row));
@@ -1419,16 +1429,15 @@ public class CLIGame {
         int index = 2;
         do {
             //you can only move
-            System.out.println("\nChoose the worker to move (indicate the INDEX 0 or 1): ");
+            System.out.print("Choose the worker to move (indicate the INDEX 0 or 1): ");
 
             try {
                 index = inputStream.nextInt(); // Read number of player
             }
             catch (InputMismatchException e){
-                System.out.println("INPUT ERROR. Insert an integer\n");
+                System.out.println("INPUT ERROR. Insert an integer");
                 inputStream.nextLine();
             }
-            inputStream.nextLine();
 
             index = validationIndex(index);
 
