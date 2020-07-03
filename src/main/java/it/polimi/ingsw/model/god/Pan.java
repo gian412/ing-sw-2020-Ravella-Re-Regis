@@ -5,6 +5,13 @@ import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.GodType;
 
+/**
+ * Class Pan, sub-class of the abstract class {@link it.polimi.ingsw.model.god.God}.
+ * This class have the ability to win the game also if the worker moves down two floors.
+ *
+ * @see it.polimi.ingsw.model.god.God
+ * @author Gianluca Regis
+ */
 public class Pan extends  God {
 
     /**

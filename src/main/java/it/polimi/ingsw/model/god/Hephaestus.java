@@ -5,6 +5,14 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.utils.GodType;
 
+/**
+ * Class Hephaestus, sub-class of the abstract class {@link it.polimi.ingsw.model.god.God}.
+ * This class have the ability to build twice after moving, but only in the same cell,
+ * and the second build can't be a dome.
+ *
+ * @see it.polimi.ingsw.model.god.God
+ * @author Gianluca Regis
+ */
 public class Hephaestus extends God {
 
     protected boolean hasBuildSecond;

@@ -5,6 +5,13 @@ import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.GodType;
 
+/**
+ * Class Artemis, sub-class of the abstract class {@link it.polimi.ingsw.model.god.God}.
+ * This class have the ability to make two moves, instead of one, before building.
+ *
+ * @see it.polimi.ingsw.model.god.God
+ * @author Gianluca Regis
+ */
 public class Artemis extends God {
 
     protected boolean hasMovedSecond;
