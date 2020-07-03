@@ -28,7 +28,7 @@
 
 - **First AF: Advanced Gods**
 
-- **Second AF: Multiple** 
+- **Second AF: Multiple parallel Matches** 
 
 ## Tests coverage
 
