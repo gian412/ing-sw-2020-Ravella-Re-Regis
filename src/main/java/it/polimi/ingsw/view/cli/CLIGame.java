@@ -158,7 +158,7 @@ public class CLIGame {
 
                                             //YES illegal move
                                             if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                                System.out.println("ILLEGAL MOVE.\n" +
+                                                System.out.print("ILLEGAL MOVE.\n" +
                                                         "Make your choice (Your worker is " + index + "):" +
                                                         "\n    1 - Insert a new cell" +
                                                         "\n    2 - Change the worker" +
@@ -196,7 +196,7 @@ public class CLIGame {
                                         //YES illegal build
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             System.out.println("ILLEGAL BUILD.\n"+
-                                                    "\n    Insert a new cell");
+                                                    "   Insert a new cell");
 
                                             //submit the command and put has move to true
                                             build(index);
@@ -231,7 +231,7 @@ public class CLIGame {
 
                                         //YES illegal move
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("ILLEGAL MOVE.\n" +
+                                            System.out.print("ILLEGAL MOVE.\n" +
                                                     "Make your choice (Your worker is " + index + ");" +
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Change the worker" +
@@ -260,7 +260,7 @@ public class CLIGame {
                                     else if (hasMoved && hasBuilt && !hasReBuild) {
                                         //NO illegal build
                                         if (displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("Make your choice: " +
+                                            System.out.print("Make your choice: " +
                                                     "\n    1 - Build again" +
                                                     "\n    2 - Pass your turn" +
                                                     "\nIndicate the number of your choice: ");
@@ -305,7 +305,7 @@ public class CLIGame {
 
                                         //YES illegal move
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("ILLEGAL BUILD.\n" +
+                                            System.out.print("ILLEGAL BUILD.\n" +
                                                     "Make your choice: " +
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Pass your turn" +
@@ -345,7 +345,7 @@ public class CLIGame {
                                     else if (hasMoved && !hasBuilt && !hasReMoved) {
                                         // NO illegal move
                                         if (displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("Make your choice : " +
+                                            System.out.print("Make your choice : " +
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
                                                     "\nIndicate the number of your choice: ");
@@ -369,7 +369,7 @@ public class CLIGame {
 
                                         //YES illegal move
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("ILLEGAL MOVE.\n" +
+                                            System.out.print("ILLEGAL MOVE.\n" +
                                                     "Make your choice (Your worker is " + index + "):" +
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Change the worker" +
@@ -407,7 +407,7 @@ public class CLIGame {
                                         //YES illegal move
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             hasReMoved = false;
-                                            System.out.println("ILLEGAL MOVE\n" +
+                                            System.out.print("ILLEGAL MOVE\n" +
                                                     "Make your choice : " +
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
@@ -445,7 +445,7 @@ public class CLIGame {
                                         //YES illegal move
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             hasBuilt = false;
-                                            System.out.println("ILLEGAL BUILD\n" +
+                                            System.out.print("ILLEGAL BUILD\n" +
                                                     "Make your choice : " +
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
@@ -504,7 +504,7 @@ public class CLIGame {
                                     else if (hasMoved && !hasBuilt) {
                                         // NO illegal move
                                         if (displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("Make your choice : " +
+                                            System.out.print("Make your choice : " +
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Build a DOME" +
                                                     "\nIndicate the number of your choice: ");
@@ -550,7 +550,7 @@ public class CLIGame {
 
                                         //YES illegal move
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("ILLEGAL MOVE.\n" +
+                                            System.out.print("ILLEGAL MOVE.\n" +
                                                     "Make your choice (Your worker is " + index + "): " +
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Change the worker" +
@@ -585,7 +585,7 @@ public class CLIGame {
 
                                         //YES illegal build
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("ILLEGAL BUILD.\n" +
+                                            System.out.print("ILLEGAL BUILD.\n" +
                                                     "Make your choice: " +
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Build a new DOME" +
@@ -630,7 +630,7 @@ public class CLIGame {
                                 case CHARON:
                                     // action when you have never moved before in your turn
                                     if (!hasMoved && !hasBuilt && !hasForced) {
-                                        System.out.println("Make your choice : " +
+                                        System.out.print("Make your choice : " +
                                                 "\n    1 - Start your turn and MOVE" +
                                                 "\n    2 - Start your turn and FORCE" +
                                                 "\nIndicate the number of your choice: ");
@@ -671,7 +671,7 @@ public class CLIGame {
 
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             hasMoved = false;
-                                            System.out.println("ILLEGAL MOVE" +
+                                            System.out.print("ILLEGAL MOVE\n" +
                                                     " Make your choice : " +
                                                     "\n    1 - MOVE" +
                                                     "\n    2 - FORCE" +
@@ -714,7 +714,7 @@ public class CLIGame {
 
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             hasForced = false;
-                                            System.out.println("ILLEGAL FORCE" +
+                                            System.out.print("ILLEGAL FORCE" +
                                                     " Make your choice : " +
                                                     "\n    1 - MOVE" +
                                                     "\n    2 - FORCE" +
@@ -792,7 +792,7 @@ public class CLIGame {
                                         // NO illegal move
                                         if (displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             hasConfirmedMove = true;
-                                            System.out.println("Make your choice : " +
+                                            System.out.print("Make your choice : " +
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
                                                     "\nIndicate the number of your choice: ");
@@ -815,7 +815,7 @@ public class CLIGame {
 
                                         //YES illegal move
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
-                                            System.out.println("ILLEGAL MOVE.\n" +
+                                            System.out.print("ILLEGAL MOVE.\n" +
                                                     "Make your choice (Your worker is " + index + "):" +
                                                     "\n    1 - Insert a new cell" +
                                                     "\n    2 - Change the worker" +
@@ -842,7 +842,7 @@ public class CLIGame {
 
                                     //if you have moved successfully and you have already tried to built
                                     else if (hasMoved && hasConfirmedMove && !hasBuilt) {
-                                        System.out.println("Make your choice : " +
+                                        System.out.print("Make your choice : " +
                                                 "\n    1 - Build a new level" +
                                                 "\n    2 - Move again" +
                                                 "\nIndicate the number of your choice: ");
@@ -876,7 +876,7 @@ public class CLIGame {
                                         //YES illegal move/build
                                         if (!displayer.getLocalProxy().getIllegalMoveString().equals("")) {
                                             hasBuilt = false;
-                                            System.out.println("ILLEGAL MOVE/BUILD.");
+                                            System.out.print("ILLEGAL MOVE/BUILD.");
                                             System.out.print("Make your choice : " +
                                                     "\n    1 - Build a new level" +
                                                     "\n    2 - Move again" +
@@ -1132,10 +1132,9 @@ public class CLIGame {
                     input = inputStream.nextInt();
                 }
                 catch (InputMismatchException e){
-                    System.out.println("INPUT ERROR. Insert an Integer....... Press enter to continue\n");
+                    System.out.println("INPUT ERROR. Insert an Integer\n");
                     inputStream.nextLine();
                 }
-                inputStream.nextLine();
             } while (input <= 0 || input > 9);
 
             if (input == 1) {
@@ -1201,10 +1200,9 @@ public class CLIGame {
                 index = inputStream.nextInt();
             }
             catch (InputMismatchException e){
-                System.out.print("INPUT ERROR. Insert an Integer: ");
+                System.out.println("INPUT ERROR. Insert an Integer");
                 inputStream.nextLine();
             }
-            inputStream.nextLine();
         }
 
         return index;
