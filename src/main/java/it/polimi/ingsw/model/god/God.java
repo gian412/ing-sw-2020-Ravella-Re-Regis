@@ -158,7 +158,12 @@ public abstract class God {
         for (Cell[] row : neighbors) {
             for (Cell cell : row) {
                 if (cell!=null && cell.getWorker()==null && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<=1 && cell.getHeight()!=Height.DOME) {
-                    return true;
+                    if (worker.isCanMoveUp()) {
+                        return true;
+                    }
+
+                    return (worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <=0 );
+
                 }
             }
         }

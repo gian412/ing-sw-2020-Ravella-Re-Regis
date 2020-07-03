@@ -607,7 +607,11 @@ public class BoardPanel extends JPanel{
 	 * @author Elia Ravella
 	 */
 	private void registerMove(CommandType cmd) {
-		turnMoves.add(cmd);
+		if (cmd.equals(CommandType.BUILD_DOME)) {
+			turnMoves.add(CommandType.BUILD);
+		} else {
+			turnMoves.add(cmd);
+		}
 	}
 
 

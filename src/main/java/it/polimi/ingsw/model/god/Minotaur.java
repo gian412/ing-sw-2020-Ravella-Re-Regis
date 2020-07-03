@@ -100,12 +100,20 @@ public class Minotaur extends God {
             for (Cell cell : row) {
                 if (cell!=null && cell!= worker.getCurrentCell() && worker.getCurrentCell().getHeight().getDifference(cell.getHeight())<=1 && cell.getHeight()!=Height.DOME) {
                     if (cell.getWorker()==null) {
-                        return true;
+                        if (worker.isCanMoveUp()) {
+                            return true;
+                        }
+
+                        return (worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <=0 );
                     }
                     Pair direction = worker.getCurrentCell().getDirection( cell );
                     Cell nextCell = checkCell( new Pair( cell.X + direction.x, cell.Y + direction.y ) );
                     if (nextCell != null && nextCell.getWorker() == null && nextCell.getHeight() != Height.DOME) {
-                        return true;
+                        if (worker.isCanMoveUp()) {
+                            return true;
+                        }
+
+                        return (worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) <=0 );
                     }
 
                 }
