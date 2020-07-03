@@ -1,0 +1,158 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Player</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Player (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Player</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    91.7%
+  </span>
+  <span class="absValue">
+    (11/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.5%
+  </span>
+  <span class="absValue">
+    (21/ 22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.model.god.God;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * this class represents the Player in the game.
+<i>7</i>&nbsp; * it manages the workers on the Board and stores all the fundamental information about a player of Santorini
+<i>8</i>&nbsp; *
+<i>9</i>&nbsp; * @author Marco Re
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public class Player implements Comparable&lt;Player&gt; {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    private final String NAME;
+<i>14</i>&nbsp;    private God divinity;
+<i>15</i>&nbsp;    private final int age;
+<i>16</i>&nbsp;    private Player nextPlayer;
+<b class="fc"><i>17</i>&nbsp;    private Worker[] workers = new Worker[2];</b>
+<i>18</i>&nbsp;    private boolean isTurnPlayer;
+<i>19</i>&nbsp;
+<b class="fc"><i>20</i>&nbsp;    public Player(String name, int age){</b>
+<b class="fc"><i>21</i>&nbsp;        this.NAME = name;</b>
+<b class="fc"><i>22</i>&nbsp;        this.age = age;</b>
+<b class="fc"><i>23</i>&nbsp;        this.isTurnPlayer = false;</b>
+<i>24</i>&nbsp;
+<b class="fc"><i>25</i>&nbsp;        workers[0] = new Worker(this.NAME + &quot;0&quot;, this);</b>
+<b class="fc"><i>26</i>&nbsp;        workers[1] = new Worker(this.NAME + &quot;1&quot;, this);</b>
+<b class="fc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    //NAME&#39;s get
+<b class="fc"><i>30</i>&nbsp;    public String getNAME(){ return NAME;}</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    //turnPlayer&#39;s getter and setter
+<i>33</i>&nbsp;    public boolean getTurnPlayer(){
+<b class="fc"><i>34</i>&nbsp;        return isTurnPlayer;</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    public void setTurnPlayer(boolean flag){
+<b class="fc"><i>38</i>&nbsp;        isTurnPlayer = flag;</b>
+<b class="fc"><i>39</i>&nbsp;    }</b>
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    // divinity&#39;s getter and setter
+<i>42</i>&nbsp;    public void setDivinity(God divinity) {
+<b class="fc"><i>43</i>&nbsp;        this.divinity = divinity;</b>
+<b class="fc"><i>44</i>&nbsp;    }</b>
+<i>45</i>&nbsp;
+<b class="fc"><i>46</i>&nbsp;    public God getDivinity(){ return this.divinity;}</b>
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    // age&#39;s getter and setter
+<i>49</i>&nbsp;    public int getAge() {
+<b class="fc"><i>50</i>&nbsp;        return age;</b>
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    // nextPlayer&#39;s getter and setter
+<i>54</i>&nbsp;    public void setNextPlayer(Player nextPlayer) {
+<b class="fc"><i>55</i>&nbsp;        this.nextPlayer = nextPlayer;</b>
+<b class="fc"><i>56</i>&nbsp;    }</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    public Player getNextPlayer() {
+<b class="fc"><i>59</i>&nbsp;        return nextPlayer;</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    public Worker[] getWorkers(){
+<b class="fc"><i>63</i>&nbsp;        return workers;</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    //compare two player and return if is the same
+<i>67</i>&nbsp;    public boolean equals(Player p) {
+<b class="fc"><i>68</i>&nbsp;        return (this.NAME.equals(p.NAME));</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    @Override
+<i>72</i>&nbsp;    public int compareTo(Player other) {
+<b class="nc"><i>73</i>&nbsp;        return this.getAge() - other.getAge();</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 02:45</div>
+</div>
+</body>
+</html>

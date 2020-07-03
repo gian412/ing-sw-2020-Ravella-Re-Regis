@@ -1,0 +1,258 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: God</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model.god</a> ]
+</div>
+
+<h1>Coverage Summary for Class: God (it.polimi.ingsw.model.god)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">God</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (50/ 50)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model.god;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.controller.Command;
+<i>4</i>&nbsp;import it.polimi.ingsw.exceptions.IllegalMoveException;
+<i>5</i>&nbsp;import it.polimi.ingsw.model.*;
+<i>6</i>&nbsp;import it.polimi.ingsw.utils.GodType;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;public abstract class God {
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    protected Board board;
+<i>11</i>&nbsp;    public final GodType NAME;
+<i>12</i>&nbsp;    protected boolean hasMoved;
+<i>13</i>&nbsp;    protected boolean hasBuild;
+<i>14</i>&nbsp;    protected boolean hasWon;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * Class&#39; constructor with the initialization of boar and NAME
+<i>18</i>&nbsp;     *
+<i>19</i>&nbsp;     * @author Gianluca Regis
+<i>20</i>&nbsp;     * @param board indicates the board of the game
+<i>21</i>&nbsp;     * @param name indicates the name of the god
+<i>22</i>&nbsp;     */
+<i>23</i>&nbsp;    // class constructor with the initialization of board
+<b class="fc"><i>24</i>&nbsp;    public God(Board board, GodType name){</b>
+<b class="fc"><i>25</i>&nbsp;        this.board = board;</b>
+<b class="fc"><i>26</i>&nbsp;        this.NAME = name;</b>
+<b class="fc"><i>27</i>&nbsp;        this.hasMoved = false;</b>
+<b class="fc"><i>28</i>&nbsp;        this.hasBuild = false;</b>
+<b class="fc"><i>29</i>&nbsp;        this.hasWon = false;</b>
+<b class="fc"><i>30</i>&nbsp;    }</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * Actions made every turn
+<i>34</i>&nbsp;     *
+<i>35</i>&nbsp;     * This abstract method was made in order to simulate actions made by any divinity in each turn.
+<i>36</i>&nbsp;     * The method will be implemented in every child class
+<i>37</i>&nbsp;     *
+<i>38</i>&nbsp;     * @author Gianluca Regis
+<i>39</i>&nbsp;     * @param worker is the worker who is doing the actions
+<i>40</i>&nbsp;     * @param command is the command which need to be interpreted
+<i>41</i>&nbsp;     * @throws IllegalMoveException in case the action isn&#39;t legal
+<i>42</i>&nbsp;     */
+<i>43</i>&nbsp;    // abstract class&#39; abstract method
+<i>44</i>&nbsp;    public abstract void executeCommand(Worker worker, Command command) throws IllegalMoveException, NullPointerException;
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    /**
+<i>47</i>&nbsp;     * Move the worker
+<i>48</i>&nbsp;     *
+<i>49</i>&nbsp;     * Move the worker using board.moveWorker(Worker worker, Cell cell) and then check if the worker has
+<i>50</i>&nbsp;     * win using board.checkWin(Worker worker) and saving this result in the class&#39; variable hasWond.
+<i>51</i>&nbsp;     * The method throw an IllegalMoveException if the worker can&#39;t move in the given cell
+<i>52</i>&nbsp;     *
+<i>53</i>&nbsp;     * @author Gianluca Regis
+<i>54</i>&nbsp;     * @param worker is the worker you are moving
+<i>55</i>&nbsp;     * @param pair stands for the coordinates in which you&#39;re moving the worker
+<i>56</i>&nbsp;     * @throws IllegalMoveException in case the move isn&#39;t legal
+<i>57</i>&nbsp;     */
+<i>58</i>&nbsp;    protected void move(Worker worker, Pair pair) throws IllegalMoveException{
+<i>59</i>&nbsp;
+<b class="fc"><i>60</i>&nbsp;        Cell cell = board.getCell(pair); // Get the reference to the cell</b>
+<i>61</i>&nbsp;
+<b class="fc"><i>62</i>&nbsp;        if ( cell.getWorker() == null &amp;&amp; cell.getHeight() != Height.DOME &amp;&amp; worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) &lt;= 1 ) { // If the cell isn&#39;t occupied and it isn&#39;t a dome and it isn&#39;t more then 1 floor far</b>
+<b class="fc"><i>63</i>&nbsp;            if( worker.isCanMoveUp() || (!worker.isCanMoveUp() &amp;&amp; worker.getCurrentCell().getHeight().getDifference(cell.getHeight()) &lt;= 0) ){ // If worker can move up or worker can&#39;t move up but the destination isn&#39;t up</b>
+<i>64</i>&nbsp;                try {
+<b class="fc"><i>65</i>&nbsp;                    board.moveWorker(worker, pair); // Call board&#39;s move method</b>
+<b class="fc"><i>66</i>&nbsp;                    hasWon = board.checkWin(worker); // Check if the worker has win and store the result in hasWon</b>
+<b class="fc"><i>67</i>&nbsp;                } catch (IllegalMoveException e){</b>
+<b class="fc"><i>68</i>&nbsp;                    throw new IllegalMoveException(e.getMessage());</b>
+<b class="fc"><i>69</i>&nbsp;                }</b>
+<i>70</i>&nbsp;            } else{
+<b class="fc"><i>71</i>&nbsp;                throw new IllegalMoveException(&quot;CanMoveUp parameter error&quot;);</b>
+<i>72</i>&nbsp;            }
+<i>73</i>&nbsp;        }else{
+<b class="fc"><i>74</i>&nbsp;            throw new IllegalMoveException(&quot;Invalid MOVE parameters&quot;);</b>
+<i>75</i>&nbsp;        }
+<i>76</i>&nbsp;
+<b class="fc"><i>77</i>&nbsp;    }</b>
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    /**
+<i>80</i>&nbsp;     * Build a new piece in the cell passed as parameter using board-build(Cell cell, boolean isDome).
+<i>81</i>&nbsp;     * The method throw an IllegalMoveException if the piece can&#39;t be built in the given cell
+<i>82</i>&nbsp;     *
+<i>83</i>&nbsp;     * @author Gianluca Regis
+<i>84</i>&nbsp;     * @param pair stands for the coordinates in which you&#39;re building the new piece
+<i>85</i>&nbsp;     * @param isDome is true if Atlas build a dome in any position
+<i>86</i>&nbsp;     * @throws IllegalMoveException in case the move isn&#39;t legal
+<i>87</i>&nbsp;     */
+<i>88</i>&nbsp;    protected void build(Cell originCell, Pair pair, boolean isDome) throws IllegalMoveException {
+<i>89</i>&nbsp;
+<b class="fc"><i>90</i>&nbsp;        Cell buildCell = board.getCell(pair); // Get the reference to the cell</b>
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;        // build
+<b class="fc"><i>93</i>&nbsp;        if( buildCell.getWorker() == null &amp;&amp; buildCell.getHeight() != Height.DOME &amp;&amp; isDome ){ // If the cell isn&#39;t occupied and it isn&#39;t a dome and the piece to build is a dome</b>
+<i>94</i>&nbsp;            try {
+<b class="fc"><i>95</i>&nbsp;                board.build(originCell, pair, true ); // Call board&#39;s build method</b>
+<b class="fc"><i>96</i>&nbsp;            } catch (IllegalMoveException e){</b>
+<b class="fc"><i>97</i>&nbsp;                throw new IllegalMoveException(e.getMessage());</b>
+<b class="fc"><i>98</i>&nbsp;            }</b>
+<b class="fc"><i>99</i>&nbsp;        }else if( buildCell.getWorker() == null &amp;&amp; buildCell.getHeight() != Height.DOME &amp;&amp; !isDome){ // If the cell isn&#39;t occupied and it isn&#39;t a dome and the piece to build isn&#39;t a dome</b>
+<i>100</i>&nbsp;            try{
+<b class="fc"><i>101</i>&nbsp;                board.build(originCell, pair, false ); // Call board&#39;s build method</b>
+<b class="fc"><i>102</i>&nbsp;            } catch (IllegalMoveException e) {</b>
+<b class="fc"><i>103</i>&nbsp;                throw new IllegalMoveException(e.getMessage());</b>
+<b class="fc"><i>104</i>&nbsp;            }</b>
+<i>105</i>&nbsp;        } else{
+<b class="fc"><i>106</i>&nbsp;            throw new IllegalMoveException(&quot;Invalid BUILD parameters&quot;);</b>
+<i>107</i>&nbsp;        }
+<b class="fc"><i>108</i>&nbsp;    }</b>
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    /**
+<i>111</i>&nbsp;     * Reset local variable for class God
+<i>112</i>&nbsp;     *
+<i>113</i>&nbsp;     * @author Gianluca Regis
+<i>114</i>&nbsp;     */
+<i>115</i>&nbsp;    protected void resetLocalVariables(){
+<b class="fc"><i>116</i>&nbsp;        this.hasMoved = false;</b>
+<b class="fc"><i>117</i>&nbsp;        this.hasBuild = false;</b>
+<b class="fc"><i>118</i>&nbsp;    }</b>
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    /**
+<i>121</i>&nbsp;     * Check if the given cell is a valid cell or if it is out of bound
+<i>122</i>&nbsp;     *
+<i>123</i>&nbsp;     * @author Gianluca Regis
+<i>124</i>&nbsp;     * @param coordinates The coordinates of the cell
+<i>125</i>&nbsp;     * @return The cell if the coordinates are valid, null otherwise
+<i>126</i>&nbsp;     */
+<i>127</i>&nbsp;    protected Cell checkCell(Pair coordinates) {
+<i>128</i>&nbsp;        try {
+<b class="fc"><i>129</i>&nbsp;            Cell cell = board.getCell(coordinates); // Get the reference to the cell</b>
+<b class="fc"><i>130</i>&nbsp;            return cell;</b>
+<b class="fc"><i>131</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="fc"><i>132</i>&nbsp;            return null;</b>
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;        }
+<i>135</i>&nbsp;    }
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;    /**
+<i>138</i>&nbsp;     * Check if the given worker can move
+<i>139</i>&nbsp;     *
+<i>140</i>&nbsp;     * @author Gianluca Regis
+<i>141</i>&nbsp;     * @param worker The worker to check
+<i>142</i>&nbsp;     * @return true if it can move, false otherwise
+<i>143</i>&nbsp;     */
+<i>144</i>&nbsp;    protected boolean canMove(Worker worker) {
+<b class="fc"><i>145</i>&nbsp;        Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());</b>
+<b class="fc"><i>146</i>&nbsp;        for (Cell[] row : neighbors) {</b>
+<b class="fc"><i>147</i>&nbsp;            for (Cell cell : row) {</b>
+<b class="fc"><i>148</i>&nbsp;                if (cell!=null &amp;&amp; cell.getWorker()==null &amp;&amp; worker.getCurrentCell().getHeight().getDifference(cell.getHeight())&lt;=1 &amp;&amp; cell.getHeight()!=Height.DOME) {</b>
+<b class="fc"><i>149</i>&nbsp;                    return true;</b>
+<i>150</i>&nbsp;                }
+<i>151</i>&nbsp;            }
+<i>152</i>&nbsp;        }
+<b class="fc"><i>153</i>&nbsp;        return false;</b>
+<i>154</i>&nbsp;    }
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;    /**
+<i>157</i>&nbsp;     * Check if the given worker can build
+<i>158</i>&nbsp;     *
+<i>159</i>&nbsp;     * @author Gianluca Regis
+<i>160</i>&nbsp;     * @param worker The worker to check
+<i>161</i>&nbsp;     * @return true if it can move, false otherwise
+<i>162</i>&nbsp;     */
+<i>163</i>&nbsp;    protected boolean canBuild(Worker worker) {
+<b class="fc"><i>164</i>&nbsp;        Cell[][] neighbors = board.getNeighbors(worker.getCurrentCell());</b>
+<b class="fc"><i>165</i>&nbsp;        for (Cell[] row : neighbors) {</b>
+<b class="fc"><i>166</i>&nbsp;            for (Cell cell : row) {</b>
+<b class="fc"><i>167</i>&nbsp;                if (cell!=null &amp;&amp; cell.getWorker()==null &amp;&amp; cell.getHeight()!=Height.DOME) {</b>
+<b class="fc"><i>168</i>&nbsp;                    return true;</b>
+<i>169</i>&nbsp;                }
+<i>170</i>&nbsp;            }
+<i>171</i>&nbsp;        }
+<b class="fc"><i>172</i>&nbsp;        return false;</b>
+<i>173</i>&nbsp;    }
+<i>174</i>&nbsp;
+<i>175</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 02:46</div>
+</div>
+</body>
+</html>

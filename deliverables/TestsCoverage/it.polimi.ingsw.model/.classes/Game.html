@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Game</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Game (it.polimi.ingsw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Game</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    30%
+  </span>
+  <span class="absValue">
+    (3/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    36.8%
+  </span>
+  <span class="absValue">
+    (14/ 38)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.exceptions.NoSuchPlayerException;
+<i>4</i>&nbsp;import it.polimi.ingsw.model.god.God;
+<i>5</i>&nbsp;import it.polimi.ingsw.utils.GameState;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.*;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * this class encapsulates the whole match. it reunites the players with the Board and takes care
+<i>11</i>&nbsp; * of the correct management of the game&#39;s startup and closing
+<i>12</i>&nbsp; *
+<i>13</i>&nbsp; * @see Board
+<i>14</i>&nbsp; * @see Player
+<i>15</i>&nbsp; * @auhor Marco Re
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public class Game {
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    private List&lt;Player&gt; playerList;
+<i>20</i>&nbsp;    private Board board;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * class&#39; constructor
+<i>24</i>&nbsp;     *
+<i>25</i>&nbsp;     * create a new board
+<i>26</i>&nbsp;     */
+<b class="fc"><i>27</i>&nbsp;    public Game(){</b>
+<b class="fc"><i>28</i>&nbsp;        playerList = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>29</i>&nbsp;        board = new Board();</b>
+<b class="fc"><i>30</i>&nbsp;    }</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * add a new player to the game
+<i>34</i>&nbsp;     *
+<i>35</i>&nbsp;     * @param playerName the player to add
+<i>36</i>&nbsp;     * @param age the age of the player
+<i>37</i>&nbsp;     * @return true if everything is good, false if there is an error
+<i>38</i>&nbsp;     */
+<i>39</i>&nbsp;    // playerList&#39;s adder
+<i>40</i>&nbsp;    public boolean addPlayer(String playerName, int age){
+<i>41</i>&nbsp;        try {
+<b class="fc"><i>42</i>&nbsp;            playerList.add(new Player(playerName, age));</b>
+<b class="fc"><i>43</i>&nbsp;            return true;</b>
+<b class="nc"><i>44</i>&nbsp;        }catch (Exception e){</b>
+<b class="nc"><i>45</i>&nbsp;            return false;</b>
+<i>46</i>&nbsp;        }
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    public void setPlayerDivinity(String playerName, God divinity) throws NoSuchPlayerException {
+<b class="nc"><i>50</i>&nbsp;        for(Player p : playerList)</b>
+<b class="nc"><i>51</i>&nbsp;            if(p.getNAME().equals(playerName)){</b>
+<b class="nc"><i>52</i>&nbsp;                p.setDivinity(divinity);</b>
+<b class="nc"><i>53</i>&nbsp;                return;</b>
+<i>54</i>&nbsp;            }
+<b class="nc"><i>55</i>&nbsp;        throw new NoSuchPlayerException();</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    /**
+<i>59</i>&nbsp;     * triggers the &quot;end-game&quot; procedure to inform the clients that the match is ended
+<i>60</i>&nbsp;     * @authors Ravella Elia
+<i>61</i>&nbsp;     */
+<i>62</i>&nbsp;    public void endGame(){
+<b class="nc"><i>63</i>&nbsp;        board.endGame();</b>
+<b class="nc"><i>64</i>&nbsp;    }</b>
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    /**
+<i>67</i>&nbsp;     * this methods starts the game
+<i>68</i>&nbsp;     *
+<i>69</i>&nbsp;     * in detail: sorts the player&#39;s list by the age (the youngest is the &quot;Challenger&quot;, the first player)
+<i>70</i>&nbsp;     * and concatenates all the other players in a circular dataset. This method also sets the status of the board to
+<i>71</i>&nbsp;     * SELECTING_GOD that is the first part of the game. as last thing, it sets the first player of the list as
+<i>72</i>&nbsp;     * the turn player
+<i>73</i>&nbsp;     *
+<i>74</i>&nbsp;     * @see GameState
+<i>75</i>&nbsp;     * @see BoardProxy
+<i>76</i>&nbsp;     * @author Ravella Elia, Marco Re
+<i>77</i>&nbsp;     */
+<i>78</i>&nbsp;    public void startGame(){
+<b class="nc"><i>79</i>&nbsp;        Collections.sort(playerList);</b>
+<i>80</i>&nbsp;
+<b class="nc"><i>81</i>&nbsp;        for(int i = 0; i &lt; playerList.size(); i++){</b>
+<b class="nc"><i>82</i>&nbsp;            if(i != playerList.size() - 1) playerList.get(i).setNextPlayer(playerList.get(i + 1));</b>
+<b class="nc"><i>83</i>&nbsp;            else playerList.get(i).setNextPlayer(playerList.get(0));</b>
+<i>84</i>&nbsp;        }
+<i>85</i>&nbsp;
+<b class="nc"><i>86</i>&nbsp;        board.getProxy().setStatus(GameState.SELECTING_GOD);</b>
+<b class="nc"><i>87</i>&nbsp;        board.setTurnPlayer(playerList.get(0));</b>
+<b class="nc"><i>88</i>&nbsp;    }</b>
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    public Board getBoard() {
+<b class="nc"><i>91</i>&nbsp;        return board;</b>
+<i>92</i>&nbsp;    }
+<i>93</i>&nbsp;
+<b class="nc"><i>94</i>&nbsp;    public Player getTurnPlayer(){ return board.getTurnPlayer(); }</b>
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    public int getNumberOfPlayers(){
+<b class="nc"><i>97</i>&nbsp;        return playerList.size();</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    public String getPlayers(){
+<b class="fc"><i>101</i>&nbsp;        StringBuilder players = new StringBuilder();</b>
+<i>102</i>&nbsp;
+<b class="fc"><i>103</i>&nbsp;        for(Player p : playerList){</b>
+<b class="fc"><i>104</i>&nbsp;            players.append(p.getNAME());</b>
+<b class="fc"><i>105</i>&nbsp;            players.append(&quot; &quot;);</b>
+<b class="fc"><i>106</i>&nbsp;            players.append(p.getAge());</b>
+<b class="fc"><i>107</i>&nbsp;            players.append(&quot;\n&quot;);</b>
+<b class="fc"><i>108</i>&nbsp;        }</b>
+<i>109</i>&nbsp;
+<b class="fc"><i>110</i>&nbsp;        return players.toString();</b>
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;    public Map&lt;String, String&gt; getGodsMap() {
+<b class="nc"><i>114</i>&nbsp;        Map&lt;String, String&gt; gods = new HashMap&lt;&gt;();</b>
+<i>115</i>&nbsp;
+<b class="nc"><i>116</i>&nbsp;        for (Player p : playerList) {</b>
+<b class="nc"><i>117</i>&nbsp;            gods.put(p.getNAME(), p.getDivinity().NAME.getCapitalizedName());</b>
+<b class="nc"><i>118</i>&nbsp;        }</b>
+<i>119</i>&nbsp;
+<b class="nc"><i>120</i>&nbsp;        return  gods;</b>
+<i>121</i>&nbsp;    }
+<i>122</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 02:45</div>
+</div>
+</body>
+</html>
