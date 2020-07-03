@@ -304,7 +304,6 @@ public class BoardPanel extends JPanel{
 									JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Your turn is ended!");
 									remoteChangeTurn();
 								} else {
-									JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Go on pal!");
 									directionsPanel.setWorkerCell(message.getWorkers().get(StaticFrame.getPlayerName() + directionsPanel.getWorkerIndex()));
 								}
 							} else {
@@ -432,7 +431,6 @@ public class BoardPanel extends JPanel{
 
 						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
 							if(!actualBoard.getWorkers().containsValue(cell) && !workersAdded.contains(cell)){
-								// TODO remove this dialog
 								JOptionPane.showMessageDialog(StaticFrame.mainFrame, "adding worker at " + cell.x + " " + cell.y);
 
 								PlayerCommand toSend = new PlayerCommand(

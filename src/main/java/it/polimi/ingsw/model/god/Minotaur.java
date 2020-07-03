@@ -6,6 +6,13 @@ import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.GodType;
 
+/**
+ * Class Minotaur, sub-class of the abstract class {@link it.polimi.ingsw.model.god.God}.
+ * This class have the ability to make a swap whit another worker while moving.
+ *
+ * @see it.polimi.ingsw.model.god.God
+ * @author Gianluca Regis
+ */
 public class Minotaur extends God {
 
     /**

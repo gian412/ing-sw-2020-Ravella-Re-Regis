@@ -5,6 +5,13 @@ import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.GodType;
 
+/**
+ * Class Prometheus, sub-class of the abstract class {@link it.polimi.ingsw.model.god.God}.
+ * This class have the ability to build before moving if he dont want to move upward.
+ *
+ * @see it.polimi.ingsw.model.god.God
+ * @author Gianluca Regis
+ */
 public class Prometheus extends God {
     protected boolean hasBuildBefore;
 

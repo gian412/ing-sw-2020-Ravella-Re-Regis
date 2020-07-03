@@ -5,6 +5,13 @@ import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.GodType;
 
+/**
+ * Class Chronus, sub-class of the abstract class {@link it.polimi.ingsw.model.god.God}.
+ * This class have the ability to win the game also if there are five complete tower on the board.
+ *
+ * @see it.polimi.ingsw.model.god.God
+ * @author Gianluca Regis
+ */
 public class Chronus extends God {
 
     /**

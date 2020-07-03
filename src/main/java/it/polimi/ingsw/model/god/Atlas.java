@@ -5,6 +5,14 @@ import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.GodType;
 
+/**
+ * Class Atlas, sub-class of the abstract class {@link it.polimi.ingsw.model.god.God}.
+ * This class have the ability to build a dome at every {@link it.polimi.ingsw.model.Height}.
+ *
+ * @see it.polimi.ingsw.model.god.God
+ * @see it.polimi.ingsw.model.Height
+ * @author Gianluca Regis
+ */
 public class Atlas extends God {
 
     /**

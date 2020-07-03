@@ -9,7 +9,13 @@ import it.polimi.ingsw.model.Pair;
 import it.polimi.ingsw.model.Height;
 import it.polimi.ingsw.utils.GodType;
 
-
+/**
+ * Class Charon, sub-class of the abstract class {@link it.polimi.ingsw.model.god.God}.
+ * This class have the ability to force a worker before moving.
+ *
+ * @see it.polimi.ingsw.model.god.God
+ * @author Gianluca Regis
+ */
 public class Charon extends God {
 
     protected boolean hasForced;

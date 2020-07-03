@@ -5,6 +5,13 @@ import it.polimi.ingsw.exceptions.IllegalMoveException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.GodType;
 
+/**
+ * Class Athena, sub-class of the abstract class {@link it.polimi.ingsw.model.god.God}.
+ * This class have the ability to change a variable that make other worker unable to move upward.
+ *
+ * @see it.polimi.ingsw.model.god.God
+ * @author Gianluca Regis
+ */
 public class Athena extends God{
 
     /**
