@@ -26,11 +26,11 @@
 
 ### Model Tests Coverage
 
-![Model Coverage](readmeResources/Model%20Coverage.png)
+![Model Coverage](readmeResources/ModelCoverage.png)
 
 ### Complete Tests Coverage
 
-![Complete Coverage](readmeResources/Complete%20Coverage.png)
+![Complete Coverage](readmeResources/CompleteCoverage.png)
 
 As requested, we deeply tested our Model with particular attention to God's package. Where it was necessary and in edge cases we also tested the other packages, focusing on the network interaction.
 
