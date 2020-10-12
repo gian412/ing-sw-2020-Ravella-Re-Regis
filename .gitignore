@@ -31,3 +31,8 @@ hs_err_pid*
 .idea/
 out/
 /src/main/java/META-INF/
+
+# VScode files
+.classpath
+.project
+.settings/
