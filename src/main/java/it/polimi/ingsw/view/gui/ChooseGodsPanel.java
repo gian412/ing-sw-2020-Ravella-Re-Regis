@@ -18,12 +18,12 @@ import java.net.Socket;
 
 /**
  * The panel in charge of the "choosing god" phase of the game
+ * 
  * @author Elia Ravella, Gianluca Regis
  */
 public class ChooseGodsPanel extends JPanel {
+    private static final long serialVersionUID = 1;
 
-    private static final int IMAGE_BASE_WIDTH = 84;
-    private static final int IMAGE_BASE_HEIGHT = 141;
     private final int playerNumber;
     private String chooseGod = "";
 
@@ -33,8 +33,8 @@ public class ChooseGodsPanel extends JPanel {
     private ObjectOutputStream outputStream;
 
     /**
-     * Inner class to observe the BoardListener object
-     * and display the elements that arrive from the socket
+     * Inner class to observe the BoardListener object and display the elements that
+     * arrive from the socket
      *
      * @author Elia Ravella, Gianluca Regis
      * @see BoardListener
@@ -48,19 +48,22 @@ public class ChooseGodsPanel extends JPanel {
         }
 
         /**
-         * classic update function in the Observer pattern: it receives a BoardProxy object
-         * and interprets the content
+         * classic update function in the Observer pattern: it receives a BoardProxy
+         * object and interprets the content
+         * 
          * @param message object of the update
          * @author Elia Ravella, Gianluca Regis
          */
         @Override
         public void update(BoardProxy message) {
             switch (message.getStatus()) {
-                // if the BoardProxy signals a "selecting_god status", a grid with all available gods must be shown
+                // if the BoardProxy signals a "selecting_god status", a grid with all available
+                // gods must be shown
                 case SELECTING_GOD:
                     clearView();
-                    if(message.getTurnPlayer().equals(StaticFrame.getPlayerName())){
-                        if(message.getChoosingGods().equals("")){ // this happens when the player is in charge of choosing ALL the gods
+                    if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+                        if (message.getChoosingGods().equals("")) { // this happens when the player is in charge of
+                                                                    // choosing ALL the gods
                             showGodButtons();
                         } else {
                             showGodButtons(message.getChoosingGods());
@@ -78,16 +81,12 @@ public class ChooseGodsPanel extends JPanel {
                 // in case of disconnection, this client should return to login page
                 case TERMINATOR:
                     // show error message
-                    JOptionPane.showMessageDialog(
-                            StaticFrame.mainFrame,
-                            message.getWinner(),
-                            "Unexpected disconnection",
-                            JOptionPane.ERROR_MESSAGE
-                    );
+                    JOptionPane.showMessageDialog(StaticFrame.mainFrame, message.getWinner(),
+                            "Unexpected disconnection", JOptionPane.ERROR_MESSAGE);
 
                     listener.removeObserver(reader);
 
-                    //load login panel
+                    // load login panel
                     LoginPanel loginPanel = new LoginPanel();
 
                     try {
@@ -101,13 +100,16 @@ public class ChooseGodsPanel extends JPanel {
                     StaticFrame.addPanel(loginPanel);
                     StaticFrame.refresh();
                     break;
+                default:
+                    break;
             }
         }
     }
 
     /**
      * class constructor
-     * @param connSocket the socket that connects to the game
+     * 
+     * @param connSocket   the socket that connects to the game
      * @param playerNumber the number of players in the match
      * @author Elia Ravella, Gianluca Regis
      */
@@ -145,8 +147,8 @@ public class ChooseGodsPanel extends JPanel {
      *
      * @author Elia Ravella, Gianluca Regis
      */
-    public void showGodButtons(){
-        for(int i = 0; i < 14; i++){
+    public void showGodButtons() {
+        for (int i = 0; i < 14; i++) {
 
             String actualGod = GodType.values()[i].getCapitalizedName();
 
@@ -173,19 +175,21 @@ public class ChooseGodsPanel extends JPanel {
                 }
             });
 
-            this.add(imageButton, setConstraint(i%7, i/7));
+            this.add(imageButton, setConstraint(i % 7, i / 7));
         }
 
         JButton submit = new JButton("Submit your choice");
         submit.addActionListener(e -> {
 
-            if (chooseGod != null && !chooseGod.isEmpty() && chooseGod.split(" ").length==playerNumber ) {
+            if (chooseGod != null && !chooseGod.isEmpty() && chooseGod.split(" ").length == playerNumber) {
                 try {
-                    PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.SET_GODS), 0);
+                    PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(),
+                            new Command(new Pair(0, 0), CommandType.SET_GODS), 0);
                     commandToSend.setMessage(chooseGod);
                     outputStream.writeObject(commandToSend);
                     outputStream.flush();
-                    commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
+                    commandToSend = new PlayerCommand(StaticFrame.getPlayerName(),
+                            new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
                     outputStream.writeObject(commandToSend);
                     outputStream.flush();
                     chooseGod = ""; // Clear the list of chosen Gods
@@ -196,30 +200,31 @@ public class ChooseGodsPanel extends JPanel {
                 JOptionPane.showMessageDialog(StaticFrame.mainFrame, "You must choose " + playerNumber + " Gods");
             }
         });
-        this.add(submit, setConstraint(3,3 ));
-
+        this.add(submit, setConstraint(3, 3));
 
     }
 
     /**
      * overload of the previous method, just with a reduced set of gods
+     * 
      * @param gods the gods to be shown
      * @author Elia Ravella, Gianluca Regis
      */
     public void showGodButtons(String gods) {
-        for(int i = 0; i < gods.split(" ").length; i++){
+        for (int i = 0; i < gods.split(" ").length; i++) {
 
             String actualGod = gods.split(" ")[i];
             actualGod = actualGod.trim();
 
-            if(actualGod.equals("")) continue; // in case the string is poorly formatted
+            if (actualGod.equals(""))
+                continue; // in case the string is poorly formatted
 
             Image image;
             JButton imageButton;
             try {
                 image = GetImages.getGodImage(actualGod);
-                 imageButton = new JButton(new ImageIcon(image));
-            }catch(Exception e){
+                imageButton = new JButton(new ImageIcon(image));
+            } catch (Exception e) {
                 imageButton = new JButton(actualGod);
             }
 
@@ -227,22 +232,24 @@ public class ChooseGodsPanel extends JPanel {
 
             imageButton.addActionListener(e -> {
                 if (chooseGod.equals("")) {
-                    ((JButton)e.getSource()).setEnabled(false); // ... get God's name from the button...
+                    ((JButton) e.getSource()).setEnabled(false); // ... get God's name from the button...
                     chooseGod = ((JButton) e.getSource()).getName(); // ... and save it
                 }
             });
-            this.add(imageButton, setConstraint(i%gods.split(" ").length, 0));
+            this.add(imageButton, setConstraint(i % gods.split(" ").length, 0));
         }
 
         JButton submit = new JButton("Submit your choice");
         submit.addActionListener(e -> {
-            if (chooseGod!=null && !chooseGod.isEmpty()) {
+            if (chooseGod != null && !chooseGod.isEmpty()) {
                 try {
-                    PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHOOSE_GOD), 0);
+                    PlayerCommand commandToSend = new PlayerCommand(StaticFrame.getPlayerName(),
+                            new Command(new Pair(0, 0), CommandType.CHOOSE_GOD), 0);
                     commandToSend.setMessage(chooseGod);
                     outputStream.writeObject(commandToSend);
                     outputStream.flush();
-                    commandToSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
+                    commandToSend = new PlayerCommand(StaticFrame.getPlayerName(),
+                            new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
                     outputStream.writeObject(commandToSend);
                     outputStream.flush();
 
@@ -255,20 +262,22 @@ public class ChooseGodsPanel extends JPanel {
             }
 
         });
-        this.add(submit, setConstraint(gods.split(" ").length/2,1 ));
+        this.add(submit, setConstraint(gods.split(" ").length / 2, 1));
     }
 
     /**
-     * sets up a basic "GridBagConstraint" object. used during the aligning of the objects in the grid
+     * sets up a basic "GridBagConstraint" object. used during the aligning of the
+     * objects in the grid
+     * 
      * @param gridX column
      * @param gridY row
      * @return a GridBagConstraints objects
      * @author Elia Ravella, Gianluca Regis
      */
-    private  GridBagConstraints setConstraint(int gridX, int gridY){
+    private GridBagConstraints setConstraint(int gridX, int gridY) {
         GridBagConstraints cons = new GridBagConstraints();
         cons.gridx = gridX;
-        cons.gridy =  gridY;
+        cons.gridy = gridY;
         cons.weightx = 0.142;
         cons.weighty = 0.5;
 
@@ -277,22 +286,24 @@ public class ChooseGodsPanel extends JPanel {
 
     /**
      * loads and shows the game board
+     * 
      * @author Elia Ravella, Gianluca Regis
      */
-    private void showBoard(BoardProxy firstBoard){
+    private void showBoard(BoardProxy firstBoard) {
 
         listener.removeObserver(reader);
 
-        //load next panel
+        // load next panel
         BoardPanel boardPanel = new BoardPanel(this.socket, firstBoard, listener, outputStream);
 
         StaticFrame.removePanel(this);
         StaticFrame.addPanel(boardPanel);
         StaticFrame.refresh();
     }
-    
+
     /**
      * removes all component from this panel
+     * 
      * @author Elia Ravella
      */
     private void clearView() {
@@ -305,7 +316,7 @@ public class ChooseGodsPanel extends JPanel {
      *
      * @author Elia Ravella
      */
-    private void refreshView(){
+    private void refreshView() {
         this.invalidate();
         this.validate();
         this.repaint();

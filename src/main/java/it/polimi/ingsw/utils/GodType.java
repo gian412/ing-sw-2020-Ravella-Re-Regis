@@ -1,14 +1,14 @@
 package it.polimi.ingsw.utils;
 
-import it.polimi.ingsw.view.cli.Ansi;
-
 /**
- * this enum eases the client-side management of the strings that involve god's name
+ * this enum eases the client-side management of the strings that involve god's
+ * name
  */
 public enum GodType {
 
-    APOLLO("APOLLO"), ARTEMIS("ARTEMIS"), ATHENA("ATHENA"), ATLAS("ATLAS"), CHARON("CHARON"), CHRONUS("CHRONUS"), DEMETER("DEMETER"),
-    HEPHAESTUS("HEPHAESTUS"), HESTIA("HESTIA"), MINOTAUR("MINOTAUR"), PAN("PAN"), PROMETHEUS("PROMETHEUS"), TRITON("TRITON"), ZEUS("ZEUS");
+    APOLLO("APOLLO"), ARTEMIS("ARTEMIS"), ATHENA("ATHENA"), ATLAS("ATLAS"), CHARON("CHARON"), CHRONUS("CHRONUS"),
+    DEMETER("DEMETER"), HEPHAESTUS("HEPHAESTUS"), HESTIA("HESTIA"), MINOTAUR("MINOTAUR"), PAN("PAN"),
+    PROMETHEUS("PROMETHEUS"), TRITON("TRITON"), ZEUS("ZEUS");
 
     private final String name;
 
@@ -59,7 +59,7 @@ public enum GodType {
         return name;
     }
 
-    public String getCapitalizedName(){
+    public String getCapitalizedName() {
         return name.substring(0, 1) + name.substring(1).toLowerCase();
     }
 }

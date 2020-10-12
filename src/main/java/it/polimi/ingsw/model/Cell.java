@@ -36,7 +36,8 @@ public class Cell {
      * worker's getter
      *
      * @author Marco Re
-     * @return the worker which is present in the cell, null if there isn't any worker
+     * @return the worker which is present in the cell, null if there isn't any
+     *         worker
      */
     // worker's getter
     public Worker getWorker() {
@@ -44,13 +45,13 @@ public class Cell {
     }
 
     /**
-     *worker's setter
+     * worker's setter
      *
      * @author Marco Re
      * @param worker the worker which the player wants to set in the cell
      */
     // worker's setter
-    public void setWorker(Worker worker){
+    public void setWorker(Worker worker) {
         this.worker = worker;
     }
 
@@ -68,13 +69,14 @@ public class Cell {
     /**
      * height's setter
      *
-     * it is used when the player wants to build a dome when the actual height isn't a THIRD FLOOR
+     * it is used when the player wants to build a dome when the actual height isn't
+     * a THIRD FLOOR
      *
      * @author Marco Re
      * @param height is the new height of the cell
      */
     // height's setter
-    public void setHeight(Height height){
+    public void setHeight(Height height) {
         this.height = height;
     }
 
@@ -86,8 +88,8 @@ public class Cell {
      * @author Marco Re
      */
     // height's adder
-    public void buildFloor(){
-        switch(this.height){
+    public void buildFloor() {
+        switch (this.height) {
             case GROUND:
                 this.height = Height.FIRST_FLOOR;
                 break;
@@ -100,6 +102,9 @@ public class Cell {
             case THIRD_FLOOR:
                 this.height = Height.DOME;
                 isCompleted = true;
+                break;
+            case DOME:
+                // TODO: throw an error
                 break;
         }
     }
@@ -114,7 +119,7 @@ public class Cell {
      * @return an array of two integer with the two coordinates x and y
      */
     // method that return the direction of the movement of the worker
-    public Pair getDirection(Cell secondCell){
+    public Pair getDirection(Cell secondCell) {
 
         int[] direction = new int[2];
 
@@ -127,19 +132,19 @@ public class Cell {
     }
 
     /**
-     *check if the cell is adjacent to an other
+     * check if the cell is adjacent to an other
      *
      * @author Marco Re
      * @param cell the other cell
      * @return true if the cell is adjacent
      */
-    public boolean cellDistance(Pair cell){
+    public boolean cellDistance(Pair cell) {
         int distanceX, distanceY;
 
         distanceX = this.X - cell.x;
         distanceY = this.Y - cell.y;
 
-        return ( (distanceX>=-1 && distanceX<=1) && (distanceY>=-1 && distanceY<=1) );
+        return ((distanceX >= -1 && distanceX <= 1) && (distanceY >= -1 && distanceY <= 1));
     }
 
     /**
@@ -148,7 +153,7 @@ public class Cell {
      * @author Gianluca Regis
      * @return true if the cell is a perimeter cell, otherwise return false
      */
-    public boolean isPerimeter(){
+    public boolean isPerimeter() {
         return this.X == 0 || this.X == 4 || this.Y == 0 || this.Y == 4;
     }
 
@@ -163,9 +168,9 @@ public class Cell {
      */
     // equals implementation for cell
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
 
-        if( !( o instanceof Cell))
+        if (!(o instanceof Cell))
             return false;
 
         Cell other = (Cell) o;
@@ -196,7 +201,7 @@ public class Cell {
         return myCell.toString();
     }
 
-    public void setIsCompleted(){
+    public void setIsCompleted() {
         this.isCompleted = true;
     }
 

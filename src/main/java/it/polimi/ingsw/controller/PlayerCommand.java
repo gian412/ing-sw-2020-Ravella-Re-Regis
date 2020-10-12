@@ -1,18 +1,17 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Player;
-
 import java.io.Serializable;
 
 /**
- * encapsulates in a single data structure the command and the player issuing it.
- * this class is the only type of object sent by client (with the exceptions of String type objects)
- * during all the interaction between client and server
+ * encapsulates in a single data structure the command and the player issuing
+ * it. this class is the only type of object sent by client (with the exceptions
+ * of String type objects) during all the interaction between client and server
  *
  * @see Command
  * @author Elia Ravella
  */
 public class PlayerCommand implements Serializable {
+    private static final long serialVersionUID = 1;
     String playerName;
     Command cmd;
     String message;
@@ -20,23 +19,26 @@ public class PlayerCommand implements Serializable {
 
     /**
      * class constructor
-     * @param p the Name of the player
-     * @param c the Command object that represents the action
-     * @param workerIndex the identifier for the worker that the user is willing to move/build with
+     * 
+     * @param p           the Name of the player
+     * @param c           the Command object that represents the action
+     * @param workerIndex the identifier for the worker that the user is willing to
+     *                    move/build with
      */
-    public PlayerCommand(String p, Command c, int workerIndex){
+    public PlayerCommand(String p, Command c, int workerIndex) {
         playerName = p;
         cmd = c;
         this.workerIndex = workerIndex;
     }
 
-    public String getPlayer(){
+    public String getPlayer() {
         return playerName;
     }
 
-    public  Command getCommand(){
+    public Command getCommand() {
         return cmd;
     }
+
     public int getWorkerIndex() {
         return workerIndex;
     }

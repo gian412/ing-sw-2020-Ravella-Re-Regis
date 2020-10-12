@@ -1,13 +1,15 @@
 package it.polimi.ingsw.view.gui;
 
-import javax.swing.*;
-
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
-public class GUILoader{
+public class GUILoader {
+
+    private GUILoader() {
+    }
 
     /**
      * loads the GUI
+     * 
      * @author Elia Ravella
      */
     public static void loadGUI() {

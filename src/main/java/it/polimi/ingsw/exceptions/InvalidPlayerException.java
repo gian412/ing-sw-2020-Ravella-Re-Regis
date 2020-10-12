@@ -1,5 +1,9 @@
 package it.polimi.ingsw.exceptions;
 
 public class InvalidPlayerException extends Exception {
-    public InvalidPlayerException(){ super("Invalid player, maybe wrong turn"); }
+    private static final long serialVersionUID = 1;
+
+    public InvalidPlayerException() {
+        super("Invalid player, maybe wrong turn");
+    }
 }

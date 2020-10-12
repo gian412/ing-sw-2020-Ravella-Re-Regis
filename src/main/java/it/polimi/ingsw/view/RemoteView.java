@@ -15,7 +15,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-
 public class RemoteView extends Observable<PlayerCommand> implements Observer<BoardProxy>, Runnable {
     private Socket connSocket;
     private Controller controller;
@@ -28,11 +27,12 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
     /**
      * constructor of the RemoteView class
      *
-     * @param socket the client to communicate with
+     * @param socket     the client to communicate with
      * @param controller the controller of the match (one for all views)
-     * @param player a string that represents the player associated to this view.
+     * @param player     a string that represents the player associated to this
+     *                   view.
      */
-    public RemoteView(Socket socket, Controller controller, String player){
+    public RemoteView(Socket socket, Controller controller, String player) {
         disconnected = false;
         this.controller = controller;
         this.connSocket = socket;
@@ -48,57 +48,58 @@ public class RemoteView extends Observable<PlayerCommand> implements Observer<Bo
     /**
      * runs the RemoteView
      *
-     * the main method of the RemoteView, it's in charge of scanning the
-     * input stream from the client
+     * the main method of the RemoteView, it's in charge of scanning the input
+     * stream from the client
      */
     @Override
-    public void run(){
-        if(connSocket.isConnected() && !connSocket.isClosed()){
-            while (true){
+    public void run() {
+        if (connSocket.isConnected() && !connSocket.isClosed()) {
+            while (true) {
                 try {
                     PlayerCommand playerCommand = (PlayerCommand) fromClient.readObject();
-                    if(playerCommand != null){
+                    if (playerCommand != null) {
                         notify(playerCommand);
-                    }
-                    else break;
+                    } else
+                        break;
                 } catch (IOException e) {
                     System.err.println("Client disconnected");
                     disconnected = true;
-                    notify(new PlayerCommand(player.getNAME(), new Command(new Pair(-1, -1), CommandType.DISCONNECTED), 0));
+                    notify(new PlayerCommand(player.getNAME(), new Command(new Pair(-1, -1), CommandType.DISCONNECTED),
+                            0));
                     break;
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
-        }else{
+        } else {
             System.err.println("Socket not connected or closed. Shutting down");
         }
     }
 
-
     /**
-     * update method (inherited from the Observer interface) called when the observed object is changed
+     * update method (inherited from the Observer interface) called when the
+     * observed object is changed
      *
-     * send to the client the object changed, the Board in form of a BoardProxy in this case. Also, handles
-     * the case in which a client unexpectedly disconnects
+     * send to the client the object changed, the Board in form of a BoardProxy in
+     * this case. Also, handles the case in which a client unexpectedly disconnects
      *
      * @param message the changed object
      */
     @Override
     public void update(BoardProxy message) {
-        if(disconnected) return;
+        if (disconnected)
+            return;
         try {
 
             toClient.reset();
             toClient.writeObject(message);
             toClient.flush();
 
-            if(message.getWinner().equals("Unexpected Game Over")) {
+            if (message.getWinner().equals("Unexpected Game Over")) {
                 System.out.println("Unexpected game over, shutting down");
                 connSocket.close();
             }
         } catch (IOException | NullPointerException e) {
-            //e.printStackTrace();
         }
     }
 }

@@ -13,22 +13,30 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- * first panel to be displayed when the application boots up, must have all login and connection configure options
+ * first panel to be displayed when the application boots up, must have all
+ * login and connection configure options
+ * 
  * @author Gianluca Regis
  */
 public class LoginPanel extends JPanel {
+    private static final long serialVersionUID = 1L;
 
     // login page components
-    JTextField txtName, txtAge;
-    JLabel labelName, labelAge, labelError;
-    JButton btnConfigure, btnLogin;
+    JTextField txtName;
+    JTextField txtAge;
+    JLabel labelName;
+    JLabel labelAge;
+    JLabel labelError;
+    JButton btnConfigure;
+    JButton btnLogin;
     JPanel that = this;
     String ip = "127.0.0.1";
     int port = 13300;
 
     /**
      *
-     * Initializes and instances the GUI elements of the login page and displays them
+     * Initializes and instances the GUI elements of the login page and displays
+     * them
      *
      * @author Gianluca Regis
      *
@@ -97,12 +105,12 @@ public class LoginPanel extends JPanel {
             while (!valid) {
                 String strIp = JOptionPane.showInputDialog(that, "Insert IP address");
                 String[] checkIp = strIp.split("[.]");
-                if (checkIp.length==4) {
+                if (checkIp.length == 4) {
                     boolean checked = true;
                     for (String singleNumber : checkIp) {
                         try {
                             int singleNumberInt = Integer.parseInt(singleNumber);
-                            checked = singleNumberInt>=0 && singleNumberInt<255;
+                            checked = singleNumberInt >= 0 && singleNumberInt < 255;
                         } catch (NumberFormatException exception) {
                             checked = false;
                         }
@@ -116,7 +124,9 @@ public class LoginPanel extends JPanel {
                 try {
                     port = Integer.parseInt(JOptionPane.showInputDialog(that, "Insert port number"));
                     valid = true;
-                } catch (NumberFormatException exception) {}
+                } catch (NumberFormatException exception) {
+                    continue;
+                }
             }
         });
         btnLogin.addActionListener(new ActionListener() {
@@ -147,7 +157,7 @@ public class LoginPanel extends JPanel {
 
         GridBagConstraints constraints = new GridBagConstraints();
 
-        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
         constraints.gridy = 0;
@@ -156,7 +166,7 @@ public class LoginPanel extends JPanel {
         this.add(labelName, constraints);
 
         constraints = new GridBagConstraints();
-        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
         constraints.gridy = 1;
@@ -165,7 +175,7 @@ public class LoginPanel extends JPanel {
         this.add(txtName, constraints);
 
         constraints = new GridBagConstraints();
-        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -175,7 +185,7 @@ public class LoginPanel extends JPanel {
         this.add(new JPanel(), constraints);
 
         constraints = new GridBagConstraints();
-        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 2;
         constraints.gridy = 0;
@@ -185,7 +195,7 @@ public class LoginPanel extends JPanel {
         this.add(new JPanel(), constraints);
 
         constraints = new GridBagConstraints();
-        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
         constraints.gridy = 2;
@@ -193,7 +203,7 @@ public class LoginPanel extends JPanel {
         this.add(labelAge, constraints);
 
         constraints = new GridBagConstraints();
-        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
         constraints.gridy = 3;
@@ -201,7 +211,7 @@ public class LoginPanel extends JPanel {
         this.add(txtAge, constraints);
 
         constraints = new GridBagConstraints();
-        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
         constraints.gridy = 4;
@@ -209,7 +219,7 @@ public class LoginPanel extends JPanel {
         this.add(labelError, constraints);
 
         constraints = new GridBagConstraints();
-        constraints.fill= GridBagConstraints.HORIZONTAL;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 0.33;
         constraints.gridx = 1;
         constraints.gridy = 5;
@@ -230,24 +240,23 @@ public class LoginPanel extends JPanel {
      *
      * Login function
      *
-     * connects to the server, send the arguments (player's name and player's age) and loads next panel
+     * connects to the server, send the arguments (player's name and player's age)
+     * and loads next panel
+     * 
      * @author Elia Ravella, Gianluca Regis
      *
      */
     public void login() {
-
-        Socket connSocket;
-        try {
+        try (Socket connSocket = new Socket(ip, port)) {
             // Declaration of connection's constants
-            connSocket = new Socket(ip, port);
             Scanner input = new Scanner(connSocket.getInputStream());
             PrintStream output = new PrintStream(connSocket.getOutputStream());
 
-            String connectedPlayers[] = input.nextLine().split(" "); // connected players
+            String[] connectedPlayers = input.nextLine().split(" "); // connected players
             String clientName = txtName.getText();
 
-            for(int i = 0; i < connectedPlayers.length; i++){
-                if(connectedPlayers[i].equals(clientName)) {
+            for (int i = 0; i < connectedPlayers.length; i++) {
+                if (connectedPlayers[i].equals(clientName)) {
                     clientName = JOptionPane.showInputDialog("Username already taken! insert a new one");
                     i--;
                 }
@@ -261,19 +270,20 @@ public class LoginPanel extends JPanel {
 
             int playerNumber = 0;
             String message = input.nextLine(); // server prompt
-            if(message.equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) {
-                while (playerNumber!=2 && playerNumber!=3) {
+            if (message
+                    .equals("Creating new game. How many player do you want to play with? (2 or 3 player allowed)")) {
+                while (playerNumber != 2 && playerNumber != 3) {
                     playerNumber = Integer.parseInt(JOptionPane.showInputDialog(this, "How many players in the game?"));
                 }
                 output.println(playerNumber);
                 output.flush();
-            }else{
+            } else {
                 playerNumber = Integer.parseInt(message.substring(56, 57));
             }
 
             input.nextLine(); // final dialog
 
-            //load next panel
+            // load next panel
             ChooseGodsPanel chooseGodsPanel = new ChooseGodsPanel(connSocket, playerNumber);
             StaticFrame.removePanel(this);
             StaticFrame.addPanel(chooseGodsPanel);

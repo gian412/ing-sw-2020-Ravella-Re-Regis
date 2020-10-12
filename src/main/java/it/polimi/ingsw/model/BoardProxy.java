@@ -8,8 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class acts as a proxy of the model's Board: it contains all the Board's information to display it properly and
- * some other infos about the match in general. As the PlayerCommand, the BoardProxy is the only type of object that
+ * This class acts as a proxy of the model's Board: it contains all the Board's
+ * information to display it properly and some other infos about the match in
+ * general. As the PlayerCommand, the BoardProxy is the only type of object that
  * the server sends to the client
  *
  * @see it.polimi.ingsw.controller.PlayerCommand
@@ -17,6 +18,8 @@ import java.util.Map;
  * @author Marco Re, Elia Ravella
  */
 public class BoardProxy extends Observable<BoardProxy> implements Serializable {
+
+    private static final long serialVersionUID = 1;
 
     private Height[][] boardScheme;
     private Map<String, String> gods;
@@ -29,7 +32,7 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     /**
      * class constructor, instantiates all the variables and data structures
      */
-    public BoardProxy(){
+    public BoardProxy() {
         boardScheme = new Height[5][5];
         workers = new HashMap<>();
         choosingGods = "";
@@ -41,7 +44,7 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
         return gods;
     }
 
-    public void setGods(Map<String, String> mapGods){
+    public void setGods(Map<String, String> mapGods) {
         gods = mapGods;
     }
 
@@ -77,7 +80,7 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
         this.turnPlayer = turnPlayer;
     }
 
-    public void setWinner(String player){
+    public void setWinner(String player) {
         this.winPlayer = player;
         this.setStatus(GameState.TERMINATOR);
     }
@@ -86,19 +89,19 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
         return winPlayer;
     }
 
-    public void addHeight(int x, int y, Height h){
+    public void addHeight(int x, int y, Height h) {
         boardScheme[x][y] = h;
     }
 
-    public void addWorker(String worker, Pair coordinates){
+    public void addWorker(String worker, Pair coordinates) {
         workers.put(worker, coordinates);
     }
 
-    public void resetWorkers(){
+    public void resetWorkers() {
         workers = new HashMap<>();
     }
 
-    public void updateProxy(){
+    public void updateProxy() {
         notify(this);
     }
 
@@ -111,7 +114,8 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
     }
 
     /**
-     * returns a string that represents the board. it's used in console representation
+     * returns a string that represents the board. it's used in console
+     * representation
      *
      * @return the string representing the Board
      */
@@ -122,8 +126,8 @@ public class BoardProxy extends Observable<BoardProxy> implements Serializable {
 
         myBoard.append(this.choosingGods + "\n\n");
 
-        for(int row = 0; row < 5; row++){
-            for(int col = 0; col < 5; col++) {
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 5; col++) {
                 myBoard.append(boardScheme[row][col].toString());
                 myBoard.append('\t');
             }

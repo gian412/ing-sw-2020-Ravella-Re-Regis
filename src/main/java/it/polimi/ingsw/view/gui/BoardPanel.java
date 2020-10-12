@@ -25,8 +25,9 @@ import java.util.ArrayList;
  *
  * @author Ravella Elia, Gianluca Regis
  */
-public class BoardPanel extends JPanel{
-	
+public class BoardPanel extends JPanel {
+	private static final long serialVersionUID = 1;
+
 	private final Socket socket;
 	private final ReadProxyBoard reader;
 	private BoardListener listener;
@@ -39,10 +40,9 @@ public class BoardPanel extends JPanel{
 	private OptionPanel optionPanel;
 	private DirectionsPanel directionsPanel;
 
-	private final String PATH = "src/main/java/it/polimi/ingsw/utils/graphics/";
-	private final int firstOffset = 19; // px
-	private final int cellLength = 137; // px
-	private final int interstitialWidth = 22; //px
+	private static final int FIRST_OFFSET = 19; // px
+	private static final int CELL_LENGTH = 137; // px
+	private static final int INTERSTITIAL_WIDTH = 22; // px
 
 	/**
 	 * Inner class that represents the pop-up panel with the available actions
@@ -50,10 +50,11 @@ public class BoardPanel extends JPanel{
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	class OptionPanel extends JPanel {
+		private static final long serialVersionUID = 1;
 
 		private boolean isPlaying;
 
-		public OptionPanel(boolean canForce, boolean canBuildDome, boolean canEndBefore){
+		public OptionPanel(boolean canForce, boolean canBuildDome, boolean canEndBefore) {
 			super();
 
 			isPlaying = false;
@@ -61,8 +62,8 @@ public class BoardPanel extends JPanel{
 				// Initialize and add a "end turn" button
 				JButton endTurnButton = new JButton("End Turn");
 				endTurnButton.addActionListener(e -> {
-					if (turnMoves.size()==2 && turnMoves.get(0).equals(CommandType.MOVE) &&
-							(turnMoves.get(1).equals(CommandType.BUILD) || turnMoves.get(1).equals(CommandType.BUILD_DOME))) {
+					if (turnMoves.size() == 2 && turnMoves.get(0).equals(CommandType.MOVE)
+							&& (turnMoves.get(1).equals(CommandType.BUILD) || turnMoves.get(1).equals(CommandType.BUILD_DOME))) {
 						remoteChangeTurn();
 						optionPanel.setVisible(false);
 					} else {
@@ -71,7 +72,6 @@ public class BoardPanel extends JPanel{
 				});
 				this.add(endTurnButton);
 			}
-
 
 			// Initialize and add move button
 			JButton moveButton = new JButton("Move");
@@ -124,11 +124,13 @@ public class BoardPanel extends JPanel{
 	}
 
 	/**
-	 * Inner class that represents the pop-up panel with the available directions for the chosen action
+	 * Inner class that represents the pop-up panel with the available directions
+	 * for the chosen action
 	 *
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	class DirectionsPanel extends JPanel {
+		private static final long serialVersionUID = 1;
 		private int workerIndex;
 		private Pair workerCell;
 		private CommandType cmd;
@@ -136,8 +138,8 @@ public class BoardPanel extends JPanel{
 		private static final int IMAGE_BASE_HEIGHT = 50;
 
 		/**
-		 * builds the panel that shows the possible directions for the selected move
-		 * all the buttons have a dedicated actionListener that "puts together" the command
+		 * builds the panel that shows the possible directions for the selected move all
+		 * the buttons have a dedicated actionListener that "puts together" the command
 		 * and pushes it through the outputstream
 		 */
 		public DirectionsPanel(GodType particularGod) {
@@ -145,15 +147,15 @@ public class BoardPanel extends JPanel{
 			workerCell = new Pair(0, 0);
 
 			// Initialize components
-			JButton btnNorthWest = new JButton("NORTH-WEST"),
-					btnNorth = new JButton("NORTH"),
-					btnNorthEast = new JButton("NORTH-EAST"),
-					btnWest = new JButton("WEST"),
-					btnPower,
-					btnEast = new JButton("EAST"),
-					btnSouthWest = new JButton("SOUTH-WEST"),
-					btnSouth = new JButton("SOUTH"),
-					btnSouthEast = new JButton("SOUTH-EAST");
+			JButton btnNorthWest = new JButton("NORTH-WEST");
+			JButton btnNorth = new JButton("NORTH");
+			JButton btnNorthEast = new JButton("NORTH-EAST");
+			JButton btnWest = new JButton("WEST");
+			JButton btnPower;
+			JButton btnEast = new JButton("EAST");
+			JButton btnSouthWest = new JButton("SOUTH-WEST");
+			JButton btnSouth = new JButton("SOUTH");
+			JButton btnSouthEast = new JButton("SOUTH-EAST");
 
 			// Add action listeners
 			btnNorthWest.addActionListener(e -> {
@@ -235,9 +237,10 @@ public class BoardPanel extends JPanel{
 				// Add power to the central button
 				Image image;
 				try {
-					image = (GetImages.getPowerImage(StaticFrame.getGod().toString())).getScaledInstance(IMAGE_BASE_WIDTH, IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
+					image = (GetImages.getPowerImage(StaticFrame.getGod().toString())).getScaledInstance(IMAGE_BASE_WIDTH,
+							IMAGE_BASE_HEIGHT, Image.SCALE_DEFAULT);
 					btnPower = new JButton(new ImageIcon(image));
-				}catch(Exception e){
+				} catch (Exception e) {
 					btnPower = new JButton();
 				}
 			}
@@ -253,7 +256,7 @@ public class BoardPanel extends JPanel{
 			this.add(btnSouth);
 			this.add(btnSouthEast);
 
-			this.setLayout( new GridLayout(3, 3));
+			this.setLayout(new GridLayout(3, 3));
 		}
 
 		public void setWorkerIndex(int workerIndex) {
@@ -268,30 +271,31 @@ public class BoardPanel extends JPanel{
 			this.cmd = cmd;
 		}
 
-		public int getWorkerIndex(){
+		public int getWorkerIndex() {
 			return workerIndex;
 		}
 	}
 
 	/**
-	 * Inner class to observe the BoardListener object
-	 * saves the boardproxy in a local attribute and calls the repaint()
+	 * Inner class to observe the BoardListener object saves the boardproxy in a
+	 * local attribute and calls the repaint()
 	 *
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	class ReadProxyBoard implements Observer<BoardProxy> {
 		private final Component parentComponent;
 
-		public ReadProxyBoard(Component parentComponent){
+		public ReadProxyBoard(Component parentComponent) {
 			this.parentComponent = parentComponent;
 		}
 
 		@Override
 		public void update(BoardProxy message) {
-			if(message.getIllegalMoveString().equals("")) {
+			if (message.getIllegalMoveString().equals("")) {
 				switch (message.getStatus()) {
 					case ADDING_WORKER:
-						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName()) && !message.getWorkers().containsKey(StaticFrame.getPlayerName() + "0")) {
+						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())
+								&& !message.getWorkers().containsKey(StaticFrame.getPlayerName() + "0")) {
 							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Add your workers!");
 						}
 						actualBoard = message;
@@ -299,12 +303,13 @@ public class BoardPanel extends JPanel{
 						break;
 					case PLAYING:
 						if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
-							if(message.getTurnPlayer().equals(actualBoard.getTurnPlayer())){
-								if(GodActions.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())){
+							if (message.getTurnPlayer().equals(actualBoard.getTurnPlayer())) {
+								if (GodActions.isTurnEnded(StaticFrame.getGod(), turnMoves.toArray())) {
 									JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Your turn is ended!");
 									remoteChangeTurn();
 								} else {
-									directionsPanel.setWorkerCell(message.getWorkers().get(StaticFrame.getPlayerName() + directionsPanel.getWorkerIndex()));
+									directionsPanel.setWorkerCell(
+											message.getWorkers().get(StaticFrame.getPlayerName() + directionsPanel.getWorkerIndex()));
 								}
 							} else {
 								JOptionPane.showMessageDialog(StaticFrame.mainFrame, "select the worker for this turn");
@@ -315,47 +320,36 @@ public class BoardPanel extends JPanel{
 						break;
 					case TERMINATOR:
 						if (message.getWinner().equals("Unexpected Game Over")) {
-							JOptionPane.showMessageDialog(
-									StaticFrame.mainFrame,
-									"Game over because another client closed the game",
-									"Client disconnected",
-									JOptionPane.ERROR_MESSAGE
-							);
+							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Game over because another client closed the game",
+									"Client disconnected", JOptionPane.ERROR_MESSAGE);
 						} else if (message.getWinner().equals("Server down")) {
-							JOptionPane.showMessageDialog(
-									StaticFrame.mainFrame,
-									"Game over because the server went down",
-									"Server down",
-									JOptionPane.ERROR_MESSAGE
-							);
-						} else if (message.getWinner().equals(StaticFrame.getPlayerName())){
-							JOptionPane.showMessageDialog(
-									StaticFrame.mainFrame,
-									"Congrats! You win!",
-									"You win",
-									JOptionPane.INFORMATION_MESSAGE
-							);
-						}  else {
-							JOptionPane.showMessageDialog(
-									StaticFrame.mainFrame,
-									"You lose! " + "The winner is " + message.getWinner() + "!",
-									"You lose",
-									JOptionPane.INFORMATION_MESSAGE
-							);
+							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Game over because the server went down",
+									"Server down", JOptionPane.ERROR_MESSAGE);
+						} else if (message.getWinner().equals(StaticFrame.getPlayerName())) {
+							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "Congrats! You win!", "You win",
+									JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(StaticFrame.mainFrame,
+									"You lose! " + "The winner is " + message.getWinner() + "!", "You lose",
+									JOptionPane.INFORMATION_MESSAGE);
 						}
 						actualBoard = message;
 						showLogin();
+						break;
+					default:
+						break;
 				}
 			} else {
-				if(message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
+				if (message.getTurnPlayer().equals(StaticFrame.getPlayerName())) {
 					JOptionPane.showMessageDialog(StaticFrame.mainFrame, message.getIllegalMoveString());
-					if(turnMoves.size() > 0) turnMoves.remove(turnMoves.size() - 1);
+					if (!turnMoves.isEmpty())
+						turnMoves.remove(turnMoves.size() - 1);
 				}
 				actualBoard = message;
 				refreshView();
 			}
 		}
-    }
+	}
 
 	public BoardPanel(Socket socket, BoardProxy firstBoard, BoardListener listener, ObjectOutputStream outputStream) {
 		workersAdded = new ArrayList<>();
@@ -370,7 +364,8 @@ public class BoardPanel extends JPanel{
 		turnMoves = new ArrayList<>();
 
 		// Initialize option panel and add it to the board panel
-		optionPanel = new OptionPanel(StaticFrame.godCanForce(), StaticFrame.godCanBuildDome(), StaticFrame.godCanEndBefore());
+		optionPanel = new OptionPanel(StaticFrame.godCanForce(), StaticFrame.godCanBuildDome(),
+				StaticFrame.godCanEndBefore());
 		optionPanel.setVisible(false);
 		this.add(optionPanel);
 
@@ -386,8 +381,8 @@ public class BoardPanel extends JPanel{
 	}
 
 	/**
-	 * override of the JPanel original paint method
-	 * allows to do some serious custom painting
+	 * override of the JPanel original paint method allows to do some serious custom
+	 * painting
 	 *
 	 * @param g the "Graphics2D" object
 	 * @author Elia Ravella
@@ -407,18 +402,19 @@ public class BoardPanel extends JPanel{
 		this.setSize(boardImg.getWidth(null), boardImg.getHeight(null));
 
 		if (actualBoard != null) {
-			BoardMaker.drawElements(g, actualBoard, firstOffset, cellLength, interstitialWidth, this);
+			BoardMaker.drawElements(g, actualBoard, FIRST_OFFSET, CELL_LENGTH, INTERSTITIAL_WIDTH, this);
 		}
 	}
 
 	/**
-	 * this method adds a dedicated mouselistener to this panel: this mouselistener maps
-	 * the click on the image to a click on the actualboard's grid of cells
+	 * this method adds a dedicated mouselistener to this panel: this mouselistener
+	 * maps the click on the image to a click on the actualboard's grid of cells
 	 */
 	private void appendMouseClickMapper() {
 		// the first board is not received directly from the model
 		// it's passed from the previous panel, so "it's already there"
-		if(actualBoard.getStatus().equals(GameState.ADDING_WORKER) && actualBoard.getTurnPlayer().equals(StaticFrame.getPlayerName()))
+		if (actualBoard.getStatus().equals(GameState.ADDING_WORKER)
+				&& actualBoard.getTurnPlayer().equals(StaticFrame.getPlayerName()))
 			JOptionPane.showMessageDialog(this, "Add your workers!");
 
 		this.addMouseListener(new MouseAdapter() {
@@ -430,17 +426,11 @@ public class BoardPanel extends JPanel{
 						cell = BoardMaker.map(e.getX(), e.getY());
 
 						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
-							if(!actualBoard.getWorkers().containsValue(cell) && !workersAdded.contains(cell)){
+							if (!actualBoard.getWorkers().containsValue(cell) && !workersAdded.contains(cell)) {
 								JOptionPane.showMessageDialog(StaticFrame.mainFrame, "adding worker at " + cell.x + " " + cell.y);
 
-								PlayerCommand toSend = new PlayerCommand(
-										StaticFrame.getPlayerName(),
-										new Command(
-												cell,
-												CommandType.ADD_WORKER
-										),
-										0
-								);
+								PlayerCommand toSend = new PlayerCommand(StaticFrame.getPlayerName(),
+										new Command(cell, CommandType.ADD_WORKER), 0);
 								workersAdded.add(cell);
 
 								try {
@@ -455,17 +445,11 @@ public class BoardPanel extends JPanel{
 							}
 
 							/**
-							 *  procedure to verify if the player already added his 2 workers
+							 * procedure to verify if the player already added his 2 workers
 							 */
 							if (workersAdded.size() == 2) {
-								PlayerCommand changeTurn = new PlayerCommand(
-										StaticFrame.getPlayerName(),
-										new Command(
-												new Pair(0, 0),
-												CommandType.CHANGE_TURN
-										),
-										0
-								);
+								PlayerCommand changeTurn = new PlayerCommand(StaticFrame.getPlayerName(),
+										new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
 
 								try {
 									outputStream.reset();
@@ -477,21 +461,25 @@ public class BoardPanel extends JPanel{
 							}
 
 						} else {
-							JOptionPane.showMessageDialog( StaticFrame.mainFrame, "it is not your turn!");
+							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "it is not your turn!");
 						}
 						break;
 					case PLAYING:
 						cell = BoardMaker.map(e.getX(), e.getY());
 
 						if (StaticFrame.getPlayerName().equals(actualBoard.getTurnPlayer())) {
-							// Check if there is a worker in the selected cell, and if is'nt already selected another one
+							// Check if there is a worker in the selected cell, and if is'nt already
+							// selected another one
 							if (checkWorkerPresence(cell) && !optionPanel.isPlaying()) {
 								optionPanel.setVisible(true);
 								optionPanel.setPlaying(true);
 							}
 						} else {
-							JOptionPane.showMessageDialog( StaticFrame.mainFrame, "it is not your turn!");
+							JOptionPane.showMessageDialog(StaticFrame.mainFrame, "it is not your turn!");
 						}
+						break;
+					case SELECTING_GOD:
+					case TERMINATOR:
 						break;
 				}
 			}
@@ -503,36 +491,41 @@ public class BoardPanel extends JPanel{
 	 *
 	 * @author Elia Ravella
 	 */
-	private void refreshView(){
+	private void refreshView() {
 		this.invalidate();
 		this.validate();
 		this.repaint();
 	}
 
 	/**
-	 * given a cell to check, verify if there's a worker on it and sets the optionPanel accordingly
+	 * given a cell to check, verify if there's a worker on it and sets the
+	 * optionPanel accordingly
+	 * 
 	 * @param cell the cell to be checked
 	 * @return true/false
 	 * @author Elia Ravella, Gianluca Regis
 	 */
 	private boolean checkWorkerPresence(Pair cell) {
-		if (actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0") != null && actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0").equals(cell)) {
+		if (actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0") != null
+				&& actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "0").equals(cell)) {
 			directionsPanel.setWorkerIndex(0);
 			directionsPanel.setWorkerCell(cell);
 			return true;
 		}
-		if (actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1") != null && actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1").equals(cell)) {
+		if (actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1") != null
+				&& actualBoard.getWorkers().get(StaticFrame.getPlayerName() + "1").equals(cell)) {
 			directionsPanel.setWorkerIndex(1);
 			directionsPanel.setWorkerCell(cell);
 			return true;
-		} else return false;
+		} else
+			return false;
 	}
 
 	private void showLogin() {
 
 		listener.removeObserver(reader);
 
-		//load next panel
+		// load next panel
 		LoginPanel loginPanel = new LoginPanel();
 
 		try {
@@ -553,54 +546,49 @@ public class BoardPanel extends JPanel{
 	 *
 	 * @author Elia Ravella
 	 */
-	private void remoteChangeTurn(){
+	private void remoteChangeTurn() {
 		optionPanel.setPlaying(false);
 		optionPanel.setVisible(false);
 
 		turnMoves.clear();
 
-		PlayerCommand endTurn = new PlayerCommand(
-				StaticFrame.getPlayerName(),
-				new Command(new Pair(0, 0), CommandType.CHANGE_TURN),
-				0
-		);
+		PlayerCommand endTurn = new PlayerCommand(StaticFrame.getPlayerName(),
+				new Command(new Pair(0, 0), CommandType.CHANGE_TURN), 0);
 
 		try {
 			outputStream.reset();
 			outputStream.writeObject(endTurn);
 			outputStream.flush();
-		}catch (IOException x){
+		} catch (IOException x) {
 			JOptionPane.showMessageDialog(null, "Unknown problem with the network communications!");
 		}
 	}
 
 	/**
-	 * this function initializes a new PlayerCommand object using the parameters and send it to the server
+	 * this function initializes a new PlayerCommand object using the parameters and
+	 * send it to the server
 	 *
-	 * @param cell target cell of the command
-	 * @param command the command to be issued
+	 * @param cell        target cell of the command
+	 * @param command     the command to be issued
 	 * @param workerIndex indentifier for the piece on the board
 	 * @author Elia Ravella
 	 */
-	private void sendCommand(Pair cell, CommandType command, int workerIndex){
-		PlayerCommand toSend = new PlayerCommand(
-				StaticFrame.getPlayerName(),
-				new Command(cell, command),
-				workerIndex
-		);
+	private void sendCommand(Pair cell, CommandType command, int workerIndex) {
+		PlayerCommand toSend = new PlayerCommand(StaticFrame.getPlayerName(), new Command(cell, command), workerIndex);
 
 		try {
 			outputStream.reset();
 			outputStream.writeObject(toSend);
 			outputStream.flush();
-		}catch (IOException x){
+		} catch (IOException x) {
 			JOptionPane.showMessageDialog(null, "Problem with sending your command to the server! Try again");
 		}
 
 	}
 
 	/**
-	 * this functions stores the moves that the player has done in a dedicated data structure
+	 * this functions stores the moves that the player has done in a dedicated data
+	 * structure
 	 *
 	 * @see GodActions
 	 * @param cmd the type of command that the player has done
@@ -613,6 +601,5 @@ public class BoardPanel extends JPanel{
 			turnMoves.add(cmd);
 		}
 	}
-
 
 }
